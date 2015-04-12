@@ -7,7 +7,8 @@ CXXSRC		=
 CSRC		=
 INCLUDES	= -I ./includes
 ###################
-CtvTy		= src/ctvty/gameObject.cpp
+CtvTy		= src/ctvty/gameObject.cpp \
+		src/ctvty/component.cpp
 
 ###################
 CXXSRC		= $(CtvTy)

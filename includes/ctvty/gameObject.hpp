@@ -1,11 +1,10 @@
 #ifndef GameObject_hpp__
 # define GameObject_hpp__
 
+#include <map>
 #include <string>
 #include <vector>
 #include <list>
-
-#include "ctvty/component.hpp"
 
 #include "ctvty/event.hpp"
 
@@ -13,6 +12,7 @@
 
 namespace ctvty {
 
+  class Component;
   class Transform;
   class GameObject : public Object {
   private:

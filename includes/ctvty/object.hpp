@@ -1,6 +1,8 @@
 #ifndef Object_hpp__
 # define Object_hpp__
 
+#include <list>
+
 #include "ctvty/utility.hh"
 
 namespace ctvty {

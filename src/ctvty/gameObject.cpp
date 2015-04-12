@@ -1,5 +1,5 @@
 #include "ctvty/gameObject.hpp"
-
+#include "ctvty/component.hpp"
 namespace ctvty {
 
   /*
@@ -77,7 +77,7 @@ namespace ctvty {
     if (events_map[methodName] == false)
       return ;
     for (Component* component : components)
-      if (component->doImplement(methodName))
+      if (component->DoImplement(methodName))
 	(*component)[methodName](params);
   }
 

@@ -78,7 +78,7 @@ namespace ctvty {
     /*
      * event Receiver
      */
-    template<typename ... parameters>
+    template<typename _class, typename ... parameters>
     class intern_receiver;
 
     class receiver {
@@ -86,9 +86,9 @@ namespace ctvty {
       virtual void	operator() (ctvty::event::parameters::values _params) = 0;
 
     public:
-      template<typename ... parameters>
-      static receiver* create(std::function<void (parameters...)> _fn) {
-	return (new intern_receiver< parameters ... >(_fn));
+      template<typename _class, typename ... parameters>
+      static receiver* create(_class* _this, std::function<void ( _class*, parameters...)> _fn) {
+	return (new intern_receiver< _class, parameters ... >(_this, _fn));
       }
     };
 
@@ -111,40 +111,44 @@ namespace ctvty {
 
     template<unsigned int N>
     struct unfolder {
-      template<typename... args, typename ...final>
-      static void apply(ctvty::event::parameters::values values,
-			std::function<void (args...)> fn,
-			final ... sended) {
+      template<typename _class, typename... args, typename ...final>
+      static void apply(ctvty::event::parameters::values	values,
+			_class*					_this_,
+			std::function<void ( _class*, args... )>fn,
+			final ...				sended) {
 	if (!values[sizeof ... (args) - N]->is< typename typeAt<sizeof ... (args) - N, args...>::type >())
 	  throw std::runtime_error("mismatch type on call");
-	unfolder<N - 1>::apply(values, fn, sended ..., values[sizeof ... (args) - N]->as< typename typeAt<sizeof ... (args) - N, args...>::type >());
+	unfolder<N - 1>::apply(values, _this_, fn, sended ..., values[sizeof ... (args) - N]->as< typename typeAt<sizeof ... (args) - N, args...>::type >());
       }
     };
 
     template<>
     struct unfolder <0> {
-      template<typename ... args, typename ... final>
-      static void apply(ctvty::event::parameters::values values,
-			std::function<void (args...)> fn,
-			final ... sended) {
-	fn( sended ... );
+      template<typename _class, typename ... args, typename ... final>
+      static void apply(ctvty::event::parameters::values,
+			_class*					_this_,
+			std::function<void ( _class*, args... )>fn,
+			final ...				sended) {
+	fn( _this_, sended ... );
       }
     };
 
 
-    template<typename ... parameters>
+    template<typename _class, typename ... parameters>
     class intern_receiver : public receiver{
     private:
-      std::function<void (parameters...)>	_fn;
+      _class*					_this_;
+      std::function<void ( _class*, parameters ... )>	_fn;
 
     public:
-      intern_receiver(std::function<void(parameters...)> fn) : _fn(fn) {}
+      intern_receiver(_class* _this, std::function<void( _class*, parameters... )> fn)
+	: _this_(_this), _fn(fn) {}
 
     public:
       void operator() (ctvty::event::parameters::values _values) {
 	if (_values.size() < sizeof ... (parameters))
 	  throw std::runtime_error("not enough operands");
-	unfolder<sizeof ... (parameters)>::apply(_values, _fn);
+	unfolder<sizeof ... (parameters)>::apply(_values, _this_, _fn);
       }
     };
 
