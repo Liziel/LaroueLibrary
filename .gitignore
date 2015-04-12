@@ -1,0 +1,17 @@
+*
+
+#ungingore folder
+!*/
+!/
+
+#uningore source & headers files
+!*.c
+!*.cpp
+
+!*.h
+!*.hh
+!*.hpp
+
+#unignore makefile
+!Makefile
+!*/Makefile
