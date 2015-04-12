@@ -7,8 +7,10 @@ CXXSRC		=
 CSRC		=
 INCLUDES	= -I ./includes
 ###################
+CtvTy		= src/ctvty/gameObject.cpp
+
 ###################
-CXXSRC		=
+CXXSRC		= $(CtvTy)
 CSRC		=
 
 FLAGS		= -Wall -Wextra $(INCLUDES)

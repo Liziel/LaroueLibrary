@@ -2,6 +2,7 @@
 # define Event_hh__
 
 #include <vector>
+#include <functional>
 
 /*
  * here's what's important in this .hpp
@@ -15,6 +16,9 @@ namespace ctvty {
       template<typename ... _values>
       values PackValues(_values...);
     };
+
+    class UpdateDispatcher;
+    class DelayedScript;
   };
 };
 
@@ -65,7 +69,7 @@ namespace ctvty {
       values PackValues(_values ... vs) {
 	values retval = {
 	  (value::create<_values>(vs))...,
-	}
+	};
 	return (retval);
       }
 
@@ -79,7 +83,7 @@ namespace ctvty {
 
     class receiver {
     public:
-      virtual void	operator() (parameter::values _params) = 0;
+      virtual void	operator() (ctvty::event::parameters::values _params) = 0;
 
     public:
       template<typename ... parameters>
@@ -108,7 +112,9 @@ namespace ctvty {
     template<unsigned int N>
     struct unfolder {
       template<typename... args, typename ...final>
-      static void apply(parameter::values values, std::function<void (args...)> fn, final ... sended) {
+      static void apply(ctvty::event::parameters::values values,
+			std::function<void (args...)> fn,
+			final ... sended) {
 	if (!values[sizeof ... (args) - N]->is< typename typeAt<sizeof ... (args) - N, args...>::type >())
 	  throw std::runtime_error("mismatch type on call");
 	unfolder<N - 1>::apply(values, fn, sended ..., values[sizeof ... (args) - N]->as< typename typeAt<sizeof ... (args) - N, args...>::type >());
@@ -118,7 +124,9 @@ namespace ctvty {
     template<>
     struct unfolder <0> {
       template<typename ... args, typename ... final>
-      static void apply(parameter::values values, std::function<void (args...)> fn, final ... sended) {
+      static void apply(ctvty::event::parameters::values values,
+			std::function<void (args...)> fn,
+			final ... sended) {
 	fn( sended ... );
       }
     };
@@ -133,7 +141,7 @@ namespace ctvty {
       intern_receiver(std::function<void(parameters...)> fn) : _fn(fn) {}
 
     public:
-      void operator() (parameter::values _values) {
+      void operator() (ctvty::event::parameters::values _values) {
 	if (_values.size() < sizeof ... (parameters))
 	  throw std::runtime_error("not enough operands");
 	unfolder<sizeof ... (parameters)>::apply(_values, _fn);

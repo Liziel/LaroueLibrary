@@ -1,6 +1,7 @@
-#ifndef GameObject_hh__
-# define GameObject_hh__
+#ifndef GameObject_hpp__
+# define GameObject_hpp__
 
+#include <string>
 #include <vector>
 #include <list>
 
@@ -12,90 +13,157 @@
 
 namespace ctvty {
 
+  class Transform;
   class GameObject : public Object {
   private:
-    std::vector<ctvty::Component*>	components;
+    /*
+     * Components Vector storing the component attached to the GameObject
+     * the two map allow a faster event dispatch:
+     * events_map store the used and unused event listener in this object
+     * child_events_map sotre the used unused event Listener in the childs objects
+     */
+    std::list<ctvty::Component*>		components;
+    std::map<std::string, bool>			events_map;
+    std::map<std::string, bool>			childs_events_map;
 
   private:
-    bool				activation_state;
-    std::vector<GameObject*>		childs;
-    GameObject*				parent;
+    /*
+     * Activation State determine if the game Object should or should not receive any events
+     */
+    bool					activation_state;
+
+  private:
+    /*
+     * All GameObject are a node of a n-sized tree
+     */
+    std::list<GameObject*>			childs;
+    GameObject*					parent;
+
+  private:
+    /*
+     * All GameObject should have a Transform Component for their localization
+     */
+    Transform*					transform;
 
   protected:
+    /*
+     * A GameObject is definied by its tag, which can be shared with other gameObject (see FindWithTag)
+     */
     const std::string				tag;
+
+  private:
+    /*
+     * Static List of all GameObjects and all parent-less GameObject (on top of tree)
+     */
+    static std::list<GameObject*>	gameObjects;
+    static std::list<GameObject*>	fathers;
 
   public:
     GameObject(const std::string name = "GameObject",
-	       const std::string& _tag = "undefined",
-	       GameObject* _parent = nullptr,
-	       bool state = false)
-      : Object(name), activation_state(state), parent(_parent), tag(_tag) {
-      gameObjects.push_back(this);
-    }
-
-    ~GameObject() {
-      parent->childs.remove([this] (GameObject* _comp) -> bool {return _comp == this;});
-      gameObjects.remove([this] (GameObject* _comp) -> bool {return _comp == this;});
-    }
-
-  protected:
-    virtual Object*				clone() const {
-      GameObject*	clone = new GameObject(name + "(clone)", tag, parent);
-
-      for (GameObject* child : childs)
-	clone->childs.push_back(child->clone());
-      for (Component* component : components)
-	clone->components.push_back(component->clone());
-      return (clone);
-    }
-
-    virtual void				intern_Destroy() {
-      Object::intern_Destroy();
-
-      for (GameObject* child : childs)
-	child->intern_destroy();
-      for (Component* component : components)
-	component->intern_destroy();
-      delete this;
-    }
+	       const std::string& tag = "undefined",
+	       GameObject* parent = nullptr,
+	       bool state = false);
+    ~GameObject();
 
   public:
-    void				AddComponent(ctvty::Component* component) {
-      components.push_back(component);
-    }
-
-    void				BroadcastMessage(const std::string& methodName,
-							 event::parameters::values params) {
-      SendMessage(methodName, params);
-      for (GameObject* child : childs)
-	child->BroadcastMessage(methodName, params);
-    }
-
-    void				SendMessage(const std::string& methodName,
-						    event::parameters::values params) {
-      if (activation_state == false)
-	return ;
-      for (Component* component : components)
-	if (component->doImplement(methodName))
-	  component[methodName](params);
-    }
-
-    void				SendMessageUpwards(const std::string& methodName,
-							   event::parameters::values params) {
-      SendMessage(methodName, params);
-      parent->sendMessageUpwards(methodName, params);
-    }
+    /*
+     * Inherited from ctvty::Object
+     * intern method for Instantiate and Destroy
+     */
+    virtual Object*				clone() const;
+    virtual void				intern_Destroy();
 
   public:
-    void				SetActive(bool state) {
-      for (GameObject* child : childs)
-	child->SetActive(state);
-      activation_state = state;
-    }
+    /*
+     * Intern Method allowing faster treatment for events
+     * Should ONLY be used by ctvty classes, user won't have to use it
+     */
+    void					SetEventListening(const std::string& eventName,
+								  bool isListening,
+								  bool isChild = false);
 
   public:
+    /*
+     * Instantiate and attach a new component acccording to the given name
+     *   ex:
+     *    Collider2D component = this->AddComponent("Collider2D") -> will create a Collider2D an return it
+     */
+    ctvty::Component*				AddComponent(const std::string&);
+
+
+  public:
+    /*
+     * Message (Events) Parts
+     * BroadCast send events + values to itself and its childs
+     * SendMessage sned events + values to itself
+     * SendMessageUpwards send events + values to itself and fathers
+     */
+    void					BroadcastMessage(const std::string& methodName,
+								 event::parameters::values params
+									= event::parameters::PackValues());
+
+    void					SendMessage(const std::string& methodName,
+							    event::parameters::values params
+								= event::parameters::PackValues());
+
+    void					SendMessageUpwards(const std::string& methodName,
+								   event::parameters::values params
+									= event::parameters::PackValues());
+
+
+  public:
+    /*
+     * Set the Activation State
+     *  true -> this GameObject will receive events
+     * false -> it will not 
+     */
+    void					SetActive(bool state);
+
+
+  public:
+    /*
+     * Compare Its own Tag with the given tag (simple string == string -.-')
+     */
+    bool					CompareTag(const std::string& _tag);
+
+
+  public:
+    /*
+     * Static Search Function, use the static gameObjects list
+     * Find -> Find the first GameObject with the given name and return it
+     * FindGameObjectWithTag -> Find the first GameObject with the given tag and return it
+     * FindGameObjectsWIthTag -> make and vector of all GemeObject sharing the given tag and return it
+     */
+    static GameObject*				Find(const std::string& name);
+
+    static GameObject*				FindGameObjectWithTag(const std::string& tag);
+
+    static std::vector<GameObject*>		FindGameObjectsWithTag(const std::string& tag);
+
+
+
+  public:
+    /*
+     * Return the orphan list, useful for dispatching event from top of each GameObject tree
+     */
+    static std::list<GameObject*>&		accessParentsGameObjects();
+
+
+
+  public:
+    /*
+
+     * Component Search Methodes:
+     *   Component -> return the first found
+     *   ComponentS -> return an array of found components
+
+     *   GetComponent(s) -> search in its own component
+     *   GetComponent(s)InChildren() -> search in the children (deep search) components
+     *	 GetComponent(s)InParent() -> search in the parent (deep search) components
+
+     */
     template<typename component>
-    component*				GetComponent() {
+    component*					GetComponent() {
       for (ctvty::Component* _component : components) {
 	if (dynamic_cast<component*>(_component) != nullptr)
 	  return _component;
@@ -104,7 +172,7 @@ namespace ctvty {
     }
 
     template<typename component>
-    std::vector<component*>		GetComponents() {
+    std::vector<component*>			GetComponents() {
       std::vector<component*>	_founds;
 
       for (ctvty::Component* _component : components) {
@@ -116,9 +184,9 @@ namespace ctvty {
 
   public:
     template<typename component>
-    component*				GetComponentInChildren() {
+    component*					GetComponentInChildren() {
       for (ctvty::GameObject* gameObject : childs) {
-	component* _component = gameObejct->GetComponentInChildren<component>();
+	component* _component = gameObject->GetComponentInChildren<component>();
 	if (_component != nullptr)
 	  return (_component);
       }
@@ -126,7 +194,7 @@ namespace ctvty {
     }
 
     template<typename component>
-    std::vector<component*>		GetComponentsInChildren() {
+    std::vector<component*>			GetComponentsInChildren() {
       std::vector<component*> _founds;
 
       for (ctvty::GameObject* gameObject : childs) {
@@ -138,54 +206,21 @@ namespace ctvty {
 
   public:
     template<typename component>
-    component*				GetComponentInParent() {
+    component*					GetComponentInParent() {
       component*   _found = parent->GetComponent<component>();
       if (!_found)
-	return (parent->GetComponentInParent<compoenent>());
+	return (parent->GetComponentInParent<component>());
       return (_found);
     }
+
     template<typename component>
-    component*				GetComponentsInParent() {
+    component*					GetComponentsInParent() {
       std::vector<component*> _founds = parent->GetComponents<component>();
-      std::vector<component*> _parents_found = parent->getComponentInParent<component>();
+      std::vector<component*> _parents_found = parent->GetComponentsInParent<component>();
 
       _founds.insert(_founds.end(), _parents_found.begin(), _parents_found.end());
       return (_founds);
     }
-
-
-  public:
-    bool				CompareTag(const std::string& _tag) {
-      return (_tag == tag);
-    }
-
-  private:
-    static std::list<GameObject*>	gameObjects;
-
-  public:
-    static GameObject*			Find(const std::string& name) { 
-      for (GameObject* gameObject : gameObjects)
-	if (gameObject->name == name)
-	  return (gameObject);
-      return (nullptr);
-    }
-
-    static Gameobject*			FindGameObjectWithTag(const std::string& tag) {
-      for (GameObject* gameObject : gameObjects)
-	if (gameObject->CompareTag(tag))
-	  return (gameObject);
-      return (nullptr);
-    }
-
-    static std::vector<Gameobject>*	FindGameObjectsWithTag(const std::string& tag) {
-      std::vector<GameObject>*		_founds;
-
-      for (GameObject* gameObject : gameObjects)
-	if (gameObject->CompareTag(tag))
-	  _founds.push_back(gameObject);
-      return (_founds);
-    }
-
   };
 };
 

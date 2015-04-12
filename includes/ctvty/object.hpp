@@ -1,5 +1,5 @@
-#ifndef GameObject_hh__
-# define GameObject_hh__
+#ifndef Object_hpp__
+# define Object_hpp__
 
 #include "ctvty/utility.hh"
 
@@ -7,52 +7,77 @@ namespace ctvty {
 
   class Object {
   protected:
+    /*
+     * All Object are referenced with a name
+     */
     const std::string name;
 
   protected:
-    Object(const std::string& _name) : name(_name) {
-      Objects.push_back(this);
-    }
-
-    virtual ~Object() {
-      Objects.remove([this] (Object* _comp) -> bool {return _comp == this;});
-    }
+    /*
+     * basic Ctor & Dtor 
+     */
+    Object(const std::string& _name);
+    virtual ~Object();
 
   public:
-    Object() = delete;
-
-  protected:
-    virtual Object*		clone() = 0;
+    /*
+     * intern method corrsponding to the Instantiate & Destroy static methodes
+     */
+    virtual Object*		clone() const = 0;
     virtual void		intern_Destroy() {}
 
   private:
+    /*
+     * A List of all instiated Objects
+     */
     static std::list<Object*>	Objects;
 
   public:
-    static void			Destroy(Object* del, float _time); //will use the delayed action component
-    static void			Destroy(Object* del) { del->intern_destroy(); }
+    /*
+     * Destroy will delete the given object, in the given time (or immediatly if no time is given)
+     *    ALWAYS call Destroy and never delete because Destroy will unlink all game part
+     */
+    static void			Destroy(Object* del, float time = 0.f);
 
   public:
-    static Object*		Instantiate(Object* cp) { return cp->clone(); } 
-    static Object*		Instantiate(Object* cp, vector2 position, vector2 rotation); // will clone and set the transform
+    /*
+     * Will instantiate an copy of the given object, and place it at the given coordinate
+     * Will also active the clone object
+     * ex:
+     *    GameObject enemy_template; //with its own component, definition, and position
+     *	  GameObject enemy_clone = Instantiate(enemy_template);
+     *    GameObject enemy_clone_at_center = Instantiate(enemy_template, {0f, 0f}, vector2::ydirection);
+     */
+    static Object*		Instantiate(Object* copy);
+    static Object*		Instantiate(Object* copy,
+					    vector2 position,
+					    vector2 rotation);
 
   public:
+    /*
+     * Static research methodes
+     *  FindObjectByType will find the first Object corresponding to the type given in the template
+     *  FindObjectsByType will create a vector of all Object corresponfing to the given type
+     *  ex:
+     *   std::vector<Component*> all_components =
+		Object::FindObjectsOfType<Component*>();
+     */
     template<typename type>
-    static Object*		FindObjectOfType() {
+    static type*		FindObjectOfType() {
       for (Object* object : Objects) {
 	if (dynamic_cast<type*>(object) != nullptr)
-	  return (object);
+	  return (dynamic_cast<type*>(object));
       }
       return (nullptr);
     }
 
     template<typename type>
-    static Object*		FindObjectsOfType() {
+    static std::vector<type*>		FindObjectsOfType() {
       std::vector<type*>	_founds;
 
       for (Object* object : Objects) {
 	if (dynamic_cast<type*>(object) != nullptr)
-	  _founds.push_back(object);
+	  _founds.push_back(dynamic_cast<type*>(object));
       }
       return (_founds);
     }
