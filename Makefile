@@ -7,11 +7,15 @@ CXXSRC		=
 CSRC		=
 INCLUDES	= -I ./includes
 ###################
+### CtvTy -> unity conception
 CtvTy		= src/ctvty/gameObject.cpp \
 		src/ctvty/component.cpp
 
+### Serial -> Json Serialisation
+Serial		= src/serialization/Serializable.cpp
+
 ###################
-CXXSRC		= $(CtvTy)
+CXXSRC		= $(CtvTy) $(Serial)
 CSRC		=
 
 FLAGS		= -Wall -Wextra $(INCLUDES)

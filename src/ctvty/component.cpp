@@ -7,6 +7,7 @@ namespace ctvty {
    */
   Component::		Component(GameObject* parent, const std::string& name)
     : Object(name), gameObject(parent), transform(nullptr /*parent->GetComponent<Transform>()*/) {
+    RegisterListener("BroadcastMessage", &Component::BroadcastMessage);
   }
 
   Component::		~Component() {

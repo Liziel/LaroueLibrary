@@ -97,12 +97,12 @@ namespace ctvty {
 
     template <typename T0, typename... T>
     struct typeAt<0, T0, T...> {
-      typedef T0 type;
+      using type = typename std::remove_cv< typename std::remove_reference<T0>::type >::type;
     };
 
     template <int N, typename T0, typename... T>
     struct typeAt<N, T0, T...> {
-      typedef typename typeAt<N-1, T...>::type type;
+      using type = typename typeAt<N-1, T...>::type;
     };
 
 

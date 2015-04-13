@@ -84,11 +84,18 @@ namespace ctvty {
 
   public:
     /*
-     * Instantiate and attach a new component acccording to the given name
+     * Instantiate and attach a new component of the given type
      *   ex:
-     *    Collider2D component = this->AddComponent("Collider2D") -> will create a Collider2D an return it
+     *    Collider2D component = this->AddComponent<Collider2D>() -> will create a Collider2D,
+									attach it to this an return it
      */
-    ctvty::Component*				AddComponent(const std::string&);
+    template<typename _component>
+    Component*				AddComponent() {
+      Component*	new_component = new _component(this);
+
+      components.push_back(new_component);
+      return (new_component);
+    }
 
 
   public:
