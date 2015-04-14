@@ -65,6 +65,24 @@ namespace ctvty {
 	       bool state = false);
     ~GameObject();
 
+
+    GameObject(const serialization::Archive& __serial)
+      : Object(__serial["name"].as<std::string>()),
+	activation_state(false),
+	parent(nullptr),
+	tag(__serial["tag"].as<std::string>()) {
+      if (__serial.exist("childs"))
+	__serial["childs"] & childs;
+      __serial["components"] & components;
+    }
+
+    void	Serialize(serialization::Archive& __serial) override {
+      __serial["tag"] & tag;
+      __serial["name"] & name;
+      __serial["childs"] & childs;
+      __serial["components"] & components;
+    }
+
   public:
     /*
      * Inherited from ctvty::Object

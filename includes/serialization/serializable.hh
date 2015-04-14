@@ -41,7 +41,7 @@ namespace serialization {
   };
 
   template<typename _type>
-  int	Registration<_type>::_register([] () -> int {      
+  int	Registration<_type>::_register([] () -> int {
       std::string		name(__PRETTY_FUNCTION__);
       std::regex		regex(".* \\[.* = (.*)\\]");
       std::smatch		sm;
@@ -54,9 +54,10 @@ namespace serialization {
 };
 
 # define REGISTER_FOR_SERIALIZATION(__type__)				\
-  void	 register_for_serialization ## __type__ () {			\
+  void	 register_for_serialization_ ## __type__ () {			\
     (void)serialization::Registration< __type__ >::_register;		\
   }
+
 # define EASILY_SERIALIZABLE(__class__, __initializer_list__,  __serialization__) \
   void	Serialize(serialization::Archive& __serial) __serialization__;	\
   __class__(const serialization::Archive& __serial) __initializer_list__ __serialization__;	\

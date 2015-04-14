@@ -1,13 +1,14 @@
 #ifndef Object_hpp__
 # define Object_hpp__
 
-#include <list>
+# include <list>
 
-#include "ctvty/utility.hh"
+# include "ctvty/utility.hh"
+# include "serialization/serializable.hh"
 
 namespace ctvty {
 
-  class Object {
+  class Object : public serialization::Serializable {
   protected:
     /*
      * All Object are referenced with a name

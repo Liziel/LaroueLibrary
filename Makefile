@@ -22,7 +22,7 @@ Serial		= src/serialization/serializable.cpp \
 Main		= src/start/main.cpp
 
 ###################
-CXXSRC		+= $(Main) $(Serial) # $(CtvTy)
+CXXSRC		+= $(Serial) $(CtvTy)
 CSRC		+=
 
 FLAGS		= -Wall -Wextra $(INCLUDES)
@@ -52,6 +52,6 @@ re: fclean all
 	$(CXX) -c -o $@ $< $(CXXFLAGS)
 
 .c.o:
-	$(CC) -c -o $@ $< $(CXXFLAGS)
+	$(CC) -c -o $@ $< $(CFLAGS)
 
 .PHONY: all clean fclean re

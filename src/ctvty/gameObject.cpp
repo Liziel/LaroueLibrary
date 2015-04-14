@@ -2,6 +2,8 @@
 #include "ctvty/component.hpp"
 namespace ctvty {
 
+  REGISTER_FOR_SERIALIZATION(GameObject);
+
   /*
    * Ctor & Dtor
    */

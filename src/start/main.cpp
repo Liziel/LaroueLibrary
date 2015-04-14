@@ -36,7 +36,7 @@ struct test : public serialization::Serializable{
    * stringifiable part
    */
   EASILY_SERIALIZABLE(test
-		      ,: test()
+		      ,
 		      , {
       __serial["i1"] & i1;
       __serial["i2"] & i2;
@@ -48,7 +48,7 @@ struct test : public serialization::Serializable{
       __serial["l2"] & l2;
     });
 };
-REGISTER_FOR_SERIALIZATION(test);
+REGISTER_FOR_SERIALIZATION(test);//dans ton cpp
 
 int main() {
   test* t = new test;
@@ -72,12 +72,18 @@ int main() {
   t->l1.emplace_back(5);
   t->l1.emplace_back(5);
   t->l2.emplace_back(new test);
+
   {
     serialization::Serial	json;
+    serialization::Serial*	jsonFile;
+
+    if ((jsonFile = serialization::Serial::InstanciateFromFile("save.json")) != nullptr)
+      std::cout << jsonFile->Stringify() << std::endl;
 
     json & t;
     std::cout << "with modification:\n" << json.Stringify() << std::endl;
 
-    dynamic_cast<test*>(serialization::Serializable::Instantiate( json ))->log_self();
+    std::cout << std::endl;
+    dynamic_cast<test*>(serialization::Serializable::Instantiate( *jsonFile ))->log_self();
   }
 }

@@ -1,9 +1,10 @@
 #ifndef Serial_hh__
 # define Serial_hh__
 
-# include <iostream>
 # include <type_traits>
 # include <typeinfo>
+
+# include <fstream>
 
 # include <list>
 # include <map>
@@ -63,9 +64,9 @@ namespace serialization {
     _type		as() const { return serial_info<_type>::get(serial); }
 
   public:
-    static bool		isBlank(std::string::iterator& cursor, std::string::iterator end);
-    static bool		isDelimiteur(std::string::iterator& cursor, std::string::iterator end);
-    static bool		isSeparateur(std::string::iterator& cursor, std::string::iterator end);
+    static bool		isBlank(std::string::const_iterator& cursor, std::string::const_iterator end);
+    static bool		isDelimiteur(std::string::const_iterator& cursor, std::string::const_iterator end);
+    static bool		isSeparateur(std::string::const_iterator& cursor, std::string::const_iterator end);
 
   public:
     std::string		Stringify(int level = 0) { return serial->Stringify(level); }
@@ -74,8 +75,19 @@ namespace serialization {
     Serial(serial::interface* = nullptr);
 
   public:
-    static Serial*	Instanciate(std::string::iterator& current, std::string::iterator end);
-
+    static Serial*	Instanciate(std::string::const_iterator& current, std::string::const_iterator end);
+    static Serial*	InstanciateFromString(const std::string& s) {
+      std::string::const_iterator b = s.begin();
+      return Instanciate(b, s.end());
+    }
+    static Serial*	InstanciateFromFile(const std::string& s) {
+      std::ifstream		_file;
+      _file.open(s);
+      if (!_file)
+	return nullptr;
+      return (InstanciateFromString(std::string(std::istreambuf_iterator<char>(_file),
+						std::istreambuf_iterator<char>())));
+    }
   public:
     template<typename _type>
     static Serial*	Instanciate(_type _variable) {
@@ -95,11 +107,11 @@ namespace serialization {
       std::string				get() { return _serialized_string; }
 
     public:
-      static std::string			makeString(std::string::iterator& cursor, std::string::iterator end);
-      static bool				isString(std::string::iterator& cursor, std::string::iterator end);
+      static std::string			makeString(std::string::const_iterator& cursor, std::string::const_iterator end);
+      static bool				isString(std::string::const_iterator& cursor, std::string::const_iterator end);
 
     public:
-      string(std::string::iterator& cursor, std::string::iterator end);
+      string(std::string::const_iterator& cursor, std::string::const_iterator end);
       string(const std::string& _variable);
     };
 
@@ -111,7 +123,7 @@ namespace serialization {
       std::map< std::string, Serial* >		_serialized_object;
 
     public:
-      static bool				isObject(std::string::iterator& cursor, std::string::iterator end);
+      static bool				isObject(std::string::const_iterator& cursor, std::string::const_iterator end);
 
     public:
       Serial&					operator[] (const std::string& _index);
@@ -121,7 +133,7 @@ namespace serialization {
       std::string				getClassNameByTypeId(const std::string&);
 
     public:
-      object(std::string::iterator& cursor, std::string::iterator end);
+      object(std::string::const_iterator& cursor, std::string::const_iterator end);
       template<typename serializable>
       object(serializable* _s) {
 	_serialized_object.emplace("type",
@@ -143,14 +155,14 @@ namespace serialization {
       std::list<Serial*>			_serialized_list;
 
     public:
-      static bool				isList(std::string::iterator& cursor, std::string::iterator end);
+      static bool				isList(std::string::const_iterator& cursor, std::string::const_iterator end);
 
     public:
       std::list<Serial*>::iterator		begin() { return _serialized_list.begin(); }
       std::list<Serial*>::iterator		end() { return _serialized_list.end(); }
 
     public:
-      list(std::string::iterator& cursor, std::string::iterator end);
+      list(std::string::const_iterator& cursor, std::string::const_iterator end);
       template<typename iterator>
       list(iterator begin, iterator end) {
 	for (; begin != end; ++begin) {
@@ -172,10 +184,10 @@ namespace serialization {
       long					get() { return _serialized_integer; }
 
     public:
-      static bool				isInteger(std::string::iterator& cursor, std::string::iterator end);
+      static bool				isInteger(std::string::const_iterator& cursor, std::string::const_iterator end);
 
     public:
-      integer(std::string::iterator& cursor, std::string::iterator end);
+      integer(std::string::const_iterator& cursor, std::string::const_iterator end);
       template<typename _integer_>
       integer(_integer_ _integer) : _serialized_integer(_integer) {}
     };
@@ -193,10 +205,10 @@ namespace serialization {
       double					get() { return _serialized_floating; }
 
     public:
-      static bool				isFloating(std::string::iterator& cursor, std::string::iterator end);
+      static bool				isFloating(std::string::const_iterator& cursor, std::string::const_iterator end);
 
     public:
-      floating(std::string::iterator& cursor, std::string::iterator end);
+      floating(std::string::const_iterator& cursor, std::string::const_iterator end);
       template<typename _floating_>
       floating(_floating_ _floating) : _serialized_floating(_floating) {}
     };
@@ -210,10 +222,10 @@ namespace serialization {
       bool					_serialized_boolean;
 
     public:
-      static bool				isBoolean(std::string::iterator& cursor, std::string::iterator end);
+      static bool				isBoolean(std::string::const_iterator& cursor, std::string::const_iterator end);
 
     public:
-      boolean(std::string::iterator& cursor, std::string::iterator end);
+      boolean(std::string::const_iterator& cursor, std::string::const_iterator end);
       boolean(bool);
     };
 
@@ -238,11 +250,22 @@ namespace serialization {
 
   template<typename _type>
   struct serial_info< _type,
-		      typename std::enable_if< std::is_constructible<std::string, _type>::value >::type > {
+		      typename std::enable_if< std::is_constructible<std::string, _type>::value && !std::is_const<_type>::value >::type > {
     using type = serial::string;
     static _type get(serial::interface* _interface) { return string_get<_type>(_interface); }
     static bool	 is(serial::interface* _interface) { return dynamic_cast<serial::string*>(_interface) != nullptr; }
     static void  set(serial::interface* _interface, _type& _variable) { _variable = get(_interface); }
+    static serial::interface* make(_type _variable) {
+      return new serial::string(_variable);
+    }
+  };
+
+  template<typename _type>
+  struct serial_info< _type,
+		      typename std::enable_if< std::is_same< const std::string, typename std::remove_reference<_type>::type >::value >::type > {
+    using type = serial::string;
+    static _type get(serial::interface* _interface) { return string_get<_type>(_interface); }
+    static bool	 is(serial::interface* _interface) { return dynamic_cast<serial::string*>(_interface) != nullptr; }
     static serial::interface* make(_type _variable) {
       return new serial::string(_variable);
     }

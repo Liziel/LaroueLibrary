@@ -1,4 +1,3 @@
-#include <iostream>
 #include <algorithm>
 #include <cctype>
 #include <sstream>
@@ -16,56 +15,56 @@ namespace serialization {
   /*
    * From Json : Parse
    */
-  Serial*	Serial::Instanciate(std::string::iterator& cursor, std::string::iterator end) {
+  Serial*	Serial::Instanciate(std::string::const_iterator& cursor, std::string::const_iterator end) {
     if (Serial::isBlank(cursor, end))
       return nullptr;
 
+    if (serial::boolean::isBoolean(cursor, end))
+      return (new Serial(new serial::boolean(cursor, end)));
+    if (serial::object::isObject(cursor, end))
+      return (new Serial(new serial::object(cursor, end)));
     if (serial::string::isString(cursor, end))
       return (new Serial(new serial::string(cursor, end)));
-    else if (serial::object::isObject(cursor, end))
-      return (new Serial(new serial::object(cursor, end)));
-    else if (serial::list::isList(cursor, end))
+    if (serial::list::isList(cursor, end))
       return (new Serial(new serial::list(cursor, end)));
-    else if (serial::floating::isFloating(cursor, end))
+    if (serial::floating::isFloating(cursor, end))
       return (new Serial(new serial::floating(cursor, end)));
-    else if (serial::integer::isInteger(cursor, end))
+    if (serial::integer::isInteger(cursor, end))
       return (new Serial(new serial::integer(cursor, end)));
-    else if (serial::boolean::isBoolean(cursor, end))
-      return (new Serial(new serial::boolean(cursor, end)));
     return nullptr;
   }
 
   namespace serial {
-    bool	string::isString(std::string::iterator& cursor, std::string::iterator) {
+    bool	string::isString(std::string::const_iterator& cursor, std::string::const_iterator) {
       return *cursor == '"';
     }
 
-    bool	object::isObject(std::string::iterator& cursor, std::string::iterator) {
+    bool	object::isObject(std::string::const_iterator& cursor, std::string::const_iterator) {
       return *cursor == '{';
     }
 
-    bool	list::isList(std::string::iterator& cursor, std::string::iterator) {
+    bool	list::isList(std::string::const_iterator& cursor, std::string::const_iterator) {
       return *cursor == '[';
     }
 
-    bool	floating::isFloating(std::string::iterator& cursor, std::string::iterator) {
-      std::string::iterator c = cursor;
+    bool	floating::isFloating(std::string::const_iterator& cursor, std::string::const_iterator) {
+      std::string::const_iterator c = cursor;
 
       if (*c == '-') ++ c;
       while (std::isdigit(*c)) ++c;
       return *c == '.';
     }
 
-    bool	integer::isInteger(std::string::iterator& cursor, std::string::iterator) {
-      std::string::iterator c = cursor;
+    bool	integer::isInteger(std::string::const_iterator& cursor, std::string::const_iterator) {
+      std::string::const_iterator c = cursor;
 
       if (*c == '-') ++ c;
       return std::isdigit(*c);
     }
 
-    bool	boolean::isBoolean(std::string::iterator& cursor, std::string::iterator end) {
-      std::string::iterator false_test = cursor;
-      std::string::iterator true_test = cursor;
+    bool	boolean::isBoolean(std::string::const_iterator& cursor, std::string::const_iterator end) {
+      std::string::const_iterator false_test = cursor;
+      std::string::const_iterator true_test = cursor;
 
       if ((std::size_t)std::distance(cursor, end) > sizeof("false")) {
 	std::advance(false_test, sizeof("false"));
@@ -83,7 +82,7 @@ namespace serialization {
     }
   };
 
-  bool		Serial::isBlank(std::string::iterator& cursor, std::string::iterator end) {
+  bool		Serial::isBlank(std::string::const_iterator& cursor, std::string::const_iterator end) {
     while (*cursor == ' '  ||
 	   *cursor == '\t' ||
 	   *cursor == '\n'
@@ -91,7 +90,7 @@ namespace serialization {
     return cursor == end;
   }
 
-  bool		Serial::isDelimiteur(std::string::iterator& cursor, std::string::iterator) {
+  bool		Serial::isDelimiteur(std::string::const_iterator& cursor, std::string::const_iterator) {
     if (*cursor == ':') {
       ++cursor;
       return true;
@@ -99,7 +98,7 @@ namespace serialization {
     return false;
   }
 
-  bool		Serial::isSeparateur(std::string::iterator& cursor, std::string::iterator) {
+  bool		Serial::isSeparateur(std::string::const_iterator& cursor, std::string::const_iterator) {
     if (*cursor == ',') {
       ++cursor;
       return true;
@@ -111,25 +110,29 @@ namespace serialization {
    * From Json : Instanciate
    */
   namespace serial {
-    std::string			string::makeString(std::string::iterator& cursor, std::string::iterator) {
-      std::string::iterator string_beg;
+    std::string			string::makeString(std::string::const_iterator& cursor, std::string::const_iterator) {
+      std::string::const_iterator string_beg;
 
       ++cursor;
       string_beg = cursor;
       while (*cursor != '"') ++cursor;
-      return std::string(string_beg, cursor);
-      ++cursor;
+      {
+	std::string _retval(string_beg, cursor);
+	++cursor;
+	return _retval;
+      }
     }
 
-    string::			string(std::string::iterator& cursor, std::string::iterator end)
+    string::			string(std::string::const_iterator& cursor, std::string::const_iterator end)
       : _serialized_string(makeString(cursor, end)) {}
 
     string::			string(const std::string& _variable)
       : _serialized_string(_variable) {}
 
-    object::			object(std::string::iterator& cursor, std::string::iterator end) {
+    object::			object(std::string::const_iterator& cursor, std::string::const_iterator end) {
       ++cursor;
       
+      Serial::isBlank(cursor, end);
       while (*cursor != '}') {
 
 	Serial::isBlank(cursor, end);
@@ -151,9 +154,10 @@ namespace serialization {
       ++cursor;
     }
 
-    list::			list(std::string::iterator& cursor, std::string::iterator end) {
+    list::			list(std::string::const_iterator& cursor, std::string::const_iterator end) {
       ++cursor;
 
+      Serial::isBlank(cursor, end);
       while (*cursor != ']') {
 	Serial::isBlank(cursor, end);
 	Serial*		value = Serial::Instanciate(cursor, end);
@@ -168,15 +172,15 @@ namespace serialization {
       ++cursor;
     }
 
-    integer::			integer(std::string::iterator& cursor, std::string::iterator) {
-      std::string::iterator	beg = cursor;
+    integer::			integer(std::string::const_iterator& cursor, std::string::const_iterator) {
+      std::string::const_iterator	beg = cursor;
 
       while (std::isdigit(*cursor)) ++ cursor;
       _serialized_integer = std::stoll(std::string(beg, cursor));
     }
 
-    floating::			floating(std::string::iterator& cursor, std::string::iterator) {
-      std::string::iterator	beg = cursor;
+    floating::			floating(std::string::const_iterator& cursor, std::string::const_iterator) {
+      std::string::const_iterator	beg = cursor;
 
       while (std::isdigit(*cursor)) ++ cursor;
       ++cursor;//skip dot
@@ -184,9 +188,9 @@ namespace serialization {
       _serialized_floating = std::stold(std::string(beg, cursor));
     }
 
-    boolean::			boolean(std::string::iterator& cursor, std::string::iterator end) {
-      std::string::iterator false_test = cursor;
-      std::string::iterator true_test = cursor;
+    boolean::			boolean(std::string::const_iterator& cursor, std::string::const_iterator end) {
+      std::string::const_iterator false_test = cursor;
+      std::string::const_iterator true_test = cursor;
 
       if ((std::size_t)std::distance(cursor, end) > sizeof("false")) {
 	std::advance(false_test, sizeof("false"));
@@ -220,7 +224,7 @@ namespace serialization {
 
       std::for_each(_serialized_object.begin(), _serialized_object.end(), [=, &_stringified]
 		   (std::pair< std::string, Serial* > pair) {
-		      _stringified += std::string(level, '\t') +
+		      _stringified += std::string(level + 1, '\t') +
 			'"' + pair.first + '"'
 			+ " : "
 			+ pair.second->Stringify(level + 1)

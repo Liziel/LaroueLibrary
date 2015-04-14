@@ -78,37 +78,37 @@ namespace ctvty {
      */
     template<typename type>
     auto			GetComponent()
-      -> decltype( GameObject::GetComponent<type>() ) {
+      -> decltype( GameObject().GetComponent<type>() ) {
       return this->gameObject->GetComponent<type>();
     }
     
     template<typename type>
     auto			GetComponentInChildren()
-      -> decltype( GameObject::GetComponentInChildren<type>() ) {
+      -> decltype( GameObject().GetComponentInChildren<type>() ) {
       return this->gameObject->GetComponentInChildren<type>();
     }
 
     template<typename type>
     auto			GetComponentInParent()
-      -> decltype( GameObject::GetComponent<type>() ) {
+      -> decltype( GameObject().GetComponent<type>() ) {
       return this->gameObject->GetComponent<type>();
     }
 
     template<typename type>
     auto			GetComponents()
-      -> decltype( GameObject::GetComponents<type>() ) {
+      -> decltype( GameObject().GetComponents<type>() ) {
       return this->gameObject->GetComponents<type>();
     }
     
     template<typename type>
     auto			GetComponentsInChildren()
-      -> decltype( GameObject::GetComponentsInChildren<type>() ) {
+      -> decltype( GameObject().GetComponentsInChildren<type>() ) {
       return this->gameObject->GetComponentsInChildren<type>();
     }
 
     template<typename type>
     auto			GetComponentsInParent()
-      -> decltype( GameObject::GetComponents<type>() ) {
+      -> decltype( GameObject().GetComponents<type>() ) {
       return this->gameObject->GetComponents<type>();
     }
 
