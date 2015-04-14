@@ -19,7 +19,12 @@ namespace serialization {
     return (_intern);
   }
 
-  Serializable*			Serializable::Instantiate(Archive& archive) {
+  Serializable*			Serializable::Instantiate(const Archive& archive) {
     return getAllocationMap() [archive["type"].as<std::string>()] (archive["object"].as<const Archive>());
-  }  
+  }
+
+  Serializable*			Serializable::Instantiate(const Serial& serial) {
+    const Archive&		archive = serial.as<Archive>();
+    return getAllocationMap() [archive["type"].as<std::string>()] (archive["object"].as<const Archive>());
+  }
 };

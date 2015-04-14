@@ -4,18 +4,10 @@
 #include <string>
 #include <ostream>
 
+# include "serial.hh"
+
 namespace serialization {
-  class Serial;
-  class Archive {
-  private:
-
-  public:
-    const	Serial& operator[](const std::string&) const;
-		Serial& operator[](const std::string&);
-
-  public:
-    std::ostream&	write(std::ostream&);
-  };
+  using Archive = serial::object;
 };
 
 #endif
