@@ -5,14 +5,15 @@ CC		= gcc
 endif
 
 ifeq ($(CXX),)
-CXX		= g++ #may be clang++
+CXX		= g++
 endif
 
 INCLUDES	= -I ./includes
 ###################
 ### CtvTy -> unity conception
 CtvTy		= src/ctvty/gameObject.cpp \
-		src/ctvty/component.cpp
+		src/ctvty/component.cpp\
+		src/ctvty/object.cpp
 
 ### Serial -> Json Serialisation
 Serial		= src/serialization/serializable.cpp \
@@ -22,7 +23,7 @@ Serial		= src/serialization/serializable.cpp \
 Main		= src/start/main.cpp
 
 ###################
-CXXSRC		+= $(Serial) $(CtvTy)
+CXXSRC		+= $(Serial) $(CtvTy) $(Main)
 CSRC		+=
 
 FLAGS		= -Wall -Wextra $(INCLUDES)

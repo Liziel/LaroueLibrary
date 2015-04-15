@@ -12,6 +12,6 @@ namespace ctvty {
     Objects.remove_if([this] (Object* _comp) -> bool {return _comp == this;});
   }
 
-
+  std::list<Object*>		Object::Objects({});
 
 };

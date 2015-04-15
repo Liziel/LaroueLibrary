@@ -6,7 +6,7 @@
 #include <vector>
 #include <list>
 
-#include "ctvty/event.hpp"
+#include "ctvty/event/properties.hpp"
 
 #include "ctvty/object.hpp"
 
@@ -66,15 +66,7 @@ namespace ctvty {
     ~GameObject();
 
 
-    GameObject(const serialization::Archive& __serial)
-      : Object(__serial["name"].as<std::string>()),
-	activation_state(false),
-	parent(nullptr),
-	tag(__serial["tag"].as<std::string>()) {
-      if (__serial.exist("childs"))
-	__serial["childs"] & childs;
-      __serial["components"] & components;
-    }
+    GameObject(const serialization::Archive& __serial);
 
     void	Serialize(serialization::Archive& __serial) override {
       __serial["tag"] & tag;
@@ -93,12 +85,20 @@ namespace ctvty {
 
   public:
     /*
+     * Everytime you want to set a father to a GameObject,
+     * prefer call this setter, than to do it manualy
+     */
+    void					SetParent(GameObject*);
+    void					SetParent(std::nullptr_t);
+
+  public:
+    /*
      * Intern Method allowing faster treatment for events
      * Should ONLY be used by ctvty classes, user won't have to use it
      */
     void					SetEventListening(const std::string& eventName,
 								  bool isListening,
-								  bool isChild = false);
+								  GameObject* child = nullptr);
 
   public:
     /*
@@ -150,7 +150,6 @@ namespace ctvty {
      * Compare Its own Tag with the given tag (simple string == string -.-')
      */
     bool					CompareTag(const std::string& _tag);
-
 
   public:
     /*

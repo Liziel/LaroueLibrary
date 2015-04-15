@@ -11,16 +11,67 @@ namespace ctvty {
 					   const std::string& _tag,
 					   GameObject* _parent,
 					   bool state)
-    : Object(name), activation_state(state), parent(_parent), tag(_tag) {
+    : Object(name), activation_state(state), parent(nullptr), tag(_tag) {
+    SetParent(_parent);
     gameObjects.push_back(this);
-    if (parent == nullptr)
-      fathers.push_back(this);
+  }
+
+  GameObject::			GameObject(const serialization::Archive& __serial)
+      : GameObject(__serial.exist("name") ? __serial["name"].as<std::string>() : "GameObject",
+		   __serial.exist("tag") ? __serial["tag"].as<std::string>() : "undefined") {
+      if (__serial.exist("childs"))
+	__serial["childs"] & childs;
+      for (GameObject* child : childs)
+	child->SetParent(this);
+
+      if (__serial.exist("components"))
+	__serial["components"] & components;
+      for (Component* component : components)
+	component->AttachParent(this);
   }
 
   GameObject::			~GameObject() {
-    parent->childs.remove_if([this] (GameObject* _comp) -> bool {return _comp == this;});
+    SetParent(nullptr);
     gameObjects.remove_if([this] (GameObject* _comp) -> bool {return _comp == this;});
   }
+
+  /*
+   * Set the parent and refresh parents::events and refresh parents list
+   */
+  void				GameObject::SetParent(GameObject* _parent) {
+    if (_parent == parent)  return ;
+    if (parent != nullptr)
+      fathers.remove_if( [ = ](GameObject* child) { return child == this; } );
+    SetParent(nullptr);
+    if (_parent == nullptr) 
+      return ;
+    parent->childs.push_back(this);
+    std::for_each(events_map.begin(), events_map.end(), [&] (std::pair<std::string, bool> pair) {
+	if (pair.second)
+	  parent->SetEventListening(pair.first, true, this);
+      });
+    std::for_each(childs_events_map.begin(), childs_events_map.end(), [&] (std::pair<std::string, bool> pair) {
+	if (pair.second)
+	  parent->SetEventListening(pair.first, true, this);
+      });
+    parent = _parent;
+  }
+
+  void				GameObject::SetParent(std::nullptr_t) {
+    if (parent == nullptr)
+      return ;
+    parent->childs.remove_if( [ = ](GameObject* child) { return child == this; } );
+    std::for_each(events_map.begin(), events_map.end(), [&] (std::pair<std::string, bool> pair) {
+	if (pair.second)
+	  parent->SetEventListening(pair.first, false, this);
+      });
+    std::for_each(childs_events_map.begin(), childs_events_map.end(), [&] (std::pair<std::string, bool> pair) {
+	if (pair.second)
+	  parent->SetEventListening(pair.first, false, this);
+      });
+    parent = nullptr;
+  }
+
 
   /*
    * Herited From ctvty::Object
@@ -38,6 +89,7 @@ namespace ctvty {
   void				GameObject::intern_Destroy() {
     Object::intern_Destroy();
 
+    SetParent(nullptr);
     for (GameObject* child : childs)
       child->intern_Destroy();
     for (Component* component : components)
@@ -50,17 +102,34 @@ namespace ctvty {
    * Component Management
    */
   void				GameObject::SetEventListening(const std::string& eventName,
-						  bool isListening,
-						  bool isChild) {
-    if (isChild)
-      childs_events_map[eventName] = isListening;
-    else
-      events_map[eventName] = isListening;
+							      bool isListening,
+							      GameObject* child) {
+    if (child == nullptr) {
+      if (events_map[eventName] == isListening)
+	return ;
+      events_map[eventName] = isListening;      
+    } else {
+      if (isListening == childs_events_map[eventName])
+	return ;
 
-    if (isListening == false && events_map[eventName] == true)
-      return ;
-    else if (parent != nullptr && isListening != events_map[eventName])
-      parent->SetEventListening(eventName, isListening, true);
+      if (isListening)
+	childs_events_map[eventName] = true;
+      else
+	for (GameObject* _child : childs) {
+	  bool child_implement = _child->childs_events_map[eventName];
+	  
+	  if (_child == child)
+	    return ;
+	  if (child_implement == true) {
+	    childs_events_map[eventName] = true;
+	    return ;
+	  } else
+	    childs_events_map[eventName] = false;
+	}
+    }
+
+    if (parent != nullptr && isListening == true && events_map[eventName] == false)
+      parent->SetEventListening(eventName, isListening, this);
   }
 
   void				GameObject::BroadcastMessage(const std::string& methodName,
@@ -138,4 +207,6 @@ namespace ctvty {
     return (fathers);
   }
 
+  std::list<GameObject*>	GameObject::gameObjects({});
+  std::list<GameObject*>	GameObject::fathers({});
 };

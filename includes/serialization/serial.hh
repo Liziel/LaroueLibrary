@@ -126,6 +126,11 @@ namespace serialization {
       static bool				isObject(std::string::const_iterator& cursor, std::string::const_iterator end);
 
     public:
+      bool					exist(const std::string& _index) const {
+	return _serialized_object.find(_index) != _serialized_object.end();
+      }
+
+    public:
       Serial&					operator[] (const std::string& _index);
       const Serial&				operator[] (const std::string& _index) const;
 

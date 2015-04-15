@@ -15,3 +15,8 @@
 #unignore makefile
 !Makefile
 !*/Makefile
+
+#unignore Json files
+!*.json
+
+#unignore model files and anim

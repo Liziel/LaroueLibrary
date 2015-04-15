@@ -16,9 +16,6 @@ namespace ctvty {
       template<typename ... _values>
       values PackValues(_values...);
     };
-
-    class UpdateDispatcher;
-    class DelayedScript;
   };
 };
 

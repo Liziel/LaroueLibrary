@@ -4,7 +4,7 @@
 #include <map>
 #include <string>
 
-#include "ctvty/event.hpp"
+#include "ctvty/event/properties.hpp"
 #include "ctvty/object.hpp"
 
 namespace ctvty {
@@ -28,6 +28,9 @@ namespace ctvty {
 	      const std::string& name);
     virtual ~Component();
 
+  public:
+    void			AttachParent(GameObject*);
+
   protected:
     /*
      * allow a component to register the given listener with the given name
@@ -45,6 +48,8 @@ namespace ctvty {
 	.emplace(name,
 		 event::receiver::create(dynamic_cast<child_class*>(this),
 					 std::function<void ( child_class*, listener_arguments... )>(listener)));
+      if (gameObject)
+	gameObject->SetEventListening(name, true);
     }
 
   public:

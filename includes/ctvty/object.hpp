@@ -40,7 +40,8 @@ namespace ctvty {
      * Destroy will delete the given object, in the given time (or immediatly if no time is given)
      *    ALWAYS call Destroy and never delete because Destroy will unlink all game part
      */
-    static void			Destroy(Object* del, float time = 0.f);
+    static void			Destroy(Object* del);
+    static void			Destroy(Object* del, float delay);
 
   public:
     /*

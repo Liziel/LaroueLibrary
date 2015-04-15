@@ -7,7 +7,6 @@ namespace ctvty {
    */
   Component::		Component(GameObject* parent, const std::string& name)
     : Object(name), gameObject(parent), transform(nullptr /*parent->GetComponent<Transform>()*/) {
-    RegisterListener("BroadcastMessage", &Component::BroadcastMessage);
   }
 
   Component::		~Component() {
@@ -42,6 +41,22 @@ namespace ctvty {
   }
 
   /*
-   * 
+   *  Event Listener
    */
+  void			Component::AttachParent(GameObject* _gameObject) {
+    gameObject = _gameObject;
+    std::for_each(registeredListener.begin(), registeredListener.end(),
+		  [ & ] (std::pair<std::string, event::receiver*> pair) {
+		    gameObject->SetEventListening(pair.first, true);
+		  });
+  }
+
+  bool			Component::DoImplement(const std::string& methodeName) {
+    return registeredListener.find(methodeName) != registeredListener.end();
+  }
+
+  event::receiver&	Component::operator [] (const std::string& methodeName) {
+    return *(registeredListener[methodeName]);
+  }
+
 };
