@@ -2,6 +2,7 @@
 #include "serialization/archive.hh"
 #include "serialization/serial.hh"
 
+#include <iostream>
 
 namespace serialization {
 
@@ -20,11 +21,11 @@ namespace serialization {
   }
 
   Serializable*			Serializable::Instantiate(const Archive& archive) {
-    return getAllocationMap() [archive["type"].as<std::string>()] (archive["object"].as<const Archive>());
+    return getAllocationMap() [archive["type"].as<std::string>()] (archive["object"].as<const Archive&>());
   }
 
   Serializable*			Serializable::Instantiate(const Serial& serial) {
-    const Archive&		archive = serial.as<Archive>();
-    return getAllocationMap() [archive["type"].as<std::string>()] (archive["object"].as<const Archive>());
+    const Archive&		archive = serial.as<const Archive&>();
+    return getAllocationMap() [archive["type"].as<std::string>()] (archive["object"].as<const Archive&>());
   }
 };

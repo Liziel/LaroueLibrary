@@ -12,10 +12,14 @@ namespace serialization {
   Serial::	Serial(serial::interface* _interface)
     : serial(_interface) {}
 
+  Serial::	~Serial() {
+    delete serial;
+  }
+
   /*
    * From Json : Parse
    */
-  Serial*	Serial::Instanciate(std::string::const_iterator& cursor, std::string::const_iterator end) {
+  Serial*	Serial::Instantiate(std::string::const_iterator& cursor, std::string::const_iterator end) {
     if (Serial::isBlank(cursor, end))
       return nullptr;
 
@@ -107,7 +111,7 @@ namespace serialization {
   }
 
   /*
-   * From Json : Instanciate
+   * From Json : Instantiate
    */
   namespace serial {
     std::string			string::makeString(std::string::const_iterator& cursor, std::string::const_iterator) {
@@ -142,7 +146,7 @@ namespace serialization {
 	Serial::isDelimiteur(cursor, end);
 
 	Serial::isBlank(cursor, end);
-	Serial*		value = Serial::Instanciate(cursor, end);
+	Serial*		value = Serial::Instantiate(cursor, end);
 	Serial::isBlank(cursor, end);
 
 	_serialized_object.emplace(key, value);
@@ -160,7 +164,7 @@ namespace serialization {
       Serial::isBlank(cursor, end);
       while (*cursor != ']') {
 	Serial::isBlank(cursor, end);
-	Serial*		value = Serial::Instanciate(cursor, end);
+	Serial*		value = Serial::Instantiate(cursor, end);
 	Serial::isBlank(cursor, end);
 
 	_serialized_list.push_back(value);
@@ -208,6 +212,26 @@ namespace serialization {
 	}
       }
     }
+  };
+
+  /*
+   * Dtor
+   */
+  namespace serial {
+    string::	~string() {}
+
+    object::	object() {}
+    object::	~object() {
+      for (std::pair< std::string, Serial* > pair : _serialized_object)
+	delete pair.second;
+    }
+
+    list::	~list() {
+      for (Serial* serial : _serialized_list)
+	delete serial;
+    }
+
+
   };
 
   /*
@@ -271,7 +295,7 @@ namespace serialization {
   /*
    * serial::object definitions
    */
-  Serializable*	SerializableInstanciate(serial::object& serial) {
+  Serializable*	SerializableInstantiate(serial::object& serial) {
     return Serializable::Instantiate(serial);
   }
   namespace serial {

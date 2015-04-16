@@ -13,7 +13,9 @@ INCLUDES	= -I ./includes
 ### CtvTy -> unity conception
 CtvTy		= src/ctvty/gameObject.cpp \
 		src/ctvty/component.cpp\
-		src/ctvty/object.cpp
+		src/ctvty/object.cpp\
+		src/ctvty/event/clock.cpp\
+		src/ctvty/event/delayed.cpp
 
 ### Serial -> Json Serialisation
 Serial		= src/serialization/serializable.cpp \

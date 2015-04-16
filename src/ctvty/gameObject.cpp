@@ -1,5 +1,8 @@
+#include <iostream>
+
 #include "ctvty/gameObject.hpp"
 #include "ctvty/component.hpp"
+
 namespace ctvty {
 
   REGISTER_FOR_SERIALIZATION(GameObject);
@@ -19,19 +22,29 @@ namespace ctvty {
   GameObject::			GameObject(const serialization::Archive& __serial)
       : GameObject(__serial.exist("name") ? __serial["name"].as<std::string>() : "GameObject",
 		   __serial.exist("tag") ? __serial["tag"].as<std::string>() : "undefined") {
-      if (__serial.exist("childs"))
-	__serial["childs"] & childs;
-      for (GameObject* child : childs)
-	child->SetParent(this);
+    std::list<GameObject*>	_childs;
+    std::list<Component*>	_components;
 
-      if (__serial.exist("components"))
-	__serial["components"] & components;
-      for (Component* component : components)
-	component->AttachParent(this);
+    if (__serial.exist("childs"))
+      __serial["childs"] & _childs;
+    for (GameObject* child : _childs)
+      child->SetParent(this);
+
+    if (__serial.exist("components"))
+      __serial["components"] & _components;
+    for (Component* component : _components)
+      component->AttachParent(this);
+  }
+
+  void				GameObject::Serialize(serialization::Archive& __serial_instance) {
+    SERIALIZE_OBJECT_AS(ctvty::GameObject, __serial_instance);
+    __serial["tag"] & tag;
+    __serial["name"] & name;
+    __serial["childs"] & childs;
+    __serial["components"] & components;
   }
 
   GameObject::			~GameObject() {
-    SetParent(nullptr);
     gameObjects.remove_if([this] (GameObject* _comp) -> bool {return _comp == this;});
   }
 
@@ -45,6 +58,7 @@ namespace ctvty {
     SetParent(nullptr);
     if (_parent == nullptr) 
       return ;
+    parent = _parent;
     parent->childs.push_back(this);
     std::for_each(events_map.begin(), events_map.end(), [&] (std::pair<std::string, bool> pair) {
 	if (pair.second)
@@ -54,7 +68,6 @@ namespace ctvty {
 	if (pair.second)
 	  parent->SetEventListening(pair.first, true, this);
       });
-    parent = _parent;
   }
 
   void				GameObject::SetParent(std::nullptr_t) {
@@ -70,6 +83,10 @@ namespace ctvty {
 	  parent->SetEventListening(pair.first, false, this);
       });
     parent = nullptr;
+  }
+
+  void				GameObject::AddChild(GameObject* child) {
+    child->SetParent(this);
   }
 
 
@@ -90,11 +107,13 @@ namespace ctvty {
     Object::intern_Destroy();
 
     SetParent(nullptr);
-    for (GameObject* child : childs)
-      child->intern_Destroy();
-    for (Component* component : components)
-      component->intern_Destroy();
-    delete this;
+    std::cout << childs.size() << std::endl;
+    for (GameObject*& child : std::list<GameObject*>(childs)) {
+      Object::Destroy(child); child = nullptr;
+    } childs.clear();
+    for (Component* component : std::list<Component*>(components)) {
+      Object::Destroy(component); component = nullptr;
+    } components.clear();
   }
 
 

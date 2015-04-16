@@ -58,8 +58,23 @@ namespace serialization {
     (void)serialization::Registration< __type__ >::_register;		\
   }
 
+# define SERIALIZE_OBJECT_AS(__type__, __serial__)			\
+  __serial__["type"] & std::string( #__type__ );			\
+  serialization::Archive* __new_serial =				\
+    new serialization::serial::object;					\
+  serialization::Archive& __serial = *__new_serial;			\
+  __serial__.emplace("object",						\
+		     new serialization::Serial( __new_serial ));	\
+
+
 # define EASILY_SERIALIZABLE(__class__, __initializer_list__,  __serialization__) \
-  void	Serialize(serialization::Archive& __serial) __serialization__;	\
-  __class__(const serialization::Archive& __serial) __initializer_list__ __serialization__;	\
+  void	Serialize(serialization::Archive& __serial_instance) {		\
+    SERIALIZE_OBJECT_AS( __class__, __serial_instance);			\
+    __serialization__;							\
+  };									\
+  __class__(const serialization::Archive& __serial)			\
+  __initializer_list__ {						\
+    __serialization__;							\
+  };									\
 
 #endif

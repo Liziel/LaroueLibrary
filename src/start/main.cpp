@@ -1,89 +1,27 @@
 #include <iostream>
 #include "serialization/serializable.hh"
-
-struct test : public serialization::Serializable{
-  /*
-   * some member and default ctor for test
-   */
-  int		i1;
-  int		i2;
-
-  float		f1;
-  float		f2;
-
-  std::list<int>	l1;
-  std::list<test*>	l2;
-  test() : i1(1), i2(2), f1(1.1), f2(2.2) { }
-
-  void	log_self() {
-    std::cout
-      << i1 << " "
-      << i2 << " "
-      << f1 << " "
-      << f2 << " "
-      << std::endl;
-
-    std::cout << "[ ";
-    std::for_each(l1.begin(), l1.end(), [] (int i) { std::cout << i << " "; });
-    std::cout << "]\n";
-
-    std::cout << "[ ";
-    std::for_each(l2.begin(), l2.end(), [] (test* i) { i->log_self(); std::cout << "\n"; });
-    std::cout << "]\n";
-  }
-
-  /*
-   * stringifiable part
-   */
-  EASILY_SERIALIZABLE(test
-		      ,
-		      , {
-      __serial["i1"] & i1;
-      __serial["i2"] & i2;
-
-      __serial["f1"] & f1;
-      __serial["f2"] & f2;
-
-      __serial["l1"] & l1;
-      __serial["l2"] & l2;
-    });
-};
-REGISTER_FOR_SERIALIZATION(test);//dans ton cpp
+#include "ctvty/gameObject.hpp"
+#include "ctvty/event/clock.hh"
 
 int main() {
-  test* t = new test;
+  ctvty::GameObject	*Army = new ctvty::GameObject("Army", "army", nullptr, true);
+  serialization::Serial	json;
 
-  {
-    serialization::Serial	json;
+  Army->AddChild(new ctvty::GameObject("Soldier1", "soldier", nullptr, true));
+  Army->AddChild(new ctvty::GameObject("Soldier2", "soldier", nullptr, true));
+  Army->AddChild(new ctvty::GameObject("Soldier3", "soldier", nullptr, true));
+  Army->AddChild(new ctvty::GameObject("Soldier4", "soldier", nullptr, true));
 
-    json & t;
-    std::cout << "no modification:\n" << json.Stringify() << std::endl;
-  }
+  json & Army;
 
-  t->i1 += 11;
-  t->i2 += 22;
+  std::cout << json.Stringify() << std::endl;
 
-  t->f1 += 1.01;
-  t->f2 += 2.02;
+  ctvty::Object::Destroy( Army );
 
-  t->l1.emplace_back(5);
-  t->l1.emplace_back(5);
-  t->l1.emplace_back(5);
-  t->l1.emplace_back(5);
-  t->l1.emplace_back(5);
-  t->l2.emplace_back(new test);
+  ctvty::Object::Destroy( (ctvty::Object*)serialization::Serializable::Instantiate( json ) );
 
-  {
-    serialization::Serial	json;
-    serialization::Serial*	jsonFile;
+  new ctvty::event::DelayedAction(2.5f, [](){std::cout << "yeah" << std::endl;});
+  new ctvty::event::DelayedAction(5.f, [](){exit(0);});
 
-    if ((jsonFile = serialization::Serial::InstanciateFromFile("save.json")) != nullptr)
-      std::cout << jsonFile->Stringify() << std::endl;
-
-    json & t;
-    std::cout << "with modification:\n" << json.Stringify() << std::endl;
-
-    std::cout << std::endl;
-    dynamic_cast<test*>(serialization::Serializable::Instantiate( *jsonFile ))->log_self();
-  }
+  ctvty::event::Clock::GetClock().Start();
 }

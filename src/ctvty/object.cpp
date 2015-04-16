@@ -14,4 +14,11 @@ namespace ctvty {
 
   std::list<Object*>		Object::Objects({});
 
+  /*
+   * Destroy
+   */
+  void				Object::Destroy(Object* del) {
+    del->intern_Destroy();
+    delete del;
+  }
 };

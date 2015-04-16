@@ -68,12 +68,7 @@ namespace ctvty {
 
     GameObject(const serialization::Archive& __serial);
 
-    void	Serialize(serialization::Archive& __serial) override {
-      __serial["tag"] & tag;
-      __serial["name"] & name;
-      __serial["childs"] & childs;
-      __serial["components"] & components;
-    }
+    void	Serialize(serialization::Archive& __serial) override;
 
   public:
     /*
@@ -90,6 +85,7 @@ namespace ctvty {
      */
     void					SetParent(GameObject*);
     void					SetParent(std::nullptr_t);
+    void					AddChild(GameObject*);
 
   public:
     /*
