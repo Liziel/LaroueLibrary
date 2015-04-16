@@ -29,6 +29,10 @@ namespace ctvty {
       delayedActions.remove_if([action] (DelayedAction* comp) { return comp == action; });
     }
 
+    void				Clock::End() {
+      end = true;
+    }
+
     void				Clock::Start() {
       std::chrono::time_point<std::chrono::system_clock>	fixed_beg, fixed_loop;
 

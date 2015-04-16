@@ -21,11 +21,15 @@ CtvTy		= src/ctvty/gameObject.cpp \
 Serial		= src/serialization/serializable.cpp \
 		src/serialization/serial.cpp
 
+### FileSystem -> Oop FieSystem
+FileSystem	= src/filesystem/file.cpp \
+		src/filesystem/directory.cpp
+
 ### Main -> where we start the ctvty application
 Main		= src/start/main.cpp
 
 ###################
-CXXSRC		+= $(Serial) $(CtvTy) $(Main)
+CXXSRC		+= $(Serial) $(CtvTy) $(Main) $(FileSystem)
 CSRC		+=
 
 FLAGS		= -Wall -Wextra $(INCLUDES)
@@ -37,10 +41,20 @@ CXXOBJ		= $(CXXSRC:.cpp=.o)
 COBJ		= $(CSRC:.c=.o)
 OBJ		= $(CXXOBJ) $(COBJ)
 
+ifneq ($(CXXOBJ),)
+ifeq 	($(LINKER),)
+LINKER	= $(CXX)
+endif
+else
+ifeq	($(LINKER),)
+LINKER	= $(CC)
+endif
+endif
+
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CXX) -o $(NAME) $(OBJ) $(LDFLAGS)
+	$(LINKER) -o $(NAME) $(OBJ) $(LDFLAGS)
 
 
 clean:

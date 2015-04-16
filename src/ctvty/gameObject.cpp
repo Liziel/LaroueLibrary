@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "ctvty/gameObject.hpp"
 #include "ctvty/component.hpp"
 
@@ -107,7 +105,6 @@ namespace ctvty {
     Object::intern_Destroy();
 
     SetParent(nullptr);
-    std::cout << childs.size() << std::endl;
     for (GameObject*& child : std::list<GameObject*>(childs)) {
       Object::Destroy(child); child = nullptr;
     } childs.clear();
