@@ -26,10 +26,9 @@ namespace ctvty {
     private:
       std::list<DelayedAction*>				delayedActions;
 
-    public:
-      /*
-       * DO NOT FUCKING CALL THIS
-       */
+    private:
+      /* Only the Delayed Action will be allowed to call this methods */
+      friend DelayedAction;
       void						AddDelayedAction(DelayedAction*);
       void						RemoveDelayedAction(DelayedAction*);
 

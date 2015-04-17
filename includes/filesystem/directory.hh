@@ -2,14 +2,14 @@
 # define Directory_hh__
 
 # include <string>
-# include <list>
+# include <set>
 
 # include "file.hh"
 
 namespace filesystem {
-  class Directory {
+  class Directory : public File {
   public:
-    using iterator = std::list<File>::iterator;
+    using iterator = std::set<File>::iterator;
 
   public:
     Directory(const std::string&);
@@ -36,22 +36,17 @@ namespace filesystem {
 
   public:
     /*
-     * getPath() -> return the real path to the file
-     */
-    std::string		GetPath() const;
-    std::string		GetName() const;
-
-  public:
-    /*
      * allow to iterate over this directory file list
      */
     iterator		begin();
     iterator		end();
 
+  public:
+    void		Go() const;
+
   private:
-    bool				valid;
-    File				path;
-    std::list<File>			files;
+    bool					valid;
+    std::set<File, std::less<std::string> >	files;
   };
 };
 

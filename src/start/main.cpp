@@ -4,16 +4,20 @@
 #include "ctvty/gameObject.hpp"
 #include "ctvty/event/clock.hh"
 
+void	recursiveList(filesystem::Directory& directory) {
+  std::list<filesystem::Directory>	subList;
 
-void	recursiveList(const std::string& _directory) {
-  filesystem::Directory	directory(_directory);
-
-  if (directory)
+  if (directory) {
+    std::cout << directory.GetPath() << ":" << std::endl;
     for (auto file : directory) {
-      std::cout << "path: \"" << file.GetPath() << "\", name: " << file.GetName() << std::endl;
+      std::cout << file.GetName() << " ";
       if (file.GetName() != "." && file.GetName() != "..")
-	recursiveList(file.GetPath());
+	subList.emplace_back(directory.GetPath() + '/' + file.GetName());
     }
+    std::cout << std::endl << std::endl;
+    std::for_each(subList.begin(), subList.end(),
+		  &recursiveList);
+  }
 }
 
 int main() {
@@ -29,7 +33,10 @@ int main() {
 
   std::cout << json.Stringify() << std::endl;
 
-  recursiveList(".");
+  {
+    filesystem::Directory root(".");
+    recursiveList(root);
+  }
 
   new ctvty::event::DelayedAction(2.5f, [](){std::cout << "yeah" << std::endl;});
   new ctvty::event::DelayedAction(5.f, [](){ctvty::event::Clock::GetClock().End();});

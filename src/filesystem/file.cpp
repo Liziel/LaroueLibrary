@@ -38,7 +38,9 @@ namespace filesystem {
   File::operator	bool() const{
     return (valid);
   }
-
+  File::operator	std::string () const {
+    return (name);
+  }
 
   /*
    * Getters

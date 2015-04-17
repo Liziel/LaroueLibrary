@@ -34,6 +34,7 @@ namespace filesystem {
      */
     std::string		GetPath() const;
     std::string		GetName() const;
+    operator		std::string() const;
   };
 };
 
