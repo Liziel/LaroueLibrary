@@ -16,6 +16,9 @@
 !Makefile
 !*/Makefile
 
+#unignore Assets
+!assets/
+
 #unignore Json files
 !*.json
 

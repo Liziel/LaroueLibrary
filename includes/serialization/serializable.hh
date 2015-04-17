@@ -33,6 +33,9 @@ namespace serialization {
 
   public:
     virtual void			Serialize(Archive&) = 0;
+
+  public:
+    virtual ~Serializable() {}
   };
 
   template<typename _type>

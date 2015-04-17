@@ -8,6 +8,7 @@ namespace filesystem {
   class File {
   private:
     bool		valid;
+    std::string		relativepath;
     std::string		_realpath;
     std::string		name;
 
@@ -27,6 +28,10 @@ namespace filesystem {
      *	   std::cout << "toto exist" << std::endl;
      */
     operator bool	() const;
+    bool		IsDirectory() const;
+
+  public:
+    void		Create();
 
   public:
     /*

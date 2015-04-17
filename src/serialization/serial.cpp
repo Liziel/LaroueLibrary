@@ -238,11 +238,11 @@ namespace serialization {
    * Stringify
    */
   namespace serial {
-    std::string		string::Stringify(int) {
+    std::string		string::Stringify(int) const {
       return ('"' + _serialized_string + '"');
     }
 
-    std::string		object::Stringify(int level) {
+    std::string		object::Stringify(int level) const {
       std::string	_stringified("{\n");
       std::size_t	i = 0;
 
@@ -258,7 +258,7 @@ namespace serialization {
       return (_stringified);
     }
 
-    std::string		list::Stringify(int level) {
+    std::string		list::Stringify(int level) const {
       std::string	_stringified("[\n");
       std::size_t	i = 0;
 
@@ -272,19 +272,19 @@ namespace serialization {
       return (_stringified);
     }
 
-    std::string		integer::Stringify(int) {
+    std::string		integer::Stringify(int) const {
       std::stringstream	ss("");
       ss << _serialized_integer;
       return (ss.str());
     }
 
-    std::string		floating::Stringify(int) {
+    std::string		floating::Stringify(int) const {
       std::stringstream	ss("");
       ss << _serialized_floating;
       return (ss.str());
     }
 
-    std::string		boolean::Stringify(int) {
+    std::string		boolean::Stringify(int) const {
       std::stringstream	ss("");
       ss << std::boolalpha << _serialized_boolean;
       return (ss.str());

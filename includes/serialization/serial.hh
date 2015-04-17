@@ -25,7 +25,7 @@ namespace serialization {
   namespace serial {
     class interface {
     public:
-      virtual std::string	Stringify(int level = 0) = 0;
+      virtual std::string	Stringify(int level = 0) const = 0;
       virtual ~interface()	{}
     };
     class string;
@@ -77,7 +77,7 @@ namespace serialization {
     static bool		isSeparateur(std::string::const_iterator& cursor, std::string::const_iterator end);
 
   public:
-    std::string		Stringify(int level = 0) { return serial->Stringify(level); }
+    std::string		Stringify(int level = 0) const { return serial->Stringify(level); }
 
   public:
     Serial(serial::interface* = nullptr);
@@ -107,7 +107,7 @@ namespace serialization {
   namespace serial {
     class string : public interface {
     public:
-      std::string				Stringify(int level = 0);
+      std::string				Stringify(int level = 0) const;
 
     private:
       std::string				_serialized_string;
@@ -127,7 +127,7 @@ namespace serialization {
 
     class object : public interface {
     public:
-      std::string				Stringify(int level = 0);
+      std::string				Stringify(int level = 0) const;
 
     private:
       std::map< std::string, Serial* >		_serialized_object;
@@ -164,7 +164,7 @@ namespace serialization {
 
     class list : public interface {
     public:
-      std::string				Stringify(int level = 0);
+      std::string				Stringify(int level = 0) const;
       template<typename iterator>
       void					Fill(iterator begin, iterator end);
 
@@ -191,7 +191,7 @@ namespace serialization {
 
     class integer : public interface {
     public:
-      std::string				Stringify(int level = 0);
+      std::string				Stringify(int level = 0) const;
       template<typename _integer_>
       void					Fill(_integer_&);
 
@@ -212,7 +212,7 @@ namespace serialization {
 
     class floating : public interface {
     public:
-      std::string				Stringify(int level = 0);
+      std::string				Stringify(int level = 0) const;
       template<typename floating>
       void					Fill(floating&);
 
@@ -233,7 +233,7 @@ namespace serialization {
 
     class boolean : public interface {
     public:
-      std::string				Stringify(int level = 0);
+      std::string				Stringify(int level = 0) const;
       void					Fill(bool&);
 
     private:

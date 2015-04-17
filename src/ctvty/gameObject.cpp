@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "ctvty/gameObject.hpp"
 #include "ctvty/component.hpp"
 
@@ -13,6 +15,7 @@ namespace ctvty {
 					   GameObject* _parent,
 					   bool state)
     : Object(name), activation_state(state), parent(nullptr), tag(_tag) {
+    std::cout << "i am alive" << std::endl;
     SetParent(_parent);
     gameObjects.push_back(this);
   }
@@ -43,6 +46,7 @@ namespace ctvty {
   }
 
   GameObject::			~GameObject() {
+    std::cout << "i am dead" << std::endl;
     gameObjects.remove_if([this] (GameObject* _comp) -> bool {return _comp == this;});
   }
 

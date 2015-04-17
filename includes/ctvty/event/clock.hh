@@ -34,6 +34,7 @@ namespace ctvty {
 
     private:
       Clock();
+
     public:
       static Clock&					GetClock();
 

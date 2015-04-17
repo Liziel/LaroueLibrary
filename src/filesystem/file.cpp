@@ -1,5 +1,9 @@
-#include <cstdlib>
 #include <regex>
+
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <cstdlib>
+
 #include "filesystem/file.hh"
 
 namespace filesystem {
@@ -8,7 +12,7 @@ namespace filesystem {
    *Ctor & Dtor
    */
   File::File(const std::string& path)
-    : _realpath("") {
+    : relativepath(path), _realpath("") {
     char		__realpath[256];
 
     if (realpath(path.c_str(), __realpath) != nullptr) {
@@ -31,7 +35,20 @@ namespace filesystem {
 
   File::~File() {}
 
-  
+  /*
+   *Create The Said File
+   */
+  void			File::Create() {
+    char		__realpath[256];
+
+    if (*this)
+      return ;
+    std::fclose(std::fopen(relativepath.c_str(), "w+"));
+    realpath(relativepath.c_str(), __realpath);
+    valid = true;
+    _realpath = __realpath;
+  }
+
   /*
    * boolean operator
    */
@@ -45,6 +62,13 @@ namespace filesystem {
   /*
    * Getters
    */
+  bool			File::IsDirectory() const {
+    struct stat info;
+    if (!*this)
+      return (false);
+    stat( _realpath.c_str(), &info );
+    return info.st_mode & S_IFDIR;
+  }
   std::string		File::GetPath() const{
     return _realpath;
   }

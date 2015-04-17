@@ -11,11 +11,16 @@ endif
 INCLUDES	= -I ./includes
 ###################
 ### CtvTy -> unity conception
+CtvTyEvent	=src/ctvty/event/clock.cpp\
+		src/ctvty/event/delayed.cpp
+
+CtvTyAssets	=src/ctvty/assets/assets.cpp\
+		src/ctvty/assets/asset.cpp
+
 CtvTy		= src/ctvty/gameObject.cpp \
 		src/ctvty/component.cpp\
 		src/ctvty/object.cpp\
-		src/ctvty/event/clock.cpp\
-		src/ctvty/event/delayed.cpp
+		$(CtvTyEvent) $(CtvTyAssets)
 
 ### Serial -> Json Serialisation
 Serial		= src/serialization/serializable.cpp \
