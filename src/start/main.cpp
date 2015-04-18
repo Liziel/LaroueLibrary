@@ -71,7 +71,7 @@ int main() {
       save_assets.GetAsset("Army.json").Save(Army);
     }
 
-  if (1)
+  if (0)
     {
       std::cout << "some copy are made" << std::endl;
       std::shared_ptr<ctvty::GameObject>	ArmyCopy1 = save_assets.GetAsset("Army.json").LoadAs<ctvty::GameObject>();

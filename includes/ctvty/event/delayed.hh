@@ -15,12 +15,40 @@ namespace ctvty {
 
       bool			do_repeat;
 
+    private:
+      bool			has_finished;
+
     public:
-      DelayedAction(float delay, std::function<void()> callback, float repeat = 0);
+      DelayedAction(std::function<void()> callback, float delay, float repeat = 0);
       ~DelayedAction();
 
     public:
       void			Refresh();
+
+    public:
+      bool			HasFinished();
+    };
+
+    template<typename container>
+    class DelayedActionContainer {
+    private:
+      container&	_container;
+      DelayedAction*	_action;
+
+    public:
+      template<typename ... delayed_parameters>
+      DelayedActionContainer(container& _c, std::function<void()> callback, delayed_parameters ... p)
+	: _container(_c), _action(new DelayedAction ([this, callback] () {
+	    callback(); delete this;
+	  }, p...)) {
+	
+      }
+
+      ~DelayedActionContainer() {
+	if (!_action->HasFinished())
+	  delete _action;
+	_container.remove_if([this] (DelayedActionContainer* oth) { return oth == this; });
+      }
     };
   };
 };

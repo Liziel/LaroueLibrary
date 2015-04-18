@@ -16,11 +16,11 @@ namespace ctvty {
   private:
     std::string					tag;
 
-  private:
+  protected:
     GameObject*					gameObject;
     Transform*					transform;
 
-  private:
+  protected:
     std::map<std::string, event::receiver*>	registeredListener;
 
   public:
@@ -123,7 +123,7 @@ namespace ctvty {
      * Event listeners methodes,
      * Should only be used in intern
      */
-    bool			DoImplement(const std::string&);
+    virtual bool		DoImplement(const std::string&);
 
     event::receiver&		operator [] (const std::string&);
   };

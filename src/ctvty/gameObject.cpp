@@ -127,7 +127,11 @@ namespace ctvty {
     if (child == nullptr) {
       if (events_map[eventName] == isListening)
 	return ;
-      events_map[eventName] = isListening;      
+      if (isListening != true)
+	for (Component* component : components)
+	  if (component->DoImplement(eventName))
+	    return ;
+      events_map[eventName] = isListening;	
     } else {
       if (isListening == childs_events_map[eventName])
 	return ;

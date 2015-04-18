@@ -24,7 +24,7 @@ namespace ctvty {
   }
 
   void				Object::Destroy(Object* del, float delay) {
-    new event::DelayedAction(delay, [del] () { del->intern_Destroy(); delete del; });
+    new event::DelayedAction([del] () -> void { del->intern_Destroy(); delete del; }, delay);
     del->intern_Destroy();
     delete del;
   }
