@@ -15,7 +15,7 @@
 									\
   void attach_to_event ## __event__ ( ... )				\
   { /* nop */ }								\
-
+  
 
 # define ATTACH_THIS_TO(__event__)					\
   attach_to_event ## __event__ <child_class*>(dynamic_cast<child_class*>(this))	\
