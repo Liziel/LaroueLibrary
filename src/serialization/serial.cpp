@@ -35,6 +35,8 @@ namespace serialization {
       return (new Serial(new serial::floating(cursor, end)));
     if (serial::integer::isInteger(cursor, end))
       return (new Serial(new serial::integer(cursor, end)));
+    if (serial::function::isFunction(cursor, end))
+      return (new Serial(new serial::function(cursor, end)));
     return nullptr;
   }
 
@@ -64,6 +66,15 @@ namespace serialization {
 
       if (*c == '-') ++ c;
       return std::isdigit(*c);
+    }
+
+    bool	function::isFunction(std::string::const_iterator& cursor, std::string::const_iterator end) {
+      std::string::const_iterator c = cursor;
+
+      while (c != end && *c != '(') ++c;
+      if (c == end)
+	return false;
+      return (_saved_functions.find(std::string(cursor, c)) != _saved_functions.end());
     }
 
     bool	boolean::isBoolean(std::string::const_iterator& cursor, std::string::const_iterator end) {
@@ -176,6 +187,23 @@ namespace serialization {
       ++cursor;
     }
 
+    function::			function(std::string::const_iterator& cursor, std::string::const_iterator end)
+      : _clean(nullptr) {
+      std::string::const_iterator	beg = cursor;
+
+      
+      Serial::isBlank(cursor, end);
+      while (std::isalnum(*cursor)) ++cursor;
+      _function = _saved_functions.at(_function_name = std::string(beg, cursor));
+      Serial::isBlank(cursor, end);
+      ++cursor;
+      Serial::isBlank(cursor, end);
+      _parameter = Serial::Instantiate(cursor, end);
+      Serial::isBlank(cursor, end);
+      ++cursor;
+      Serial::isBlank(cursor, end);
+    }
+
     integer::			integer(std::string::const_iterator& cursor, std::string::const_iterator) {
       std::string::const_iterator	beg = cursor;
 
@@ -258,6 +286,10 @@ namespace serialization {
       return (_stringified);
     }
 
+    std::string		function::Stringify(int level) const {
+      return _function_name + '(' + _parameter->Stringify(level + 1) + ')';
+    }
+
     std::string		list::Stringify(int level) const {
       std::string	_stringified("[\n");
       std::size_t	i = 0;
@@ -291,6 +323,27 @@ namespace serialization {
     }
 
   };
+
+  /*
+   * serial::function definitions
+   */
+  void			StoreFunction(const std::string& _function_name,
+				      std::function<Serial*(const Serial&)> _function) {
+    serial::function::StoreFunction(_function_name, _function);
+  }
+  namespace serial {
+    void		function::StoreFunction(const std::string& _function_name,
+						std::function<Serial*(const Serial&)> _function) {
+      _saved_functions.emplace(_function_name, _function);
+    }
+
+    Serial*		function::Execute() {
+      return _function(*_parameter);
+    }
+    
+    std::map< std::string, std::function<Serial*(const Serial&)> >	function::_saved_functions({});
+  };
+
 
   /*
    * serial::object definitions

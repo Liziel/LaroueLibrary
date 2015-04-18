@@ -25,6 +25,12 @@ int main() {
   ctvty::asset::Cache<ctvty::GameObject>
 					*save_cache;
   ctvty::asset::Assets			assets("assets");
+  serialization::StoreFunction("asset", [&assets](const serialization::Serial& __serial) -> serialization::Serial* {
+      std::string path;
+      __serial & path;
+
+      return serialization::Serial::InstantiateFromFile(assets.GetAsset(path).GetFile().GetPath());
+    });
   ctvty::asset::Assets			save_assets(std::move(assets.GetAssets("save")));
   ctvty::GameObject			*Army = new ctvty::GameObject("Army", "army", nullptr, true);
 
@@ -48,7 +54,7 @@ int main() {
 	    });
 	return pass;
       });
-    assets.Cache(save_cache);
+    save_assets.Cache(save_cache);
   }
 
   {
@@ -56,6 +62,8 @@ int main() {
     std::shared_ptr<ctvty::GameObject>	ArmyCopy1 = save_assets.GetAsset("Army.json").LoadAs<ctvty::GameObject>();
     std::shared_ptr<ctvty::GameObject>	ArmyCopy2 = save_assets.GetAsset("Army.json").LoadAs<ctvty::GameObject>();
     std::shared_ptr<ctvty::GameObject>	ArmyCopy3 = save_assets.GetAsset("Army.json").LoadAs<ctvty::GameObject>();
+
+    std::shared_ptr<ctvty::GameObject>	ArmyTest = assets.GetAsset("Army.json").LoadAs<ctvty::GameObject>();
   }
 
   if (0)

@@ -1,50 +1,10 @@
 {
 	"object" : {
 		"childs" : [
-		{
-				"object" : {
-					"childs" : [
-					],
-					"components" : [
-					],
-					"name" : "Soldier1",
-					"tag" : "soldier",
-				},
-				"type" : "ctvty::GameObject",
-			},
-		{
-				"object" : {
-					"childs" : [
-					],
-					"components" : [
-					],
-					"name" : "Soldier2",
-					"tag" : "soldier",
-				},
-				"type" : "ctvty::GameObject",
-			},
-		{
-				"object" : {
-					"childs" : [
-					],
-					"components" : [
-					],
-					"name" : "Soldier3",
-					"tag" : "soldier",
-				},
-				"type" : "ctvty::GameObject",
-			},
-		{
-				"object" : {
-					"childs" : [
-					],
-					"components" : [
-					],
-					"name" : "Soldier4",
-					"tag" : "soldier",
-				},
-				"type" : "ctvty::GameObject",
-			},
+		    asset("save/Army.json"),
+		    asset("save/Army.json"),
+		    asset("save/Army.json"),
+		    asset("save/Army.json")
 		],
 		"components" : [
 		],

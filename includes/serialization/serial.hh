@@ -4,6 +4,8 @@
 # include <type_traits>
 # include <typeinfo>
 
+# include <functional>
+
 # include <fstream>
 
 # include <list>
@@ -34,7 +36,15 @@ namespace serialization {
     class integer;
     class floating;
     class boolean;
+    class function;
   };
+
+  class Serial;
+  template<typename parameter>
+  serial::function*		MakeFunction(const std::string& _function_name, parameter serializable);
+
+  void				StoreFunction(const std::string& _function_name,
+					      std::function<Serial*(const Serial&)> _function);
 
   class Serial {
   private:
@@ -44,7 +54,8 @@ namespace serialization {
     template<typename _type>
     const Serial&	operator & (_type& variable) const {
       if (!is<_type>())
-	return *this;
+	if (serial_info<_type, serial::function>::is(serial))
+	  serial_info<_type, serial::function>::set(serial, variable);
       serial_info<_type>::set(serial, variable);
       return *this;
     }
@@ -69,7 +80,11 @@ namespace serialization {
     bool		is() const { return serial_info<_type>::is(serial); }
 
     template<typename _type>
-    _type		as() const { return serial_info<_type>::get(serial); }
+    _type		as() const {
+	if (serial_info<_type, serial::function>::is(serial))
+	  return serial_info<_type, serial::function>::get(serial);      
+      return serial_info<_type>::get(serial);
+    }
 
   public:
     static bool		isBlank(std::string::const_iterator& cursor, std::string::const_iterator end);
@@ -186,6 +201,47 @@ namespace serialization {
 	for (; begin != end; ++begin) {
 	  _serialized_list.push_back(Serial::Instantiate(*begin));
 	}
+      }
+    };
+
+    class function : public interface {
+    public:
+      std::string				Stringify(int level = 0) const;
+      
+    private:
+      std::string				_function_name;
+      std::function<Serial*(const Serial&)>	_function;
+      Serial*					_parameter;
+
+    private:
+      Serial*					_clean;
+    public:
+      void					StoreCleaner(Serial* c) {
+	if (_clean != nullptr)
+	  delete _clean;
+	_clean = c;
+      }
+
+    private:
+      static std::map< std::string, std::function<Serial*(const Serial&)> >	_saved_functions;
+
+    public:
+      static void				StoreFunction(const std::string& _function_name,
+							      std::function<Serial*(const Serial&)> _function);
+
+    public:
+      Serial*					Execute();
+
+    public:
+      static bool				isFunction(std::string::const_iterator& cursor, std::string::const_iterator end);
+
+    public:
+      ~function() {if (_clean != nullptr) delete _clean; delete _parameter; }
+      function(std::string::const_iterator& cursor, std::string::const_iterator end);
+      template<typename parameter>
+      function(std::string _function_name, parameter serializable)
+	: _function_name(_function_name), _function(_saved_functions[_function_name]), _clean(nullptr) {
+	(*_parameter) & serializable;
       }
     };
 
@@ -376,6 +432,33 @@ namespace serialization {
   };
 
   /*
+   * Function serial_info
+   */
+  template<typename _type>
+  struct serial_info< _type,
+		      serial::function> {
+    using type = serial::function;
+    static bool	 is(serial::interface* _interface) { return dynamic_cast<serial::function*>(_interface) != nullptr; }
+    static _type get(serial::interface* _interface) {
+      serial::function* ex = dynamic_cast<serial::function*>(_interface);
+      Serial* serial = ex->Execute();
+      ex->StoreCleaner(serial);
+
+      return serial->as<_type>();
+    }
+    static void	 set(serial::interface* _interface, _type& _variable) {
+      serial::function* ex = dynamic_cast<serial::function*>(_interface);
+      Serial* serial = ex->Execute();
+
+      (*serial) & _variable;
+      delete serial;
+    }
+    static serial::interface* make(_type _variable) {
+      return _variable;
+    }
+  };
+
+  /*
    * Serials info
    */
   template<typename _type>
@@ -410,6 +493,11 @@ namespace serialization {
     }
   };
 
+
+  template<typename parameter>
+  serial::function*		MakeFunction(const std::string& _function_name, parameter serializable) {
+    return new serial::function(_function_name, serializable);
+  }
 };
 
 #endif
