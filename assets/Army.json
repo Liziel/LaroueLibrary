@@ -1,15 +1,10 @@
 {
-	"object" : {
-		"childs" : [
-		    asset("save/Army.json"),
-		    asset("save/Army.json"),
-		    asset("save/Army.json"),
-		    asset("save/Army.json")
-		],
-		"components" : [
-		],
-		"name" : "Army",
-		"tag" : "army",
-	},
-	"type" : "ctvty::GameObject",
+    "object" : {
+	"childs" : asset("save/ArmyArray.json"),
+	"components" : [
+	],
+	"name" : "Army",
+	"tag" : "army",
+    },
+    "type" : "ctvty::GameObject",
 }

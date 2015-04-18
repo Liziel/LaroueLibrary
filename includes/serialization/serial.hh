@@ -1,6 +1,8 @@
 #ifndef Serial_hh__
 # define Serial_hh__
 
+# include <iostream>
+
 # include <type_traits>
 # include <typeinfo>
 
@@ -53,9 +55,11 @@ namespace serialization {
   public:
     template<typename _type>
     const Serial&	operator & (_type& variable) const {
-      if (!is<_type>())
+      if (!is<_type>()) {
 	if (serial_info<_type, serial::function>::is(serial))
 	  serial_info<_type, serial::function>::set(serial, variable);
+	return *this;
+      }
       serial_info<_type>::set(serial, variable);
       return *this;
     }
@@ -450,7 +454,7 @@ namespace serialization {
       serial::function* ex = dynamic_cast<serial::function*>(_interface);
       Serial* serial = ex->Execute();
 
-      (*serial) & _variable;
+      (*const_cast<const Serial*>(serial)) & _variable;
       delete serial;
     }
     static serial::interface* make(_type _variable) {
