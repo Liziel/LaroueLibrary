@@ -22,7 +22,10 @@ void	recursiveList(filesystem::Directory& directory) {
 }
 
 int main() {
+  ctvty::asset::Cache<ctvty::GameObject>
+					*save_cache;
   ctvty::asset::Assets			assets("assets");
+  ctvty::asset::Assets			save_assets(std::move(assets.GetAssets("save")));
   ctvty::GameObject			*Army = new ctvty::GameObject("Army", "army", nullptr, true);
 
   Army->AddChild(new ctvty::GameObject("Soldier1", "soldier", nullptr, true));
@@ -32,26 +35,38 @@ int main() {
 
 
   std::cout << "Army will be saved" << std::endl;
+  save_assets.GetAsset("Army.json").Save(Army);
+
   {
-    assets.GetAsset("Army.json").Save(Army);
-    std::shared_ptr<ctvty::GameObject>	ArmyCopy1 = assets.GetAsset("Army.json").LoadAs<ctvty::GameObject>();
-    std::shared_ptr<ctvty::GameObject>	ArmyCopy2 = assets.GetAsset("Army.json").LoadAs<ctvty::GameObject>();
-    std::shared_ptr<ctvty::GameObject>	ArmyCopy3 = assets.GetAsset("Army.json").LoadAs<ctvty::GameObject>();
+    std::cout << "assets are cached" << std::endl;
+    save_cache = new ctvty::asset::Cache<ctvty::GameObject>([](ctvty::asset::Asset& file)->bool {
+	bool	pass = file.GetFile().GetName()
+	  .substr(file.GetFile().GetName().size()-sizeof("json") + 1, sizeof("json")) == "json";
+	if (pass)
+	  file.SetDeleter([](serialization::Serializable* obj) {
+	      ctvty::Object::Destroy(dynamic_cast<ctvty::Object*>(obj));
+	    });
+	return pass;
+      });
+    assets.Cache(save_cache);
   }
 
   {
-    filesystem::Directory root(".");
-    recursiveList(root);
+    std::cout << "some copy are made" << std::endl;
+    std::shared_ptr<ctvty::GameObject>	ArmyCopy1 = save_assets.GetAsset("Army.json").LoadAs<ctvty::GameObject>();
+    std::shared_ptr<ctvty::GameObject>	ArmyCopy2 = save_assets.GetAsset("Army.json").LoadAs<ctvty::GameObject>();
+    std::shared_ptr<ctvty::GameObject>	ArmyCopy3 = save_assets.GetAsset("Army.json").LoadAs<ctvty::GameObject>();
   }
 
-  new ctvty::event::DelayedAction(2.5f, [](){std::cout << "yeah" << std::endl;});
-  new ctvty::event::DelayedAction(5.f, [](){ctvty::event::Clock::GetClock().End();});
+  if (0)
+    {
+      filesystem::Directory root(".");
+      recursiveList(root);
+    }
 
-  auto start = std::chrono::high_resolution_clock::now();
-  ctvty::event::Clock::GetClock().Start();
-  auto end = std::chrono::high_resolution_clock::now();
-  std::chrono::duration<double> diff = end - start;
-  std::cout << diff.count() << " s" << std::endl;
-
+  std::cout << "call to Destroy" << std::endl;
   ctvty::Object::Destroy(Army);
+
+  std::cout << "delete cache" << std::endl;
+  delete save_cache;
 }

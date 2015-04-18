@@ -1,4 +1,5 @@
 #include "ctvty/object.hpp"
+#include "ctvty/event/clock.hh"
 
 namespace ctvty {
   /*
@@ -20,5 +21,21 @@ namespace ctvty {
   void				Object::Destroy(Object* del) {
     del->intern_Destroy();
     delete del;
+  }
+
+  void				Object::Destroy(Object* del, float delay) {
+    new event::DelayedAction(delay, [del] () { del->intern_Destroy(); delete del; });
+    del->intern_Destroy();
+    delete del;
+  }
+
+  /*
+   * Instantiate
+   */
+  Object*			Object::Instantiate(Object* _template) {
+    Object*	product;
+
+    product = _template->clone();
+    return (product);
   }
 };

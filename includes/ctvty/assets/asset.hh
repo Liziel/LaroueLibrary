@@ -2,6 +2,7 @@
 # define Asset_hh__
 
 # include <memory>
+# include <functional>
 
 # include "filesystem/file.hh"
 # include "serialization/serializable.hh"
@@ -12,9 +13,16 @@ namespace ctvty {
     private:
       std::weak_ptr<serialization::Serializable>	LoadedObject;
       filesystem::File					file;
+      std::function<void(serialization::Serializable*)>	deleter;
 
     public:
-      Asset(const std::string&);
+      Asset(const std::string&,
+	    std::function<void(serialization::Serializable*)> = [] (serialization::Serializable* obj) {
+	      delete obj;
+	    });
+    
+    public:
+      void						SetDeleter(std::function<void(serialization::Serializable*)>);
 
     public:
       template<typename _type>

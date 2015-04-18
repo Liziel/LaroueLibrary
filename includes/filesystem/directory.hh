@@ -38,11 +38,11 @@ namespace filesystem {
     /*
      * allow to iterate over this directory file list
      */
-    iterator		begin();
-    iterator		end();
+    Directory::iterator		begin();
+    Directory::iterator		end();
 
   public:
-    void		Go() const;
+    void		Create();
 
   private:
     bool					valid;

@@ -6,7 +6,7 @@
 
 namespace filesystem {
   class File {
-  private:
+  protected:
     bool		valid;
     std::string		relativepath;
     std::string		_realpath;

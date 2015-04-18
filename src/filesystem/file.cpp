@@ -31,7 +31,7 @@ namespace filesystem {
   }
 
   File::File(const File& oth)
-    : valid(oth.valid), _realpath(oth._realpath), name(oth.name) { }
+    : valid(oth.valid), relativepath(oth.relativepath), _realpath(oth._realpath), name(oth.name) { }
 
   File::~File() {}
 
@@ -43,7 +43,10 @@ namespace filesystem {
 
     if (*this)
       return ;
-    std::fclose(std::fopen(relativepath.c_str(), "w+"));
+    FILE* _file = std::fopen(relativepath.c_str(), "w+");
+    if (_file == nullptr)
+      return ;
+    std::fclose(_file);
     realpath(relativepath.c_str(), __realpath);
     valid = true;
     _realpath = __realpath;
