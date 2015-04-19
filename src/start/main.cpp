@@ -2,6 +2,7 @@
 #include "serialization/serializable.hh"
 #include "filesystem/directory.hh"
 #include "ctvty/gameObject.hpp"
+#include "ctvty/application.hh"
 #include "ctvty/event/clock.hh"
 #include "ctvty/assets/assets.hh"
 
@@ -21,24 +22,24 @@ void	recursiveList(filesystem::Directory& directory) {
   }
 }
 
-int main() {
+int main(int ac, char** av) {
   ctvty::asset::Cache<ctvty::GameObject>
 					*save_cache;
 
   ctvty::asset::Assets			assets("assets");
   ctvty::asset::Assets			save_assets(std::move(assets.GetAssets("save")));
 
-  serialization::StoreFunction("asset", [&assets](const serialization::Serial& __serial) -> serialization::Serial* {
-      std::string path;
-      __serial & path;
+  ctvty::GameObject			*Army = nullptr;
 
-      serialization::Serial* product =
-	serialization::Serial::InstantiateFromFile(assets.GetAsset(path).GetFile().GetPath());
-      return product;
-    });
-
-
-  ctvty::GameObject			*Army;
+  {
+    bool	initialization_succes;
+    if (ac == 2)
+      initialization_succes = ctvty::Application::Initialize(av[1]);
+    else
+      initialization_succes = ctvty::Application::Initialize("assets");
+    if (!initialization_succes)
+      return (-1);
+  }
 
   if (1)
     {
@@ -63,11 +64,12 @@ int main() {
 	  pass = pass && (file.GetFile().GetName() != "ArmyArray.json");
 	  if (pass)
 	    file.SetDeleter([](serialization::Serializable* obj) {
-		ctvty::Object::Destroy(dynamic_cast<ctvty::Object*>(obj));
+		if (dynamic_cast<ctvty::Object*>(obj) != nullptr)
+		  ctvty::Object::Destroy(dynamic_cast<ctvty::Object*>(obj));
 	      });
 	  return pass;
 	});
-      assets.Cache(save_cache);
+      save_assets.Cache(save_cache);
     }
 
   if (1)
@@ -90,7 +92,7 @@ int main() {
       recursiveList(root);
     }
 
-  if (0)
+  if (1)
     {
       std::cout << "call to Destroy" << std::endl;
       ctvty::Object::Destroy(Army);

@@ -31,6 +31,9 @@ namespace ctvty {
       Transform(const serialization::Archive&);
 
     public:
+      ~Transform();
+
+    public:
       void		Serialize(serialization::Archive& __serial) override;
 
     public:

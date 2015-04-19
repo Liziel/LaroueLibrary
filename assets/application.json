@@ -1,0 +1,18 @@
+{
+	"object" : {
+		"fps" : 30,
+		"load" : "base",
+		"scenes" : [
+		    {
+			"object" : {
+			    "name" : "base",
+			    "objects" : [
+				asset("save/Army.json"),
+			    ],
+			},
+			"type" : "ctvty::Application::Scene",
+		    }
+		],
+	},
+	"type" : "ctvty::Application",
+}

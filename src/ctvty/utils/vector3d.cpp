@@ -4,7 +4,7 @@
 namespace ctvty {
   namespace utils {
 
-    REGISTER_FOR_SERIALIZATION(Vector3D);
+    REGISTER_FOR_SERIALIZATION(ctvty::utils, Vector3D);
 
     Vector3D::		Vector3D(float _x, float _y, float _z, float _scale)
       : x(_x), y(_y), z(_z), scale(_scale) { }

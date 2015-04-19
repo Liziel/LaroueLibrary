@@ -26,6 +26,7 @@ CtvTy		= src/ctvty/gameObject.cpp \
 		src/ctvty/component.cpp\
 		src/ctvty/object.cpp\
 		src/ctvty/behaviour.cpp\
+		src/ctvty/application.cpp\
 		$(CtvTyEvent) $(CtvTyAssets) $(CtvTyComponents) $(CtvTyUtils)
 
 ### Serial -> Json Serialisation

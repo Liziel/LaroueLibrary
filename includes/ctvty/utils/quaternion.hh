@@ -20,6 +20,9 @@ namespace ctvty {
       Quaternion(const serialization::Archive&);
 
     public:
+      ~Quaternion();
+
+    public:
       void	Serialize(serialization::Archive& __serial) override;
     };
 

@@ -13,7 +13,25 @@
 # include <list>
 # include <map>
 
+# include <exception>
+
 namespace serialization {
+  namespace error {
+    class undefined_type_reference : public std::runtime_error {
+    public:
+      undefined_type_reference(const std::string& type);
+    };
+
+    class undefined_variable_reference : public std::runtime_error {
+    public:
+      undefined_variable_reference(const std::string& var);
+    };
+
+    class backtrace_serial_error : public std::runtime_error {
+    public:
+      backtrace_serial_error(const std::string& type, const std::string& _what);
+    };
+  };
   class Serializable;
 
   template<typename _type, class _enable = void>

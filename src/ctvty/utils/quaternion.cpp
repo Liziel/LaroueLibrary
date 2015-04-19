@@ -3,7 +3,7 @@
 namespace ctvty {
   namespace utils {
 
-    REGISTER_FOR_SERIALIZATION(Quaternion);
+    REGISTER_FOR_SERIALIZATION(ctvty::utils, Quaternion);
 
     Quaternion::	Quaternion(float x, float y, float z, float _scale)
       : rotation(new Vector3D(x, y, z)), scale(_scale) { }
@@ -21,6 +21,10 @@ namespace ctvty {
 	scale = 1.f;
 
       __serial["rotation"] & rotation;
+    }
+
+    Quaternion::	~Quaternion() {
+      delete rotation;
     }
 
     void		Quaternion::Serialize(serialization::Archive& __serial_instance) {

@@ -21,11 +21,29 @@ namespace serialization {
   }
 
   Serializable*			Serializable::Instantiate(const Archive& archive) {
-    return getAllocationMap() [archive["type"].as<std::string>()] (archive["object"].as<const Archive&>());
+    if (getAllocationMap().end() == getAllocationMap().find(archive["type"].as<std::string>()))
+      throw error::undefined_type_reference(archive["type"].as<std::string>());
+    try {
+      return getAllocationMap() [archive["type"].as<std::string>()] (archive["object"].as<const Archive&>());
+    } catch (const error::undefined_type_reference& e) {
+      throw error::backtrace_serial_error(archive["type"].as<std::string>(), e.what());
+    } catch (const error::undefined_variable_reference& e) {
+      throw error::backtrace_serial_error(archive["type"].as<std::string>(), e.what());
+    } catch (const error::backtrace_serial_error& e) {
+      throw error::backtrace_serial_error(archive["type"].as<std::string>(), e.what());
+    }
   }
 
   Serializable*			Serializable::Instantiate(const Serial& serial) {
     const Archive&		archive = serial.as<const Archive&>();
-    return getAllocationMap() [archive["type"].as<std::string>()] (archive["object"].as<const Archive&>());
+    try {
+      return getAllocationMap() [archive["type"].as<std::string>()] (archive["object"].as<const Archive&>());
+    } catch (const error::undefined_type_reference& e) {
+      throw error::backtrace_serial_error(archive["type"].as<std::string>(), e.what());
+    } catch (const error::undefined_variable_reference& e) {
+      throw error::backtrace_serial_error(archive["type"].as<std::string>(), e.what());
+    } catch (const error::backtrace_serial_error& e) {
+      throw error::backtrace_serial_error(archive["type"].as<std::string>(), e.what());
+    }
   }
 };

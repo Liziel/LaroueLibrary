@@ -7,6 +7,20 @@
 
 namespace serialization {
   /*
+   * exception
+   */
+  namespace error {
+    undefined_type_reference::undefined_type_reference(const std::string& type)
+      : std::runtime_error("serial error: type \"" + type + "\" is undefined") {}
+
+    undefined_variable_reference::undefined_variable_reference(const std::string& variable)
+      : std::runtime_error("serial error: variable \"" + variable + "\" isn't declared in the serial") {}
+
+    backtrace_serial_error::backtrace_serial_error(const std::string& type, const std::string& _what)
+      : std::runtime_error("serial error: instanciated from " + type + "\n" + _what) {}
+  };
+
+  /*
    * base serial function and ctor
    */
   Serial::	Serial(serial::interface* _interface)
@@ -364,6 +378,8 @@ namespace serialization {
 
 
     const Serial&	object::operator[] (const std::string& _index) const {
+      if (_serialized_object.find(_index) == _serialized_object.end())
+	throw error::undefined_variable_reference(_index);
       return (*(_serialized_object.at(_index)));
     }
   };

@@ -4,7 +4,7 @@
 namespace ctvty {
   namespace component {
 
-    REGISTER_FOR_SERIALIZATION(Transform);
+    REGISTER_FOR_SERIALIZATION(ctvty::component, Transform);
 
     Transform::		Transform(GameObject* gameObject, 
 				  utils::Vector3D* p , utils::Quaternion* r, utils::Vector3D* s)
@@ -25,6 +25,12 @@ namespace ctvty {
 	scale = new utils::Vector3D(1.f, 1.f, 1.f);
       __serial["position"] & position;
       __serial["rotation"] & rotation;
+    }
+
+    Transform::		~Transform() {
+      delete scale;
+      delete position;
+      delete rotation;
     }
 
     void		Transform::Serialize(serialization::Archive& __serial_instance) {

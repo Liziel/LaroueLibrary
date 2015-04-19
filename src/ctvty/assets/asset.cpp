@@ -17,9 +17,15 @@ namespace ctvty {
 	return LoadedObject.lock();
 
       serialization::Serial*	json = serialization::Serial::InstantiateFromFile(file.GetPath());
-      base.reset(serialization::Serializable::Instantiate(*json), [this](serialization::Serializable* obj) {
-	  deleter(obj);
-	});
+      try {
+	base.reset(serialization::Serializable::Instantiate(*json), [this](serialization::Serializable* obj) {
+	    deleter(obj);
+	  });
+      } catch (const std::exception& e) {
+	std::cout << "failed to load the file " + file.GetName() + " cause is:" << std::endl
+		  << e.what() << std::endl;
+	return nullptr;
+      }
       LoadedObject = base;
       delete json;
       return LoadedObject.lock();

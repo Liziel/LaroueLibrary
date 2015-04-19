@@ -7,7 +7,7 @@
 
 namespace ctvty {
 
-  REGISTER_FOR_SERIALIZATION(GameObject);
+  REGISTER_FOR_SERIALIZATION(ctvty, GameObject);
 
   /*
    * Ctor & Dtor
@@ -28,6 +28,7 @@ namespace ctvty {
 					   component::Transform*		_transform,
 					   bool					_state)
     : Object(name), activation_state(_state), parent(nullptr), transform(_transform), tag(_tag) {
+    std::cout << "i am alive" << std::endl;
     SetParent(_parent);
     gameObjects.push_back(this);
     if (transform != nullptr)
@@ -63,7 +64,8 @@ namespace ctvty {
   }
 
   GameObject::			~GameObject() {
-    std::cout << "i am dead" << std::endl;
+    if (transform != nullptr)
+      delete transform;
     gameObjects.remove_if([this] (GameObject* _comp) -> bool {return _comp == this;});
   }
 
