@@ -29,7 +29,7 @@ namespace ctvty {
     virtual ~Component();
 
   public:
-    void			AttachParent(GameObject*);
+    virtual void				AttachParent(GameObject*);
 
   protected:
     /*

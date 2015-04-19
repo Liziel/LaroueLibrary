@@ -3,7 +3,8 @@
 
 # include <list>
 
-# include "ctvty/utility.hh"
+# include "ctvty/utils/vector3d.hh"
+# include "ctvty/utils/quaternion.hh"
 # include "serialization/serializable.hh"
 
 namespace ctvty {
@@ -54,8 +55,8 @@ namespace ctvty {
      */
     static Object*		Instantiate(Object* copy);
     static Object*		Instantiate(Object* copy,
-					    vector2 position,
-					    vector2 rotation);
+					    utils::Vector3D position,
+					    utils::Quaternion rotation);
 
   public:
     /*

@@ -29,15 +29,16 @@ namespace ctvty {
       bool			HasFinished();
     };
 
-    template<typename container>
+    template<template<typename, typename> class container>
     class DelayedActionContainer {
     private:
-      container&	_container;
+      container< DelayedActionContainer, std::allocator<DelayedActionContainer*> *>&	_container;
       DelayedAction*	_action;
 
     public:
       template<typename ... delayed_parameters>
-      DelayedActionContainer(container& _c, std::function<void()> callback, delayed_parameters ... p)
+      DelayedActionContainer(container<DelayedActionContainer*, std::allocator<DelayedActionContainer*>>& _c,
+			     std::function<void()> callback, delayed_parameters ... p)
 	: _container(_c), _action(new DelayedAction ([this, callback] () {
 	    callback(); delete this;
 	  }, p...)) {

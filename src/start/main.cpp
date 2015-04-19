@@ -40,13 +40,18 @@ int main() {
 
   ctvty::GameObject			*Army;
 
-  if (0)
+  if (1)
     {
-      Army  = new ctvty::GameObject("Army", "army", nullptr, true);
-      Army->AddChild(new ctvty::GameObject("Soldier1", "soldier", nullptr, true));
-      Army->AddChild(new ctvty::GameObject("Soldier2", "soldier", nullptr, true));
-      Army->AddChild(new ctvty::GameObject("Soldier3", "soldier", nullptr, true));
-      Army->AddChild(new ctvty::GameObject("Soldier4", "soldier", nullptr, true));
+      Army  = new ctvty::GameObject("Army", "army", nullptr,
+				    new ctvty::utils::Vector3D(0.f, 0.f, 1.f), new ctvty::utils::Quaternion(0.f, 0.f, 0.f, 1.f));
+      Army->AddChild(new ctvty::GameObject("Soldier1", "soldier", nullptr,
+					   new ctvty::utils::Vector3D(0.f, 0.f, 1.f), new ctvty::utils::Quaternion(0.f, 0.f, 0.f, 1.f)));
+      Army->AddChild(new ctvty::GameObject("Soldier1", "soldier", nullptr,
+					   new ctvty::utils::Vector3D(0.f, 0.f, 1.f), new ctvty::utils::Quaternion(0.f, 0.f, 0.f, 1.f)));
+      Army->AddChild(new ctvty::GameObject("Soldier2", "soldier", nullptr,
+					   new ctvty::utils::Vector3D(0.f, 0.f, 1.f), new ctvty::utils::Quaternion(0.f, 0.f, 0.f, 1.f)));
+      Army->AddChild(new ctvty::GameObject("Soldier2", "soldier", nullptr,
+					   new ctvty::utils::Vector3D(0.f, 0.f, 1.f), new ctvty::utils::Quaternion(0.f, 0.f, 0.f, 1.f)));
     }
 
   if (1)
@@ -65,7 +70,7 @@ int main() {
       assets.Cache(save_cache);
     }
 
-  if (0)
+  if (1)
     {
       std::cout << "Army will be saved" << std::endl;
       save_assets.GetAsset("Army.json").Save(Army);

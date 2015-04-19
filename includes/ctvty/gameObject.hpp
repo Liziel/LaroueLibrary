@@ -13,7 +13,7 @@
 namespace ctvty {
 
   class Component;
-  class Transform;
+  namespace component { class Transform; };
   class GameObject : public Object {
   private:
     /*
@@ -43,7 +43,9 @@ namespace ctvty {
     /*
      * All GameObject should have a Transform Component for their localization
      */
-    Transform*					transform;
+    component::Transform*					transform;
+  public:
+    component::Transform*					GetTransformation();
 
   protected:
     /*
@@ -59,10 +61,20 @@ namespace ctvty {
     static std::list<GameObject*>	fathers;
 
   public:
-    GameObject(const std::string name = "GameObject",
-	       const std::string& tag = "undefined",
-	       GameObject* parent = nullptr,
-	       bool state = false);
+    GameObject(const std::string&		name,
+	       const std::string&		tag,
+	       GameObject*			parent,
+	       utils::Vector3D*			position,
+	       utils::Quaternion*		rotation,
+	       utils::Vector3D*			scale = new utils::Vector3D(1.f, 1.f, 1.f),
+	       bool				state = false);
+
+    GameObject(const std::string&		name = "GameObject",
+	       const std::string&		tag = "undefined",
+	       GameObject*			parent = nullptr,
+	       component::Transform*		transform = nullptr,
+	       bool				state = false);
+
     ~GameObject();
 
 

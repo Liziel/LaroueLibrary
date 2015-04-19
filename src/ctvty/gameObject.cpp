@@ -3,6 +3,8 @@
 #include "ctvty/gameObject.hpp"
 #include "ctvty/component.hpp"
 
+#include "ctvty/component/transform.hh"
+
 namespace ctvty {
 
   REGISTER_FOR_SERIALIZATION(GameObject);
@@ -10,19 +12,33 @@ namespace ctvty {
   /*
    * Ctor & Dtor
    */
-  GameObject::			GameObject(const std::string name,
-					   const std::string& _tag,
-					   GameObject* _parent,
-					   bool state)
-    : Object(name), activation_state(state), parent(nullptr), tag(_tag) {
-    std::cout << "i am alive" << std::endl;
+  GameObject::			GameObject(const std::string&		name,
+					   const std::string&		tag,
+					   GameObject*			parent,
+					   utils::Vector3D*		position,
+					   utils::Quaternion*		rotation,
+					   utils::Vector3D*		scale,
+					   bool				state)
+    : GameObject(name, tag, parent, new component::Transform(this, position, rotation, scale), state) {
+  }
+
+  GameObject::			GameObject(const std::string&			name,
+					   const std::string&			_tag,
+					   GameObject*				_parent,
+					   component::Transform*		_transform,
+					   bool					_state)
+    : Object(name), activation_state(_state), parent(nullptr), transform(_transform), tag(_tag) {
     SetParent(_parent);
     gameObjects.push_back(this);
+    if (transform != nullptr)
+      transform->AttachParent(this);
   }
+
 
   GameObject::			GameObject(const serialization::Archive& __serial)
       : GameObject(__serial.exist("name") ? __serial["name"].as<std::string>() : "GameObject",
-		   __serial.exist("tag") ? __serial["tag"].as<std::string>() : "undefined") {
+		   __serial.exist("tag") ? __serial["tag"].as<std::string>() : "undefined",
+		   nullptr, __serial["transform"].as<component::Transform*>()) {
     std::list<GameObject*>	_childs;
     std::list<Component*>	_components;
 
@@ -43,6 +59,7 @@ namespace ctvty {
     __serial["name"] & name;
     __serial["childs"] & childs;
     __serial["components"] & components;
+    __serial["transform"] & transform;
   }
 
   GameObject::			~GameObject() {
@@ -96,8 +113,12 @@ namespace ctvty {
    * Herited From ctvty::Object
    */
   Object*			GameObject::clone() const {
-    GameObject*	clone = new GameObject(name + "(clone)", tag, parent);
+    component::Transform*	_transform;
+    GameObject*	clone = new GameObject(name + "(clone)", tag,
+				       nullptr,
+				       _transform = (component::Transform*)transform->clone());
 
+    transform->AttachParent(clone);
     for (GameObject* child : childs)
       clone->childs.push_back((GameObject*)child->clone());
     for (Component* component : components)

@@ -4,25 +4,25 @@
 /* AND HERE IS THE MONSTER !! */
 
 # include "ctvty/behaviour.hh"
-# include "event/event/delayed.hh"
+# include "ctvty/event/delayed.hh"
 
 # define ATTACHED_TO_EVENT(__event__, __parameters__)			\
   template<typename type>						\
-  auto attach_to_event ## __event__ (type* _this)			\
-  -> decltype( _this -> __event__ ( __parameters__ ), void )		\
-  { this->Component::RegisterListener(## __event__ ,			\
-				      &type :: __event__); }		\
+  auto attach_to_event_ ## __event__ (type* _this)			\
+  -> decltype( _this -> __event__ ( __parameters__ ), bool() )		\
+  { this->Component::RegisterListener( # __event__ ,			\
+				       &type :: __event__); return true;} \
 									\
-  void attach_to_event ## __event__ ( ... )				\
-  { /* nop */ }								\
+  bool attach_to_event_ ## __event__ ( ... )				\
+  { return false; }							\
   
 
 # define ATTACH_THIS_TO(__event__)					\
-  attach_to_event ## __event__ <child_class*>(dynamic_cast<child_class*>(this))	\
+  attach_to_event_ ## __event__ (dynamic_cast<child_class*>(this))	\
 
 namespace ctvty {
-  class Collision;
-  class Collision2D;
+  class Collision {public: Collision() {}};
+  class Collision2D {public: Collision2D() {}};
 
   template <typename child_class>
   class MonoBehaviour : public Behaviour {
@@ -30,15 +30,15 @@ namespace ctvty {
     /*
      *Invoke -> do delayed call
      */
-    std::list< event::DelayedActionContainer< std::list<DelayedActionContainer*> >* >	invoked;
+    std::list< event::DelayedActionContainer< std::list >* >	invoked;
 
   public:
     template<typename ... arguments>
-    void			Invoke(void (child_class::*invokable)(arguments...), float time, arguments ...) {
-      invoked.push_back(new DelayedActionContainer(invoked,
+    void			Invoke(void (child_class::*invokable)(arguments...), float time, arguments ... args) {
+      invoked.push_back(new event::DelayedActionContainer< std::list >(invoked,
 						   std::bind(invokable,
 							     dynamic_cast<child_class*>(this),
-							     arguments ... ),
+							     args ... ),
 						   time)
 			);
     }
@@ -46,11 +46,11 @@ namespace ctvty {
     template<typename ... arguments>
     void			InvokeRepeating(void (child_class::*invokable)(arguments...),
 						float time, float repeat,
-						arguments ...) {
-      invoked.push_back(new DelayedActionContainer(invoked,
+						arguments ... args) {
+      invoked.push_back(new event::DelayedActionContainer< std::list >(invoked,
 						   std::bind(invokable,
 							     dynamic_cast<child_class*>(this),
-							     arguments ... ),
+							     args ... ),
 						   time, repeat)
 			);
     }

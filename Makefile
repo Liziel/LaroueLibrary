@@ -17,11 +17,16 @@ CtvTyEvent	=src/ctvty/event/clock.cpp\
 CtvTyAssets	=src/ctvty/assets/assets.cpp\
 		src/ctvty/assets/asset.cpp
 
+CtvTyUtils	=src/ctvty/utils/vector3d.cpp\
+		src/ctvty/utils/quaternion.cpp
+
+CtvTyComponents	=src/ctvty/component/transform.cpp
+
 CtvTy		= src/ctvty/gameObject.cpp \
 		src/ctvty/component.cpp\
 		src/ctvty/object.cpp\
 		src/ctvty/behaviour.cpp\
-		$(CtvTyEvent) $(CtvTyAssets)
+		$(CtvTyEvent) $(CtvTyAssets) $(CtvTyComponents) $(CtvTyUtils)
 
 ### Serial -> Json Serialisation
 Serial		= src/serialization/serializable.cpp \

@@ -86,7 +86,7 @@ namespace serialization {
     template<typename _type>
     _type		as() const {
 	if (serial_info<_type, serial::function>::is(serial))
-	  return serial_info<_type, serial::function>::get(serial);      
+	  return serial_info<_type, serial::function>::get(serial);
       return serial_info<_type>::get(serial);
     }
 

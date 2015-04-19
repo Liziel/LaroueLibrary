@@ -80,7 +80,7 @@ namespace ctvty {
 
     class receiver {
     public:
-      virtual void	operator() (ctvty::event::parameters::values _params) = 0;
+      virtual void	operator() (ctvty::event::parameters::values _params = parameters::PackValues()) = 0;
 
     public:
       template<typename _class, typename ... parameters>
