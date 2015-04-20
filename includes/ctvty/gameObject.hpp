@@ -132,8 +132,12 @@ namespace ctvty {
      * SendMessageUpwards send events + values to itself and fathers
      */
     void					BroadcastMessage(const std::string& methodName,
-								 event::parameters::values params
-									= event::parameters::PackValues());
+								 event::parameters::values params);
+
+    template<typename ... parameters>
+    void					BroadcastMessage(const std::string& methodName, parameters ... p) {
+      BroadcastMessage(methodName, event::parameters::PackValues(p...));
+    }
 
     void					SendMessage(const std::string& methodName,
 							    event::parameters::values params

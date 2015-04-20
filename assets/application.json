@@ -11,6 +11,23 @@
 			    ],
 			},
 			"type" : "ctvty::Application::Scene",
+		    },
+		    {
+			"object" : {
+			    "name" : "complex",
+			    "objects" : [
+				asset("save/Army.json"),
+				asset("save/Army.json"),
+				asset("save/Army.json"),
+				asset("save/Army.json"),
+				asset("save/Army.json"),
+				asset("save/Army.json"),
+				asset("save/Army.json"),
+				asset("save/Army.json"),
+				asset("save/Army.json"),
+			    ],
+			},
+			"type" : "ctvty::Application::Scene",
 		    }
 		],
 	},

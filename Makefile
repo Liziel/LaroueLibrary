@@ -20,7 +20,8 @@ CtvTyAssets	=src/ctvty/assets/assets.cpp\
 CtvTyUtils	=src/ctvty/utils/vector3d.cpp\
 		src/ctvty/utils/quaternion.cpp
 
-CtvTyComponents	=src/ctvty/component/transform.cpp
+CtvTyComponents	=src/ctvty/component/transform.cpp\
+		src/ctvty/component/rigidbody.cpp
 
 CtvTy		= src/ctvty/gameObject.cpp \
 		src/ctvty/component.cpp\
@@ -78,9 +79,9 @@ fclean: clean
 re: fclean all
 
 .cpp.o:
-	$(CXX) -c -o $@ $< $(CXXFLAGS)
+	$(CXX) -c -o $@		 $< $(CXXFLAGS)
 
 .c.o:
-	$(CC) -c -o $@ $< $(CFLAGS)
+	$(CC) -c -o $@		 $< $(CFLAGS)
 
 .PHONY: all clean fclean re

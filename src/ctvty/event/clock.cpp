@@ -50,14 +50,20 @@ namespace ctvty {
 		      );
 	for (DelayedAction* action : std::list<DelayedAction*>(delayedActions))
 	  action->Refresh();
-	std::for_each(GameObject::accessParentsGameObjects().begin(),
-		      GameObject::accessParentsGameObjects().end(),
-		      [] (GameObject* gameObject) { gameObject->BroadcastMessage("Update"); }
-		      );
-	std::for_each(GameObject::accessParentsGameObjects().begin(),
-		      GameObject::accessParentsGameObjects().end(),
-		      [] (GameObject* gameObject) { gameObject->BroadcastMessage("Render"); }
-		      );
+
+	std::list<GameObject*> fathers_copy(ctvty::GameObject::accessParentsGameObjects());
+	  std::for_each(fathers_copy.begin(),
+			fathers_copy.end(),
+			[this] (GameObject* gameObject) { if (!end) gameObject->BroadcastMessage("Update"); }
+			);
+	  std::for_each(fathers_copy.begin(),
+			fathers_copy.end(),
+			[this] (GameObject* gameObject) { if (!end) gameObject->BroadcastMessage("Render"); }
+			);
+	  std::for_each(fathers_copy.begin(),
+			fathers_copy.end(),
+			[this] (GameObject* gameObject) { if (!end) gameObject->BroadcastMessage("OnGui"); }
+			);
       }
     }
   };

@@ -28,13 +28,11 @@ namespace ctvty {
 					   component::Transform*		_transform,
 					   bool					_state)
     : Object(name), activation_state(_state), parent(nullptr), transform(_transform), tag(_tag) {
-    std::cout << "i am alive" << std::endl;
     SetParent(_parent);
     gameObjects.push_back(this);
     if (transform != nullptr)
       transform->AttachParent(this);
   }
-
 
   GameObject::			GameObject(const serialization::Archive& __serial)
       : GameObject(__serial.exist("name") ? __serial["name"].as<std::string>() : "GameObject",
@@ -74,7 +72,7 @@ namespace ctvty {
    */
   void				GameObject::SetParent(GameObject* _parent) {
     if (_parent == parent)  return ;
-    if (parent != nullptr)
+    if (parent == nullptr)
       fathers.remove_if( [ = ](GameObject* child) { return child == this; } );
     SetParent(nullptr);
     if (_parent == nullptr) 
@@ -121,10 +119,13 @@ namespace ctvty {
 				       _transform = (component::Transform*)transform->clone());
 
     transform->AttachParent(clone);
-    for (GameObject* child : childs)
-      clone->childs.push_back((GameObject*)child->clone());
-    for (Component* component : components)
-      clone->components.push_back((Component*)component->clone());
+    for (GameObject* child : childs) 
+      clone->AddChild(((GameObject*)child->clone()));
+    for (Component* component : components) {
+      Component* component_clone = (Component*)component->clone();
+      clone->components.push_back(component_clone);
+      component_clone->AttachParent(clone);
+    }
     return (clone);
   }
 
@@ -209,6 +210,8 @@ namespace ctvty {
    * GameObject Activation State
    */
   void				GameObject::SetActive(bool state) {
+    if (parent == nullptr)
+      fathers.push_back(this);
     for (GameObject* child : childs)
       child->SetActive(state);
     activation_state = state;

@@ -432,6 +432,20 @@ namespace serialization {
     static serial::interface* make(_type _variable) { return new serial::integer(_variable); }
   };
 
+  template<typename _type>
+  struct serial_info< _type,
+		      typename std::enable_if< std::is_enum< _type >::value >::type > {
+    using type = serial::integer;
+    static _type get(serial::interface* _interface) {
+      return static_cast<_type>(dynamic_cast<serial::integer*>(_interface)->get());
+    }
+    static bool  is(serial::interface* _interface) {
+      return dynamic_cast<serial::integer*>(_interface) != nullptr;
+    }
+    static void	 set(serial::interface* _interface, _type& _variable) { _variable = static_cast<_type>(get(_interface)); }
+    static serial::interface* make(_type _variable) { return new serial::integer(static_cast<_type>(_variable)); }
+  };
+
   /*
    * Floating serial_info
    */

@@ -5,6 +5,7 @@
 #include "ctvty/application.hh"
 #include "ctvty/event/clock.hh"
 #include "ctvty/assets/assets.hh"
+#include "ctvty/component/rigidbody.hh"
 
 void	recursiveList(filesystem::Directory& directory) {
   std::list<filesystem::Directory>	subList;
@@ -41,10 +42,18 @@ int main(int ac, char** av) {
       return (-1);
   }
 
+  {
+    ctvty::Application::Quit(5.f);
+    new ctvty::event::DelayedAction([] () {ctvty::Application::LoadScene("base");}, 1.5f);
+    new ctvty::event::DelayedAction([] () {ctvty::Application::LoadScene("complex");}, 3.f);
+    ctvty::Application::Start();
+  }
+
   if (1)
     {
       Army  = new ctvty::GameObject("Army", "army", nullptr,
 				    new ctvty::utils::Vector3D(0.f, 0.f, 1.f), new ctvty::utils::Quaternion(0.f, 0.f, 0.f, 1.f));
+      Army->AddComponent<ctvty::component::RigidBody>();
       Army->AddChild(new ctvty::GameObject("Soldier1", "soldier", nullptr,
 					   new ctvty::utils::Vector3D(0.f, 0.f, 1.f), new ctvty::utils::Quaternion(0.f, 0.f, 0.f, 1.f)));
       Army->AddChild(new ctvty::GameObject("Soldier1", "soldier", nullptr,
@@ -86,7 +95,7 @@ int main(int ac, char** av) {
       std::shared_ptr<ctvty::GameObject>	ArmyCopy3 = save_assets.GetAsset("Army.json").LoadAs<ctvty::GameObject>();
     }
 
-  if (0)
+  if (1)
     {
       filesystem::Directory root(".");
       recursiveList(root);

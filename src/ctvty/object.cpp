@@ -1,11 +1,13 @@
 #include "ctvty/object.hpp"
 #include "ctvty/event/clock.hh"
+#include "ctvty/gameObject.hpp"
 
 namespace ctvty {
+
   /*
    * Ctor & Dtor
    */
-  Object::			Object(const std::string& _name) : name(_name) {
+  Object::			Object(const std::string& _name) : name(_name), destroyableOnLoad(true) {
     Objects.push_back(this);
   }
 
@@ -34,8 +36,24 @@ namespace ctvty {
    */
   Object*			Object::Instantiate(Object* _template) {
     Object*	product;
+    GameObject*	gameObject;
 
     product = _template->clone();
+    if ((gameObject = dynamic_cast<GameObject*>(product)) != nullptr) {
+      gameObject->BroadcastMessage("Awake");
+      gameObject->SetActive(true);
+    }      
     return (product);
+  }
+
+  /*
+   * Destroyable when loading a new scene
+   */
+  void				Object::DontDestroyOnLoad() {
+    destroyableOnLoad = false;
+  }
+
+  bool				Object::IsDestroyableOnLoad() const {
+    return destroyableOnLoad;
   }
 };

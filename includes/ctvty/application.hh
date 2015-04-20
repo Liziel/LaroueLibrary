@@ -17,26 +17,31 @@ namespace ctvty {
     static Application*&	GetApplication();
   
   public:
-    class Scene : public serialization::Serializable {
+    struct Scene : public serialization::Serializable {
     private:
       std::list <ctvty::GameObject*>	objects;
       std::string			name;
 
     public:
-      Scene() = default;
+      ~Scene();
       Scene(const serialization::Archive&);
       void				Serialize(serialization::Archive&);
+
+    public:
+      std::string			GetName() const;
+      void				Instantiate() const;
     };
 
   private:
     bool			leave_state;
     event::DelayedAction*	delayed_quit;
     std::list<Scene*>		scenes;
-    std::string			load_scene;
+    std::string			base_scene;
     asset::Assets*		assets;
 
 
   public:
+    ~Application();
     Application(const serialization::Archive&);
     void			Serialize(serialization::Archive&);
 

@@ -199,6 +199,24 @@
 			},
 		],
 		"components" : [
+		{
+				"object" : {
+					"detectCollision" : 1,
+					"detectionMode" : 0,
+					"isKinematic" : 0,
+					"mass" : 1,
+					"velocity" : {
+						"object" : {
+							"scale" : 1,
+							"x" : 0,
+							"y" : 0,
+							"z" : 0,
+						},
+						"type" : "ctvty::utils::Vector3D",
+					},
+				},
+				"type" : "ctvty::component::RigidBody",
+			}
 		],
 		"name" : "Army",
 		"tag" : "army",

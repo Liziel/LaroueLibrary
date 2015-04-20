@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "ctvty/event/delayed.hh"
 #include "ctvty/event/clock.hh"
 

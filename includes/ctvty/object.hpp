@@ -36,6 +36,15 @@ namespace ctvty {
      */
     static std::list<Object*>	Objects;
 
+  protected:
+    bool			destroyableOnLoad;
+  public:
+    /*
+     * Prevent the destruction of the this object tree (parents and childs) when loading a new scene
+     */
+    void			DontDestroyOnLoad();
+    virtual bool		IsDestroyableOnLoad() const;
+
   public:
     /*
      * Destroy will delete the given object, in the given time (or immediatly if no time is given)
