@@ -3,24 +3,38 @@
 
 # include "ctvty/monobehaviour.hpp"
 # include "ctvty/utils/vector3d.hh"
+# include "ctvty/utils/boundingbox.hh"
 
 namespace ctvty {
   namespace component {
     
-    enum CollisionDetectionMode {
-      discrete,//will do a low check for when the body is moving
-      raycast,//will raycast to see if the body collision other box, great impact on performance
+    enum class CollisionDetectionMode {
+      Discrete,//will do a low check for when the body is moving, use for a low speed moving object (a player)
+      ContinousDynamic,
+      Continous
     };
 
-    enum ForceMode {
+    enum class ForceMode {
       Force,//continous force, using RigidBody mass --> ex : someone running and jumping at the same time
       Acceleration,//continuous force, non-using RigidBody mass --> ex : climbing a ladder
       Impulse,//Instant force, using RigidBody mass --> ex: a jump
       VelocityChange//Instant force, non-using RigidBody mass --> ex : a jetpack (or somewhat)
     };
 
+    class Collider;
     class RigidBody : public MonoBehaviour<RigidBody> {
     private:
+      utils::BoundingBox3D			boundingBox;
+      std::list<Collider*>			sub_colliders;
+      std::list<utils::Vector3D>		vertices;
+
+    private:
+      std::list<Collider*>			colliders_collisions;
+
+    private:
+      std::list<Collider*>			colliders_trigger;
+
+    private://later accessible and serializable
       CollisionDetectionMode	detectionMode;
       bool			detectCollision;
       bool			isKinematic;
@@ -46,9 +60,10 @@ namespace ctvty {
       /*
        * accessed only by MonoBehaviour
        */
-      void			Start();
       void			FixedUpdate();
       
+    public:
+      void			RegisterCollider(Collider*);
 
     public:
       RigidBody(GameObject* parent);
@@ -59,6 +74,11 @@ namespace ctvty {
 
     public:
       Object*	clone() const override;
+
+    private:
+      void			DiscreteCheckMovement(utils::Vector3D&);
+      void			ContinousCheckMovement(utils::Vector3D&);
+      void			DynamicContinousCheckMovement(utils::Vector3D&);
     };
 
   };

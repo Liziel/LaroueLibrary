@@ -155,6 +155,7 @@ namespace ctvty {
      * false -> it will not 
      */
     void					SetActive(bool state);
+    bool					IsActive();
 
 
   public:
@@ -208,12 +209,12 @@ namespace ctvty {
     }
 
     template<typename component>
-    std::vector<component*>			GetComponents() {
-      std::vector<component*>	_founds;
+    std::list<component*>			GetComponents() {
+      std::list<component*>	_founds;
 
       for (ctvty::Component* _component : components) {
-	if (dynamic_cast<component>(_component) != nullptr)
-	  _founds.push_back(_component);
+	if (dynamic_cast<component*>(_component) != nullptr)
+	  _founds.push_back(dynamic_cast<component*>(_component));
       }
       return (_founds);
     }
@@ -230,11 +231,11 @@ namespace ctvty {
     }
 
     template<typename component>
-    std::vector<component*>			GetComponentsInChildren() {
-      std::vector<component*> _founds;
+    std::list<component*>			GetComponentsInChildren() {
+      std::list<component*> _founds;
 
       for (ctvty::GameObject* gameObject : childs) {
-	std::vector<component*> _child_founds = gameObject->GetComponentsInChildren<component>();
+	std::list<component*> _child_founds = gameObject->GetComponentsInChildren<component>();
 	_founds.insert(_founds.end(), _child_founds.begin(), _child_founds.end());
       }
       return (_founds);
@@ -251,8 +252,8 @@ namespace ctvty {
 
     template<typename component>
     component*					GetComponentsInParent() {
-      std::vector<component*> _founds = parent->GetComponents<component>();
-      std::vector<component*> _parents_found = parent->GetComponentsInParent<component>();
+      std::list<component*> _founds = parent->GetComponents<component>();
+      std::list<component*> _parents_found = parent->GetComponentsInParent<component>();
 
       _founds.insert(_founds.end(), _parents_found.begin(), _parents_found.end());
       return (_founds);

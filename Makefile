@@ -45,9 +45,9 @@ Main		= src/start/main.cpp
 CXXSRC		+= $(Serial) $(CtvTy) $(Main) $(FileSystem)
 CSRC		+=
 
-FLAGS		= -Wall -Wextra $(INCLUDES)
-CFLAGS		+= -W $(FLAGS)
-CXXFLAGS	+= -W $(FLAGS) -std=c++11
+FLAGS		= -W -Wextra $(INCLUDES)
+CFLAGS		+= $(FLAGS) -Wall
+CXXFLAGS	+= $(FLAGS) -std=c++11 # skip bad warning for c++11 
 LDFLAGS		=
 
 CXXOBJ		= $(CXXSRC:.cpp=.o)

@@ -443,7 +443,7 @@ namespace serialization {
       return dynamic_cast<serial::integer*>(_interface) != nullptr;
     }
     static void	 set(serial::interface* _interface, _type& _variable) { _variable = static_cast<_type>(get(_interface)); }
-    static serial::interface* make(_type _variable) { return new serial::integer(static_cast<_type>(_variable)); }
+    static serial::interface* make(_type _variable) { return new serial::integer(static_cast<long>(_variable)); }
   };
 
   /*

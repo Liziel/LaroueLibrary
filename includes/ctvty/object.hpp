@@ -86,8 +86,8 @@ namespace ctvty {
     }
 
     template<typename type>
-    static std::vector<type*>		FindObjectsOfType() {
-      std::vector<type*>	_founds;
+    static std::list<type*>		FindObjectsOfType() {
+      std::list<type*>	_founds;
 
       for (Object* object : Objects) {
 	if (dynamic_cast<type*>(object) != nullptr)

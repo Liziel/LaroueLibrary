@@ -40,6 +40,7 @@ namespace ctvty {
 
     public:
       void						SetMaxFramePerSeconds(short);
+      float						GetFixedDeltaTime();
 
       /*
        * if the last frame has been longer than the MaxFrameDuration, the value will be > 1

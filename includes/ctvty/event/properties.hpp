@@ -31,7 +31,7 @@ namespace ctvty {
 
       class value {
       public:
-	virtual std::string	getType() = 0;
+	virtual const std::type_info&	getType() const = 0;
 	
       public:
 	template<typename _type>
@@ -51,7 +51,10 @@ namespace ctvty {
       };
 
       template<typename _type>
-      class intern_value : public value{
+      class intern_value : public value {
+      public:
+	const std::type_info&		getType() const { return typeid(_type); }
+
       private:
 	_type		_value;
 
