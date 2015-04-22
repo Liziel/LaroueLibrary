@@ -17,6 +17,10 @@ namespace ctvty {
       frame_length = std::chrono::milliseconds(1000 / frames);
     }
 
+    float				Clock::GetFixedDeltaTime() {
+      return std::chrono::duration<double>(frame_length).count();
+    }
+
     double				Clock::LastFrameRatio() {
       return lastFrameRatio;
     }

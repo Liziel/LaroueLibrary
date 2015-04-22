@@ -110,6 +110,13 @@ namespace ctvty {
 
 
   /*
+   * Transform
+   */
+  component::Transform*		GameObject::GetTransformation() {
+    return (transform);
+  }
+
+  /*
    * Herited From ctvty::Object
    */
   Object*			GameObject::clone() const {

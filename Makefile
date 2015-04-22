@@ -18,7 +18,8 @@ CtvTyAssets	=src/ctvty/assets/assets.cpp\
 		src/ctvty/assets/asset.cpp
 
 CtvTyUtils	=src/ctvty/utils/vector3d.cpp\
-		src/ctvty/utils/quaternion.cpp
+		src/ctvty/utils/quaternion.cpp\
+		src/ctvty/utils/boundingbox.cpp
 
 CtvTyComponents	=src/ctvty/component/transform.cpp\
 		src/ctvty/component/rigidbody.cpp

@@ -42,6 +42,10 @@ namespace ctvty {
       return _clone;
     }
 
+    utils::Vector3D&	RigidBody::GetVelocity() {
+      return *velocity;
+    }
+
     void		RigidBody::FixedUpdate() {
       utils::Vector3D movement = GetVelocity() + (utils::Vector3D::down * World::gravity);
       movement *= event::Clock::GetClock().GetFixedDeltaTime();

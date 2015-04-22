@@ -17,10 +17,10 @@ namespace ctvty {
       physics::Material*		material;
 
     public:
-      ctvstd::Optional<utils::Collision>
+      virtual ctvstd::Optional<utils::Collision>
 					Collision(const std::list<utils::Vector3D>& vertices,
 						  const utils::Vector3D& position,
-						  const utils::Vector3D& direction);
+						  const utils::Vector3D& direction) = 0;
 
     };
     

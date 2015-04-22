@@ -46,8 +46,13 @@ namespace ctvty {
     }
 
 
+
     Vector3D		Vector3D::Project(const Vector3D& vector) {
       return vector * DotProduct(vector);
+    }
+
+    Vector3D		Vector3D::ProjectOnPlane(const Vector3D& normal) {
+      return Project(normal) - (*this);
     }
 
     Vector3D		Vector3D::Reflect(const Vector3D& normal) {

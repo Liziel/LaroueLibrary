@@ -44,5 +44,8 @@ namespace ctvty {
       return new Transform(nullptr, *position, *rotation, *scale);
     }
 
+    utils::Vector3D&	Transform::GetPosition() {
+      return *position;
+    }
   };
 };

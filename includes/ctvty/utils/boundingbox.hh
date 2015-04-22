@@ -8,19 +8,22 @@ namespace ctvty {
   namespace utils {
     class BoundingBox3D {
     private:
-      std::array<Face, 6>		faces;
-      std::array<utils::Vector3D, 8>	vertices;
+      utils::Vector3D		base_vertex;
+      utils::Vector3D		end_point;
 
     public:
-      utils::Vector3D&			operator[](int);
-      void				Include(const BoundingBox3D&);
+      void				Include(const BoundingBox3D& box);
+      void				Include(const utils::Vector3D& vertex);
 
     public:
       bool				Intersect(const BoundingBox3D& box);
+      bool				Intersect(const utils::Vector3D& vertex);
+
+    public:
       BoundingBox3D			operator + (const utils::Vector3D&);
 
     public:
-      BoundingBox3D(std::array<utils::Vector3D, 8>&&);
+      BoundingBox3D(const utils::Vector3D&, const utils::Vector3D&);
       BoundingBox3D();
     };
   };
