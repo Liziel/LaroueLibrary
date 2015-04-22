@@ -8,7 +8,7 @@ namespace ctvty {
   namespace utils {
     class BoundingBox3D {
     private:
-      std::array<Face, 6>		edges;
+      std::array<Face, 6>		faces;
       std::array<utils::Vector3D, 8>	vertices;
 
     public:

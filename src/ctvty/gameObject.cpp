@@ -219,6 +219,10 @@ namespace ctvty {
       SendMessage("Start");
   }
 
+  bool				GameObject::IsActive() {
+    return activation_state;
+  }
+
   /*
    * Intern Utilisation Methodes
    */

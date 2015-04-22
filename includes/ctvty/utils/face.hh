@@ -7,6 +7,7 @@
 
 namespace ctvty {
   namespace utils {
+
     class Face {
     private:
       std::vector<Vector3D>		dots;
@@ -14,6 +15,13 @@ namespace ctvty {
 
     public:
       ctvstd::Optional<ContactPoint>	Intersection(const Vector3D& position, const Vector3D& direction);
+
+    public:
+      Vector3D&				operator [] (std::size_t);
+      
+    public:
+      Face(std::size_t);
+      Face(std::vector<Vector3D>&&);
     };
   };
 };

@@ -9,7 +9,6 @@ namespace ctvty {
     struct Vector3D : public serialization::Serializable{
     public:
       float	x,y,z;
-      float	scale;
 
     public:
       static const Vector3D	up;
@@ -23,15 +22,16 @@ namespace ctvty {
 
 
     public:
-      Vector3D(float, float, float, float = 1.);
+      Vector3D();
+      Vector3D(float, float, float);
       Vector3D(const serialization::Archive&);
 
     public:
       void	Serialize(serialization::Archive& __serial) override;
 
     public:
-      Vector3D	GetNormalized();
-      float	GetMagnitude();
+      Vector3D	GetNormalized() const;
+      float	GetMagnitude() const;
 
     public:
       Vector3D	Reflect(const Vector3D& normal);
@@ -39,27 +39,20 @@ namespace ctvty {
       Vector3D	ProjectOnPlane(const Vector3D& normal);
 
     public:
-      Vector3D	operator + (float) const;
-      Vector3D	operator + (const Vector3D&) const;
+      float	DotProduct(const Vector3D& vector);
 
     public:
       Vector3D	operator - () const;
-      Vector3D	operator - (float) const;
+      Vector3D	operator + (const Vector3D&) const;
       Vector3D	operator - (const Vector3D&) const;
+      Vector3D&	operator += (const Vector3D&);
+      Vector3D&	operator -= (const Vector3D&);
 
     public:
       Vector3D	operator * (float) const;
-      Vector3D	operator * (const Vector3D&) const;
       Vector3D	operator / (float) const;
-      Vector3D	operator / (const Vector3D&) const;
-
-    public:
-      Vector3D&	operator += (float);
-      Vector3D&	operator += (const Vector3D&);
-      
-    public:
       Vector3D&	operator *= (float);
-      Vector3D&	operator *= (const Vector3D&);
+      Vector3D&	operator /= (float);
     };
 
   };
