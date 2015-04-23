@@ -39,7 +39,6 @@ namespace ctvty {
 		   __serial.exist("tag") ? __serial["tag"].as<std::string>() : "undefined",
 		   nullptr, __serial["transform"].as<component::Transform*>()) {
     std::list<GameObject*>	_childs;
-    std::list<Component*>	_components;
 
     if (__serial.exist("childs"))
       __serial["childs"] & _childs;
@@ -47,9 +46,10 @@ namespace ctvty {
       child->SetParent(this);
 
     if (__serial.exist("components"))
-      __serial["components"] & _components;
-    for (Component* component : _components)
+      __serial["components"] & components;
+    for (Component* component : components)
       component->AttachParent(this);
+
   }
 
   void				GameObject::Serialize(serialization::Archive& __serial_instance) {
@@ -126,7 +126,7 @@ namespace ctvty {
 				       _transform = (component::Transform*)transform->clone());
 
     transform->AttachParent(clone);
-    for (GameObject* child : childs) 
+    for (GameObject* child : childs)
       clone->AddChild(((GameObject*)child->clone()));
     for (Component* component : components) {
       Component* component_clone = (Component*)component->clone();
@@ -155,6 +155,7 @@ namespace ctvty {
   void				GameObject::SetEventListening(const std::string& eventName,
 							      bool isListening,
 							      GameObject* child) {
+    std::cout << "Set Event Listening: " << eventName << std::endl;
     if (child == nullptr) {
       if (events_map[eventName] == isListening)
 	return ;
@@ -202,6 +203,7 @@ namespace ctvty {
       return ;
     if (events_map[methodName] == false)
       return ;
+    std::cout << "dispatch: " << methodName << std::endl;
     for (Component* component : components)
       if (component->DoImplement(methodName))
 	(*component)[methodName](params);

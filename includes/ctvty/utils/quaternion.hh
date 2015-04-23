@@ -12,6 +12,9 @@ namespace ctvty {
     private:
       Vector3D*	rotation;
       float	scale;
+      
+    public:
+      static const Quaternion	identity;
 
     public:
       Quaternion(float, float, float, float);

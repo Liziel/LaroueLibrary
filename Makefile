@@ -19,10 +19,12 @@ CtvTyAssets	=src/ctvty/assets/assets.cpp\
 
 CtvTyUtils	=src/ctvty/utils/vector3d.cpp\
 		src/ctvty/utils/quaternion.cpp\
-		src/ctvty/utils/boundingbox.cpp
+		src/ctvty/utils/boundingbox.cpp\
+		src/ctvty/utils/face.cpp
 
 CtvTyComponents	=src/ctvty/component/transform.cpp\
-		src/ctvty/component/rigidbody.cpp
+		src/ctvty/component/rigidbody.cpp\
+		src/ctvty/component/collider.cpp\
 
 CtvTy		= src/ctvty/gameObject.cpp \
 		src/ctvty/component.cpp\

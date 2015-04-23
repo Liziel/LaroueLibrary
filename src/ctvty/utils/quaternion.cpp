@@ -27,6 +27,8 @@ namespace ctvty {
       delete rotation;
     }
 
+    const Quaternion	Quaternion::identity(0., 0., 1., 0.);		
+
     void		Quaternion::Serialize(serialization::Archive& __serial_instance) {
       SERIALIZE_OBJECT_AS(ctvty::utils::Quaternion, __serial_instance);
       __serial["rotation"] & rotation;

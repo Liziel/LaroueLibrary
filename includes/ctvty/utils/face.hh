@@ -1,9 +1,11 @@
 #ifndef Faces_hh__
 # define Faces_hh__
 
-#include "ctvty/utils/vector3d.hh"
-#include "ctvty/utils/contactpoint.hh"
-#include "std/optional.hpp"
+# include <vector>
+
+# include "ctvty/utils/vector3d.hh"
+# include "ctvty/utils/contactpoint.hh"
+# include "std/optional.hpp"
 
 namespace ctvty {
   namespace utils {
@@ -15,6 +17,9 @@ namespace ctvty {
 
     public:
       ctvstd::Optional<ContactPoint>	Intersection(const Vector3D& position, const Vector3D& direction);
+
+    public:
+      Vector3D				GetNormal() const;
 
     public:
       Vector3D&				operator [] (std::size_t);

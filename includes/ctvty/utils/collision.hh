@@ -9,9 +9,12 @@ namespace ctvty {
   }
   namespace utils {
     struct Collision {
-      component::Collider*	collider;
-      float			force;
-      ContactPoint		point;
+      component::Collider*			collider_from;
+      component::Collider*			collider_to;
+      float					force;
+      ContactPoint				point;
+    public:
+      Collision(const Collision&) = default;
     };
   }
 };

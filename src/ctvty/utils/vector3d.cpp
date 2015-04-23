@@ -47,25 +47,34 @@ namespace ctvty {
 
 
 
-    Vector3D		Vector3D::Project(const Vector3D& vector) {
+    Vector3D		Vector3D::Project(const Vector3D& vector) const {
       return vector * DotProduct(vector);
     }
 
-    Vector3D		Vector3D::ProjectOnPlane(const Vector3D& normal) {
+    Vector3D		Vector3D::ProjectOnPlane(const Vector3D& normal) const {
       return Project(normal) - (*this);
     }
 
-    Vector3D		Vector3D::Reflect(const Vector3D& normal) {
+    Vector3D		Vector3D::Reflect(const Vector3D& normal) const {
       return (normal * (-2 * DotProduct(normal))) + (*this);
     }
 
 
 
-    float		Vector3D::DotProduct(const Vector3D& vector) {
+    float		Vector3D::DotProduct(const Vector3D& vector) const {
       return
 	vector.x * x +
 	vector.y * y +
 	vector.z * z ;
+    }
+
+    Vector3D		Vector3D::CrossProduct(const Vector3D& vector) const {
+      return
+	Vector3D(
+		 y * vector.z - z * vector.y,
+		 z * vector.x - x * vector.z,
+		 x * vector.y - y * vector.x
+		 );
     }
 
 

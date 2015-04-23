@@ -34,13 +34,13 @@ namespace ctvty {
       float	GetMagnitude() const;
 
     public:
-      Vector3D	Reflect(const Vector3D& normal);
-      Vector3D	Project(const Vector3D& vector);
-      Vector3D	ProjectOnPlane(const Vector3D& normal);
+      Vector3D	Reflect(const Vector3D& normal) const;
+      Vector3D	Project(const Vector3D& vector) const;
+      Vector3D	ProjectOnPlane(const Vector3D& normal) const;
 
     public:
-      float	DotProduct(const Vector3D& vector);
-
+      float	DotProduct(const Vector3D& vector) const;
+      Vector3D	CrossProduct(const Vector3D& vector) const;
     public:
       Vector3D	operator - () const;
       Vector3D	operator + (const Vector3D&) const;

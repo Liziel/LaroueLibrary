@@ -1,6 +1,8 @@
 #ifndef Event_hh__
 # define Event_hh__
 
+#include <iostream>
+
 #include <vector>
 #include <functional>
 
@@ -78,7 +80,7 @@ namespace ctvty {
     /*
      * event Receiver
      */
-    template<typename _class, typename ... parameters>
+    template<typename primary_class, typename _class, typename ... parameters>
     class intern_receiver;
 
     class receiver {
@@ -86,9 +88,9 @@ namespace ctvty {
       virtual void	operator() (ctvty::event::parameters::values _params = parameters::PackValues()) = 0;
 
     public:
-      template<typename _class, typename ... parameters>
-      static receiver* create(_class* _this, std::function<void ( _class*, parameters...)> _fn) {
-	return (new intern_receiver< _class, parameters ... >(_this, _fn));
+      template<typename primary_class, typename _class, typename ... parameters>
+      static receiver* create(primary_class* _this, std::function<void ( _class*, parameters...)> _fn) {
+	return (new intern_receiver< primary_class, _class, parameters ... >(_this, _fn));
       }
     };
 
@@ -134,21 +136,23 @@ namespace ctvty {
     };
 
 
-    template<typename _class, typename ... parameters>
-    class intern_receiver : public receiver{
+    template<typename primary_class, typename _class, typename ... parameters>
+    class intern_receiver : public receiver {
     private:
-      _class*					_this_;
+      primary_class*					_this_;
       std::function<void ( _class*, parameters ... )>	_fn;
 
     public:
-      intern_receiver(_class* _this, std::function<void( _class*, parameters... )> fn)
-	: _this_(_this), _fn(fn) {}
+      intern_receiver(primary_class* _this, std::function<void( _class*, parameters... )> fn)
+	: _this_(_this), _fn(fn) {
+	std::cout << "intern " << _this_ << std::endl;
+      }
 
     public:
       void operator() (ctvty::event::parameters::values _values) {
 	if (_values.size() < sizeof ... (parameters))
 	  throw std::runtime_error("not enough operands");
-	unfolder<sizeof ... (parameters)>::apply(_values, _this_, _fn);
+	unfolder<sizeof ... (parameters)>::apply(_values, dynamic_cast<_class*>(_this_), _fn);
       }
     };
 

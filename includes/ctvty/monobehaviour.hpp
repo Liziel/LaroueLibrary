@@ -61,7 +61,6 @@ namespace ctvty {
       invoked.clear();
     }
 
-
   public:
     MonoBehaviour(GameObject* parent, const std::string& name)
       : Behaviour(parent, name) {

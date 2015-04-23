@@ -9,12 +9,17 @@ namespace ctvty {
   namespace component {
 
     class Collider : public MonoBehaviour<Collider> {
-      friend class RigidBody;
     private:
       utils::BoundingBox3D		boundingBox;
       RigidBody*			rigidBody;
       bool				isTrigger;
       physics::Material*		material;
+
+    public:
+      bool				IsTrigger();
+      RigidBody*			GetRigidBody();
+      utils::BoundingBox3D&		GetBoundingBox();
+      const physics::Material*		GetMaterial();
 
     public:
       virtual ctvstd::Optional<utils::Collision>

@@ -1,202 +1,6 @@
 {
 	"object" : {
 		"childs" : [
-		{
-				"object" : {
-					"childs" : [
-					],
-					"components" : [
-					],
-					"name" : "Soldier1",
-					"tag" : "soldier",
-					"transform" : {
-						"object" : {
-							"position" : {
-								"object" : {
-									"scale" : 1,
-									"x" : 0,
-									"y" : 0,
-									"z" : 1,
-								},
-								"type" : "ctvty::utils::Vector3D",
-							},
-							"rotation" : {
-								"object" : {
-									"rotation" : {
-										"object" : {
-											"scale" : 1,
-											"x" : 0,
-											"y" : 0,
-											"z" : 0,
-										},
-										"type" : "ctvty::utils::Vector3D",
-									},
-									"scale" : 1,
-								},
-								"type" : "ctvty::utils::Quaternion",
-							},
-							"scale" : {
-								"object" : {
-									"scale" : 1,
-									"x" : 1,
-									"y" : 1,
-									"z" : 1,
-								},
-								"type" : "ctvty::utils::Vector3D",
-							},
-						},
-						"type" : "ctvty::component::Transform",
-					},
-				},
-				"type" : "ctvty::GameObject",
-			},
-		{
-				"object" : {
-					"childs" : [
-					],
-					"components" : [
-					],
-					"name" : "Soldier1",
-					"tag" : "soldier",
-					"transform" : {
-						"object" : {
-							"position" : {
-								"object" : {
-									"scale" : 1,
-									"x" : 0,
-									"y" : 0,
-									"z" : 1,
-								},
-								"type" : "ctvty::utils::Vector3D",
-							},
-							"rotation" : {
-								"object" : {
-									"rotation" : {
-										"object" : {
-											"scale" : 1,
-											"x" : 0,
-											"y" : 0,
-											"z" : 0,
-										},
-										"type" : "ctvty::utils::Vector3D",
-									},
-									"scale" : 1,
-								},
-								"type" : "ctvty::utils::Quaternion",
-							},
-							"scale" : {
-								"object" : {
-									"scale" : 1,
-									"x" : 1,
-									"y" : 1,
-									"z" : 1,
-								},
-								"type" : "ctvty::utils::Vector3D",
-							},
-						},
-						"type" : "ctvty::component::Transform",
-					},
-				},
-				"type" : "ctvty::GameObject",
-			},
-		{
-				"object" : {
-					"childs" : [
-					],
-					"components" : [
-					],
-					"name" : "Soldier2",
-					"tag" : "soldier",
-					"transform" : {
-						"object" : {
-							"position" : {
-								"object" : {
-									"scale" : 1,
-									"x" : 0,
-									"y" : 0,
-									"z" : 1,
-								},
-								"type" : "ctvty::utils::Vector3D",
-							},
-							"rotation" : {
-								"object" : {
-									"rotation" : {
-										"object" : {
-											"scale" : 1,
-											"x" : 0,
-											"y" : 0,
-											"z" : 0,
-										},
-										"type" : "ctvty::utils::Vector3D",
-									},
-									"scale" : 1,
-								},
-								"type" : "ctvty::utils::Quaternion",
-							},
-							"scale" : {
-								"object" : {
-									"scale" : 1,
-									"x" : 1,
-									"y" : 1,
-									"z" : 1,
-								},
-								"type" : "ctvty::utils::Vector3D",
-							},
-						},
-						"type" : "ctvty::component::Transform",
-					},
-				},
-				"type" : "ctvty::GameObject",
-			},
-		{
-				"object" : {
-					"childs" : [
-					],
-					"components" : [
-					],
-					"name" : "Soldier2",
-					"tag" : "soldier",
-					"transform" : {
-						"object" : {
-							"position" : {
-								"object" : {
-									"scale" : 1,
-									"x" : 0,
-									"y" : 0,
-									"z" : 1,
-								},
-								"type" : "ctvty::utils::Vector3D",
-							},
-							"rotation" : {
-								"object" : {
-									"rotation" : {
-										"object" : {
-											"scale" : 1,
-											"x" : 0,
-											"y" : 0,
-											"z" : 0,
-										},
-										"type" : "ctvty::utils::Vector3D",
-									},
-									"scale" : 1,
-								},
-								"type" : "ctvty::utils::Quaternion",
-							},
-							"scale" : {
-								"object" : {
-									"scale" : 1,
-									"x" : 1,
-									"y" : 1,
-									"z" : 1,
-								},
-								"type" : "ctvty::utils::Vector3D",
-							},
-						},
-						"type" : "ctvty::component::Transform",
-					},
-				},
-				"type" : "ctvty::GameObject",
-			},
 		],
 		"components" : [
 		{
@@ -207,10 +11,9 @@
 					"mass" : 1,
 					"velocity" : {
 						"object" : {
-							"scale" : 1,
 							"x" : 0,
 							"y" : 0,
-							"z" : 0,
+							"z" : 10.,
 						},
 						"type" : "ctvty::utils::Vector3D",
 					},
@@ -224,7 +27,6 @@
 			"object" : {
 				"position" : {
 					"object" : {
-						"scale" : 1,
 						"x" : 0,
 						"y" : 0,
 						"z" : 1,
@@ -235,20 +37,18 @@
 					"object" : {
 						"rotation" : {
 							"object" : {
-								"scale" : 1,
 								"x" : 0,
 								"y" : 0,
 								"z" : 0,
 							},
 							"type" : "ctvty::utils::Vector3D",
 						},
-						"scale" : 1,
+						"scale" : 0,
 					},
 					"type" : "ctvty::utils::Quaternion",
 				},
 				"scale" : {
 					"object" : {
-						"scale" : 1,
 						"x" : 1,
 						"y" : 1,
 						"z" : 1,

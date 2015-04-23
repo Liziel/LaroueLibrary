@@ -10,7 +10,9 @@
 namespace ctvty {
 
   class GameObject;
-  class Transform;
+  namespace component {
+    class Transform;
+  };
 
   class Component : public Object {
   private:
@@ -18,7 +20,7 @@ namespace ctvty {
 
   protected:
     GameObject*					gameObject;
-    Transform*					transform;
+    component::Transform*			transform;
 
   protected:
     std::map<std::string, event::receiver*>	registeredListener;
@@ -46,7 +48,7 @@ namespace ctvty {
 						 void (child_class::*listener)(listener_arguments...)) {
       registeredListener
 	.emplace(name,
-		 event::receiver::create(dynamic_cast<child_class*>(this),
+		 event::receiver::create(this,
 					 std::function<void ( child_class*, listener_arguments... )>(listener)));
       if (gameObject)
 	gameObject->SetEventListening(name, true);
@@ -79,6 +81,7 @@ namespace ctvty {
      * will just check if the given tag is the same as the registered tag
      */
     bool			CompareTag(const std::string& tag);
+    GameObject*			GetGameObject();
 
   public:
     /*

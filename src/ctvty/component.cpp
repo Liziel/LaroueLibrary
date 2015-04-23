@@ -6,7 +6,10 @@ namespace ctvty {
    * Ctor & Dtor
    */
   Component::		Component(GameObject* parent, const std::string& name)
-    : Object(name), gameObject(parent), transform(nullptr /*parent->GetComponent<Transform>()*/) {
+    : Object(name), gameObject(parent) {
+    std::cout << name << " " << parent << std::endl;
+    if (parent)
+      AttachParent(parent);
   }
 
   Component::		~Component() {
@@ -41,10 +44,18 @@ namespace ctvty {
   }
 
   /*
+   * Getter
+   */
+  GameObject*		Component::GetGameObject() {
+    return gameObject;
+  }
+
+  /*
    *  Event Listener
    */
   void			Component::AttachParent(GameObject* _gameObject) {
     gameObject = _gameObject;
+    transform = gameObject->GetTransformation();
     std::for_each(registeredListener.begin(), registeredListener.end(),
 		  [ & ] (std::pair<std::string, event::receiver*> pair) {
 		    gameObject->SetEventListening(pair.first, true);
