@@ -48,7 +48,9 @@ namespace ctvty {
 
 
     Vector3D		Vector3D::Project(const Vector3D& vector) {
-      return vector * DotProduct(vector);
+	if (vector.GetMagnitude() == 0)
+	return Vector3D::zero;
+      return vector * (DotProduct(vector) / (vector.GetMagnitude() * vector.GetMagnitude()));
     }
 
     Vector3D		Vector3D::ProjectOnPlane(const Vector3D& normal) {
