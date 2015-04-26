@@ -2,6 +2,9 @@
 
 namespace ctvty {
   namespace component {
+    Collider::Collider(GameObject* parent, const std::string& name)
+      : MonoBehaviour<Collider>(parent, name) {}
+
     bool			Collider::IsTrigger() {
       return isTrigger;
     }

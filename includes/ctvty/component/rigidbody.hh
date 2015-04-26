@@ -26,7 +26,6 @@ namespace ctvty {
     private:
       utils::BoundingBox3D			boundingBox;
       std::list<Collider*>			sub_colliders;
-      std::list<utils::Vector3D>		vertices;
 
     private:
       std::list<Collider*>			colliders_collisions;

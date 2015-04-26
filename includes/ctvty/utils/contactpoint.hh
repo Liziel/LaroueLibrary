@@ -8,6 +8,9 @@ namespace ctvty {
     struct ContactPoint {
       Vector3D		point;
       Vector3D		normal;
+
+    public:
+      ContactPoint(const Vector3D& point, const Vector3D& normal);
     };
   };
 };

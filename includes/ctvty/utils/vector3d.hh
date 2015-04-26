@@ -20,7 +20,6 @@ namespace ctvty {
       static const Vector3D	zero;
       static const Vector3D	one;
 
-
     public:
       Vector3D();
       Vector3D(float, float, float);
@@ -30,31 +29,42 @@ namespace ctvty {
       void	Serialize(serialization::Archive& __serial) override;
 
     public:
-      Vector3D	GetNormalized() const;
-      float	GetMagnitude() const;
+      const Vector3D	GetNormalized() const;
+      float		GetMagnitude() const;
 
     public:
-      Vector3D	Reflect(const Vector3D& normal) const;
-      Vector3D	Project(const Vector3D& vector) const;
-      Vector3D	ProjectOnPlane(const Vector3D& normal) const;
+      const Vector3D	Reflect(const Vector3D& normal) const;
+      const Vector3D	Project(const Vector3D& vector) const;
+      const Vector3D	ProjectOnPlane(const Vector3D& normal) const;
 
     public:
-      float	DotProduct(const Vector3D& vector) const;
-      Vector3D	CrossProduct(const Vector3D& vector) const;
-    public:
-      Vector3D	operator - () const;
-      Vector3D	operator + (const Vector3D&) const;
-      Vector3D	operator - (const Vector3D&) const;
-      Vector3D&	operator += (const Vector3D&);
-      Vector3D&	operator -= (const Vector3D&);
+      float		DotProduct(const Vector3D& vector) const;
+      const Vector3D	CrossProduct(const Vector3D& vector) const;
+      float		ScalarProjection(const Vector3D& vector) const;
 
     public:
-      Vector3D	operator * (float) const;
-      Vector3D	operator / (float) const;
-      Vector3D&	operator *= (float);
-      Vector3D&	operator /= (float);
+      const Vector3D	operator - () const;
+      const Vector3D	operator + (const Vector3D&) const;
+      const Vector3D	operator - (const Vector3D&) const;
+      Vector3D&		operator += (const Vector3D&);
+      Vector3D&		operator -= (const Vector3D&);
+
+    public:
+      const Vector3D	operator * (float) const;
+      const Vector3D	operator / (float) const;
+      Vector3D&		operator *= (float);
+      Vector3D&		operator /= (float);
+
+    public:
+      bool		operator == (const Vector3D&) const;
     };
 
+
+    inline
+    const Vector3D	operator * (float f, const Vector3D& v) { return v * f; }
+
+    inline
+    const Vector3D	operator / (float f, const Vector3D& v) { return v / f; }
   };
 };
 

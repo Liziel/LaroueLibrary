@@ -1,12 +1,8 @@
 NAME		= bomberman
 
-ifeq ($(CC),)
-CC		= gcc
-endif
+CC		?= gcc
 
-ifeq ($(CXX),)
-CXX		= g++
-endif
+CXX		?= g++
 
 INCLUDES	= -I ./includes
 ###################
@@ -20,11 +16,13 @@ CtvTyAssets	=src/ctvty/assets/assets.cpp\
 CtvTyUtils	=src/ctvty/utils/vector3d.cpp\
 		src/ctvty/utils/quaternion.cpp\
 		src/ctvty/utils/boundingbox.cpp\
-		src/ctvty/utils/face.cpp
+		src/ctvty/utils/face.cpp\
+		src/ctvty/utils/contactpoint.cpp
 
 CtvTyComponents	=src/ctvty/component/transform.cpp\
 		src/ctvty/component/rigidbody.cpp\
 		src/ctvty/component/collider.cpp\
+		src/ctvty/component/boxcollider.cpp
 
 CtvTy		= src/ctvty/gameObject.cpp \
 		src/ctvty/component.cpp\
@@ -51,20 +49,20 @@ CSRC		+=
 FLAGS		= -W -Wextra $(INCLUDES)
 CFLAGS		+= $(FLAGS) -Wall
 CXXFLAGS	+= $(FLAGS) -std=c++11 # skip bad warning for c++11 
-LDFLAGS		=
+LDFLAGS		+=
 
 CXXOBJ		= $(CXXSRC:.cpp=.o)
 COBJ		= $(CSRC:.c=.o)
 OBJ		= $(CXXOBJ) $(COBJ)
 
+CXXDEPENDENCIES	= $(CXXSRC:.cpp=.d)
+CDEPENDENCIES	= $(CSRC:.c=.d)
+DEPENDENCIES	= $(CDEPENDENCIES) $(CXXDEPENDENCIES)
+
 ifneq ($(CXXOBJ),)
-ifeq 	($(LINKER),)
-LINKER	= $(CXX)
-endif
+LINKER	?= $(CXX)
 else
-ifeq	($(LINKER),)
-LINKER	= $(CC)
-endif
+LINKER	?= $(CC)
 endif
 
 all: $(NAME)
@@ -72,19 +70,43 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	$(LINKER) -o $(NAME) $(OBJ) $(LDFLAGS)
 
-
 clean:
 	$(RM) $(OBJ)
 
 fclean: clean
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(DEPENDENCIES)
 
-re: fclean all
+re: fclean dependencies all
 
+ifneq ($@,re)
+-include $(DEPENDENCIES)
+endif
+
+dependencies: $(DEPENDENCIES)
+	@echo Dependencies Builded at `date`
+
+%.d: %.cpp
+	@echo -n `dirname $*` > $*.d
+	@echo -n "/" >> $*.d
+	@echo "Building Dependencies file for" $*.cpp
+	@$(CXX) -MM	$*.cpp	 $(CXXFLAGS) >>	$*.d
+	@echo "\t@echo Building " $*.cpp >> $*.d
+	@echo '\t@$$(CXX) -c	$*.cpp $$(CXXFLAGS) -o $*.o' >> $*.d
+
+%.d: %.c
+	@echo -n `dirname $*` > $*.d
+	@echo -n "/" >> $*.d
+	@echo "Building Dependencies file for" $*.c
+	@$(CC) -MM	$*.c	 $(CFLAGS) >>	$*.d
+	@echo "\t@echo Building " $*.c >> $*.d
+	@echo '\t@$$(CC) -c	$*.c $$(CFLAGS) -o $*.o' >> $*.d
 .cpp.o:
-	$(CXX) -c -o $@		 $< $(CXXFLAGS)
+	echo oui
+%.o: %.cpp
+	$(CXX) -c	$*.cpp	 $(CXXFLAGS) -o $*.o
 
-.c.o:
-	$(CC) -c -o $@		 $< $(CFLAGS)
+%.o: %.c
+	$(CC) -c	$*.c	 $(CFLAGS) -o $*.o
 
-.PHONY: all clean fclean re
+
+.PHONY: all clean fclean re dependencies

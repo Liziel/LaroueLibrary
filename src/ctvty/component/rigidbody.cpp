@@ -48,7 +48,9 @@ namespace ctvty {
     }
 
     void		RigidBody::FixedUpdate() {
-      utils::Vector3D movement = GetVelocity() + (utils::Vector3D::down * World::gravity);
+      utils::Vector3D movement = GetVelocity();
+      if (!isKinematic)
+	movement += (utils::Vector3D::down * World::gravity);
       movement *= event::Clock::GetClock().GetFixedDeltaTime();
       DiscreteCheckMovement(movement);
 
@@ -92,7 +94,7 @@ namespace ctvty {
 
       for (Collider* collider : colliders)
 	if (collider->GetBoundingBox().Intersect(endBox)
-	    && (collision = collider->Collision(vertices, position, movement))) {
+	    && (collision = collider->Collision(sub_colliders, position, movement))) {
 
 	  if (collision->force == movement.GetMagnitude()) {
 	  } else if (force < collision->force) {
@@ -110,7 +112,7 @@ namespace ctvty {
       for (RigidBody* rigidbody : rigidbodies)
 	for (Collider* collider : rigidbody->sub_colliders)
 	  if (collider->GetBoundingBox().Intersect(endBox)
-	      && (collision = collider->Collision(vertices, position, movement))) {
+	      && (collision = collider->Collision(sub_colliders, position, movement))) {
 
 	    if (collision->force == movement.GetMagnitude()) {
 	    } else if (force < collision->force) {

@@ -9,7 +9,7 @@ namespace ctvty {
   namespace component {
 
     class Collider : public MonoBehaviour<Collider> {
-    private:
+    protected:
       utils::BoundingBox3D		boundingBox;
       RigidBody*			rigidBody;
       bool				isTrigger;
@@ -22,11 +22,17 @@ namespace ctvty {
       const physics::Material*		GetMaterial();
 
     public:
+      virtual const std::list<utils::Vector3D>&
+					GetVertices() const = 0;
+
+    public:
       virtual ctvstd::Optional<utils::Collision>
-					Collision(const std::list<utils::Vector3D>& vertices,
+					Collision(const std::list<Collider*>& contact_colliders,
 						  const utils::Vector3D& position,
 						  const utils::Vector3D& direction) = 0;
 
+    protected:
+      Collider(GameObject* parent, const std::string&);
     };
     
   };

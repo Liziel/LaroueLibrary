@@ -13,6 +13,7 @@ namespace ctvty {
       component::Collider*			collider_to;
       float					force;
       ContactPoint				point;
+
     public:
       Collision(const Collision&) = default;
     };

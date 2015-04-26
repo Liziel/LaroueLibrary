@@ -36,7 +36,7 @@ namespace ctvty {
     const Vector3D	Vector3D::one		( 1.,  1.,  1.);
 
 
-    Vector3D		Vector3D::GetNormalized() const{
+    const Vector3D	Vector3D::GetNormalized() const{
       float magnitude = GetMagnitude();
       return Vector3D(x / magnitude, y / magnitude, z / magnitude);
     }
@@ -47,17 +47,17 @@ namespace ctvty {
 
 
 
-    Vector3D		Vector3D::Project(const Vector3D& vector) {
-	if (vector.GetMagnitude() == 0)
+    const Vector3D	Vector3D::Project(const Vector3D& vector) const {
+      if (vector.GetMagnitude() == 0)
 	return Vector3D::zero;
       return vector * (DotProduct(vector) / (vector.GetMagnitude() * vector.GetMagnitude()));
     }
 
-    Vector3D		Vector3D::ProjectOnPlane(const Vector3D& normal) const {
+    const Vector3D	Vector3D::ProjectOnPlane(const Vector3D& normal) const {
       return Project(normal) - (*this);
     }
 
-    Vector3D		Vector3D::Reflect(const Vector3D& normal) const {
+    const Vector3D	Vector3D::Reflect(const Vector3D& normal) const {
       return (normal * (-2 * DotProduct(normal))) + (*this);
     }
 
@@ -70,7 +70,7 @@ namespace ctvty {
 	vector.z * z ;
     }
 
-    Vector3D		Vector3D::CrossProduct(const Vector3D& vector) const {
+    const Vector3D	Vector3D::CrossProduct(const Vector3D& vector) const {
       return
 	Vector3D(
 		 y * vector.z - z * vector.y,
@@ -79,13 +79,19 @@ namespace ctvty {
 		 );
     }
 
+    float		Vector3D::ScalarProjection(const Vector3D& vector) const {
+      if (vector.GetMagnitude() == 0)
+	return 0;
+      return (DotProduct(vector) / (vector.GetMagnitude() * vector.GetMagnitude()));
+    }
 
 
-    Vector3D		Vector3D::operator * (float f) const {
+
+    const Vector3D	Vector3D::operator * (float f) const {
       return Vector3D(x * f, y *f, z *f);
     }
 
-    Vector3D		Vector3D::operator / (float f) const {
+    const Vector3D	Vector3D::operator / (float f) const {
       return Vector3D(x / f, y / f, z / f);
     }
 
@@ -105,17 +111,17 @@ namespace ctvty {
     
 
 
-    Vector3D		Vector3D::operator - () const {
+    const Vector3D		Vector3D::operator - () const {
       return Vector3D(-x, -y, -z);
     }
 
-    Vector3D		Vector3D::operator - (const Vector3D& vector) const {
+    const Vector3D		Vector3D::operator - (const Vector3D& vector) const {
       return Vector3D(x - vector.x,
 		      y - vector.y,
 		      z - vector.z);
     }
 
-    Vector3D		Vector3D::operator + (const Vector3D& vector) const {
+    const Vector3D		Vector3D::operator + (const Vector3D& vector) const {
       return Vector3D(x + vector.x,
 		      y + vector.y,
 		      z + vector.z);
@@ -133,6 +139,10 @@ namespace ctvty {
       y -= vector.y;
       z -= vector.z;
       return *this;
+    }
+
+    bool		Vector3D::operator == (const Vector3D& vector) const {
+      return x == vector.x && y == vector.y && z == vector.z;
     }
   };
 };

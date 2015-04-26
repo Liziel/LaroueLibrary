@@ -32,6 +32,7 @@ namespace ctvstd {
 		operator bool () { return var.operator bool (); }
     auto	operator * () -> decltype( *var ) { return *(var.get()); }
     auto	operator ->() -> decltype( var.operator->() ) { return var.operator -> (); }
+
   public:
     Optional&	operator = (const Optional& oth) { var = oth.var; return *this;}
   };

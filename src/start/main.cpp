@@ -1,3 +1,4 @@
+#include <cmath>
 #include <iostream>
 #include "serialization/serializable.hh"
 #include "filesystem/directory.hh"
@@ -33,13 +34,53 @@ int main(int ac, char** av) {
 
   ctvty::GameObject			*Army = nullptr;
 
+  using namespace ctvty::utils;
   if (1)
     {
-      ctvty::utils::Face face({ctvty::utils::Vector3D::zero, ctvty::utils::Vector3D::up + ctvty::utils::Vector3D::up, ctvty::utils::Vector3D::left + ctvty::utils::Vector3D::up});
+      Quaternion	q(Quaternion::Euler(Vector3D::up * M_PI / 2));
       serialization::Serial json;
-      ctvty::utils::Vector3D	normal(face.GetNormal());
-      json & &(normal);
+
+      json & &q;
       std::cout << json.Stringify() << std::endl;
+
+      ctvty::utils::Vector3D	direction(Vector3D::forward * 10 + Vector3D::up);
+      direction = q.RotatedAround(Vector3D::up, direction);
+      json & &direction;
+      std::cout << json.Stringify() << std::endl;
+
+    }
+
+  if (1)
+    {
+      ctvty::utils::Face face({
+	  ctvty::utils::Vector3D::zero,
+	    ctvty::utils::Vector3D::right,
+	    ctvty::utils::Vector3D::up +
+	    ctvty::utils::Vector3D::right,
+	    ctvty::utils::Vector3D::up,
+	    });
+      serialization::Serial json;
+
+      ctvty::utils::Vector3D	point(Vector3D::back * 2 + Vector3D::up/2);
+      ctvty::utils::Vector3D	direction(Vector3D::forward * 10);
+      float			force;
+
+      json & &(point);
+      std::cout << json.Stringify() << std::endl;
+      json & &(direction);
+      std::cout << json.Stringify() << std::endl;
+
+      { Vector3D tmp = point + direction * 0.5;
+	json & &(tmp);
+	std::cout << json.Stringify() << std::endl;}
+
+      std::cout << std::boolalpha << std::endl;
+      ctvstd::Optional<ContactPoint> p = face.Intersection(point, direction, force);
+      std::cout << "collide ? " << p << std::endl;
+      if (p) {
+	std::cout << "at" << "{ " << p->point.x << " , " << p->point.y << " , " << p->point.z << " }" << std::endl;
+	std::cout << "with force " << force << std::endl;
+      }
     }
 
   if (0)

@@ -13,19 +13,26 @@ namespace ctvty {
     class Face {
     private:
       std::vector<Vector3D>		dots;
-      Vector3D				normal;
+      std::vector<Vector3D>		repered_dots;
 
     public:
-      ctvstd::Optional<ContactPoint>	Intersection(const Vector3D& position, const Vector3D& direction);
+      Vector3D				normal;
+      Vector3D				x, y;
+
+    public:
+      ctvstd::Optional<ContactPoint>	Intersection(const Vector3D& position, const Vector3D& direction,
+						     float& force) const;
 
     public:
       Vector3D				GetNormal() const;
+      Vector3D				GetRelativePosition(const Vector3D& point3D) const;
 
     public:
-      Vector3D&				operator [] (std::size_t);
+      bool				IsPointInside(const Vector3D& point) const;
+      ctvstd::Optional<float>		GetCollisionDistance(const Vector3D& position,
+							     const Vector3D& direction) const;
       
     public:
-      Face(std::size_t);
       Face(std::vector<Vector3D>&&);
     };
   };
