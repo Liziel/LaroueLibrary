@@ -73,35 +73,31 @@ $(NAME): $(OBJ)
 clean:
 	$(RM) $(OBJ)
 
-fclean: clean
-	$(RM) $(NAME) $(DEPENDENCIES)
+fclean: clean dependencies_clean
+	$(RM) $(NAME)
 
-re: fclean dependencies all
+re: fclean all
 
-ifneq ($@,re)
 -include $(DEPENDENCIES)
-endif
 
-dependencies: $(DEPENDENCIES)
-	@echo Dependencies Builded at `date`
+clean_dependencies:
+	rm -f $(DEPENDENCIES)
+
+%.o: %.h
+	@echo $*.h not up to date
 
 %.d: %.cpp
 	@echo -n `dirname $*` > $*.d
 	@echo -n "/" >> $*.d
 	@echo "Building Dependencies file for" $*.cpp
 	@$(CXX) -MM	$*.cpp	 $(CXXFLAGS) >>	$*.d
-	@echo "\t@echo Building " $*.cpp >> $*.d
-	@echo '\t@$$(CXX) -c	$*.cpp $$(CXXFLAGS) -o $*.o' >> $*.d
 
 %.d: %.c
 	@echo -n `dirname $*` > $*.d
 	@echo -n "/" >> $*.d
 	@echo "Building Dependencies file for" $*.c
 	@$(CC) -MM	$*.c	 $(CFLAGS) >>	$*.d
-	@echo "\t@echo Building " $*.c >> $*.d
-	@echo '\t@$$(CC) -c	$*.c $$(CFLAGS) -o $*.o' >> $*.d
-.cpp.o:
-	echo oui
+
 %.o: %.cpp
 	$(CXX) -c	$*.cpp	 $(CXXFLAGS) -o $*.o
 
@@ -109,4 +105,4 @@ dependencies: $(DEPENDENCIES)
 	$(CC) -c	$*.c	 $(CFLAGS) -o $*.o
 
 
-.PHONY: all clean fclean re dependencies
+.PHONY: all clean fclean re clean_dependencies
