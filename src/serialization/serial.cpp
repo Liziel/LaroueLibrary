@@ -284,6 +284,10 @@ namespace serialization {
       return ('"' + _serialized_string + '"');
     }
 
+    std::string		string::CompactStringify(int) const {
+      return ('"' + _serialized_string + '"');
+    }
+
     std::string		object::Stringify(int level) const {
       std::string	_stringified("{\n");
       std::size_t	i = 0;
@@ -300,8 +304,27 @@ namespace serialization {
       return (_stringified);
     }
 
+    std::string		object::CompactStringify(int) const {
+      std::string	_stringified("{");
+      std::size_t	i = 0;
+
+      std::for_each(_serialized_object.begin(), _serialized_object.end(), [=, &_stringified]
+		   (std::pair< std::string, Serial* > pair) {
+		      _stringified += " \"" +
+			pair.first + "\" : "
+			+ pair.second->CompactStringify()
+			+ ( (i + 1 < _serialized_object.size()) ? (", ") : (" ") );
+		    });
+      _stringified += "}";
+      return (_stringified);
+    }
+
     std::string		function::Stringify(int level) const {
       return _function_name + '(' + _parameter->Stringify(level + 1) + ')';
+    }
+
+    std::string		function::CompactStringify(int level) const {
+      return _function_name + '(' + _parameter->CompactStringify(level + 1) + ')';
     }
 
     std::string		list::Stringify(int level) const {
@@ -318,7 +341,27 @@ namespace serialization {
       return (_stringified);
     }
 
+    std::string		list::CompactStringify(int level) const {
+      std::string	_stringified("[");
+      std::size_t	i = 0;
+
+      std::for_each(_serialized_list.begin(), _serialized_list.end(), [=, &_stringified]
+		   (Serial* serial) {
+		      _stringified += ' '
+			+ serial->CompactStringify(level + 1)
+			+ ( (i + 1 < _serialized_list.size()) ? (", ") : (" ") );
+		    });
+      _stringified += "]";
+      return (_stringified);
+    }
+
     std::string		integer::Stringify(int) const {
+      std::stringstream	ss("");
+      ss << _serialized_integer;
+      return (ss.str());
+    }
+
+    std::string		integer::CompactStringify(int) const {
       std::stringstream	ss("");
       ss << _serialized_integer;
       return (ss.str());
@@ -330,7 +373,19 @@ namespace serialization {
       return (ss.str());
     }
 
+    std::string		floating::CompactStringify(int) const {
+      std::stringstream	ss("");
+      ss << _serialized_floating;
+      return (ss.str());
+    }
+
     std::string		boolean::Stringify(int) const {
+      std::stringstream	ss("");
+      ss << std::boolalpha << _serialized_boolean;
+      return (ss.str());
+    }
+
+    std::string		boolean::CompactStringify(int) const {
       std::stringstream	ss("");
       ss << std::boolalpha << _serialized_boolean;
       return (ss.str());

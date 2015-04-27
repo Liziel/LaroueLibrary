@@ -25,11 +25,18 @@ namespace ctvty {
       virtual const std::list<utils::Vector3D>&
 					GetVertices() const = 0;
 
-    public:
+    protected:
       virtual ctvstd::Optional<utils::Collision>
+					CollisionImpl(const Collider* contact_colliders,
+						      const utils::Vector3D& position,
+						      const utils::Vector3D& direction) = 0;
+    public:
+      ctvstd::Optional<utils::Collision>
 					Collision(const std::list<Collider*>& contact_colliders,
 						  const utils::Vector3D& position,
-						  const utils::Vector3D& direction) = 0;
+						  const utils::Vector3D& direction) {
+	return ctvstd::none;
+      }
 
     protected:
       Collider(GameObject* parent, const std::string&);

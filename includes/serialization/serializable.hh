@@ -32,7 +32,7 @@ namespace serialization {
     static Serializable*		Instantiate(const Serial& archive);
 
   public:
-    virtual void			Serialize(Archive&) = 0;
+    virtual void			Serialize(Archive&) const = 0;
 
   public:
     virtual ~Serializable() {}

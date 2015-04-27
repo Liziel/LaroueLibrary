@@ -25,7 +25,7 @@ namespace ctvty {
     delete assets;
   }
 
-  void			Application::Serialize(serialization::Archive& __serial_instance) {
+  void			Application::Serialize(serialization::Archive& __serial_instance) const {
     float	fps = 30;
     SERIALIZE_OBJECT_AS(ctvty::Application, __serial_instance);
     __serial["scenes"] & scenes;
@@ -132,7 +132,7 @@ namespace ctvty {
       Object::Destroy(prefab);
   }
 
-  void			Application::Scene::Serialize(serialization::Archive& __serial_instance) {
+  void			Application::Scene::Serialize(serialization::Archive& __serial_instance) const {
     SERIALIZE_OBJECT_AS(ctvty::Application::Scene, __serial_instance);
     __serial["objects"] & objects;
     __serial["name"] & name;

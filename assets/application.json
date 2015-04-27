@@ -1,6 +1,6 @@
 {
 	"object" : {
-		"fps" : 30,
+		"fps" : 60,
 		"load" : "base",
 		"scenes" : [
 		    {

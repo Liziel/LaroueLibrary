@@ -74,8 +74,13 @@ namespace ctvty {
 
     }
 
-    BoundingBox3D	BoundingBox3D::operator + (const utils::Vector3D& vector) {
+    BoundingBox3D	BoundingBox3D::operator + (const utils::Vector3D& vector) const {
       return BoundingBox3D(base_vertex + vector, end_point + vector);
+    }
+
+
+    BoundingBox3D	BoundingBox3D::operator * (float f) const {
+      return BoundingBox3D(base_vertex * f, end_point * f);
     }
   };
 };

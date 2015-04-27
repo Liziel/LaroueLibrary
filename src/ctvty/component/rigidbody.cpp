@@ -27,7 +27,7 @@ namespace ctvty {
     }
 
     
-    void		RigidBody::Serialize(serialization::Archive& __serial_instance) {
+    void		RigidBody::Serialize(serialization::Archive& __serial_instance) const {
       SERIALIZE_OBJECT_AS(ctvty::component::RigidBody, __serial_instance);
       __serial["detectionMode"] & detectionMode;
       __serial["detectCollision"] & detectCollision;
@@ -37,9 +37,12 @@ namespace ctvty {
     }
 
     Object*		RigidBody::clone() const {
-      RigidBody* _clone = new RigidBody(*this);
+      serialization::Serial	copy;
+      RigidBody* _clone = nullptr;
 
-      _clone->velocity = new utils::Vector3D(*(this->velocity));
+      copy & this;
+      static_cast<const serialization::Serial&>(copy) & _clone;
+
       return _clone;
     }
 

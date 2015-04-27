@@ -18,7 +18,7 @@ namespace ctvty {
       __serial["z"] & z;
     }
 
-    void		Vector3D::Serialize(serialization::Archive& __serial_instance) {
+    void		Vector3D::Serialize(serialization::Archive& __serial_instance) const {
       SERIALIZE_OBJECT_AS(ctvty::utils::Vector3D, __serial_instance);
       __serial["x"] & x;
       __serial["y"] & y;

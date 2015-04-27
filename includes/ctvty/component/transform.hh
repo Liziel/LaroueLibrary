@@ -34,7 +34,7 @@ namespace ctvty {
       ~Transform();
 
     public:
-      void		Serialize(serialization::Archive& __serial) override;
+      void		Serialize(serialization::Archive& __serial) const override;
 
     public:
       Object*		clone() const;

@@ -8,27 +8,34 @@ namespace ctvty {
 
     class BoxCollider : public Collider {
     private:
-      utils::Vector3D*				base_offset;
-      utils::Vector3D*				size;
+      std::list<utils::Vector3D>	vertices;
+
+    private:
+      std::shared_ptr<utils::Vector3D>			msize;
+      std::shared_ptr<utils::Vector3D>			psize;
       float				scale;
 
     public:
-      BoxCollider(const utils::Vector3D& base_offset, const	utils::Vector3D& size, float scale = 1.);
-      BoxCollider(	utils::Vector3D* base_offset,		utils::Vector3D* size, float scale = 1.);
+      BoxCollider(GameObject*		gameObject);
       ctvty::Object*			clone() const;
 
     public:
 					BoxCollider(const serialization::Archive&);
-      void				Serialize(serialization::Archive&);
+      void				Serialize(serialization::Archive&) const;
+
+    private:
+      void				CalculateVertices();
+    public:
+      const std::list<utils::Vector3D>&	GetVertices() const;
 
     public:
-      std::list<utils::Vector3D>&	GetVertices() const;
+      void				Scale(float);
 
     public:
       ctvstd::Optional<utils::Collision>
-					Collision(const std::list<Collider*>& contact_colliders,
-						  const utils::Vector3D& position,
-						  const utils::Vector3D& direction);
+					CollisionImpl(const Collider* contact_colliders,
+						      const utils::Vector3D& position,
+						      const utils::Vector3D& direction) override;
 
     };
 

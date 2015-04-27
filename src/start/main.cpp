@@ -35,7 +35,9 @@ int main(int ac, char** av) {
   ctvty::GameObject			*Army = nullptr;
 
   using namespace ctvty::utils;
-  if (1)
+  ctvty::debug::CompressedLogs(Quaternion::Euler(Vector3D::up * M_PI / 2), 5, 4, new Vector3D(Vector3D::up));
+  ctvty::debug::Logs(Quaternion::Euler(Vector3D::up * M_PI / 2), 5, 4, new Vector3D(Vector3D::up));
+  if (0)
     {
       Quaternion	q(Quaternion::Euler(Vector3D::up * M_PI / 2));
       serialization::Serial json;
@@ -50,7 +52,7 @@ int main(int ac, char** av) {
 
     }
 
-  if (1)
+  if (0)
     {
       ctvty::utils::Face face({
 	  ctvty::utils::Vector3D::zero,

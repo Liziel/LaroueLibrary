@@ -19,6 +19,8 @@ CtvTyUtils	=src/ctvty/utils/vector3d.cpp\
 		src/ctvty/utils/face.cpp\
 		src/ctvty/utils/contactpoint.cpp
 
+CtvTyPhysics	= src/ctvty/physics/material.cpp
+
 CtvTyComponents	=src/ctvty/component/transform.cpp\
 		src/ctvty/component/rigidbody.cpp\
 		src/ctvty/component/collider.cpp\
@@ -29,7 +31,7 @@ CtvTy		= src/ctvty/gameObject.cpp \
 		src/ctvty/object.cpp\
 		src/ctvty/behaviour.cpp\
 		src/ctvty/application.cpp\
-		$(CtvTyEvent) $(CtvTyAssets) $(CtvTyComponents) $(CtvTyUtils)
+		$(CtvTyEvent) $(CtvTyAssets) $(CtvTyUtils) $(CtvTyComponents) $(CtvTyPhysics)
 
 ### Serial -> Json Serialisation
 Serial		= src/serialization/serializable.cpp \
@@ -70,10 +72,10 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	$(LINKER) -o $(NAME) $(OBJ) $(LDFLAGS)
 
-clean:
+clean:  clean_dependencies
 	$(RM) $(OBJ)
 
-fclean: clean dependencies_clean
+fclean: clean
 	$(RM) $(NAME)
 
 re: fclean all
@@ -82,9 +84,6 @@ re: fclean all
 
 clean_dependencies:
 	rm -f $(DEPENDENCIES)
-
-%.o: %.h
-	@echo $*.h not up to date
 
 %.d: %.cpp
 	@echo -n `dirname $*` > $*.d

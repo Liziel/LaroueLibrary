@@ -80,7 +80,7 @@ namespace ctvty {
 
     GameObject(const serialization::Archive& __serial);
 
-    void	Serialize(serialization::Archive& __serial) override;
+    void	Serialize(serialization::Archive& __serial) const override;
 
   public:
     /*

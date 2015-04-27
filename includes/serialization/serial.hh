@@ -15,6 +15,11 @@
 
 # include <exception>
 
+namespace std {
+  template<typename t>
+  class shared_ptr;
+};
+
 namespace serialization {
   namespace error {
     class undefined_type_reference : public std::runtime_error {
@@ -48,6 +53,7 @@ namespace serialization {
     class interface {
     public:
       virtual std::string	Stringify(int level = 0) const = 0;
+      virtual std::string	CompactStringify(int level = 0) const = 0;
       virtual ~interface()	{}
     };
     class string;
@@ -115,6 +121,7 @@ namespace serialization {
 
   public:
     std::string		Stringify(int level = 0) const { return serial->Stringify(level); }
+    std::string		CompactStringify(int level = 0) const { return serial->CompactStringify(level); }
 
   public:
     Serial(serial::interface* = nullptr);
@@ -145,6 +152,7 @@ namespace serialization {
     class string : public interface {
     public:
       std::string				Stringify(int level = 0) const;
+      std::string				CompactStringify(int level = 0) const;
 
     private:
       std::string				_serialized_string;
@@ -165,6 +173,7 @@ namespace serialization {
     class object : public interface {
     public:
       std::string				Stringify(int level = 0) const;
+      std::string				CompactStringify(int level = 0) const;
 
     private:
       std::map< std::string, Serial* >		_serialized_object;
@@ -202,6 +211,7 @@ namespace serialization {
     class list : public interface {
     public:
       std::string				Stringify(int level = 0) const;
+      std::string				CompactStringify(int level = 0) const;
       template<typename iterator>
       void					Fill(iterator begin, iterator end);
 
@@ -229,6 +239,7 @@ namespace serialization {
     class function : public interface {
     public:
       std::string				Stringify(int level = 0) const;
+      std::string				CompactStringify(int level = 0) const;
       
     private:
       std::string				_function_name;
@@ -270,6 +281,7 @@ namespace serialization {
     class integer : public interface {
     public:
       std::string				Stringify(int level = 0) const;
+      std::string				CompactStringify(int level = 0) const;
       template<typename _integer_>
       void					Fill(_integer_&);
 
@@ -291,6 +303,7 @@ namespace serialization {
     class floating : public interface {
     public:
       std::string				Stringify(int level = 0) const;
+      std::string				CompactStringify(int level = 0) const;
       template<typename floating>
       void					Fill(floating&);
 
@@ -312,6 +325,7 @@ namespace serialization {
     class boolean : public interface {
     public:
       std::string				Stringify(int level = 0) const;
+      std::string				CompactStringify(int level = 0) const;
       void					Fill(bool&);
 
     private:
@@ -381,6 +395,29 @@ namespace serialization {
     static bool  is(serial::interface* _interface) { return dynamic_cast<serial::object*>(_interface) != nullptr; }
     static void	 set(serial::interface* _interface, _type& _variable) { _variable = get(_interface); }
     static serial::interface* make(_type _variable) { return new serial::object(_variable); }
+  };
+
+  template<typename _type>
+  struct serial_info< const _type*,
+		      typename std::enable_if< std::is_assignable<Serializable*&, _type*>::value >::type > {
+    using type = serial::object;
+    static const _type* get(serial::interface* _interface) {
+      return dynamic_cast<_type*> (SerializableInstantiate(*(dynamic_cast<serial::object*>(_interface))));
+    }
+    static bool  is(serial::interface* _interface) { return dynamic_cast<serial::object*>(_interface) != nullptr; }
+    static serial::interface* make(const _type* _variable) { return new serial::object(_variable); }
+  };
+
+  template<typename _type>
+  struct serial_info< std::shared_ptr<_type>,
+		      typename std::enable_if< std::is_assignable<Serializable*&, _type*>::value >::type > {
+    using type = serial::object;
+    static _type* get(serial::interface* _interface) {
+      return dynamic_cast<_type*> (SerializableInstantiate(*(dynamic_cast<serial::object*>(_interface))));
+    }
+    static bool  is(serial::interface* _interface) { return dynamic_cast<serial::object*>(_interface) != nullptr; }
+    static void	 set(serial::interface* _interface, std::shared_ptr<_type>& _variable) { _variable.reset(get(_interface)); }
+    static serial::interface* make(const std::shared_ptr<_type>& _variable) { return new serial::object(_variable.get()); }
   };
 
   /*

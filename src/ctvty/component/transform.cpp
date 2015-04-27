@@ -33,7 +33,7 @@ namespace ctvty {
       delete rotation;
     }
 
-    void		Transform::Serialize(serialization::Archive& __serial_instance) {
+    void		Transform::Serialize(serialization::Archive& __serial_instance) const {
       SERIALIZE_OBJECT_AS(ctvty::component::Transform, __serial_instance);
       __serial["scale"] & scale;
       __serial["position"] & position;

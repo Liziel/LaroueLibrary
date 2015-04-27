@@ -20,12 +20,19 @@ namespace ctvty {
       bool				Intersect(const utils::Vector3D& vertex);
 
     public:
-      BoundingBox3D			operator + (const utils::Vector3D&);
+      BoundingBox3D			operator + (const utils::Vector3D&) const;
+      BoundingBox3D			operator * (float) const;
 
     public:
       BoundingBox3D(const utils::Vector3D&, const utils::Vector3D&);
       BoundingBox3D();
     };
+
+    inline
+    BoundingBox3D			operator * (float f, BoundingBox3D b) {
+      return b * f;
+    }
+    
   };
 };
 

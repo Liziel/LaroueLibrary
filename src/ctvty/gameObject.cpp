@@ -52,7 +52,7 @@ namespace ctvty {
 
   }
 
-  void				GameObject::Serialize(serialization::Archive& __serial_instance) {
+  void				GameObject::Serialize(serialization::Archive& __serial_instance) const {
     SERIALIZE_OBJECT_AS(ctvty::GameObject, __serial_instance);
     __serial["tag"] & tag;
     __serial["name"] & name;

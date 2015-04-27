@@ -13,7 +13,7 @@ namespace ctvty {
       float	dynamicFriction;
 
     public:
-      void	Serialize(serialization::Archive&);
+      void	Serialize(serialization::Archive&) const;
     };
   };
 };

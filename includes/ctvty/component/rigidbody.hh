@@ -34,11 +34,11 @@ namespace ctvty {
       std::list<Collider*>			colliders_trigger;
 
     private://later accessible and serializable
-      CollisionDetectionMode	detectionMode;
-      bool			detectCollision;
-      bool			isKinematic;
-      float			mass;
-      utils::Vector3D*		velocity;
+      CollisionDetectionMode			detectionMode;
+      bool					detectCollision;
+      bool					isKinematic;
+      float					mass;
+      std::shared_ptr<utils::Vector3D>		velocity;
       
     private:
       bool			asleep;
@@ -69,7 +69,7 @@ namespace ctvty {
       RigidBody(const serialization::Archive&);
 
     public:
-      void	Serialize(serialization::Archive& __serial) override;
+      void	Serialize(serialization::Archive& __serial) const override;
 
     public:
       Object*	clone() const override;

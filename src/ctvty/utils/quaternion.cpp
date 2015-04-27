@@ -23,7 +23,7 @@ namespace ctvty {
 
     const Quaternion	Quaternion::identity(0., 0., 0., 1.);
 
-    void		Quaternion::Serialize(serialization::Archive& __serial_instance) {
+    void		Quaternion::Serialize(serialization::Archive& __serial_instance) const {
       SERIALIZE_OBJECT_AS(ctvty::utils::Quaternion, __serial_instance);
       __serial["x"] & x;
       __serial["y"] & y;
