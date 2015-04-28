@@ -16,11 +16,11 @@ namespace ctvty {
       std::shared_ptr<physics::Material>		material;
 
     public:
-      RigidBody*			GetRigidBody() const;
+      const RigidBody*			GetRigidBody() const;
 
     public:
       bool				IsTrigger() const;
-      utils::BoundingBox3D&		GetBoundingBox() const;
+      const utils::BoundingBox3D&	GetBoundingBox() const;
       const physics::Material&		GetMaterial() const;
 
     public:

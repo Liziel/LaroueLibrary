@@ -36,6 +36,9 @@ namespace ctvty {
 	  }
       }
 
+      /*
+       * Allow to get Assets
+       */
       Assets				GetAssets(const std::string&);
       Asset&				GetAsset(const std::string&);
 

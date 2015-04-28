@@ -16,8 +16,8 @@ namespace ctvty {
       void				Include(const utils::Vector3D& vertex);
 
     public:
-      bool				Intersect(const BoundingBox3D& box);
-      bool				Intersect(const utils::Vector3D& vertex);
+      bool				Intersect(const BoundingBox3D& box) const;
+      bool				Intersect(const utils::Vector3D& vertex) const;
 
     public:
       BoundingBox3D			operator + (const utils::Vector3D&) const;

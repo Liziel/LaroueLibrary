@@ -8,6 +8,7 @@
 #include "ctvty/assets/assets.hh"
 #include "ctvty/component/rigidbody.hh"
 #include "ctvty/utils/face.hh"
+#include "ctvty/debug.hpp"
 
 void	recursiveList(filesystem::Directory& directory) {
   std::list<filesystem::Directory>	subList;
@@ -25,18 +26,21 @@ void	recursiveList(filesystem::Directory& directory) {
   }
 }
 
+using namespace ctvty::utils;
 int main(int ac, char** av) {
-  ctvty::asset::Cache<ctvty::GameObject>
-					*save_cache;
+  std::shared_ptr<ctvty::asset::Cache<ctvty::GameObject>>
+					save_cache;
 
   ctvty::asset::Assets			assets("assets");
   ctvty::asset::Assets			save_assets(std::move(assets.GetAssets("save")));
 
   ctvty::GameObject			*Army = nullptr;
 
-  using namespace ctvty::utils;
-  ctvty::debug::CompressedLogs(Quaternion::Euler(Vector3D::up * M_PI / 2), 5, 4, new Vector3D(Vector3D::up));
-  ctvty::debug::Logs(Quaternion::Euler(Vector3D::up * M_PI / 2), 5, 4, new Vector3D(Vector3D::up));
+  if (0)
+    {
+      ctvty::debug::CompressedLogs(Quaternion::Euler(Vector3D::up * M_PI / 2), 5, 4, new Vector3D(Vector3D::up));
+      ctvty::debug::Logs(Quaternion::Euler(Vector3D::up * M_PI / 2), 5, 4, new Vector3D(Vector3D::up));
+    }
   if (0)
     {
       Quaternion	q(Quaternion::Euler(Vector3D::up * M_PI / 2));
@@ -88,6 +92,7 @@ int main(int ac, char** av) {
   if (0)
     {
       bool	initialization_succes;
+
       if (ac == 2)
 	initialization_succes = ctvty::Application::Initialize(av[1]);
       else
@@ -115,18 +120,18 @@ int main(int ac, char** av) {
   if (0)
     {
       std::cout << "assets are cached" << std::endl;
-      save_cache = new ctvty::asset::Cache<ctvty::GameObject>([](ctvty::asset::Asset& file)->bool {
-	  bool	pass = file.GetFile().GetName()
-	    .substr(file.GetFile().GetName().size()-sizeof("json") + 1, sizeof("json")) == "json";
-	  pass = pass && (file.GetFile().GetName() != "ArmyArray.json");
-	  if (pass)
-	    file.SetDeleter([](serialization::Serializable* obj) {
-		if (dynamic_cast<ctvty::Object*>(obj) != nullptr)
-		  ctvty::Object::Destroy(dynamic_cast<ctvty::Object*>(obj));
-	      });
-	  return pass;
-	});
-      save_assets.Cache(save_cache);
+      save_cache.reset(new ctvty::asset::Cache<ctvty::GameObject>([](ctvty::asset::Asset& file)->bool {
+	    bool	pass = file.GetFile().GetName()
+	      .substr(file.GetFile().GetName().size()-sizeof("json") + 1, sizeof("json")) == "json";
+	    pass = pass && (file.GetFile().GetName() != "ArmyArray.json");
+	    if (pass)
+	      file.SetDeleter([](serialization::Serializable* obj) {
+		  if (dynamic_cast<ctvty::Object*>(obj) != nullptr)
+		    ctvty::Object::Destroy(dynamic_cast<ctvty::Object*>(obj));
+		});
+	    return pass;
+	  }));
+      save_assets.Cache(save_cache.get());
     }
 
   if (0)
@@ -153,11 +158,5 @@ int main(int ac, char** av) {
     {
       std::cout << "call to Destroy" << std::endl;
       ctvty::Object::Destroy(Army);
-    }
-
-  if (0)
-    {
-      std::cout << "delete cache" << std::endl;
-      delete save_cache;
     }
 }

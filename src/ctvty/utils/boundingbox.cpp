@@ -45,7 +45,7 @@ namespace ctvty {
 	end_point.z = vertex.z;
     }
 
-    bool		BoundingBox3D::Intersect(const BoundingBox3D& box) {
+    bool		BoundingBox3D::Intersect(const BoundingBox3D& box) const {
       return (
 	      Intersect(Vector3D(box.base_vertex.x, box.base_vertex.y, box.base_vertex.z))	||
 
@@ -61,7 +61,7 @@ namespace ctvty {
 	      );
     }
 
-    bool		BoundingBox3D::Intersect(const utils::Vector3D& vertex) {
+    bool		BoundingBox3D::Intersect(const utils::Vector3D& vertex) const {
       return (
 	      base_vertex	.x	< vertex.x	&&
 	      end_point		.x	> vertex.x	&&

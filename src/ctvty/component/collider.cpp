@@ -6,20 +6,20 @@ namespace ctvty {
     Collider::Collider(GameObject* parent, const std::string& name)
       : MonoBehaviour<Collider>(parent, name) {}
 
-    bool			Collider::IsTrigger() {
+    bool			Collider::IsTrigger() const {
       return isTrigger;
     }
 
-    RigidBody*			Collider::GetRigidBody() {
+    const RigidBody*		Collider::GetRigidBody() const {
       return rigidBody;
     }
 
-    utils::BoundingBox3D&	Collider::GetBoundingBox() {
+    const utils::BoundingBox3D&	Collider::GetBoundingBox() const {
       return boundingBox;
     }
 
-    const physics::Material*	Collider::GetMaterial() {
-      return material;
+    const physics::Material&	Collider::GetMaterial() const {
+      return *material;
     }
 
     ctvstd::Optional<utils::Collision>
@@ -60,6 +60,7 @@ namespace ctvty {
 	}
 
       }
+      return collision;
     }
 
 

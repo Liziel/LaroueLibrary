@@ -86,7 +86,7 @@ namespace ctvty {
     }
 
     template<typename type>
-    static std::list<type*>		FindObjectsOfType() {
+    static std::list<type*>	FindObjectsOfType() {
       std::list<type*>	_founds;
 
       for (Object* object : Objects) {

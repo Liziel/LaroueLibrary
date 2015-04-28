@@ -25,11 +25,21 @@ namespace ctvty {
       void						SetDeleter(std::function<void(serialization::Serializable*)>);
 
     public:
+      /*
+       * Load :
+		Each time we load, always the same instance of the loaded object
+       * LoadAs :
+		same as load but dynamic cast to wanted type
+       */
       template<typename _type>
       std::shared_ptr<_type>				LoadAs() { return std::dynamic_pointer_cast<_type>(Load()); }
       std::shared_ptr<serialization::Serializable>	Load();
 
     public:
+      /*
+       * Inverse of Load, will save the given serializable object in the json file
+       *  -> Integer, Floating, String, Container< Serializable >, std::shared_ptr< Serializable >, Object inheriting serialization::Serializable
+       */
       void						Save(const serialization::Serial&);
       template<typename _type>
       void						Save(const _type& to_serialize) {

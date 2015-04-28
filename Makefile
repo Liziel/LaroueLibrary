@@ -51,7 +51,7 @@ CSRC		+=
 FLAGS		= -W -Wextra $(INCLUDES)
 CFLAGS		+= $(FLAGS) -Wall
 CXXFLAGS	+= $(FLAGS) -std=c++11 # skip bad warning for c++11 
-LDFLAGS		+=
+LDFLAGS		+= -lpthread
 
 CXXOBJ		= $(CXXSRC:.cpp=.o)
 COBJ		= $(CSRC:.c=.o)
@@ -86,6 +86,7 @@ clean_dependencies:
 	rm -f $(DEPENDENCIES)
 
 %.d: %.cpp
+	@$(CXX) -MM	$*.cpp	 $(CXXFLAGS) 1> .build_log
 	@echo -n `dirname $*` > $*.d
 	@echo -n "/" >> $*.d
 	@echo "Building Dependencies file for" $*.cpp
