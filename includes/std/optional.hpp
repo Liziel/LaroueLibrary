@@ -29,12 +29,13 @@ namespace ctvstd {
       : var(new type ( _args ... )) {}
 
   public:
+    Optional& operator = (const Optional& rhs) { var = rhs.var; return *this; }
+    Optional& operator = (type* rhs) { var.reset(rhs); return *this; }
+
+  public:
 		operator bool () { return var.operator bool (); }
     auto	operator * () -> decltype( *var ) { return *(var.get()); }
     auto	operator ->() -> decltype( var.operator->() ) { return var.operator -> (); }
-
-  public:
-    Optional&	operator = (const Optional& oth) { var = oth.var; return *this;}
   };
 
 };

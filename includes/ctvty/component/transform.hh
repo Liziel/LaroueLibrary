@@ -44,8 +44,8 @@ namespace ctvty {
       void		Rotate(const utils::Vector3D&);
 
     public:
-      utils::Vector3D&	GetPosition();
-
+      utils::Vector3D&		GetPosition();
+      utils::Quaternion&	GetRotation();
     };
 
   };

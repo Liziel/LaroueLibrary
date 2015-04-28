@@ -26,7 +26,7 @@ namespace ctvty {
 
       if (!(dForce = Face::GetCollisionDistance(position, direction)))
 	return ctvstd::none;
-      if (*dForce > 1)
+      if (*dForce > 1 || *dForce < 0)
 	return ctvstd::none;
       if (!IsPointInside(position + direction * *dForce))
 	return ctvstd::none;

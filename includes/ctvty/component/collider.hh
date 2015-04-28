@@ -10,16 +10,18 @@ namespace ctvty {
 
     class Collider : public MonoBehaviour<Collider> {
     protected:
-      utils::BoundingBox3D		boundingBox;
-      RigidBody*			rigidBody;
-      bool				isTrigger;
-      physics::Material*		material;
+      utils::BoundingBox3D				boundingBox;
+      RigidBody*					rigidBody;
+      bool						isTrigger;
+      std::shared_ptr<physics::Material>		material;
 
     public:
-      bool				IsTrigger();
-      RigidBody*			GetRigidBody();
-      utils::BoundingBox3D&		GetBoundingBox();
-      const physics::Material*		GetMaterial();
+      RigidBody*			GetRigidBody() const;
+
+    public:
+      bool				IsTrigger() const;
+      utils::BoundingBox3D&		GetBoundingBox() const;
+      const physics::Material&		GetMaterial() const;
 
     public:
       virtual const std::list<utils::Vector3D>&
@@ -27,16 +29,16 @@ namespace ctvty {
 
     protected:
       virtual ctvstd::Optional<utils::Collision>
-					CollisionImpl(const Collider* contact_colliders,
-						      const utils::Vector3D& position,
-						      const utils::Vector3D& direction) = 0;
+					CollisionImpl(const Collider*		contact_collider,
+						      const utils::Vector3D&	position,
+						      const utils::Quaternion&	quaternion,
+						      const utils::Vector3D&	direction) const = 0;
     public:
       ctvstd::Optional<utils::Collision>
-					Collision(const std::list<Collider*>& contact_colliders,
-						  const utils::Vector3D& position,
-						  const utils::Vector3D& direction) {
-	return ctvstd::none;
-      }
+					Collision(const std::list<Collider*>&	contact_colliders,
+						  const utils::Vector3D&	position,
+						  const utils::Quaternion&	quaternion,
+						  const utils::Vector3D&	direction) const;
 
     protected:
       Collider(GameObject* parent, const std::string&);

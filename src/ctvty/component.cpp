@@ -20,7 +20,7 @@ namespace ctvty {
    * Message Functions
    */
   void			Component::BroadcastMessage(const std::string& methodName,
-					 event::parameters::values params) {
+					 event::parameters::values params) const {
     gameObject->BroadcastMessage(methodName, params);
   }
 

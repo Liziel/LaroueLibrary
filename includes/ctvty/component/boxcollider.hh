@@ -8,7 +8,8 @@ namespace ctvty {
 
     class BoxCollider : public Collider {
     private:
-      std::list<utils::Vector3D>	vertices;
+      std::list<utils::Vector3D>			vertices;
+      std::array<std::shared_ptr<utils::Face>, 6>	faces;
 
     private:
       std::shared_ptr<utils::Vector3D>			msize;
@@ -31,11 +32,25 @@ namespace ctvty {
     public:
       void				Scale(float);
 
+    private:
+      ctvstd::Optional<utils::Collision>
+					CollisionImpact(const utils::Vector3D& vertex,
+							const utils::Vector3D& direction) const;
+
+    private:
+      ctvstd::Optional<utils::Collision>
+					CollisionIter(std::list<utils::Vector3D>::const_iterator b,
+						      std::list<utils::Vector3D>::const_iterator e,
+						      const utils::Vector3D& position,
+						      const utils::Quaternion& roatation,
+						      const utils::Vector3D& direction) const;
+
     public:
       ctvstd::Optional<utils::Collision>
 					CollisionImpl(const Collider* contact_colliders,
 						      const utils::Vector3D& position,
-						      const utils::Vector3D& direction) override;
+						      const utils::Quaternion& roatation,
+						      const utils::Vector3D& direction) const override;
 
     };
 

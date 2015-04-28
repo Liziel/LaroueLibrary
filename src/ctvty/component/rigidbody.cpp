@@ -86,7 +86,7 @@ namespace ctvty {
 	  });
 
       utils::Vector3D&				position =
-	gameObject->GetTransformation()->GetPosition();
+	transform->GetPosition();
       utils::BoundingBox3D			endBox  = boundingBox + (movement + position);
 
       ctvstd::Optional<utils::Collision>	collision(ctvstd::none);
@@ -97,7 +97,7 @@ namespace ctvty {
 
       for (Collider* collider : colliders)
 	if (collider->GetBoundingBox().Intersect(endBox)
-	    && (collision = collider->Collision(sub_colliders, position, movement))) {
+	    && (collision = collider->Collision(sub_colliders, position, transform->GetRotation(), movement))) {
 
 	  if (collision->force == movement.GetMagnitude()) {
 	  } else if (force < collision->force) {
@@ -115,7 +115,7 @@ namespace ctvty {
       for (RigidBody* rigidbody : rigidbodies)
 	for (Collider* collider : rigidbody->sub_colliders)
 	  if (collider->GetBoundingBox().Intersect(endBox)
-	      && (collision = collider->Collision(sub_colliders, position, movement))) {
+	      && (collision = collider->Collision(sub_colliders, position, transform->GetRotation(), movement))) {
 
 	    if (collision->force == movement.GetMagnitude()) {
 	    } else if (force < collision->force) {
@@ -141,19 +141,28 @@ namespace ctvty {
 	utils::Vector3D	slide = penetration;
 	for (utils::Collision& collision : future_collider_collisions) {
 
-	  if (collision.collider_from->GetMaterial()->dynamicFriction &&
-	      collision.collider_to->GetMaterial()->dynamicFriction)
-	    slide = slide.ProjectOnPlane(collision.point.normal)
-	      * (1 / collision.collider_from->GetMaterial()->dynamicFriction)
-	      * (1 / collision.collider_to->GetMaterial()->dynamicFriction);
-	  else
-	    slide = slide.ProjectOnPlane(collision.point.normal);
+	  slide = slide.ProjectOnPlane(collision.point.normal);
+	  if (collision.collider_from->GetMaterial().dynamicFriction) {
+	    slide *= (1 / collision.collider_from->GetMaterial().dynamicFriction);
+	    for (const Collider* collider_to : collision.collider_to)
+	      if (collider_to->GetMaterial().dynamicFriction)
+		slide *= (1 / collider_to->GetMaterial().dynamicFriction);
+	      else {
+		slide = penetration.ProjectOnPlane(collision.point.normal); break;
+	      }
+	  } else
+	    slide = penetration.ProjectOnPlane(collision.point.normal);
 
-	  if (collision.force != 0)
-	    bounce += penetration.Reflect(collision.point.normal)
-	      * (collision.collider_from->GetMaterial()->bounciness + collision.collider_to->GetMaterial()->bounciness);
+	  if (collision.force != 0) {
+	    float bouncing = 0;
+	    for (const Collider* collider_to : collision.collider_to)
+	      bouncing += collider_to->GetMaterial().bounciness;
+	    bouncing += collision.collider_from->GetMaterial().bounciness;
+	    bounce = penetration.Reflect(collision.point.normal);
+	  }
 
-	  collision.collider_to->BroadcastMessage("OnCollisionEnter", &collision);
+	  for (const Collider* c : collision.collider_to)
+	    c->BroadcastMessage("OnCollisionEnter", &collision);
 	  collision.collider_from->BroadcastMessage("OnCollisionEnter", &collision);
 
 	}

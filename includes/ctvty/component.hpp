@@ -60,10 +60,11 @@ namespace ctvty {
      * this->BroadcastMessage() == this->parent->BroadcastMessage();
      */
     void			BroadcastMessage(const std::string& methodName,
-						 event::parameters::values params);
+						 event::parameters::values params) const;
+
     template<typename ... parameters>
     void			BroadcastMessage(const std::string& methodName,
-						 parameters ... p) {
+						 parameters ... p) const{
       BroadcastMessage(methodName, event::parameters::PackValues(p ... ));
     }
 
