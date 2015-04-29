@@ -27,6 +27,11 @@ namespace ctvty {
       __serial["velocity"] & velocity;
     }
 
+    void		RigidBody::RegisterCollider(ctvty::component::Collider* c) {
+      sub_colliders.push_back(c);
+      boundingBox.Include(c->GetBoundingBox());
+      ctvty::debug::Logs(c->GetBoundingBox(), boundingBox);
+    }
     
     void		RigidBody::Serialize(serialization::Archive& __serial_instance) const {
       SERIALIZE_OBJECT_AS(ctvty::component::RigidBody, __serial_instance);
@@ -53,9 +58,9 @@ namespace ctvty {
 
     decltype(std::chrono::high_resolution_clock::now()) start;
     decltype(std::chrono::high_resolution_clock::now()) end;
+
     void		RigidBody::Awake() {
       start = std::chrono::high_resolution_clock::now();
-      ctvty::debug::Log("plop");
     }
 
     void		RigidBody::FixedUpdate() {
@@ -78,8 +83,8 @@ namespace ctvty {
       std::list<Collider*>	colliders
 	= Object::FindObjectsOfType<Collider>(); colliders.remove_if([=](Collider* collider) {
 	    return collider->GetGameObject() == gameObject
-	      || collider->GetRigidBody() != nullptr
-	      || !collider->GetGameObject()->IsActive();
+	      || !collider->GetGameObject()->IsActive()
+	      || collider->GetRigidBody() != nullptr;
 	  });
       std::list<RigidBody*>	rigidbodies
 	= Object::FindObjectsOfType<RigidBody>(); rigidbodies.remove_if([=](RigidBody* rigidbody) {
@@ -100,7 +105,6 @@ namespace ctvty {
       for (Collider* collider : colliders) {
 	utils::BoundingBox3D rhs = collider->GetBoundingBox()
 	  + collider->GetGameObject()->GetTransformation()->GetPosition();
-	//ctvty::debug::Logs(rhs, endBox, rhs.Intersect(endBox));
 	if (rhs.Intersect(endBox)
 	    && (collision = collider->Collision(sub_colliders, position, transform->GetRotation(), movement))) {
 	  if (collision->force == movement.GetMagnitude()) {
@@ -144,6 +148,7 @@ namespace ctvty {
        *  broadcast message
        */
       if (collision) {
+	std::cout << "collision" << std::endl;
 	utils::Vector3D	penetration = movement.GetNormalized() * force;
 	utils::Vector3D	bounce = utils::Vector3D::zero;
 	utils::Vector3D	slide = penetration;

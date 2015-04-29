@@ -201,9 +201,11 @@ namespace ctvty {
      */
     template<typename component>
     component*					GetComponent() {
+      component* c = nullptr;
+
       for (ctvty::Component* _component : components) {
-	if (dynamic_cast<component*>(_component) != nullptr)
-	  return _component;
+	if ((c = dynamic_cast<component*>(_component)) != nullptr)
+	  return c;
       }
       return (nullptr);
     }

@@ -22,15 +22,15 @@ namespace ctvty {
     void		BoundingBox3D::Include(const BoundingBox3D& box) {
       Include(Vector3D(box.base_vertex.x, box.base_vertex.y, box.base_vertex.z));
 
-      Include(Vector3D(box.base_vertex.x + box.end_point.x, box.base_vertex.y, box.base_vertex.z));
-      Include(Vector3D(box.base_vertex.x, box.base_vertex.y + box.end_point.y, box.base_vertex.z));
-      Include(Vector3D(box.base_vertex.x, box.base_vertex.y, box.base_vertex.z + box.end_point.z));
+      Include(Vector3D(box.end_point.x, box.base_vertex.y, box.base_vertex.z));
+      Include(Vector3D(box.base_vertex.x, box.end_point.y, box.base_vertex.z));
+      Include(Vector3D(box.base_vertex.x, box.base_vertex.y, box.end_point.z));
 
-      Include(Vector3D(box.base_vertex.x + box.end_point.x, box.base_vertex.y + box.end_point.y, box.base_vertex.z));
-      Include(Vector3D(box.base_vertex.x, box.base_vertex.y + box.end_point.y, box.base_vertex.z + box.end_point.z));
-      Include(Vector3D(box.base_vertex.x + box.end_point.x, box.base_vertex.y, box.base_vertex.z + box.end_point.z));
+      Include(Vector3D(box.end_point.x, box.end_point.y, box.base_vertex.z));
+      Include(Vector3D(box.base_vertex.x, box.end_point.y, box.end_point.z));
+      Include(Vector3D(box.end_point.x, box.base_vertex.y, box.end_point.z));
 
-      Include(Vector3D(box.base_vertex.x + box.end_point.x, box.base_vertex.y + box.end_point.y, box.base_vertex.z + box.end_point.z));
+      Include(Vector3D(box.end_point.x, box.end_point.y, box.end_point.z));
     }
 
     void		BoundingBox3D::Include(const Vector3D& vertex) {
@@ -54,15 +54,15 @@ namespace ctvty {
       return (
 	      Intersect(Vector3D(box.base_vertex.x, box.base_vertex.y, box.base_vertex.z))	||
 
-	      Intersect(Vector3D(box.base_vertex.x + box.end_point.x, box.base_vertex.y, box.base_vertex.z))	||
-	      Intersect(Vector3D(box.base_vertex.x, box.base_vertex.y + box.end_point.y, box.base_vertex.z))	||
-	      Intersect(Vector3D(box.base_vertex.x, box.base_vertex.y, box.base_vertex.z + box.end_point.z))	||
+	      Intersect(Vector3D(box.end_point.x, box.base_vertex.y, box.base_vertex.z))	||
+	      Intersect(Vector3D(box.base_vertex.x, box.end_point.y, box.base_vertex.z))	||
+	      Intersect(Vector3D(box.base_vertex.x, box.base_vertex.y, box.end_point.z))	||
 
-	      Intersect(Vector3D(box.base_vertex.x + box.end_point.x, box.base_vertex.y + box.end_point.y, box.base_vertex.z))	||
-	      Intersect(Vector3D(box.base_vertex.x, box.base_vertex.y + box.end_point.y, box.base_vertex.z + box.end_point.z))	||
-	      Intersect(Vector3D(box.base_vertex.x + box.end_point.x, box.base_vertex.y, box.base_vertex.z + box.end_point.z))	||
+	      Intersect(Vector3D(box.end_point.x, box.end_point.y, box.base_vertex.z))	||
+	      Intersect(Vector3D(box.base_vertex.x, box.end_point.y, box.end_point.z))	||
+	      Intersect(Vector3D(box.end_point.x, box.base_vertex.y, box.end_point.z))	||
 
-	      Intersect(Vector3D(box.base_vertex.x + box.end_point.x, box.base_vertex.y + box.end_point.y, box.base_vertex.z + box.end_point.z))
+	      Intersect(Vector3D(box.end_point.x, box.end_point.y, box.end_point.z))
 	      );
     }
 

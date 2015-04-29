@@ -24,6 +24,9 @@ namespace ctvty {
       const physics::Material&		GetMaterial() const;
 
     public:
+      void				Awake();
+
+    public:
       virtual const std::list<utils::Vector3D>&
 					GetVertices() const = 0;
 

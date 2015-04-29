@@ -1,11 +1,24 @@
 #include "ctvty/component/collider.hh"
 #include "ctvty/component/transform.hh"
 #include "ctvty/debug.hpp"
+#include "ctvty/component/rigidbody.hh"
 
 namespace ctvty {
   namespace component {
     Collider::Collider(GameObject* parent, const std::string& name)
-      : MonoBehaviour<Collider>(parent, name), material(new physics::Material) {}
+      : MonoBehaviour<Collider>(parent, name), material(new physics::Material) { }
+
+    void			Collider::Awake() {
+      RigidBody*	r = GetComponent<RigidBody>();
+
+      if (r != nullptr) {
+	ctvty::debug::Log(r);
+	rigidBody = r;
+	r->RegisterCollider(this);
+      }
+      else
+	r = nullptr;
+    }
 
     bool			Collider::IsTrigger() const {
       return isTrigger;
@@ -29,11 +42,13 @@ namespace ctvty {
 						    const utils::Quaternion&	quaternion,
 						    const utils::Vector3D&	direction) const {
       ctvstd::Optional<utils::Collision>	collision;
-      ctvty::debug::Logs<const Collider*, bool>(this, false);
       for (const Collider* collider : contact_colliders) {
+	ctvty::debug::Logs(this->gameObject, collider->gameObject,
+			   position, transform->GetPosition());
 	ctvstd::Optional<utils::Collision>	collided
-	  = collider->CollisionImpl(collider, position, quaternion, -direction);
+	  = CollisionImpl(collider, position, quaternion, direction);
 	if (collided) {
+	  ctvty::debug::CompressedLogs(collided->force, collided->point.point);
 	  if (!collision)
 	    collision = collided;
 	  else if (collision->force < collided->force)
@@ -46,10 +61,8 @@ namespace ctvty {
 	  collision->collider_from = this;
 	}
 
-	collided = CollisionImpl(this,
-				 collider->transform->GetPosition(),
-				 collider->transform->GetRotation(),
-				 direction);
+	collided
+	  = collider->CollisionImpl(this, transform->GetPosition(), transform->GetRotation(), -direction);
 	if (collided) {
 	  if (!collision)
 	    collision = collided;
