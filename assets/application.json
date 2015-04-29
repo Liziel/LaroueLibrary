@@ -1,34 +1,18 @@
 {
 	"object" : {
-		"fps" : 60,
+		"fps" : 30,
 		"load" : "base",
 		"scenes" : [
 		    {
 			"object" : {
 			    "name" : "base",
 			    "objects" : [
-				asset("save/Army.json"),
+				asset("save/colliding_cube.json"),
+				asset("save/falling_cube.json"),
 			    ],
 			},
 			"type" : "ctvty::Application::Scene",
 		    },
-		    {
-			"object" : {
-			    "name" : "complex",
-			    "objects" : [
-				asset("save/Army.json"),
-				asset("save/Army.json"),
-				asset("save/Army.json"),
-				asset("save/Army.json"),
-				asset("save/Army.json"),
-				asset("save/Army.json"),
-				asset("save/Army.json"),
-				asset("save/Army.json"),
-				asset("save/Army.json"),
-			    ],
-			},
-			"type" : "ctvty::Application::Scene",
-		    }
 		],
 	},
 	"type" : "ctvty::Application",

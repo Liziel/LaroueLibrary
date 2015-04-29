@@ -218,11 +218,20 @@ namespace serialization {
       Serial::isBlank(cursor, end);
     }
 
-    integer::			integer(std::string::const_iterator& cursor, std::string::const_iterator) {
-      std::string::const_iterator	beg = cursor;
+    integer::			integer(std::string::const_iterator& cursor, std::string::const_iterator end) {
+      bool neg = false;
 
+      if (*cursor == '-') {
+	neg = true;
+	++cursor;
+      }
+      Serial::isBlank(cursor, end);
+      std::string::const_iterator	beg = cursor;
       while (std::isdigit(*cursor)) ++ cursor;
-      _serialized_integer = std::stoll(std::string(beg, cursor));
+      if (neg)
+	_serialized_integer = -std::stoll(std::string(beg, cursor));
+      else
+	_serialized_integer = std::stoll(std::string(beg, cursor));
     }
 
     floating::			floating(std::string::const_iterator& cursor, std::string::const_iterator) {
@@ -274,6 +283,8 @@ namespace serialization {
     }
 
 
+    boolean::	boolean(bool b)
+      : _serialized_boolean(b) {}
   };
 
   /*
@@ -381,13 +392,15 @@ namespace serialization {
 
     std::string		boolean::Stringify(int) const {
       std::stringstream	ss("");
-      ss << std::boolalpha << _serialized_boolean;
+      ss << std::boolalpha;
+      ss << _serialized_boolean;
       return (ss.str());
     }
 
     std::string		boolean::CompactStringify(int) const {
       std::stringstream	ss("");
-      ss << std::boolalpha << _serialized_boolean;
+      ss << std::boolalpha;
+      ss << _serialized_boolean;
       return (ss.str());
     }
 

@@ -46,6 +46,10 @@ namespace ctvty {
 	  
 	  serialization::Serial* product =
 	    serialization::Serial::InstantiateFromFile(assets->GetAsset(path).GetFile().GetPath());
+	  if (product == nullptr)
+	    throw std::invalid_argument("invalid argument in to asset json function: "
+					+ path
+					+ " file does'nt exist!");
 	  return product;
 	});
     }

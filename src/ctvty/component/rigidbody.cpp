@@ -4,6 +4,7 @@
 #include "ctvty/event/clock.hh"
 #include "ctvty/utils/collision.hh"
 #include "ctvty/component/transform.hh"
+#include "ctvty/debug.hpp"
 
 namespace ctvty {
   namespace component {
@@ -50,19 +51,20 @@ namespace ctvty {
       return *velocity;
     }
 
+    decltype(std::chrono::high_resolution_clock::now()) start;
+    decltype(std::chrono::high_resolution_clock::now()) end;
+    void		RigidBody::Awake() {
+      start = std::chrono::high_resolution_clock::now();
+      ctvty::debug::Log("plop");
+    }
+
     void		RigidBody::FixedUpdate() {
+      GetVelocity() += (utils::Vector3D::down * World::gravity)
+	* event::Clock::GetClock().GetFixedDeltaTime();
       utils::Vector3D movement = GetVelocity();
-      if (!isKinematic)
-	movement += (utils::Vector3D::down * World::gravity);
+
       movement *= event::Clock::GetClock().GetFixedDeltaTime();
       DiscreteCheckMovement(movement);
-
-      {
-	serialization::Serial json;
-	json & transform;
-	std::cout << json.Stringify() << std::endl;
-      }
-
       GetVelocity() = movement / event::Clock::GetClock().GetFixedDeltaTime();
     }
 
@@ -95,10 +97,12 @@ namespace ctvty {
       std::list< utils::Collision >		future_collider_collisions;
       std::list< Collider* >			future_colliders_trigger;
 
-      for (Collider* collider : colliders)
-	if (collider->GetBoundingBox().Intersect(endBox)
+      for (Collider* collider : colliders) {
+	utils::BoundingBox3D rhs = collider->GetBoundingBox()
+	  + collider->GetGameObject()->GetTransformation()->GetPosition();
+	//ctvty::debug::Logs(rhs, endBox, rhs.Intersect(endBox));
+	if (rhs.Intersect(endBox)
 	    && (collision = collider->Collision(sub_colliders, position, transform->GetRotation(), movement))) {
-
 	  if (collision->force == movement.GetMagnitude()) {
 	  } else if (force < collision->force) {
 	    force = (collision)->force;
@@ -111,10 +115,13 @@ namespace ctvty {
 	  }
 
 	}
+      }
 
       for (RigidBody* rigidbody : rigidbodies)
-	for (Collider* collider : rigidbody->sub_colliders)
-	  if (collider->GetBoundingBox().Intersect(endBox)
+	for (Collider* collider : rigidbody->sub_colliders) {
+	  utils::BoundingBox3D rhs = collider->GetBoundingBox()
+	    + collider->GetGameObject()->GetTransformation()->GetPosition();
+	  if (rhs.Intersect(endBox)
 	      && (collision = collider->Collision(sub_colliders, position, transform->GetRotation(), movement))) {
 
 	    if (collision->force == movement.GetMagnitude()) {
@@ -129,6 +136,7 @@ namespace ctvty {
 	    }
 
 	  }
+	}
 
       /*
        * for every collider retrived :

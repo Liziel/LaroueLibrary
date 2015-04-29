@@ -9,6 +9,7 @@
 #include "ctvty/component/rigidbody.hh"
 #include "ctvty/utils/face.hh"
 #include "ctvty/debug.hpp"
+#include "ctvty/component/boxcollider.hh"
 
 void	recursiveList(filesystem::Directory& directory) {
   std::list<filesystem::Directory>	subList;
@@ -36,11 +37,37 @@ int main(int ac, char** av) {
 
   ctvty::GameObject			*Army = nullptr;
 
+  if (1)
+    {
+      bool	initialization_succes;
+
+      if (ac == 2)
+	initialization_succes = ctvty::Application::Initialize(av[1]);
+      else
+	initialization_succes = ctvty::Application::Initialize("assets");
+      if (!initialization_succes)
+	return (-1);
+      ctvty::Application::Quit(5.f);
+      ctvty::Application::Start();
+    }
+
+
+  if (0)
+    {
+      Army  = new ctvty::GameObject("Falling Cube", "cubes", nullptr,
+				    new ctvty::utils::Vector3D(ctvty::utils::Vector3D::forward),
+				    new ctvty::utils::Quaternion(0.f, 0.f, 0.f, 0.f));
+      Army->AddComponent<ctvty::component::RigidBody>();
+      Army->AddComponent<ctvty::component::BoxCollider>();
+      save_assets.GetAsset("falling_cube.json").Save(Army);
+    }
+
   if (0)
     {
       ctvty::debug::CompressedLogs(Quaternion::Euler(Vector3D::up * M_PI / 2), 5, 4, new Vector3D(Vector3D::up));
       ctvty::debug::Logs(Quaternion::Euler(Vector3D::up * M_PI / 2), 5, 4, new Vector3D(Vector3D::up));
     }
+
   if (0)
     {
       Quaternion	q(Quaternion::Euler(Vector3D::up * M_PI / 2));
@@ -91,30 +118,10 @@ int main(int ac, char** av) {
 
   if (0)
     {
-      bool	initialization_succes;
-
-      if (ac == 2)
-	initialization_succes = ctvty::Application::Initialize(av[1]);
-      else
-	initialization_succes = ctvty::Application::Initialize("assets");
-      if (!initialization_succes)
-	return (-1);
-    }
-
-  if (0)
-    {
       ctvty::Application::Quit(5.f);
       new ctvty::event::DelayedAction([] () {ctvty::Application::LoadScene("base");}, 1.5f);
       new ctvty::event::DelayedAction([] () {ctvty::Application::LoadScene("complex");}, 3.f);
       ctvty::Application::Start();
-    }
-
-  if (0)
-    {
-      Army  = new ctvty::GameObject("Army", "army", nullptr,
-				    new ctvty::utils::Vector3D(ctvty::utils::Vector3D::forward),
-				    new ctvty::utils::Quaternion(0.f, 0.f, 0.f, 0.f));
-      Army->AddComponent<ctvty::component::RigidBody>();
     }
 
   if (0)

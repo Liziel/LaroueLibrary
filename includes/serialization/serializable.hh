@@ -62,12 +62,12 @@ namespace serialization {
   }
 
 # define SERIALIZE_OBJECT_AS(__type__, __serial__)			\
-  __serial__["type"] & std::string( #__type__ );			\
   serialization::Archive* __new_serial =				\
     new serialization::serial::object;					\
   serialization::Archive& __serial = *__new_serial;			\
   __serial__.emplace("object",						\
 		     new serialization::Serial( __new_serial ));	\
+  __serial__["type"] & std::string( #__type__ );			\
 
 
 # define EASILY_SERIALIZABLE(__class__, __initializer_list__,  __serialization__) \

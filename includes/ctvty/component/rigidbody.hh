@@ -59,6 +59,7 @@ namespace ctvty {
       /*
        * accessed only by MonoBehaviour
        */
+      void			Awake();
       void			FixedUpdate();
 
     public:

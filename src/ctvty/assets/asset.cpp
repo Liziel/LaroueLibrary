@@ -22,7 +22,7 @@ namespace ctvty {
 	    deleter(obj);
 	  });
       } catch (const std::exception& e) {
-	std::cout << "failed to load the file " + file.GetName() + " cause is:" << std::endl
+	std::cerr << "failed to load the file " + file.GetName() + " cause is:" << std::endl
 		  << e.what() << std::endl;
 	return nullptr;
       }

@@ -1,10 +1,11 @@
 #include "ctvty/component/collider.hh"
 #include "ctvty/component/transform.hh"
+#include "ctvty/debug.hpp"
 
 namespace ctvty {
   namespace component {
     Collider::Collider(GameObject* parent, const std::string& name)
-      : MonoBehaviour<Collider>(parent, name) {}
+      : MonoBehaviour<Collider>(parent, name), material(new physics::Material) {}
 
     bool			Collider::IsTrigger() const {
       return isTrigger;
@@ -28,6 +29,7 @@ namespace ctvty {
 						    const utils::Quaternion&	quaternion,
 						    const utils::Vector3D&	direction) const {
       ctvstd::Optional<utils::Collision>	collision;
+      ctvty::debug::Logs<const Collider*, bool>(this, false);
       for (const Collider* collider : contact_colliders) {
 	ctvstd::Optional<utils::Collision>	collided
 	  = collider->CollisionImpl(collider, position, quaternion, -direction);

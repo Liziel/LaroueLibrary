@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "ctvty/gameObject.hpp"
 #include "ctvty/component.hpp"
 
@@ -155,7 +153,6 @@ namespace ctvty {
   void				GameObject::SetEventListening(const std::string& eventName,
 							      bool isListening,
 							      GameObject* child) {
-    std::cout << "Set Event Listening: " << eventName << std::endl;
     if (child == nullptr) {
       if (events_map[eventName] == isListening)
 	return ;
@@ -203,7 +200,6 @@ namespace ctvty {
       return ;
     if (events_map[methodName] == false)
       return ;
-    std::cout << "dispatch: " << methodName << std::endl;
     for (Component* component : components)
       if (component->DoImplement(methodName))
 	(*component)[methodName](params);

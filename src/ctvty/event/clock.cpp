@@ -18,7 +18,7 @@ namespace ctvty {
     }
 
     float				Clock::GetFixedDeltaTime() {
-      return std::chrono::duration<double>(frame_length).count();
+      return fixedDeltaTime.count();
     }
 
     double				Clock::LastFrameRatio() {
@@ -47,6 +47,7 @@ namespace ctvty {
 	  std::this_thread::sleep_for(frame_length - (fixed_loop - fixed_beg));
 	else
 	  lastFrameRatio = (fixed_loop - fixed_beg) / frame_length;
+	fixedDeltaTime = std::chrono::high_resolution_clock::now() - fixed_beg;
 	fixed_beg = std::chrono::high_resolution_clock::now();
 	std::for_each(GameObject::accessParentsGameObjects().begin(),
 		      GameObject::accessParentsGameObjects().end(),

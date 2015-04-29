@@ -332,6 +332,9 @@ namespace serialization {
       bool					_serialized_boolean;
 
     public:
+      bool					get() { return _serialized_boolean; }
+
+    public:
       static bool				isBoolean(std::string::const_iterator& cursor, std::string::const_iterator end);
 
     public:
@@ -453,7 +456,9 @@ namespace serialization {
   long		int_is(serial::interface*);
   template<typename _type>
   struct serial_info< _type,
-		      typename std::enable_if< std::is_integral< _type >::value >::type > {
+		      typename std::enable_if< std::is_integral< _type >::value
+					       && !std::is_same< bool, _type>::value
+					       >::type > {
     using type = serial::integer;
     static _type get(serial::interface* _interface) {
       if (dynamic_cast<serial::integer*>(_interface) == nullptr &&
@@ -502,6 +507,27 @@ namespace serialization {
     }
     static void	 set(serial::interface* _interface, _type& _variable) { _variable = get(_interface); }
     static serial::interface* make(_type _variable) { return new serial::floating(_variable); }
+  };
+
+  /*
+   * Bool
+   */
+  template<typename _type>
+  struct serial_info< _type,
+		      typename std::enable_if< std::is_same< bool, _type >::value >::type > {
+    using type = serial::boolean;
+    static _type get(serial::interface* _interface) {
+      if (dynamic_cast<serial::boolean*>(_interface) == nullptr &&
+	  dynamic_cast<serial::integer*>(_interface) != nullptr)
+	return double_get(_interface);
+      return dynamic_cast<serial::boolean*>(_interface)->get();
+    }
+    static bool  is(serial::interface* _interface) {
+      return dynamic_cast<serial::boolean*>(_interface) != nullptr ||
+	dynamic_cast<serial::integer*>(_interface) != nullptr;
+    }
+    static void	 set(serial::interface* _interface, _type& _variable) { _variable = get(_interface); }
+    static serial::interface* make(_type _variable) { return new serial::boolean(_variable); }
   };
 
   /*

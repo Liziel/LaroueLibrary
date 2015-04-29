@@ -1,6 +1,7 @@
 #include <future>
 #include "ctvty/component/boxcollider.hh"
 #include "ctvty/component/transform.hh"
+#include "ctvty/debug.hpp"
 
 namespace ctvty{
   namespace component {
@@ -35,12 +36,13 @@ namespace ctvty{
       __serial["isTrigger"] & Collider::isTrigger;
 
       CalculateVertices();
+
       for (utils::Vector3D& vertex : vertices)
 	boundingBox.Include(vertex);
     }
 
     void			BoxCollider::Serialize(serialization::Archive& __serial_instance) const {
-      SERIALIZE_OBJECT_AS(BoxCollider::Serialize, __serial_instance);
+      SERIALIZE_OBJECT_AS(ctvty::component::BoxCollider, __serial_instance);
       __serial["+size"] & psize;
       __serial["-size"] & msize;
       __serial["scale"] & scale;
@@ -171,6 +173,7 @@ namespace ctvty{
 			       const utils::Quaternion& rotation,
 			       const utils::Vector3D& direction) const {
       long	len(std::distance(b, e));
+
       if (len < 10) {
 	ctvstd::Optional<utils::Collision> collision;
 	for (;b != e; ++b) {

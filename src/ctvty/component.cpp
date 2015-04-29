@@ -7,7 +7,6 @@ namespace ctvty {
    */
   Component::		Component(GameObject* parent, const std::string& name)
     : Object(name), gameObject(parent) {
-    std::cout << name << " " << parent << std::endl;
     if (parent)
       AttachParent(parent);
   }

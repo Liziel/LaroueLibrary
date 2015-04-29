@@ -40,8 +40,8 @@ namespace ctvty {
 
     product = _template->clone();
     if ((gameObject = dynamic_cast<GameObject*>(product)) != nullptr) {
-      gameObject->BroadcastMessage("Awake");
       gameObject->SetActive(true);
+      gameObject->BroadcastMessage("Awake");
     }      
     return (product);
   }

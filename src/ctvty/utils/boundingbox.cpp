@@ -14,6 +14,11 @@ namespace ctvty {
     BoundingBox3D::	BoundingBox3D()
       : BoundingBox3D( Vector3D::zero, Vector3D::zero ) {}
 
+    void		BoundingBox3D::Serialize(serialization::Archive& __serial) const {
+      __serial["base_vertex"] & &base_vertex;
+      __serial["end_point"] & &end_point;
+    }
+
     void		BoundingBox3D::Include(const BoundingBox3D& box) {
       Include(Vector3D(box.base_vertex.x, box.base_vertex.y, box.base_vertex.z));
 

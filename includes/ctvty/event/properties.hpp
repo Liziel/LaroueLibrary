@@ -1,8 +1,6 @@
 #ifndef Event_hh__
 # define Event_hh__
 
-#include <iostream>
-
 #include <vector>
 #include <functional>
 
@@ -145,7 +143,6 @@ namespace ctvty {
     public:
       intern_receiver(primary_class* _this, std::function<void( _class*, parameters... )> fn)
 	: _this_(_this), _fn(fn) {
-	std::cout << "intern " << _this_ << std::endl;
       }
 
     public:

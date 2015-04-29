@@ -3,10 +3,11 @@
 
 # include "ctvty/utils/vector3d.hh"
 # include "ctvty/utils/face.hh"
+# include "serialization/serializable.hh"
 
 namespace ctvty {
   namespace utils {
-    class BoundingBox3D {
+    class BoundingBox3D : public serialization::Serializable {
     private:
       utils::Vector3D		base_vertex;
       utils::Vector3D		end_point;
@@ -26,6 +27,9 @@ namespace ctvty {
     public:
       BoundingBox3D(const utils::Vector3D&, const utils::Vector3D&);
       BoundingBox3D();
+
+    public:
+      void				Serialize(serialization::Archive&) const override;
     };
 
     inline

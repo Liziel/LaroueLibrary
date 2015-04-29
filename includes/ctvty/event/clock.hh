@@ -16,6 +16,7 @@ namespace ctvty {
     class Clock {
     private:
       std::chrono::milliseconds		frame_length;
+      std::chrono::duration<double>	fixedDeltaTime;
 
     private:
       double						lastFrameRatio;
@@ -26,9 +27,8 @@ namespace ctvty {
     private:
       std::list<DelayedAction*>				delayedActions;
 
-    private:
+    public:
       /* Only the Delayed Action will be allowed to call this methods */
-      friend DelayedAction;
       void						AddDelayedAction(DelayedAction*);
       void						RemoveDelayedAction(DelayedAction*);
 
