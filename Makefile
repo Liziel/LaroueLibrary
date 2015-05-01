@@ -41,14 +41,19 @@ Serial		= src/serialization/serializable.cpp \
 FileSystem	= src/filesystem/file.cpp \
 		src/filesystem/directory.cpp
 
+### UserDefined
+UDComponent	= src/user_defined/component/eventtester.cpp
+
+UserDefined	= $(UDComponent)
+
 ### Main -> where we start the ctvty application
 Main		= src/start/main.cpp
 
 ###################
-CXXSRC		+= $(Serial) $(CtvTy) $(Main) $(FileSystem)
+CXXSRC		+= $(Serial) $(CtvTy) $(Main) $(FileSystem) $(UserDefined)
 CSRC		+=
 
-FLAGS		= -W -Wextra $(INCLUDES)
+FLAGS		= -W -Wall -Wextra $(INCLUDES)
 CFLAGS		+= $(FLAGS) -Wall
 CXXFLAGS	+= $(FLAGS) -std=c++11 # skip bad warning for c++11 
 LDFLAGS		+= -lpthread

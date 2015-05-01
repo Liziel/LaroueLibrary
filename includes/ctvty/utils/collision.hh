@@ -3,6 +3,7 @@
 
 #include <list>
 #include "ctvty/utils/vector3d.hh"
+#include "ctvty/utils/contactpoint.hh"
 
 namespace ctvty {
   namespace component {
@@ -17,6 +18,7 @@ namespace ctvty {
 
     public:
       Collision(const Collision&) = default;
+      Collision() = default;
     };
   }
 };

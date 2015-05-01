@@ -1,5 +1,6 @@
 #include <iostream>
 #include "ctvty/utils/face.hh"
+#include "ctvty/debug.hpp"
 
 namespace ctvty {
   namespace utils {
@@ -24,10 +25,13 @@ namespace ctvty {
     Face::Intersection(const Vector3D& position, const Vector3D& direction, float& force) const {
       ctvstd::Optional<float>	dForce;
 
+      ctvty::debug::Logs("repered Dots: " , repered_dots, "\nNormal: ", normal);
+
       if (!(dForce = Face::GetCollisionDistance(position, direction)))
 	return ctvstd::none;
       if (*dForce > 1 || *dForce < 0)
 	return ctvstd::none;
+      ctvty::debug::Logs("collision Force = ", *dForce);
       if (!IsPointInside(position + direction * *dForce))
 	return ctvstd::none;
       force = 1. - *dForce;
@@ -47,9 +51,13 @@ namespace ctvty {
     }
 
     bool		Face::IsPointInside(const Vector3D& point) const {
-      if (!(point.CrossProduct(x).GetNormalized() == normal || point.CrossProduct(x).GetNormalized() == -normal))
+      ctvty::debug::Log("### test point ###");
+      ctvty::debug::CompressedLogs(point, (dots[0] - point), (dots[0] - point).CrossProduct(x), normal);
+      ctvty::debug::CompressedLogs(point, (dots[0] - point), (dots[0] - point).CrossProduct(x), -normal);
+      ctvty::debug::Log("### end test point ###");
+      if (!((dots[0] - point).CrossProduct(x).GetNormalized() == normal
+	    || (dots[0] - point).CrossProduct(x).GetNormalized() == -normal))
 	return false;
-      std::cout << "oui" << std::endl;
       Vector3D	relative = GetRelativePosition(point);
 
       std::size_t it, itp;

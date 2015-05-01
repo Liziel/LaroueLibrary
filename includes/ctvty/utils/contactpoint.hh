@@ -11,6 +11,7 @@ namespace ctvty {
 
     public:
       ContactPoint(const Vector3D& point, const Vector3D& normal);
+      ContactPoint() = default;
     };
   };
 };

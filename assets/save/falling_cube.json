@@ -4,6 +4,10 @@
 		],
 		"components" : [
 		{
+				"object" : { },
+				"type" : "user_defined::component::EventTester",
+		},
+		{
 				"object" : {
 					"detectCollision" : 1,
 					"detectionMode" : 0,
@@ -11,7 +15,7 @@
 					"mass" : 1,
 					"velocity" : {
 						"object" : {
-							"x" : 0,
+							"x" : 7,
 							"y" : 0,
 							"z" : 0,
 						},
@@ -58,7 +62,7 @@
 			"object" : {
 				"position" : {
 					"object" : {
-						"x" : 0,
+						"x" : -5,
 						"y" : 20,
 						"z" : 0,
 					},

@@ -1,11 +1,15 @@
 #ifndef Rigidbody_hh__
 # define Rigidbody_hh__
 
+# include <list>
+# include <vector>
+
 # include "ctvty/monobehaviour.hpp"
 # include "ctvty/utils/vector3d.hh"
 # include "ctvty/utils/boundingbox.hh"
 
 namespace ctvty {
+  namespace utils { struct Collision; };
   namespace component {
     
     enum class CollisionDetectionMode {
@@ -28,10 +32,11 @@ namespace ctvty {
       std::list<Collider*>			sub_colliders;
 
     private:
-      std::list<Collider*>			colliders_collisions;
+      std::list<const Collider*>		colliders_collisions;
+      ctvstd::Optional<utils::Collision>	last_collision;
 
     private:
-      std::list<Collider*>			colliders_trigger;
+      std::list<const Collider*>		colliders_trigger;
 
     private://later accessible and serializable
       CollisionDetectionMode			detectionMode;
@@ -59,7 +64,6 @@ namespace ctvty {
       /*
        * accessed only by MonoBehaviour
        */
-      void			Awake();
       void			FixedUpdate();
 
     public:
@@ -76,9 +80,15 @@ namespace ctvty {
       Object*	clone() const override;
 
     private:
-      void			DiscreteCheckMovement(utils::Vector3D&);
-      void			ContinousCheckMovement(utils::Vector3D&);
-      void			DynamicContinousCheckMovement(utils::Vector3D&);
+      bool			DiscreteCheckMovement(utils::Vector3D&);
+      bool			ContinousCheckMovement(utils::Vector3D&);
+      bool			DynamicContinousCheckMovement(utils::Vector3D&);
+
+      void			EndMovement(utils::Vector3D& movement);
+      void			EndMovement(utils::Vector3D& movement,
+					    const utils::Collision& collideds);
+
+      void			CheckTrigger();
     };
 
   };

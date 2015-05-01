@@ -64,40 +64,40 @@ namespace ctvty{
 	(utils::Vector3D(-msize->x,	-msize->y,	-msize->z)	* scale)
       };
       faces[0].reset(new utils::Face({
-	(utils::Vector3D(-msize->x,	psize->y,	psize->z)	* scale),
-	(utils::Vector3D(-msize->x,	-msize->y,	psize->z)	* scale),
+	(utils::Vector3D(-msize->x,	-msize->y,	-msize->z)	* scale),
 	(utils::Vector3D(-msize->x,	psize->y,	-msize->z)	* scale),
-	(utils::Vector3D(-msize->x,	-msize->y,	-msize->z)	* scale)
+	(utils::Vector3D(-msize->x,	psize->y,	psize->z)	* scale),
+	(utils::Vector3D(-msize->x,	-msize->y,	psize->z)	* scale)
 	}));
       faces[1].reset(new utils::Face({
-	(utils::Vector3D(psize->x,	psize->y,	psize->z)	* scale),
-	(utils::Vector3D(psize->x,	-msize->y,	psize->z)	* scale),
+	(utils::Vector3D(psize->x,	-msize->y,	-msize->z)	* scale),
 	(utils::Vector3D(psize->x,	psize->y,	-msize->z)	* scale),
-	(utils::Vector3D(psize->x,	-msize->y,	-msize->z)	* scale)
+	(utils::Vector3D(psize->x,	psize->y,	psize->z)	* scale),
+	(utils::Vector3D(psize->x,	-msize->y,	psize->z)	* scale)
 	}));
       faces[2].reset(new utils::Face({
-	(utils::Vector3D(psize->x,	-msize->y,	psize->z)	* scale),
-	(utils::Vector3D(-msize->x,	-msize->y,	psize->z)	* scale),
+	(utils::Vector3D(-msize->x,	-msize->y,	-msize->z)	* scale),
 	(utils::Vector3D(psize->x,	-msize->y,	-msize->z)	* scale),
-	(utils::Vector3D(-msize->x,	-msize->y,	-msize->z)	* scale)
+	(utils::Vector3D(psize->x,	-msize->y,	psize->z)	* scale),
+	(utils::Vector3D(-msize->x,	-msize->y,	psize->z)	* scale)
 	}));
       faces[3].reset(new utils::Face({
-	(utils::Vector3D(psize->x,	psize->y,	psize->z)	* scale),
-	(utils::Vector3D(-msize->x,	psize->y,	psize->z)	* scale),
+	(utils::Vector3D(-msize->x,	psize->y,	-msize->z)	* scale),
 	(utils::Vector3D(psize->x,	psize->y,	-msize->z)	* scale),
-	(utils::Vector3D(-msize->x,	psize->y,	-msize->z)	* scale)
+	(utils::Vector3D(psize->x,	psize->y,	psize->z)	* scale),
+	(utils::Vector3D(-msize->x,	psize->y,	psize->z)	* scale)
 	}));
       faces[4].reset(new utils::Face({
 	(utils::Vector3D(psize->x,	psize->y,	-msize->z)	* scale),
 	(utils::Vector3D(-msize->x,	psize->y,	-msize->z)	* scale),
-	(utils::Vector3D(psize->x,	-msize->y,	-msize->z)	* scale),
-	(utils::Vector3D(-msize->x,	-msize->y,	-msize->z)	* scale)
+	(utils::Vector3D(-msize->x,	-msize->y,	-msize->z)	* scale),
+	(utils::Vector3D(psize->x,	-msize->y,	-msize->z)	* scale)
 	}));
       faces[5].reset(new utils::Face({
 	(utils::Vector3D(psize->x,	psize->y,	psize->z)	* scale),
 	(utils::Vector3D(-msize->x,	psize->y,	psize->z)	* scale),
-	(utils::Vector3D(psize->x,	-msize->y,	psize->z)	* scale),
-	(utils::Vector3D(-msize->x,	-msize->y,	psize->z)	* scale)
+	(utils::Vector3D(-msize->x,	-msize->y,	psize->z)	* scale),
+	(utils::Vector3D(psize->x,	-msize->y,	psize->z)	* scale)
 	}));
     }
 
@@ -110,64 +110,65 @@ namespace ctvty{
       boundingBox = boundingBox * f;
       *msize * f;
       *psize * f;
-      for (utils::Vector3D& vertex : vertices)
-	vertex * f;
+      CalculateVertices();
     }
 
     ctvstd::Optional<utils::Collision>
     BoxCollider::CollisionImpact(const utils::Vector3D& v, const utils::Vector3D& d) const {
       utils::Vector3D vertex(transform->GetRotation().RotatedVector(v - transform->GetPosition()));
       utils::Vector3D direction(transform->GetRotation().RotatedVector(d));
-      ctvstd::Optional<utils::Collision>	collision;
+      ctvstd::Optional<utils::Collision>	collision(ctvstd::none);
       float					force = 0;
 
       ctvty::debug::CompressedLogs(v, " ", transform->GetPosition(), " ", vertex);
-      ctvty::debug::Logs(vertices);
       ctvty::debug::CompressedLogs(direction);
+      ctvty::debug::CompressedLogs(psize, -*msize, "\n\n");
 
-      if (vertex.y <= msize->y) {
+      if (vertex.x <= -msize->x) {
 	float	_force = 0;
 	ctvstd::Optional<utils::ContactPoint> contact =
 	    faces[0]->Intersection(vertex, direction, _force);
 	if (contact && _force > force)
-	  collision = new utils::Collision{nullptr, {}, force, *contact};
-      } else if (vertex.y >= psize->y) {
+	  collision = new utils::Collision{nullptr, {}, force = _force, *contact};
+      } else if (vertex.x >= psize->x) {
 	float	_force = 0;
 	ctvstd::Optional<utils::ContactPoint> contact =
 	    faces[1]->Intersection(vertex, direction, _force);
 	if (contact && _force > force)
-	  collision = new utils::Collision{nullptr, {}, force, *contact};
+	  collision = new utils::Collision{nullptr, {}, force = _force, *contact};
       }
 
-      if (vertex.z <= msize->z) {
+      if (vertex.y <= -msize->y) {
 	float	_force = 0;
 	ctvstd::Optional<utils::ContactPoint> contact =
 	    faces[2]->Intersection(vertex, direction, _force);
 	if (contact && _force > force)
-	  collision = new utils::Collision{nullptr, {}, force, *contact};
-      } else if (vertex.z >= psize->z) {
+	  collision = new utils::Collision{nullptr, {}, force = _force, *contact};
+      } else if (vertex.y >= psize->y) {
+	ctvty::debug::Log("calcul for collision in +y");
 	float	_force = 0;
 	ctvstd::Optional<utils::ContactPoint> contact =
 	    faces[3]->Intersection(vertex, direction, _force);
+	ctvty::debug::Log(((bool)contact));
 	if (contact && _force > force)
-	  collision = new utils::Collision{nullptr, {}, force, *contact};
+	  collision = new utils::Collision{nullptr, {}, force = _force, *contact};
       }
 
-      if (vertex.x <= msize->x) {
+      if (vertex.z <= -msize->z) {
 	float	_force = 0;
 	ctvstd::Optional<utils::ContactPoint> contact =
 	    faces[4]->Intersection(vertex, direction, _force);
 	if (contact && _force > force)
-	  collision = new utils::Collision{nullptr, {}, force, *contact};
-      } else if (vertex.x >= psize->x) {
+	  collision = new utils::Collision{nullptr, {}, force = _force, *contact};
+      } else if (vertex.z >= psize->z) {
 	float	_force = 0;
 	ctvstd::Optional<utils::ContactPoint> contact =
 	    faces[5]->Intersection(vertex, direction, _force);
 	if (contact && _force > force)
-	  collision = new utils::Collision{nullptr, {}, force, *contact};
+	  collision = new utils::Collision{nullptr, {}, force = _force, *contact};
       }
 
-      return ctvstd::none;
+      return collision;
     }
 
     ctvstd::Optional<utils::Collision>
@@ -180,14 +181,14 @@ namespace ctvty{
 
       if (len < 10) {
 	ctvstd::Optional<utils::Collision> collision;
-	std::cerr << len << std::endl;
-	ctvty::debug::CompressedLogs(position, " ", transform->GetPosition());
+	ctvty::debug::Log(len);
 	for (auto c = b;c != e; ++c)
 	  ctvty::debug::Logs(len - std::distance(c, e), rotation.RotatedAround(utils::Vector3D::zero, *c) + position);
 	for (;b != e; ++b) {
 	  ctvstd::Optional<utils::Collision> collided
 	    = CollisionImpact(rotation.RotatedAround(utils::Vector3D::zero, *b) + position, direction);
 	  if (collided) {
+	  std::cout << "collided.force: " << collided->force << std::endl;
 	    if (!collision) {
 	      collision = collided;
 	    } else if (collision->force < collided->force) {

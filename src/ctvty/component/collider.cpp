@@ -41,6 +41,8 @@ namespace ctvty {
 						    const utils::Vector3D&	position,
 						    const utils::Quaternion&	quaternion,
 						    const utils::Vector3D&	direction) const {
+      ctvty::debug::ScopeDisabler scope;
+      
       ctvstd::Optional<utils::Collision>	collision;
       for (const Collider* collider : contact_colliders) {
 	ctvty::debug::Logs(this->gameObject, collider->gameObject,

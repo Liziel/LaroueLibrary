@@ -21,8 +21,8 @@
   attach_to_event_ ## __event__ (dynamic_cast<child_class*>(this))	\
 
 namespace ctvty {
-  class Collision {public: Collision() {}};
-  class Collision2D {public: Collision2D() {}};
+  namespace component { class Collider; };
+  namespace utils { struct Collision; };
 
   template <typename child_class>
   class MonoBehaviour : public Behaviour {
@@ -72,17 +72,11 @@ namespace ctvty {
       ATTACH_THIS_TO(OnBecomeInvisible);
       ATTACH_THIS_TO(OnBecomeVisible);
       ATTACH_THIS_TO(OnCollisionEnter);
-      ATTACH_THIS_TO(OnCollisionEnter2D);
       ATTACH_THIS_TO(OnCollisionExit);
-      ATTACH_THIS_TO(OnCollisionExit2D);
       ATTACH_THIS_TO(OnCollisionStay);
-      ATTACH_THIS_TO(OnCollisionStay2D);
       ATTACH_THIS_TO(OnTriggerEnter);
-      ATTACH_THIS_TO(OnTriggerEnter2D);
       ATTACH_THIS_TO(OnTriggerExit);
-      ATTACH_THIS_TO(OnTriggerExit2D);
       ATTACH_THIS_TO(OnTriggerStay);
-      ATTACH_THIS_TO(OnTriggerStay2D);
       ATTACH_THIS_TO(OnDestroy);
       ATTACH_THIS_TO(OnDisable);
       ATTACH_THIS_TO(OnEnable);
@@ -97,18 +91,12 @@ namespace ctvty {
     ATTACHED_TO_EVENT(OnApplicationQuit,);
     ATTACHED_TO_EVENT(OnBecomeInvisible,);
     ATTACHED_TO_EVENT(OnBecomeVisible,);
-    ATTACHED_TO_EVENT(OnCollisionEnter,		new const Collision);
-    ATTACHED_TO_EVENT(OnCollisionEnter2D,	new const Collision2D);
-    ATTACHED_TO_EVENT(OnCollisionExit,		new const Collision);
-    ATTACHED_TO_EVENT(OnCollisionExit2D,	new const Collision2D);
-    ATTACHED_TO_EVENT(OnCollisionStay,		new const Collision);
-    ATTACHED_TO_EVENT(OnCollisionStay2D,	new const Collision2D);
-    ATTACHED_TO_EVENT(OnTriggerEnter,		new const Collision);
-    ATTACHED_TO_EVENT(OnTriggerEnter2D,		new const Collision2D);
-    ATTACHED_TO_EVENT(OnTriggerExit,		new const Collision);
-    ATTACHED_TO_EVENT(OnTriggerExit2D,		new const Collision2D);
-    ATTACHED_TO_EVENT(OnTriggerStay,		new const Collision);
-    ATTACHED_TO_EVENT(OnTriggerStay2D,		new const Collision2D);
+    ATTACHED_TO_EVENT(OnCollisionEnter,		std::declval<const utils::Collision*>());
+    ATTACHED_TO_EVENT(OnCollisionExit,		std::declval<const utils::Collision*>());
+    ATTACHED_TO_EVENT(OnCollisionStay,		std::declval<const utils::Collision*>());
+    ATTACHED_TO_EVENT(OnTriggerEnter,		std::declval<const component::Collider*>());
+    ATTACHED_TO_EVENT(OnTriggerExit,		std::declval<const component::Collider*>());
+    ATTACHED_TO_EVENT(OnTriggerStay,		std::declval<const component::Collider*>());
     ATTACHED_TO_EVENT(OnDestroy,);
     ATTACHED_TO_EVENT(OnDisable,);
     ATTACHED_TO_EVENT(OnEnable,);
