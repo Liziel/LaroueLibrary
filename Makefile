@@ -56,7 +56,7 @@ CSRC		+=
 
 FLAGS		= -W -Wall -Wextra $(INCLUDES)
 CFLAGS		+= $(FLAGS) -Wall
-CXXFLAGS	+= $(FLAGS) -std=c++11 # skip bad warning for c++11 
+CXXFLAGS	+= $(FLAGS) -std=c++11
 LDFLAGS		+= -lpthread
 
 CXXOBJ		= $(CXXSRC:.cpp=.o)
@@ -95,9 +95,15 @@ re: fclean all
 
 clean_dependencies:
 	rm -f $(DEPENDENCIES)
+	rm -f .build_log
+
+build_renderer:
+	OUTPUT='renderer.so' INCLUDES="`pwd`/includes" make -C renderer
+	cp -f renderer/renderer.so ./renderer.so
 
 %.d: %.cpp
 	@$(CXX) -MM	$*.cpp	 $(CXXFLAGS) 1>> .build_log
+	@echo 1>> .build_log
 	@echo -n `dirname $*` > $*.d
 	@echo -n "/" >> $*.d
 	@echo "Building Dependencies file for" $*.cpp
