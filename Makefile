@@ -1,11 +1,11 @@
 NAME		= bomberman
-OUTPUT	?= $(NAME)
+OUTPUT		?= $(NAME)
 
 CC		?= gcc
 
 CXX		?= g++
 
-INCLUDES	= -I ./includes
+INCLUDES	+= -I ./includes
 ###################
 ### CtvTy -> unity conception
 CtvTyEvent	=src/ctvty/event/clock.cpp\
@@ -76,7 +76,12 @@ endif
 all: $(OUTPUT)
 
 $(OUTPUT): $(OBJ)
+ifeq ($(OUTPUT),$(NAME))
 	$(LINKER) -o $(OUTPUT) $(OBJ) $(LDFLAGS)
+else
+	@echo "Alternate output:" $(OUTPUT) "build"
+	@$(LINKER) -o $(OUTPUT) $(OBJ) $(LDFLAGS)
+endif
 
 clean:  clean_dependencies
 	$(RM) $(OBJ)
