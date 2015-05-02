@@ -1,4 +1,5 @@
 NAME		= bomberman
+OUTPUT	?= $(NAME)
 
 CC		?= gcc
 
@@ -72,10 +73,10 @@ else
 LINKER	?= $(CC)
 endif
 
-all: $(NAME)
+all: $(OUTPUT)
 
-$(NAME): $(OBJ)
-	$(LINKER) -o $(NAME) $(OBJ) $(LDFLAGS)
+$(OUTPUT): $(OBJ)
+	$(LINKER) -o $(OUTPUT) $(OBJ) $(LDFLAGS)
 
 clean:  clean_dependencies
 	$(RM) $(OBJ)
@@ -91,7 +92,7 @@ clean_dependencies:
 	rm -f $(DEPENDENCIES)
 
 %.d: %.cpp
-	@$(CXX) -MM	$*.cpp	 $(CXXFLAGS) 1> .build_log
+	@$(CXX) -MM	$*.cpp	 $(CXXFLAGS) 1>> .build_log
 	@echo -n `dirname $*` > $*.d
 	@echo -n "/" >> $*.d
 	@echo "Building Dependencies file for" $*.cpp

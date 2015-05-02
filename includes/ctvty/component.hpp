@@ -16,14 +16,14 @@ namespace ctvty {
 
   class Component : public Object {
   private:
-    std::string					tag;
+    std::string							tag;
 
   protected:
-    GameObject*					gameObject;
-    component::Transform*			transform;
+    GameObject*							gameObject;
+    component::Transform*					transform;
 
   protected:
-    std::map<std::string, event::receiver*>	registeredListener;
+    std::map< std::string, std::shared_ptr<event::receiver> >	registeredListener;
 
   public:
     Component(GameObject* parent,
@@ -48,8 +48,10 @@ namespace ctvty {
 						 void (child_class::*listener)(listener_arguments...)) {
       registeredListener
 	.emplace(name,
-		 event::receiver::create(this,
-					 std::function<void ( child_class*, listener_arguments... )>(listener)));
+		 std::shared_ptr<event::receiver>(event::receiver
+				 ::create(this,
+					  std::function<void ( child_class*, listener_arguments... )>(listener)
+							 )));
       if (gameObject)
 	gameObject->SetEventListening(name, true);
     }
@@ -65,7 +67,10 @@ namespace ctvty {
     template<typename ... parameters>
     void			BroadcastMessage(const std::string& methodName,
 						 parameters ... p) const{
-      BroadcastMessage(methodName, event::parameters::PackValues(p ... ));
+      std::vector<event::parameters::value*>	v(event::parameters::PackValues(p ... ));
+      BroadcastMessage(methodName, v);
+      for (event::parameters::value* _v : v)
+	delete _v;
     }
 
     void			SendMessage(const std::string& methodName,

@@ -31,8 +31,7 @@ namespace ctvty {
 
       class value {
       public:
-	virtual const std::type_info&	getType() const = 0;
-	
+	virtual ~value() = default;
       public:
 	template<typename _type>
 	static value*		create(_type _value) {
@@ -52,9 +51,6 @@ namespace ctvty {
 
       template<typename _type>
       class intern_value : public value {
-      public:
-	const std::type_info&		getType() const { return typeid(_type); }
-
       private:
 	_type		_value;
 
@@ -82,6 +78,8 @@ namespace ctvty {
     class intern_receiver;
 
     class receiver {
+    public:
+      virtual ~receiver() = default;
     public:
       virtual void	operator() (ctvty::event::parameters::values _params = parameters::PackValues()) = 0;
 

@@ -6,7 +6,7 @@
 namespace ctvty {
   namespace component {
     Collider::Collider(GameObject* parent, const std::string& name)
-      : MonoBehaviour<Collider>(parent, name), material(new physics::Material) { }
+      : MonoBehaviour<Collider>(parent, name), rigidBody(nullptr), material(new physics::Material) { }
 
     void			Collider::Awake() {
       RigidBody*	r = GetComponent<RigidBody>();

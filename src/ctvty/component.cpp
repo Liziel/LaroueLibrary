@@ -56,7 +56,7 @@ namespace ctvty {
     gameObject = _gameObject;
     transform = gameObject->GetTransformation();
     std::for_each(registeredListener.begin(), registeredListener.end(),
-		  [ & ] (std::pair<std::string, event::receiver*> pair) {
+		  [ & ] (std::pair<std::string, std::shared_ptr<event::receiver> > pair) {
 		    gameObject->SetEventListening(pair.first, true);
 		  });
   }

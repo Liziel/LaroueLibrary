@@ -15,7 +15,7 @@ namespace ctvty {
       if (DoImplement("OnEnable"))
 	(*this)["OnEnable"]();
     enabled = state;
-    for (std::pair<std::string, event::receiver*> pair : registeredListener) {
+    for (std::pair< std::string, std::shared_ptr<event::receiver> > pair : registeredListener) {
       gameObject->SetEventListening(pair.first, state);
     }
   }
