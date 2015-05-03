@@ -29,6 +29,7 @@
 
 #same for gdl .a
 !*.a
+renderer.a
 
 # and .so
 !*.so
