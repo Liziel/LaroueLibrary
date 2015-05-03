@@ -54,6 +54,8 @@ Main		= src/start/main.cpp
 CXXSRC		+= $(Serial) $(CtvTy) $(Main) $(FileSystem) $(UserDefined)
 CSRC		+=
 
+STATIC_LIBRARY	?= renderer.a
+
 FLAGS		= -W -Wall -Wextra $(INCLUDES)
 CFLAGS		+= $(FLAGS) -Wall
 CXXFLAGS	+= $(FLAGS) -std=c++11
@@ -75,9 +77,9 @@ endif
 
 all: $(OUTPUT)
 
-$(OUTPUT): $(OBJ)
+$(OUTPUT): $(OBJ) $(STATIC_LIBRARY)
 ifeq ($(OUTPUT),$(NAME))
-	$(LINKER) -o $(OUTPUT) $(OBJ) $(LDFLAGS)
+	$(LINKER) -o $(OUTPUT) $(OBJ) $(STATIC_LIBRARY) $(LDFLAGS)
 else
 	@echo "Alternate output:" $(OUTPUT) "build"
 	@$(LINKER) -o $(OUTPUT) $(OBJ) $(LDFLAGS)
@@ -97,9 +99,9 @@ clean_dependencies:
 	rm -f $(DEPENDENCIES)
 	rm -f .build_log
 
-build_renderer:
-	OUTPUT='renderer.so' INCLUDES="`pwd`/includes" make -C renderer
-	cp -f renderer/renderer.so ./renderer.so
+renderer.a:
+	OUTPUT='renderer.a' INCLUDES="`pwd`/includes" make -C renderer
+	cp -f renderer/renderer.a ./renderer.a
 
 %.d: %.cpp
 	@$(CXX) -MM	$*.cpp	 $(CXXFLAGS) 1>> .build_log

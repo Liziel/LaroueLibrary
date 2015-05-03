@@ -23,3 +23,12 @@
 !*.json
 
 #unignore model files and anim
+!*.obj
+!*.fbx
+!*.dae
+
+#same for gdl .a
+!*.a
+
+# and .so
+!*.so

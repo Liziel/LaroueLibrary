@@ -10,6 +10,7 @@
 #include "ctvty/utils/face.hh"
 #include "ctvty/debug.hpp"
 #include "ctvty/component/boxcollider.hh"
+#include "ctvty/rendering/renderer.hh"
 
 void	recursiveList(filesystem::Directory& directory) {
   std::list<filesystem::Directory>	subList;
@@ -36,6 +37,8 @@ int main(int ac, char** av) {
   ctvty::asset::Assets			save_assets(std::move(assets.GetAssets("save")));
 
   ctvty::GameObject			*Army = nullptr;
+
+  ctvty::rendering::Renderer::GetRenderer();
 
   if (1)
     {

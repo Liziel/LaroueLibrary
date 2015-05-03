@@ -6,8 +6,10 @@ CXX		?= g++
 
 INCLUDES	+= -I ./includes
 ##############################
+### Gdl Implementation
+GdlImpl		= src/gdlimpl/renderer.cpp
 ##############################
-CXXSRC		+= 
+CXXSRC		+= $(GdlImpl)
 CSRC		+=
 
 FLAGS		= -W -Wall -Wextra $(INCLUDES)
@@ -23,17 +25,13 @@ CXXDEPENDENCIES	= $(CXXSRC:.cpp=.d)
 CDEPENDENCIES	= $(CSRC:.c=.d)
 DEPENDENCIES	= $(CDEPENDENCIES) $(CXXDEPENDENCIES)
 
-ifneq ($(CXXOBJ),)
-LINKER	?= $(CXX)
-else
-LINKER	?= $(CC)
-endif
+LINKER	?= ar rcs
 
 all: $(OUTPUT)
 
 $(OUTPUT): $(OBJ)
 ifeq ($(OUTPUT),$(NAME))
-	$(LINKER) -o $(OUTPUT) $(OBJ) $(LDFLAGS)
+	$(LINKER) $(OUTPUT) $(OBJ) $(LDFLAGS)
 else
 	@echo "Alternate output:" $(OUTPUT) "build"
 	@$(LINKER) -o $(OUTPUT) $(OBJ) $(LDFLAGS)

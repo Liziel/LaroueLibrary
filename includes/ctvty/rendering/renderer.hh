@@ -1,17 +1,19 @@
 #ifndef Renderer_hh__
 # define Renderer_hh__
 
-# include "model3d.hh"
+# include <string>
+
+# include "ctvty/utils/vector3d.hh"
+# include "ctvty/utils/quaternion.hh"
+
+# include "ctvty/rendering/model3d.hh"
 
 namespace ctvty {
   namespace rendering {
 
     class Renderer {
-    private:
-      static RendererImpl*&			GetRenderer();
-
     public:
-      class RendererImpl {
+      class Implementation {
       public:
 	virtual Model3D*		Load3DModel(const std::string&) = 0;
 
@@ -28,9 +30,8 @@ namespace ctvty {
 							  const ctvty::utils::Vector3D& rotation) = 0;
       };
 
-
     public:
-      static void			LoadRenderingLibrary(const std::string& path);
+      static Implementation&		GetRenderer();
 
     public:
       static void			Initialize(std::size_t width,
