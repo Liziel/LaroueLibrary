@@ -38,7 +38,7 @@ int main(int ac, char** av) {
 
   ctvty::GameObject			*Army = nullptr;
 
-  ctvty::rendering::Renderer::GetRenderer();
+  //ctvty::rendering::Renderer::GetRenderer().Initialize(500, 500, "dla merde");
 
   if (1)
     {

@@ -21,13 +21,20 @@ namespace ctvty {
 	virtual void			Initialize(std::size_t width,
 						   std::size_t height,
 						   const std::string& window_name) = 0;
+
 	virtual void			Update() = 0;
+
+	virtual void			Pre3DRendering() = 0;
+	virtual void			PreHUDRendering() = 0;
 	virtual void			Flush() = 0;
+
 	virtual void			Quit() = 0;
 
       public:
 	virtual void			SetCameraPosition(const ctvty::utils::Vector3D& position,
-							  const ctvty::utils::Vector3D& rotation) = 0;
+							  const ctvty::utils::Vector3D& lookAt,
+							  const ctvty::utils::Vector3D& eulerRotation
+							  = ctvty::utils::Vector3D::zero) = 0;
       };
 
     public:

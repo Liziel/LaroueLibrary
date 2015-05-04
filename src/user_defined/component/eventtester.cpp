@@ -30,6 +30,7 @@ namespace user_defined {
       std::cerr << std::endl << std::endl << std::endl
 		<< "On Collision Enter"
 		<< std::endl << std::endl << std::endl;
+      
     }
 
     void		EventTester::OnCollisionStay(const ctvty::utils::Collision*) {

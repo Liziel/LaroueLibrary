@@ -54,12 +54,13 @@ Main		= src/start/main.cpp
 CXXSRC		+= $(Serial) $(CtvTy) $(Main) $(FileSystem) $(UserDefined)
 CSRC		+=
 
-STATIC_LIBRARY	?= renderer.a
+STATIC_LIBRARY	?= renderer/renderer.a
 
 FLAGS		= -W -Wall -Wextra $(INCLUDES)
 CFLAGS		+= $(FLAGS) -Wall
 CXXFLAGS	+= $(FLAGS) -std=c++11
 LDFLAGS		+= -lpthread
+-include	renderer/.ld_path
 
 CXXOBJ		= $(CXXSRC:.cpp=.o)
 COBJ		= $(CSRC:.c=.o)
@@ -86,7 +87,7 @@ else
 endif
 
 clean:  clean_dependencies
-	$(RM) $(OBJ)
+	$(RM) $(OBJ) $(STATIC_LIBRARY)
 
 fclean: clean
 	$(RM) $(NAME)
@@ -99,9 +100,8 @@ clean_dependencies:
 	rm -f $(DEPENDENCIES)
 	rm -f .build_log
 
-renderer.a:
-	OUTPUT='renderer.a' INCLUDES="`pwd`/includes" make -C renderer
-	cp -f renderer/renderer.a ./renderer.a
+renderer/renderer.a:
+	OUTPUT='renderer.a' INCLUDES="-I `pwd`/includes/" make -C renderer
 
 %.d: %.cpp
 	@$(CXX) -MM	$*.cpp	 $(CXXFLAGS) 1>> .build_log

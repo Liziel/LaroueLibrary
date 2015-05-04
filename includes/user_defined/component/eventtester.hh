@@ -24,6 +24,7 @@ namespace user_defined {
     public:
       ctvty::Object*	clone() const override;
     };
+
   };
 };
 

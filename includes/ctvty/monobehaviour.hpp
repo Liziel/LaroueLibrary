@@ -11,7 +11,8 @@
   auto attach_to_event_ ## __event__ (type* _this)			\
   -> decltype( _this -> __event__ ( __parameters__ ), bool() )		\
   { this->Component::RegisterListener( # __event__ ,			\
-				       &type :: __event__); return true;} \
+				       &type :: __event__);		\
+    (void)_this; return true;}						\
 									\
   bool attach_to_event_ ## __event__ ( ... )				\
   { return false; }							\

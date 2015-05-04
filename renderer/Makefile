@@ -1,4 +1,4 @@
-NAME		= renderer
+NAME		= renderer.a
 OUTPUT		?= $(NAME)
 
 CC		?= gcc
@@ -7,15 +7,16 @@ CXX		?= g++
 INCLUDES	+= -I ./includes
 ##############################
 ### Gdl Implementation
-GdlImpl		= src/gdlimpl/renderer.cpp
+GdlImpl		= src/gdlimpl/renderer.cpp\
+		src/gdlimpl/model3d.cpp
+
 ##############################
 CXXSRC		+= $(GdlImpl)
 CSRC		+=
 
-FLAGS		= -W -Wall -Wextra $(INCLUDES)
+FLAGS		= -W -Wall -Wextra $(INCLUDES) -I libraries/GdlLibrary/includes/
 CFLAGS		+= $(FLAGS) -Wall
 CXXFLAGS	+= $(FLAGS) -std=c++11 # skip bad warning for c++11 
-LDFLAGS		+=
 
 CXXOBJ		= $(CXXSRC:.cpp=.o)
 COBJ		= $(CSRC:.c=.o)
@@ -31,10 +32,10 @@ all: $(OUTPUT)
 
 $(OUTPUT): $(OBJ)
 ifeq ($(OUTPUT),$(NAME))
-	$(LINKER) $(OUTPUT) $(OBJ) $(LDFLAGS)
+	$(LINKER) $(OUTPUT) $(OBJ)
 else
 	@echo "Alternate output:" $(OUTPUT) "build"
-	@$(LINKER) -o $(OUTPUT) $(OBJ) $(LDFLAGS)
+	@$(LINKER) -o $(OUTPUT) $(OBJ)
 endif
 
 clean:  clean_dependencies
