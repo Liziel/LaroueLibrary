@@ -46,6 +46,7 @@ namespace ctvty {
       const Quaternion	Euler(const Vector3D&);
       const Vector3D	Euler() const;
       const Quaternion	Conjugate() const;
+      const Quaternion	Inverse() const;
 
     public:
       const Vector3D	RotatedVector(const Vector3D&) const;

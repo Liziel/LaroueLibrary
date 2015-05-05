@@ -1,6 +1,7 @@
 #include <iostream>
 #include "user_defined/component/eventtester.hh"
 #include "ctvty/component/transform.hh"
+#include "ctvty/debug.hpp"
 
 namespace user_defined {
   namespace component {
@@ -27,6 +28,9 @@ namespace user_defined {
       return new EventTester();
     }
 
+    void			EventTester::Update() {
+      ctvty::debug::Logs(gameObject);
+    }
 
     /*			Collision Events Tests			*/
     void		EventTester::OnCollisionEnter(const ctvty::utils::Collision*) {
@@ -50,9 +54,6 @@ namespace user_defined {
 
 
     void		EventTester::Render() {
-      static float t = 0;
-      t += 0.01;
-      std::cerr << "t: " << t << std::endl;
       model3D->Draw(transform->GetPosition(),
 		    ctvty::utils::Vector3D::one / 100,
 		    ctvty::utils::Quaternion::identity);

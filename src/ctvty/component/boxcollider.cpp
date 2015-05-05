@@ -9,6 +9,7 @@ namespace ctvty{
     
     BoxCollider::		BoxCollider(GameObject* gameObject)
       : Collider(gameObject, "BoxCollider"),
+	offset(new utils::Vector3D(utils::Vector3D::zero)),
 	msize(new utils::Vector3D(utils::Vector3D::zero)),
 	psize(new utils::Vector3D(utils::Vector3D::zero)), scale(0.) {}
 
@@ -27,10 +28,16 @@ namespace ctvty{
       : BoxCollider(nullptr) {
       __serial["+size"] & psize;
       __serial["-size"] & msize;
+
       if (__serial.exist("scale"))
 	__serial["scale"] & scale;
       else
 	scale = 1.f;
+
+      if (__serial.exist("offset"))
+	__serial["offset"] & offset;
+      else
+	offset .reset(new utils::Vector3D(utils::Vector3D::zero));
 
       __serial["material"] & Collider::material;
       __serial["isTrigger"] & Collider::isTrigger;
@@ -46,6 +53,7 @@ namespace ctvty{
       __serial["+size"] & psize;
       __serial["-size"] & msize;
       __serial["scale"] & scale;
+      __serial["offset"] & offset;
 
       __serial["material"] & Collider::material;
       __serial["isTrigger"] & Collider::isTrigger;
@@ -115,7 +123,7 @@ namespace ctvty{
 
     ctvstd::Optional<utils::Collision>
     BoxCollider::CollisionImpact(const utils::Vector3D& v, const utils::Vector3D& d) const {
-      utils::Vector3D vertex(transform->GetRotation().RotatedVector(v - transform->GetPosition()));
+      utils::Vector3D vertex(transform->GetRotation().RotatedVector(v - transform->GetPosition() - *offset));
       utils::Vector3D direction(transform->GetRotation().RotatedVector(d));
       ctvstd::Optional<utils::Collision>	collision(ctvstd::none);
       float					force = 0;
@@ -128,44 +136,66 @@ namespace ctvty{
 	float	_force = 0;
 	ctvstd::Optional<utils::ContactPoint> contact =
 	    faces[0]->Intersection(vertex, direction, _force);
-	if (contact && _force > force)
+	if (contact && _force > force) {
+	  contact->point  = (transform->GetRotation().Inverse()).RotatedVector(contact->point
+								    + transform->GetPosition() + *offset);
+	  contact->normal = (transform->GetRotation().Inverse()).RotatedVector(contact->normal);
 	  collision = new utils::Collision{nullptr, {}, force = _force, *contact};
+	}
       } else if (vertex.x >= psize->x) {
 	float	_force = 0;
 	ctvstd::Optional<utils::ContactPoint> contact =
 	    faces[1]->Intersection(vertex, direction, _force);
-	if (contact && _force > force)
+	if (contact && _force > force) {
+	  contact->point  = (transform->GetRotation().Inverse()).RotatedVector(contact->point
+								    + transform->GetPosition() + *offset);
+	  contact->normal = (transform->GetRotation().Inverse()).RotatedVector(contact->normal);
 	  collision = new utils::Collision{nullptr, {}, force = _force, *contact};
+	}
       }
 
       if (vertex.y <= -msize->y) {
 	float	_force = 0;
 	ctvstd::Optional<utils::ContactPoint> contact =
 	    faces[2]->Intersection(vertex, direction, _force);
-	if (contact && _force > force)
+	if (contact && _force > force) {
+	  contact->point  = (transform->GetRotation().Inverse()).RotatedVector(contact->point
+								    + transform->GetPosition() + *offset);
+	  contact->normal = (transform->GetRotation().Inverse()).RotatedVector(contact->normal);
 	  collision = new utils::Collision{nullptr, {}, force = _force, *contact};
+	}
       } else if (vertex.y >= psize->y) {
-	ctvty::debug::Log("calcul for collision in +y");
 	float	_force = 0;
 	ctvstd::Optional<utils::ContactPoint> contact =
 	    faces[3]->Intersection(vertex, direction, _force);
-	ctvty::debug::Log(((bool)contact));
-	if (contact && _force > force)
+	if (contact && _force > force) {
+	  contact->point  = (transform->GetRotation().Inverse()).RotatedVector(contact->point
+								    + transform->GetPosition() + *offset);
+	  contact->normal = (transform->GetRotation().Inverse()).RotatedVector(contact->normal);
 	  collision = new utils::Collision{nullptr, {}, force = _force, *contact};
+	}
       }
 
       if (vertex.z <= -msize->z) {
 	float	_force = 0;
 	ctvstd::Optional<utils::ContactPoint> contact =
 	    faces[4]->Intersection(vertex, direction, _force);
-	if (contact && _force > force)
+	if (contact && _force > force) {
+	  contact->point  = (transform->GetRotation().Inverse()).RotatedVector(contact->point
+								    + transform->GetPosition() + *offset);
+	  contact->normal = (transform->GetRotation().Inverse()).RotatedVector(contact->normal);
 	  collision = new utils::Collision{nullptr, {}, force = _force, *contact};
+	}
       } else if (vertex.z >= psize->z) {
 	float	_force = 0;
 	ctvstd::Optional<utils::ContactPoint> contact =
 	    faces[5]->Intersection(vertex, direction, _force);
-	if (contact && _force > force)
+	if (contact && _force > force) {
+	  contact->point  = (transform->GetRotation().Inverse()).RotatedVector(contact->point
+								    + transform->GetPosition() + *offset);
+	  contact->normal = (transform->GetRotation().Inverse()).RotatedVector(contact->normal);
 	  collision = new utils::Collision{nullptr, {}, force = _force, *contact};
+	}
       }
 
       return collision;

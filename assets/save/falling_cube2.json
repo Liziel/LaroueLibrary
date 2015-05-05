@@ -15,7 +15,7 @@
 					"mass" : 1,
 					"velocity" : {
 						"object" : {
-							"x" : 7,
+							"x" : 4,
 							"y" : 0,
 							"z" : 0,
 						},
@@ -45,7 +45,7 @@
 					"isTrigger" : 0,
 					"material" : {
 						"object" : {
-							"bounciness" : 0,
+							"bounciness" : 0.2,
 							"dynamicFriction" : 0,
 							"staticFriction" : 0,
 						},
@@ -63,7 +63,7 @@
 				"position" : {
 					"object" : {
 						"x" : -5,
-						"y" : 20,
+						"y" : 30,
 						"z" : 0,
 					},
 					"type" : "ctvty::utils::Vector3D",

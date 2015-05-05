@@ -1,7 +1,7 @@
 {
 	"object" : {
-		"fps" : 15,
-		"load" : "base",
+		"fps" : 60,
+		"load" : "base2",
 		"scenes" : [
 		    {
 			"object" : {
@@ -10,6 +10,19 @@
 				asset("save/colliding_side.json"),
 				asset("save/colliding_cube.json"),
 				asset("save/falling_cube.json"),
+				asset("save/falling_cube2.json"),
+				asset("save/falling_cube3.json"),
+			    ],
+			},
+			"type" : "ctvty::Application::Scene",
+		    },
+		    {
+			"object" : {
+			    "name" : "base2",
+			    "objects" : [
+				asset("save/colliding_cube.json"),
+				asset("save/sliding_cube1.json")
+				asset("save/sliding_cube2.json")
 			    ],
 			},
 			"type" : "ctvty::Application::Scene",

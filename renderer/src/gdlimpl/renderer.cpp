@@ -55,7 +55,7 @@ namespace GdlImpl {
 
     glClear(GL_COLOR_BUFFER_BIT
 	    | GL_DEPTH_BUFFER_BIT);
-    _shader.bind();    
+    _shader.bind();
   }
 
   void		Renderer::PreHUDRendering() {

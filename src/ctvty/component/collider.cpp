@@ -15,9 +15,9 @@ namespace ctvty {
 	ctvty::debug::Log(r);
 	rigidBody = r;
 	r->RegisterCollider(this);
+	std::cout << "oui" << std::endl;
       }
-      else
-	r = nullptr;
+      r = nullptr;
     }
 
     bool			Collider::IsTrigger() const {

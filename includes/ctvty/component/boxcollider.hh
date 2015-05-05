@@ -12,6 +12,7 @@ namespace ctvty {
       std::array<std::shared_ptr<utils::Face>, 6>	faces;
 
     private:
+      std::shared_ptr<utils::Vector3D>			offset;
       std::shared_ptr<utils::Vector3D>			msize;
       std::shared_ptr<utils::Vector3D>			psize;
       float				scale;

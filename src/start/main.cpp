@@ -50,7 +50,7 @@ int main(int ac, char** av) {
 	initialization_succes = ctvty::Application::Initialize("assets");
       if (!initialization_succes)
 	return (-1);
-      ctvty::Application::Quit(10.f);
+      ctvty::Application::Quit(6.1f);
       ctvty::Application::Start();
     }
 

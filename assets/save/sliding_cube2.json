@@ -15,7 +15,7 @@
 					"mass" : 1,
 					"velocity" : {
 						"object" : {
-							"x" : 7,
+							"x" : 0,
 							"y" : 0,
 							"z" : 0,
 						},
@@ -38,7 +38,7 @@
 						"object" : {
 							"x" : 1,
 							"y" : 1,
-							"z" : 1,
+							"z" : 1.1,
 						},
 						"type" : "ctvty::utils::Vector3D",
 					},
@@ -56,14 +56,14 @@
 				"type" : "ctvty::component::BoxCollider",
 			},
 		],
-		"name" : "Falling Cube",
+		"name" : "Sliding Cube 2",
 		"tag" : "cubes",
 		"transform" : {
 			"object" : {
 				"position" : {
 					"object" : {
-						"x" : -5,
-						"y" : 20,
+						"x" : 0,
+						"y" : 1.1,
 						"z" : 0,
 					},
 					"type" : "ctvty::utils::Vector3D",

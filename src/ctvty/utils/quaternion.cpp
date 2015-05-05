@@ -45,6 +45,10 @@ namespace ctvty {
       return std::sqrt(x*x + y*y + z*z + w*w);
     }
 
+    const Quaternion	Quaternion::Inverse() const {
+      return {Conjugate().Complex() / Magnitude(), Conjugate().Real() / Magnitude()};
+    }
+
     const Quaternion	Quaternion::Euler(const Vector3D& v) {
       const float c3 = std::cos(v.x * 0.5f);
       const float c2 = std::cos(v.y * 0.5f);

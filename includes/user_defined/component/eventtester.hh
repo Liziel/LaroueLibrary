@@ -22,6 +22,9 @@ namespace user_defined {
       void		Serialize(serialization::Archive&) const override;
 
     public:
+      void		Update();
+
+    public:
       void		OnCollisionEnter(const ctvty::utils::Collision*);
       void		OnCollisionStay(const ctvty::utils::Collision*);
       void		OnCollisionExit(const ctvty::utils::Collision*);
