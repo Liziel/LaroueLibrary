@@ -177,7 +177,10 @@ namespace ctvty {
 	ctvty::debug::CompressedLogs("projection on Plane with normal", collisionNormal,
 				     " of", movement,
 				     " is ", -movement.ProjectOnPlane(collisionNormal));
-	movement = bounce + -movement.ProjectOnPlane(collisionNormal) + movement.ProjectOnPlane(collisionNormal) * dynamicFriction + (movement - penetration);
+	ctvty::debug::CompressedLogs("pre-movement", movement);
+	movement = bounce
+	  + -penetration.ProjectOnPlane(collisionNormal) + penetration.ProjectOnPlane(collisionNormal) * dynamicFriction
+	  + (movement - penetration);
 	cumulated.point.normal = collisionNormal;
 
 	if (DiscreteCheckMovement(movement))

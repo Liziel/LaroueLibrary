@@ -1,5 +1,6 @@
 #include "ctvty/application.hh"
 #include "ctvty/event/clock.hh"
+#include "ctvty/rendering/renderer.hh"
 
 namespace ctvty {
 
@@ -59,6 +60,13 @@ namespace ctvty {
 	std::cerr << "application error: application.json not found, the application will quit" << std::endl;
 	return false;
       }
+      ctvty::rendering::Renderer::GetRenderer().Initialize(1000, 1000, "waw");
+      ctvty::rendering::Renderer::GetRenderer().SetCameraPosition(utils::Vector3D::up * 20
+								  - utils::Vector3D::back * 10,
+								  utils::Vector3D::up * 10
+								  + utils::Vector3D::right * 5,
+								  utils::Quaternion::identity
+								  );
       serial = serialization::Serial::InstantiateFromFile(assets->GetAsset("application.json")
 							  .GetFile().GetPath());
       app = (Application*)serialization::Serializable::Instantiate(*serial);

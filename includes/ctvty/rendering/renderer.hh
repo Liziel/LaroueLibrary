@@ -33,7 +33,7 @@ namespace ctvty {
       public:
 	virtual void			SetCameraPosition(const ctvty::utils::Vector3D& position,
 							  const ctvty::utils::Vector3D& lookAt,
-							  const ctvty::utils::Vector3D& eulerRotation
+							  const ctvty::utils::Quaternion& rotation
 							  = ctvty::utils::Vector3D::zero) = 0;
       };
 

@@ -42,7 +42,7 @@ namespace GdlImpl {
   public:
     void				SetCameraPosition(const ctvty::utils::Vector3D& position,
 							  const ctvty::utils::Vector3D& lookAt,
-							  const ctvty::utils::Vector3D& eulerRotation) final;
+							  const ctvty::utils::Quaternion& eulerRotation) final;
   };
 
 };

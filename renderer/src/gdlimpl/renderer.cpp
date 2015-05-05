@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "gdlimpl/renderer.hh"
 
 #include <glm/glm.hpp>
@@ -51,7 +53,6 @@ namespace GdlImpl {
       _shader.setUniform("view", transformation);
     }
 
-
     glClear(GL_COLOR_BUFFER_BIT
 	    | GL_DEPTH_BUFFER_BIT);
     _shader.bind();    
@@ -79,10 +80,10 @@ namespace GdlImpl {
 
   void		Renderer::SetCameraPosition(const ctvty::utils::Vector3D& p,
 					    const ctvty::utils::Vector3D& l,
-					    const ctvty::utils::Vector3D& e) {
+					    const ctvty::utils::Quaternion& e) {
     camera_position = p;
     camera_lookAt = l;
-    camera_up = ctvty::utils::Quaternion::Euler(e).RotatedVector(ctvty::utils::Vector3D::up);
+    camera_up = e.RotatedVector(ctvty::utils::Vector3D::up);
   }
 
   ctvty::rendering::Model3D*

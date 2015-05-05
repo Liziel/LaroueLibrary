@@ -29,6 +29,7 @@ namespace GdlImpl {
 
   public:
     void		Draw(const ctvty::utils::Vector3D& position,
+			     const ctvty::utils::Vector3D& scale,
 			     const ctvty::utils::Quaternion& rotation,
 			     double time = ctvty::event::Clock::GetClock().GetFixedDeltaTime()) final;
   };

@@ -1,12 +1,13 @@
 {
 	"object" : {
-		"fps" : 30,
+		"fps" : 15,
 		"load" : "base",
 		"scenes" : [
 		    {
 			"object" : {
 			    "name" : "base",
 			    "objects" : [
+				asset("save/colliding_side.json"),
 				asset("save/colliding_cube.json"),
 				asset("save/falling_cube.json"),
 			    ],

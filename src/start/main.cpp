@@ -38,7 +38,7 @@ int main(int ac, char** av) {
 
   ctvty::GameObject			*Army = nullptr;
 
-  //ctvty::rendering::Renderer::GetRenderer().Initialize(500, 500, "dla merde");
+  //;
 
   if (1)
     {
@@ -50,7 +50,7 @@ int main(int ac, char** av) {
 	initialization_succes = ctvty::Application::Initialize("assets");
       if (!initialization_succes)
 	return (-1);
-      ctvty::Application::Quit(60.f);
+      ctvty::Application::Quit(10.f);
       ctvty::Application::Start();
     }
 

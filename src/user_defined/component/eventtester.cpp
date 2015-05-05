@@ -1,5 +1,6 @@
 #include <iostream>
 #include "user_defined/component/eventtester.hh"
+#include "ctvty/component/transform.hh"
 
 namespace user_defined {
   namespace component {
@@ -8,11 +9,13 @@ namespace user_defined {
 
 
     EventTester::		EventTester()
-      : MonoBehaviour(nullptr, "EventTester") {}
+      : MonoBehaviour(nullptr, "EventTester"),
+	model3D(ctvty::rendering::Renderer::GetRenderer().Load3DModel("assets/models3d/Bombe Health/Health.FBX")) {}
 
 
     EventTester::		EventTester(const serialization::Archive&)
-      : MonoBehaviour(nullptr, "EventTester") {}
+      : MonoBehaviour(nullptr, "EventTester"),
+	model3D(ctvty::rendering::Renderer::GetRenderer().Load3DModel("assets/models3d/Bombe Health/Health.FBX")) {}
 
     void			EventTester::Serialize(serialization::Archive& __serial_instance) const {
       SERIALIZE_OBJECT_AS(user_defined::component::EventTester, __serial_instance);
@@ -46,5 +49,13 @@ namespace user_defined {
     }
 
 
+    void		EventTester::Render() {
+      static float t = 0;
+      t += 0.01;
+      std::cerr << "t: " << t << std::endl;
+      model3D->Draw(transform->GetPosition(),
+		    ctvty::utils::Vector3D::one / 100,
+		    ctvty::utils::Quaternion::identity);
+    }
   };
 };

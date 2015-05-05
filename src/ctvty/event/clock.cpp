@@ -1,6 +1,7 @@
 #include <thread>
 #include "ctvty/gameObject.hpp"
 #include "ctvty/event/clock.hh"
+#include "ctvty/rendering/renderer.hh"
 
 namespace ctvty {
   namespace event {
@@ -56,19 +57,29 @@ namespace ctvty {
 	for (DelayedAction* action : std::list<DelayedAction*>(delayedActions))
 	  action->Refresh();
 
-	std::list<GameObject*> fathers_copy(ctvty::GameObject::accessParentsGameObjects());
+	{
+	  std::list<GameObject*> fathers_copy(ctvty::GameObject::accessParentsGameObjects());
+	  ctvty::rendering::Renderer::GetRenderer().Update();
 	  std::for_each(fathers_copy.begin(),
 			fathers_copy.end(),
 			[this] (GameObject* gameObject) { if (!end) gameObject->BroadcastMessage("Update"); }
 			);
+	}
+	 
+	{
+	  std::list<GameObject*> fathers_copy(ctvty::GameObject::accessParentsGameObjects());
+	  ctvty::rendering::Renderer::GetRenderer().Pre3DRendering();
 	  std::for_each(fathers_copy.begin(),
 			fathers_copy.end(),
 			[this] (GameObject* gameObject) { if (!end) gameObject->BroadcastMessage("Render"); }
 			);
+	  ctvty::rendering::Renderer::GetRenderer().PreHUDRendering();
 	  std::for_each(fathers_copy.begin(),
 			fathers_copy.end(),
 			[this] (GameObject* gameObject) { if (!end) gameObject->BroadcastMessage("OnGui"); }
 			);
+	  ctvty::rendering::Renderer::GetRenderer().Flush();
+	}
       }
     }
   };

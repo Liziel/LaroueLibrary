@@ -5,10 +5,15 @@
 
 # include "ctvty/utils/collision.hh"
 
+# include "ctvty/rendering/renderer.hh"
+
 namespace user_defined {
   namespace component {
     
     class EventTester : public ctvty::MonoBehaviour<EventTester> {
+    private:
+      ctvty::rendering::Model3D*	model3D;
+
     public:
 			EventTester();
 
@@ -20,6 +25,9 @@ namespace user_defined {
       void		OnCollisionEnter(const ctvty::utils::Collision*);
       void		OnCollisionStay(const ctvty::utils::Collision*);
       void		OnCollisionExit(const ctvty::utils::Collision*);
+
+    public:
+      void		Render();
 
     public:
       ctvty::Object*	clone() const override;

@@ -68,6 +68,7 @@ namespace ctvty {
       ATTACH_THIS_TO(Awake);
       ATTACH_THIS_TO(Start);
       ATTACH_THIS_TO(Update);
+      ATTACH_THIS_TO(Render);
       ATTACH_THIS_TO(FixedUpdate);
       ATTACH_THIS_TO(OnApplicationQuit);
       ATTACH_THIS_TO(OnBecomeInvisible);
@@ -88,6 +89,7 @@ namespace ctvty {
     ATTACHED_TO_EVENT(Awake,);
     ATTACHED_TO_EVENT(Start,);
     ATTACHED_TO_EVENT(Update,);
+    ATTACHED_TO_EVENT(Render,);
     ATTACHED_TO_EVENT(FixedUpdate,);
     ATTACHED_TO_EVENT(OnApplicationQuit,);
     ATTACHED_TO_EVENT(OnBecomeInvisible,);
