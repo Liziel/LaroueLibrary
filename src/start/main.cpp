@@ -52,7 +52,6 @@ int main(int ac, char** av) {
       ctvty::Application::Start();
     }
 
-
   if (0)
     {
       Army  = new ctvty::GameObject("Falling Cube", "cubes", nullptr,

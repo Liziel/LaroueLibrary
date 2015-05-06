@@ -173,7 +173,6 @@ namespace ctvty {
       return false;	
     }
 
-
     void			RigidBody::EndMovement(utils::Vector3D& movement) {
       transform->GetPosition() += movement;
       GetVelocity() = movement / event::Clock::GetClock().GetFixedDeltaTime();

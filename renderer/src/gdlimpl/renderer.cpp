@@ -27,11 +27,9 @@ namespace GdlImpl {
     _shader.build();
   }
 
-
   void		Renderer::Update() {
     
   }
-
 
   void		Renderer::Pre3DRendering() {
 
@@ -71,12 +69,9 @@ namespace GdlImpl {
     gdl::SdlContext::flush();
   }
 
-
-
   void		Renderer::Quit() {
     gdl::SdlContext::stop();
   }
-
 
   void		Renderer::SetCameraPosition(const ctvty::utils::Vector3D& p,
 					    const ctvty::utils::Vector3D& l,
