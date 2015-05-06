@@ -1,6 +1,5 @@
 #include <iostream>
 #include "ctvty/utils/face.hh"
-#include "ctvty/debug.hpp"
 
 namespace ctvty {
   namespace utils {
@@ -28,10 +27,8 @@ namespace ctvty {
     Face::Intersection(const Vector3D& position, const Vector3D& direction, float& force) const {
       ctvstd::Optional<float>	dForce;
 
-      ctvty::debug::CompressedLogs("Normal At Face", normal, "Colliding Point", position, "Direction", direction);
       if (!(dForce = Face::GetCollisionDistance(position, direction)))
 	return ctvstd::none;
-      ctvty::debug::Logs("collision Force = ", *dForce);
       if (*dForce > 1 || *dForce < 0)
 	return ctvstd::none;
       if (!IsPointInside(position + direction * *dForce))
@@ -60,10 +57,11 @@ namespace ctvty {
 	return false;
       Vector3D	relative = GetRelativePosition(point);
 
-      ctvty::debug::CompressedLogs("relative", relative, "relatives", repered_dots, "dots", dots);
       std::size_t it, itp;
       bool retval = false;
       for (it = 0, itp = repered_dots.size() - 1; it < repered_dots.size(); itp = it++) {
+	if (repered_dots[it] == relative)
+	  return true;
 	if ( (repered_dots[it].y > relative.y) != (repered_dots[itp].y > relative.y) &&
 	     (relative.x
 	      < (repered_dots[itp].x - repered_dots[it].x) * (relative.y - repered_dots[it].y)

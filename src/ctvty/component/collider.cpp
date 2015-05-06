@@ -1,6 +1,5 @@
 #include "ctvty/component/collider.hh"
 #include "ctvty/component/transform.hh"
-#include "ctvty/debug.hpp"
 #include "ctvty/component/rigidbody.hh"
 
 namespace ctvty {
@@ -12,10 +11,8 @@ namespace ctvty {
       RigidBody*	r = GetComponent<RigidBody>();
 
       if (r != nullptr) {
-	ctvty::debug::Log(r);
 	rigidBody = r;
 	r->RegisterCollider(this);
-	std::cout << "oui" << std::endl;
       }
       r = nullptr;
     }
@@ -46,7 +43,6 @@ namespace ctvty {
 	ctvstd::Optional<utils::Collision>	collided;
 	collided = CollisionImpl(collider, position, quaternion, direction);
 	if (collided) {
-	  std::cerr << "piif " << collided->force << std::endl;
 	  if (!collision)
 	    collision = collided;
 	  else if (collision->force < collided->force)

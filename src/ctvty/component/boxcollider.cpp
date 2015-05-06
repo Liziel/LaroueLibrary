@@ -1,7 +1,6 @@
 #include <future>
 #include "ctvty/component/boxcollider.hh"
 #include "ctvty/component/transform.hh"
-#include "ctvty/debug.hpp"
 
 namespace ctvty{
   namespace component {
@@ -194,8 +193,6 @@ namespace ctvty{
 	}
       }
 
-      if (collision)
-	ctvty::debug::CompressedLogs("NORMAL IS", collision->point.normal);
       return collision;
     }
 
@@ -213,7 +210,6 @@ namespace ctvty{
 	  ctvstd::Optional<utils::Collision> collided
 	    = CollisionImpact(rotation.RotatedAround(utils::Vector3D::zero, *b) + position, direction);
 	  if (collided) {
-	  std::cout << "collided.force: " << collided->force << std::endl;
 	    if (!collision) {
 	      collision = collided;
 	    } else if (collision->force < collided->force) {

@@ -20,6 +20,7 @@ namespace ctvty {
 
     private:
       double						lastFrameRatio;
+      double						maxFrameSeconds;
 
     private:
       bool						end;

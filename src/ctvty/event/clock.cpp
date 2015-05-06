@@ -15,11 +15,12 @@ namespace ctvty {
     }
 
     void				Clock::SetMaxFramePerSeconds(short frames) {
+      maxFrameSeconds = frames;
       frame_length = std::chrono::milliseconds(1000 / frames);
     }
 
     float				Clock::GetFixedDeltaTime() {
-      return fixedDeltaTime.count();
+      return 1 / maxFrameSeconds; (void)fixedDeltaTime.count();
     }
 
     double				Clock::LastFrameRatio() {

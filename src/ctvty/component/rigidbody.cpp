@@ -4,7 +4,6 @@
 #include "ctvty/event/clock.hh"
 #include "ctvty/utils/collision.hh"
 #include "ctvty/component/transform.hh"
-#include "ctvty/debug.hpp"
 
 namespace ctvty {
   namespace component {
@@ -30,7 +29,6 @@ namespace ctvty {
     void		RigidBody::RegisterCollider(ctvty::component::Collider* c) {
       sub_colliders.push_back(c);
       boundingBox.Include(c->GetBoundingBox());
-      ctvty::debug::Logs(c->GetBoundingBox(), boundingBox);
     }
     
     void		RigidBody::Serialize(serialization::Archive& __serial_instance) const {
@@ -62,13 +60,11 @@ namespace ctvty {
       utils::Vector3D movement = GetVelocity();
 
       movement *= event::Clock::GetClock().GetFixedDeltaTime();
-      ctvty::debug::Logs("Velocity: ", GetVelocity(), "\nPosition: ", transform->GetPosition(), "\n\n");
       if (!DiscreteCheckMovement(movement))
 	EndMovement(movement);
     }
 
     bool		RigidBody::DiscreteCheckMovement(utils::Vector3D& momentum)  {
-      std::cout << "momentum in da stack" << std::endl;
       std::list<Collider*>	colliders
 	= Object::FindObjectsOfType<Collider>(); colliders.remove_if([=](Collider* collider) {
 	    return collider->GetGameObject() == gameObject
@@ -93,9 +89,6 @@ namespace ctvty {
 	utils::BoundingBox3D rhs = collider->GetBoundingBox()
 	  + collider->GetGameObject()->GetTransformation()->GetPosition();
 	ctvstd::Optional<utils::Collision>	_collision;
-	ctvty::debug::CompressedLogs("intersections", rhs, endBox);
-	if (rhs.Intersect(endBox) || endBox.Intersect(rhs))
-	  ctvty::debug::CompressedLogs("intersect with", collider);
 	if ((rhs.Intersect(endBox) || endBox.Intersect(rhs))
 	    && (_collision = collider->Collision(sub_colliders, position, transform->GetRotation(), momentum))) {
 	  collision = _collision;
@@ -106,7 +99,6 @@ namespace ctvty {
 	    future_collider_collisions
 	      .emplace_back(*collision);
 	  } else if (force == (collision)->force) {
-	    ctvty::debug::CompressedLogs("stocked normal", collision->point.normal);
 	    future_collider_collisions
 	      .emplace_back(*collision);
 	  }
@@ -155,21 +147,13 @@ namespace ctvty {
 	  bouncing += collision.collider_from->GetMaterial().bounciness;
 	  bounce += bouncing * -(GetVelocity()).Project(normal);
 	  collisionNormal = (collisionNormal + normal).GetNormalized();
-	  ctvty::debug::CompressedLogs("normal", normal);
 	  if (collision.collider_from->GetRigidBody() && collision.collider_from->GetRigidBody() != this)
 	    const_cast<RigidBody*>(collision.collider_from->GetRigidBody())->GetVelocity() +=
 	      GetVelocity() / collision.collider_from->GetRigidBody()->mass;
 	  GetVelocity() += -GetVelocity().Project(normal);
+	  cumulated.collider_to.push_back(collision.collider_from);
 	}
 
-	{ctvty::debug::ScopeDisabler sc;
-	  ctvty::debug::CompressedLogs("projection on Plane with normal", collisionNormal,
-				       " of", momentum,
-				       " is ", -momentum.ProjectOnPlane(collisionNormal));
-	  ctvty::debug::CompressedLogs("cumalated contact point", cumulated.point.point);
-	  ctvty::debug::CompressedLogs("pre-momentum", momentum);
-	  ctvty::debug::CompressedLogs("bounciness", bounce);
-	}
 	if (dynamicFriction)
 	  GetVelocity() -= -GetVelocity().ProjectOnPlane(collisionNormal) * dynamicFriction;
 	GetVelocity() += bounce;
@@ -178,7 +162,6 @@ namespace ctvty {
 	position += 
 	  momentum;
 	cumulated.point.normal = collisionNormal;
-	ctvty::debug::CompressedLogs("after-momentum", GetVelocity() * event::Clock::GetClock().GetFixedDeltaTime());
 	momentum = GetVelocity() * event::Clock::GetClock().GetFixedDeltaTime();
 	if (DiscreteCheckMovement(momentum))
 	  return true;
@@ -209,7 +192,6 @@ namespace ctvty {
 						       const utils::Collision& collision) {
       last_collision = new utils::Collision(collision);
       transform->GetPosition() += movement;
-      ctvty::debug::Logs("Velocity: ", GetVelocity(), "\nPosition: ", transform->GetPosition(), "\n\n");
 
       std::list<const Collider*> collidings = collision.collider_to;
 
