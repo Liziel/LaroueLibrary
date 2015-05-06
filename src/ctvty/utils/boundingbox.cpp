@@ -1,4 +1,5 @@
 #include "ctvty/utils/boundingbox.hh"
+#include "ctvty/debug.hpp"
 
 namespace ctvty {
   namespace utils {
@@ -62,11 +63,12 @@ namespace ctvty {
 	      Intersect(Vector3D(box.base_vertex.x, box.end_point.y, box.end_point.z))	||
 	      Intersect(Vector3D(box.end_point.x, box.base_vertex.y, box.end_point.z))	||
 
-	      Intersect(Vector3D(box.end_point.x, box.end_point.y, box.end_point.z))
+	      Intersect(Vector3D(box.end_point.x, box.end_point.y, box.end_point.z))	      
 	      );
     }
 
     bool		BoundingBox3D::Intersect(const utils::Vector3D& vertex) const {
+      ctvty::debug::CompressedLogs("BoundingVertex", vertex);
       return (
 	      base_vertex	.x	< vertex.x	&&
 	      end_point		.x	> vertex.x	&&

@@ -11,7 +11,10 @@ namespace ctvty {
       normal = x
 	.CrossProduct(dots[2] - dots[0])
 	.GetNormalized();
-      y = dots[0] - x.CrossProduct(normal);
+      if (dots.size() == 4)
+	y = (dots[3] - dots[0]);
+      else
+	y = dots[0] - x.CrossProduct(normal);
 
       for (const Vector3D& dot : dots)
 	repered_dots.push_back(GetRelativePosition(dot));
@@ -25,18 +28,19 @@ namespace ctvty {
     Face::Intersection(const Vector3D& position, const Vector3D& direction, float& force) const {
       ctvstd::Optional<float>	dForce;
 
-      ctvty::debug::Logs("repered Dots: " , repered_dots, "\nNormal: ", normal);
-
+      ctvty::debug::CompressedLogs("Normal At Face", normal, "Colliding Point", position, "Direction", direction);
       if (!(dForce = Face::GetCollisionDistance(position, direction)))
 	return ctvstd::none;
+      ctvty::debug::Logs("collision Force = ", *dForce);
       if (*dForce > 1 || *dForce < 0)
 	return ctvstd::none;
-      ctvty::debug::Logs("collision Force = ", *dForce);
       if (!IsPointInside(position + direction * *dForce))
 	return ctvstd::none;
       force = 1. - *dForce;
+      std::cerr << "valid" << std::endl;
       return {position + direction * *dForce, normal};
     }
+
     ctvstd::Optional<float>
 			Face::GetCollisionDistance(const Vector3D& position, const Vector3D& direction) const {
       if (!normal.DotProduct(direction))
@@ -51,20 +55,15 @@ namespace ctvty {
     }
 
     bool		Face::IsPointInside(const Vector3D& point) const {
-      ctvty::debug::Log("### test point ###");
-      ctvty::debug::CompressedLogs(point, (dots[0] - point), (dots[0] - point).CrossProduct(x), normal);
-      ctvty::debug::CompressedLogs(point, (dots[0] - point), (dots[0] - point).CrossProduct(x), -normal);
-      ctvty::debug::Log("### end test point ###");
       if (!((dots[0] - point).CrossProduct(x).GetNormalized() == normal
 	    || (dots[0] - point).CrossProduct(x).GetNormalized() == -normal))
 	return false;
       Vector3D	relative = GetRelativePosition(point);
 
+      ctvty::debug::CompressedLogs("relative", relative, "relatives", repered_dots, "dots", dots);
       std::size_t it, itp;
       bool retval = false;
       for (it = 0, itp = repered_dots.size() - 1; it < repered_dots.size(); itp = it++) {
-	if (repered_dots[it] == relative)
-	  return true;
 	if ( (repered_dots[it].y > relative.y) != (repered_dots[itp].y > relative.y) &&
 	     (relative.x
 	      < (repered_dots[itp].x - repered_dots[it].x) * (relative.y - repered_dots[it].y)

@@ -128,10 +128,6 @@ namespace ctvty{
       ctvstd::Optional<utils::Collision>	collision(ctvstd::none);
       float					force = 0;
 
-      ctvty::debug::CompressedLogs(v, " ", transform->GetPosition(), " ", vertex);
-      ctvty::debug::CompressedLogs(direction);
-      ctvty::debug::CompressedLogs(psize, -*msize, "\n\n");
-
       if (vertex.x <= -msize->x) {
 	float	_force = 0;
 	ctvstd::Optional<utils::ContactPoint> contact =
@@ -198,6 +194,8 @@ namespace ctvty{
 	}
       }
 
+      if (collision)
+	ctvty::debug::CompressedLogs("NORMAL IS", collision->point.normal);
       return collision;
     }
 
@@ -211,9 +209,6 @@ namespace ctvty{
 
       if (len < 10) {
 	ctvstd::Optional<utils::Collision> collision;
-	ctvty::debug::Log(len);
-	for (auto c = b;c != e; ++c)
-	  ctvty::debug::Logs(len - std::distance(c, e), rotation.RotatedAround(utils::Vector3D::zero, *c) + position);
 	for (;b != e; ++b) {
 	  ctvstd::Optional<utils::Collision> collided
 	    = CollisionImpact(rotation.RotatedAround(utils::Vector3D::zero, *b) + position, direction);

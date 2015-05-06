@@ -29,7 +29,6 @@ namespace user_defined {
     }
 
     void			EventTester::Update() {
-      ctvty::debug::Logs(gameObject);
     }
 
     /*			Collision Events Tests			*/

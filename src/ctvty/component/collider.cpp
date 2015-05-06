@@ -40,24 +40,20 @@ namespace ctvty {
 				Collider::Collision(const std::list<Collider*>& contact_colliders,
 						    const utils::Vector3D&	position,
 						    const utils::Quaternion&	quaternion,
-						    const utils::Vector3D&	direction) const {
-      ctvty::debug::ScopeDisabler scope;
-      
+						    const utils::Vector3D&	direction) const {      
       ctvstd::Optional<utils::Collision>	collision;
       for (const Collider* collider : contact_colliders) {
-	ctvty::debug::Logs(this->gameObject, collider->gameObject,
-			   position, transform->GetPosition());
-	ctvstd::Optional<utils::Collision>	collided
-	  = CollisionImpl(collider, position, quaternion, direction);
+	ctvstd::Optional<utils::Collision>	collided;
+	collided = CollisionImpl(collider, position, quaternion, direction);
 	if (collided) {
-	  ctvty::debug::CompressedLogs(collided->force, collided->point.point);
+	  std::cerr << "piif " << collided->force << std::endl;
 	  if (!collision)
 	    collision = collided;
 	  else if (collision->force < collided->force)
 	    collision = collided;
 	  else if (collision->force == collided->force) {
 	    collision->point.point  = (collision->point.point  + collided->point.point) / 2;
-	    collision->point.normal = (collision->point.normal + collided->point.point) / 2;
+	    collision->point.normal = (collision->point.normal + collided->point.normal) / 2;
 	  }
 	  collision->collider_to.push_back(collider);
 	  collision->collider_from = this;
@@ -72,8 +68,10 @@ namespace ctvty {
 	    collision = collided;
 	  else if (collision->force == collided->force) {
 	    collision->point.point  = (collision->point.point  + collided->point.point) / 2;
-	    collision->point.normal = (collision->point.normal + collided->point.point) / 2;
+	    collision->point.normal = (collision->point.normal + collided->point.normal) / 2;
 	  }
+	  collision->collider_to.push_back(collider);
+	  collision->collider_from = this;
 	}
 
       }

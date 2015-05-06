@@ -35,6 +35,20 @@ namespace ctvty {
       return true;
     }
 
+    template<typename T, bool b = true>
+    decltype(std::declval< typename serialization::serial_info<typename T::value_type*>::type >(), bool())	CompressedLog(T&t) {
+      if (!State())
+	return false;
+      serialization::Serial json;
+      for (auto& v: t) {
+	json & &v;
+	std::cerr << json.CompactStringify();
+      }
+      if (b)
+	std::cerr << std::endl;
+      return true;
+    }
+
     template<typename T, typename ... V> inline
     bool		CompressedLogs(V ... v);
 
