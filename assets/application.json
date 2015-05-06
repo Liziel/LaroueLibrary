@@ -1,7 +1,7 @@
 {
 	"object" : {
 		"fps" : 40,
-		"load" : "base",
+		"load" : "base2",
 		"scenes" : [
 		    {
 			"object" : {

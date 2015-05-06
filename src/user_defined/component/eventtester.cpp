@@ -53,9 +53,10 @@ namespace user_defined {
 
 
     void		EventTester::Render() {
-      model3D->Draw(transform->GetPosition(),
-		    ctvty::utils::Vector3D::one / 100,
-		    ctvty::utils::Quaternion::identity);
+      GetComponent<Animator>()->SetFrame(model->GetModel());
+      model->GetModel()->Draw(transform->GetPosition(),
+			      transfrom->GetScale(),
+			      transfrom->GetRotation());
     }
   };
 };

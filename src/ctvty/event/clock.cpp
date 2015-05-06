@@ -66,7 +66,7 @@ namespace ctvty {
 			[this] (GameObject* gameObject) { if (!end) gameObject->BroadcastMessage("Update"); }
 			);
 	}
-	 
+
 	{
 	  std::list<GameObject*> fathers_copy(ctvty::GameObject::accessParentsGameObjects());
 	  ctvty::rendering::Renderer::GetRenderer().Pre3DRendering();
