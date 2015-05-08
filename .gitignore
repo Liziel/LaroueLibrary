@@ -25,6 +25,8 @@
 #unignore model files and anim
 !*.obj
 !*.fbx
+!*.FBX
+!*.tga
 !*.dae
 
 #same for gdl .a
