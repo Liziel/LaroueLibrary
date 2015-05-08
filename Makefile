@@ -26,7 +26,8 @@ CtvTyComponents	=src/ctvty/component/transform.cpp\
 		src/ctvty/component/rigidbody.cpp\
 		src/ctvty/component/collider.cpp\
 		src/ctvty/component/boxcollider.cpp\
-		src/ctvty/component/renderer.cpp
+		src/ctvty/component/renderer.cpp\
+		src/ctvty/component/animator.cpp
 
 CtvTy		= src/ctvty/gameObject.cpp \
 		src/ctvty/component.cpp\

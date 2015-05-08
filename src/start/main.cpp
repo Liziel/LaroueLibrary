@@ -12,6 +12,7 @@
 #include "ctvty/component/boxcollider.hh"
 #include "ctvty/rendering/renderer.hh"
 #include "ctvty/component/renderer.hh"
+#include "ctvty/component/animator.hh"
 
 using namespace ctvty::utils;
 int main(int ac, char** av) {
@@ -35,18 +36,9 @@ int main(int ac, char** av) {
 
   if (1)
     {
-      serialization::Serial json, jsont;
-      std::map<std::string, std::shared_ptr<ctvty::GameObject> > map;
+      serialization::Serial json;
 
-      map.emplace(std::string("falling cube"),
-		  assets.GetAsset("save/falling_cube2.json").LoadAs<ctvty::GameObject>());
-      json & map;
+      json & new ctvty::component::Animator::State();
       std::cout << json.Stringify() << std::endl;
-      map.clear();
-      jsont & map;
-      std::cout << jsont.Stringify() << std::endl;
-      static_cast<const serialization::Serial&>(json) & map;
-      jsont & map;
-      std::cout << jsont.Stringify() << std::endl;
     }
 }
