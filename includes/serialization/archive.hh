@@ -4,7 +4,7 @@
 #include <string>
 #include <ostream>
 
-# include "serial.hh"
+# include "serial.hpp"
 
 namespace serialization {
   using Archive = serial::object;

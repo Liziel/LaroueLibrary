@@ -236,6 +236,34 @@ namespace serialization {
       }
     };
 
+    class map : public interface {
+    public:
+      std::string				Stringify(int level = 0) const;
+      std::string				CompactStringify(int level = 0) const;
+      template<typename iterator>
+      void					Fill(iterator begin, iterator end);
+
+    private:
+      std::list< std::pair<Serial*, Serial*> >		_serialized_map;
+
+    public:
+      static bool					isMap(std::string::const_iterator& cursor, std::string::const_iterator end);
+
+    public:
+      std::list< std::pair<Serial*, Serial*> >::iterator	begin() { return _serialized_map.begin(); }
+      std::list< std::pair<Serial*, Serial*> >::iterator	end() { return _serialized_map.end(); }
+
+    public:
+      ~map();
+      map(std::string::const_iterator& cursor, std::string::const_iterator end);
+      template<typename iterator>
+      map(iterator begin, iterator end) {
+	for (; begin != end; ++begin) {
+	  _serialized_map.emplace_back(Serial::Instantiate(begin->first), Serial::Instantiate(begin->second));
+	}
+      }
+    };
+
     class function : public interface {
     public:
       std::string				Stringify(int level = 0) const;
@@ -415,11 +443,11 @@ namespace serialization {
   struct serial_info< std::shared_ptr<_type>,
 		      typename std::enable_if< std::is_assignable<Serializable*&, _type*>::value >::type > {
     using type = serial::object;
-    static _type* get(serial::interface* _interface) {
-      return dynamic_cast<_type*> (SerializableInstantiate(*(dynamic_cast<serial::object*>(_interface))));
+    static std::shared_ptr<_type> get(serial::interface* _interface) {
+      return std::shared_ptr<_type> (dynamic_cast<_type*> (SerializableInstantiate(*(dynamic_cast<serial::object*>(_interface)))));
     }
     static bool  is(serial::interface* _interface) { return dynamic_cast<serial::object*>(_interface) != nullptr; }
-    static void	 set(serial::interface* _interface, std::shared_ptr<_type>& _variable) { _variable.reset(get(_interface)); }
+    static void	 set(serial::interface* _interface, std::shared_ptr<_type>& _variable) { _variable = get(_interface); }
     static serial::interface* make(const std::shared_ptr<_type>& _variable) { return new serial::object(_variable.get()); }
   };
 
@@ -427,7 +455,7 @@ namespace serialization {
    * List serial_info, for stl container
    */
   template<typename _type, typename _pass>
-  struct _do_pass { using type = _pass; };
+  struct _do_pass { using type = void; };
   template<typename _type>
   struct serial_info < _type,
 		       typename _do_pass<typename serial_info< typename _type::value_type >::type,
@@ -445,6 +473,30 @@ namespace serialization {
     static bool  is(serial::interface* _interface) { return dynamic_cast<serial::list*>(_interface) != nullptr; }
     static void	 set(serial::interface* _interface, _type& _variable) { _variable = get(_interface); }
     static serial::interface* make(_type _variable) { return new serial::list(_variable.begin(), _variable.end()); }
+  };
+
+  /*
+   * Map Serial Info
+   */
+  template<typename _type>
+  struct serial_info < _type,
+		       typename _do_pass<typename serial_info< typename _type::key_type >::type,
+					 typename serial_info< typename _type::mapped_type >::type
+					 >::type > {
+    using type = serial::map;
+    static _type get(serial::interface* _interface) {
+      _type	_map;
+
+      std::for_each(dynamic_cast<serial::map*>(_interface)->begin(), dynamic_cast<serial::map*>(_interface)->end(),
+		    [&_map] (std::pair<const Serial*, const Serial*> serial) {
+		      _map.emplace(serial.first->as<typename _type::key_type>(),
+				   serial.second->as<typename _type::mapped_type>());
+		    });
+      return _map;
+    }
+    static bool  is(serial::interface* _interface) { return dynamic_cast<serial::map*>(_interface) != nullptr; }
+    static void	 set(serial::interface* _interface, _type& _variable) { _variable = get(_interface); }
+    static serial::interface* make(_type _variable) { return new serial::map(_variable.begin(), _variable.end()); }
   };
 
   /*

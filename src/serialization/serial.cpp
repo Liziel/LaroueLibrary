@@ -2,7 +2,7 @@
 #include <cctype>
 #include <sstream>
 
-#include "serialization/serial.hh"
+#include "serialization/serial.hpp"
 #include "serialization/serializable.hh"
 
 namespace serialization {
@@ -65,6 +65,10 @@ namespace serialization {
 
     bool	list::isList(std::string::const_iterator& cursor, std::string::const_iterator) {
       return *cursor == '[';
+    }
+
+    bool	map::isMap(std::string::const_iterator& cursor, std::string::const_iterator) {
+      return *cursor == '{' && *cursor == '[';
     }
 
     bool	floating::isFloating(std::string::const_iterator& cursor, std::string::const_iterator) {
@@ -201,6 +205,29 @@ namespace serialization {
       ++cursor;
     }
 
+    map::			map(std::string::const_iterator& cursor, std::string::const_iterator end) {
+      std::advance(cursor, 2);
+
+      while (*cursor != ']') {
+	Serial::isBlank(cursor, end);
+	Serial* key = Serial::Instantiate(cursor, end);
+	Serial::isBlank(cursor, end);
+
+	Serial::isDelimiteur(cursor, end);
+
+	Serial::isBlank(cursor, end);
+	Serial*		value = Serial::Instantiate(cursor, end);
+	Serial::isBlank(cursor, end);
+
+	_serialized_map.emplace_back(key, value);
+	
+	Serial::isBlank(cursor, end);
+	Serial::isSeparateur(cursor, end);
+	Serial::isBlank(cursor, end);
+      }
+      std::advance(cursor, 2);
+    }
+
     function::			function(std::string::const_iterator& cursor, std::string::const_iterator end)
       : _clean(nullptr) {
       std::string::const_iterator	beg = cursor;
@@ -282,6 +309,13 @@ namespace serialization {
 	delete serial;
     }
 
+    map::	~map() {
+      for (std::pair< Serial*, Serial* > pair : _serialized_map) {
+	delete pair.first;
+	delete pair.second;
+      }
+    }
+
 
     boolean::	boolean(bool b)
       : _serialized_boolean(b) {}
@@ -329,6 +363,38 @@ namespace serialization {
       _stringified += "}";
       return (_stringified);
     }
+
+    std::string		map::Stringify(int level) const {
+      std::string	_stringified("{[\n");
+      std::size_t	i = 0;
+
+      std::for_each(_serialized_map.begin(), _serialized_map.end(), [=, &_stringified]
+		   (const std::pair< Serial*, Serial* >& pair) {
+		      _stringified += std::string(level + 1, '\t') +
+			pair.first->Stringify(level + 1)
+			+ " : "
+			+ pair.second->Stringify(level + 1)
+			+ ( (i + 1 < _serialized_map.size()) ? (",\n") : ("\n") );
+		    });
+      _stringified += std::string(level, '\t') + "]}";
+      return (_stringified);
+    }
+
+    std::string		map::CompactStringify(int) const {
+      std::string	_stringified("{[");
+      std::size_t	i = 0;
+
+      std::for_each(_serialized_map.begin(), _serialized_map.end(), [=, &_stringified]
+		   (std::pair< Serial*, Serial* > pair) {
+		      _stringified += ' ' + 
+			pair.first->CompactStringify() + " : "
+			+ pair.second->CompactStringify()
+			+ ( (i + 1 < _serialized_map.size()) ? (", ") : (" ") );
+		    });
+      _stringified += "]}";
+      return (_stringified);
+    }
+
 
     std::string		function::Stringify(int level) const {
       return _function_name + '(' + _parameter->Stringify(level + 1) + ')';

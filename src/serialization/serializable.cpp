@@ -1,6 +1,6 @@
 #include "serialization/serializable.hh"
 #include "serialization/archive.hh"
-#include "serialization/serial.hh"
+#include "serialization/serial.hpp"
 
 #include <iostream>
 

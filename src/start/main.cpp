@@ -16,9 +16,8 @@
 using namespace ctvty::utils;
 int main(int ac, char** av) {
   ctvty::asset::Assets			assets("assets");
-  ctvty::asset::Assets			template_assets(std::move(assets.GetAssets("template")));
 
-  if (1)
+  if (0)
     {
       bool	initialization_succes;
 
@@ -32,5 +31,22 @@ int main(int ac, char** av) {
       std::cout << "after init" << std::endl;
       ctvty::Application::Quit(5.f);
       ctvty::Application::Start();
+    }
+
+  if (1)
+    {
+      serialization::Serial json, jsont;
+      std::map<std::string, std::shared_ptr<ctvty::GameObject> > map;
+
+      map.emplace(std::string("falling cube"),
+		  assets.GetAsset("save/falling_cube2.json").LoadAs<ctvty::GameObject>());
+      json & map;
+      std::cout << json.Stringify() << std::endl;
+      map.clear();
+      jsont & map;
+      std::cout << jsont.Stringify() << std::endl;
+      static_cast<const serialization::Serial&>(json) & map;
+      jsont & map;
+      std::cout << jsont.Stringify() << std::endl;
     }
 }

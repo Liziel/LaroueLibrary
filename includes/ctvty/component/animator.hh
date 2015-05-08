@@ -8,12 +8,12 @@ namespace ctvty {
 
     class Animator : public MonoBehviour<Animator> {
     public:
-      class Animation : public serialization::Serializable { };
-      class Trigger : public serialization::Serializable { };
+      class State : public serialization::Serializable {
+	
+      };
       
     private:
-      std::list< std::shared_ptr<Animation> >	animations;
-      std::list< std::shared_ptr<Trigger> >	animations;
+      std::list< std::string, std::shared_ptr<Animation> >	animations;
     };
   };
 };
