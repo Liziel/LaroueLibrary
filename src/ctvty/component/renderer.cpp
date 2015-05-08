@@ -38,29 +38,35 @@ namespace ctvty
     }
 
     void	Renderer::Awake() {
-      model = Application::Assets().GetAsset(file).LoadAs<Model3D>();
+      model = Application::Assets().GetAsset(file).LoadAs<Renderer::Model3D>();
+      if (!model)
+	std::cerr << "Renderer error: no model definition at " << file << std::endl;
     }
 
     void	Renderer::Render()
     {
-      model->GetModel().Draw(transform->GetPosition(),
-			     transform->GetScale(),
-			     transform->GetRotation());
+      if (model)
+	model->GetModel().Draw(transform->GetPosition(),
+			       transform->GetScale(),
+			       transform->GetRotation());
     }
     
     void	Renderer::CreateAnimation(const std::string &name, int FrameStart, int FrameEnd)
     {
-      model->GetModel().CreateAnimation(name, FrameStart, FrameEnd);
+      if (model)
+	model->GetModel().CreateAnimation(name, FrameStart, FrameEnd);
     }
     
     void	Renderer::PauseAnimation()
     {
-      model->GetModel().PauseAnimation();
+      if (model)
+	model->GetModel().PauseAnimation();
     }
 
     void	Renderer::SetAnimation(const std::string &name, bool loop)
     {
-      model->GetModel().SetAnimation(name, loop);
+      if (model)
+	model->GetModel().SetAnimation(name, loop);
     }
 
 

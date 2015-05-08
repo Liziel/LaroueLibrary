@@ -2,10 +2,12 @@
 	"object" : {
 		"childs" : [
 		],
-		"components" : [
+	    "components" : [
 		{
-				"object" : { },
-				"type" : "user_defined::component::EventTester",
+		    "object" : {
+			"file" : "models3d/bombe_health.json"
+		    },
+		    "type" : "ctvty::component::Renderer",
 		},
 		{
 				"object" : {
@@ -79,9 +81,9 @@
 				},
 				"scale" : {
 					"object" : {
-						"x" : 1,
-						"y" : 1,
-						"z" : 1,
+						"x" : 0.01,
+						"y" : 0.01,
+						"z" : 0.01,
 					},
 					"type" : "ctvty::utils::Vector3D",
 				},

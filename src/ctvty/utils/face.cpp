@@ -1,4 +1,3 @@
-#include <iostream>
 #include "ctvty/utils/face.hh"
 
 namespace ctvty {
@@ -34,7 +33,6 @@ namespace ctvty {
       if (!IsPointInside(position + direction * *dForce))
 	return ctvstd::none;
       force = 1. - *dForce;
-      std::cerr << "valid" << std::endl;
       return {position + direction * *dForce, normal};
     }
 

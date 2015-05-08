@@ -212,8 +212,6 @@ namespace ctvty {
 	    if (c == cc)
 	      return true;
 
-	  if (c->GetRigidBody() != NULL)
-	    std::cout << "Collided with a rigidBody" << std::endl;
 	  c->BroadcastMessage("OnCollisionEnter", static_cast<const utils::Collision*>(&collision));
 	  BroadcastMessage("OnCollisionEnter", static_cast<const utils::Collision*>(&collision));
 	  return false;

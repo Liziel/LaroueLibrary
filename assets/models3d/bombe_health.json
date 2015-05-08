@@ -1,0 +1,6 @@
+{
+    "object" : {
+	"path" : "assets/models3d/Bombe Health/Health.FBX"
+    },
+    "type" : "ctvty::component::Renderer::Model3D",
+}

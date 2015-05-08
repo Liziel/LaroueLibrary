@@ -1,72 +1,78 @@
 {
-	"object" : {
-		"childs" : [
-		],
-		"components" : [
+    "object" : {
+	"childs" : [
+	],
+	"components" : [
 		{
-				"object" : {
-					"+size" : {
-						"object" : {
-							"x" : 20,
-							"y" : 5,
-							"z" : 20,
-						},
-						"type" : "ctvty::utils::Vector3D",
-					},
-					"-size" : {
-						"object" : {
-							"x" : 20,
-							"y" : 20,
-							"z" : 20,
-						},
-						"type" : "ctvty::utils::Vector3D",
-					},
-					"isTrigger" : 0,
-					"material" : {
-						"object" : {
-							"bounciness" : 0.0,
-							"dynamicFriction" : 0.005,
-							"staticFriction" : 0,
-						},
-						"type" : "ctvty::physics::Material",
-					},
-					"scale" : 1.0,
-				},
-				"type" : "ctvty::component::BoxCollider",
-			},
-		],
-		"name" : "Colliding Cube",
-		"tag" : "cubes",
-		"transform" : {
-			"object" : {
-				"position" : {
-					"object" : {
-						"x" : 0,
-						"y" : -5,
-						"z" : 0.1,
-					},
-					"type" : "ctvty::utils::Vector3D",
-				},
-				"rotation" : {
-					"object" : {
-						"w" : 1,
-						"x" : 0,
-						"y" : 0,
-						"z" : 0,
-					},
-					"type" : "ctvty::utils::Quaternion",
-				},
-				"scale" : {
-					"object" : {
-						"x" : 1,
-						"y" : 1,
-						"z" : 1,
-					},
-					"type" : "ctvty::utils::Vector3D",
-				},
-			},
-			"type" : "ctvty::component::Transform",
+		    "object" : {
+			"file" : "models3d/bombe_health.json"
+		    },
+		    "type" : "ctvty::component::Renderer",
 		},
+	    {
+		"object" : {
+		    "+size" : {
+			"object" : {
+			    "x" : 20,
+			    "y" : 5,
+			    "z" : 20,
+			},
+			"type" : "ctvty::utils::Vector3D",
+		    },
+		    "-size" : {
+			"object" : {
+			    "x" : 20,
+			    "y" : 20,
+			    "z" : 20,
+			},
+			"type" : "ctvty::utils::Vector3D",
+		    },
+		    "isTrigger" : 0,
+		    "material" : {
+			"object" : {
+			    "bounciness" : 0.0,
+			    "dynamicFriction" : 0.005,
+			    "staticFriction" : 0,
+			},
+			"type" : "ctvty::physics::Material",
+		    },
+		    "scale" : 1.0,
+		},
+		"type" : "ctvty::component::BoxCollider",
+	    },
+	],
+	"name" : "Colliding Cube",
+	"tag" : "cubes",
+	"transform" : {
+	    "object" : {
+		"position" : {
+		    "object" : {
+			"x" : 0,
+			"y" : -5,
+			"z" : 0.1,
+		    },
+		    "type" : "ctvty::utils::Vector3D",
+		},
+		"rotation" : {
+		    "object" : {
+			"w" : 1,
+			"x" : 0,
+			"y" : 0,
+			"z" : 0,
+		    },
+		    "type" : "ctvty::utils::Quaternion",
+		},
+		"scale" : {
+		    "object" : {
+			"x" : 0.4,
+			"y" : 0.01,
+			"z" : 0.4,
+		    },
+		    "type" : "ctvty::utils::Vector3D",
+		},
+	    },
+	    "type" : "ctvty::component::Transform",
 	},
-	"type" : "ctvty::GameObject",
+    },
+    "type" : "ctvty::GameObject",
 }

@@ -58,9 +58,6 @@ namespace user_defined {
 
 
     void		EventTester::Render() {
-      model3D->Draw(transform->GetPosition(),
-		    ctvty::utils::Vector3D::one / 70,
-		    ctvty::utils::Quaternion::identity);
     }
   };
 };
