@@ -1,0 +1,6 @@
+{
+	"object" : {
+		"file" : "renderer_model.json"
+	},
+	"type" : "ctvty::component::Renderer",
+}
