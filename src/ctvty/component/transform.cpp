@@ -69,12 +69,21 @@ namespace ctvty {
       return *rotation;
     }
 
+    inline
+    const utils::Vector3D&	Transform::GetScale() const {
+      return *scale;
+    }
+
     utils::Vector3D&		Transform::GetPosition() {
       return const_cast<utils::Vector3D&>(static_cast<const Transform&>(*this).GetPosition());
     }
 
     utils::Quaternion&		Transform::GetRotation() {
       return const_cast<utils::Quaternion&>(static_cast<const Transform&>(*this).GetRotation());
+    }
+
+    utils::Vector3D&		Transform::GetScale() {
+      return const_cast<utils::Vector3D&>(static_cast<const Transform&>(*this).GetScale());
     }
 
     const utils::Vector3D	Transform::GetRealPosition() const {

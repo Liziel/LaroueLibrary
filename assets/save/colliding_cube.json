@@ -25,7 +25,7 @@
 					"material" : {
 						"object" : {
 							"bounciness" : 0.0,
-							"dynamicFriction" : 0.0,
+							"dynamicFriction" : 0.005,
 							"staticFriction" : 0,
 						},
 						"type" : "ctvty::physics::Material",

@@ -2,6 +2,7 @@
 #include "user_defined/component/eventtester.hh"
 #include "ctvty/component/transform.hh"
 #include "ctvty/debug.hpp"
+#include "ctvty/component/rigidbody.hh"
 
 namespace user_defined {
   namespace component {
@@ -29,6 +30,10 @@ namespace user_defined {
     }
 
     void			EventTester::Update() {
+      ctvty::debug::Logs(transform->GetPosition());
+    }
+
+    void			EventTester::Awake() {
     }
 
     /*			Collision Events Tests			*/
@@ -53,10 +58,9 @@ namespace user_defined {
 
 
     void		EventTester::Render() {
-      GetComponent<Animator>()->SetFrame(model->GetModel());
-      model->GetModel()->Draw(transform->GetPosition(),
-			      transfrom->GetScale(),
-			      transfrom->GetRotation());
+      model3D->Draw(transform->GetPosition(),
+		    ctvty::utils::Vector3D::one / 70,
+		    ctvty::utils::Quaternion::identity);
     }
   };
 };

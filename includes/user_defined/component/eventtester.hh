@@ -22,6 +22,7 @@ namespace user_defined {
       void		Serialize(serialization::Archive&) const override;
 
     public:
+      void		Awake();
       void		Update();
 
     public:

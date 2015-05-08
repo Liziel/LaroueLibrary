@@ -1,13 +1,13 @@
 #ifndef Render_hh__
 # define Render_hh__
 
-# include "ctvty/monobehviour.hh"
+# include "ctvty/monobehaviour.hpp"
 # include "ctvty/rendering/model3d.hh"
 
 namespace ctvty {
   namespace component {
 
-    class Renderer : public MonoBehviour<Renderer> {
+    class Renderer : public MonoBehaviour<Renderer> {
     public:
       class Model3D : public serialization::Serializable {
       private:
@@ -21,7 +21,7 @@ namespace ctvty {
 
       public:
 			Model3D(const serialization::Archive&);
-	void		Serialize(serialization::Archive&);
+	void		Serialize(serialization::Archive&) const;
       };
     private:
       std::string			file;
@@ -31,10 +31,15 @@ namespace ctvty {
       /*
        * archive["file"] & string --> assets
        */
+			Renderer(const std::string&);
 			Renderer(const serialization::Archive&);
-      void		Serialize(serialization::Archive&) const;
+      void		Serialize(serialization::Archive&) const override;
 
     public:
+      ctvty::Object*	clone() const override;
+
+    public:
+      void		Awake();
       void		Render();
 
     public:

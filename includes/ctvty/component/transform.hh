@@ -53,10 +53,13 @@ namespace ctvty {
     public:
       const utils::Vector3D&	GetPosition() const;
       const utils::Quaternion&	GetRotation() const;
+      const utils::Vector3D&	GetScale() const;
 
     public:
       utils::Vector3D&		GetPosition();
       utils::Quaternion&	GetRotation();
+      utils::Vector3D&		GetScale();
+
     };
 
   };
