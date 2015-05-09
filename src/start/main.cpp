@@ -18,7 +18,7 @@ using namespace ctvty::utils;
 int main(int ac, char** av) {
   ctvty::asset::Assets			assets("assets");
 
-  if (1)
+  if (0)
     {
       bool	initialization_succes;
 
@@ -34,7 +34,7 @@ int main(int ac, char** av) {
       ctvty::Application::Start();
     }
 
-  if (0)
+  if (1)
     {
       serialization::Serial json;
 

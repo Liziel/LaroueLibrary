@@ -1,12 +1,12 @@
 {
 	"object" : {
 	    "name" : "My First Ctvty application",
-	    "windowX" : 1000,
-	    "windowY" : 800,
+	    "windowX" : 1920,
+	    "windowY" : 1080,
 
-	    "fps" : 50,
+	    "fps" : 60,
 
-	    "load" : "base",
+	    "load" : "base2",
 	    "scenes" : [
 		{
 		    "object" : {
