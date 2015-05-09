@@ -39,6 +39,10 @@ namespace ctvty {
     std::string			base_scene;
     asset::Assets*		assets;
 
+  private:
+    std::string			name;
+    std::size_t			windowX, windowY;
+
   public:
     ~Application();
     Application(const serialization::Archive&);

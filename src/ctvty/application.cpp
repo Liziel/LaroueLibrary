@@ -17,6 +17,12 @@ namespace ctvty {
       __serial["fps"] & fps;
     else
       fps = 30;
+
+    __serial["name"] & name;
+
+    __serial["windowX"] & windowX;
+    __serial["windowY"] & windowY;
+
     ctvty::event::Clock::GetClock().SetMaxFramePerSeconds(fps);
   }
 
@@ -69,7 +75,7 @@ namespace ctvty {
       serial = serialization::Serial::InstantiateFromFile(assets->GetAsset("application.json")
 							  .GetFile().GetPath());
       app = (Application*)serialization::Serializable::Instantiate(*serial);
-      ctvty::rendering::Renderer::GetRenderer().Initialize(1000, 1000, "waw");
+      ctvty::rendering::Renderer::GetRenderer().Initialize(app->windowX, app->windowY, app->name);
       app->assets = assets;
       delete serial;
     }
