@@ -26,6 +26,7 @@ namespace GdlImpl {
 					int FrameStart, int FrameEnd) final;
     void		PauseAnimation() final;
     void		SetAnimation(const std::string& name, bool loop = true) final;
+    float		GetFrameDuration() final;
 
   public:
     void		Draw(const ctvty::utils::Vector3D& position,

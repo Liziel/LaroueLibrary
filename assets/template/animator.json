@@ -1,0 +1,22 @@
+{
+    "object" : {
+	"default_state" : "idle",
+
+	"states" : {[
+
+	    "idle" : {
+		"name" : "idle",
+		"speed" : 1.0,
+
+		"start" : 0,
+		"end" : 100,
+
+		"transitions" : {[
+		    "boring" : "idle",
+		]},
+	    }
+
+	]},
+    },
+    "type" : "ctvty::component::Animator",
+}

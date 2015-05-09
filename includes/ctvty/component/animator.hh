@@ -40,11 +40,11 @@ namespace ctvty {
 	void		Create(Renderer*);
 	void		StartPlaying();
 	bool		HasStopped();
-	double		GetFrame(double increment);
+	double		GetFrame(Renderer&, double increment);
       };
       
     private:
-      std::map< std::string, std::shared_ptr<State> >	states;
+      std::map< std::string, std::shared_ptr<State> >		states;
       std::string						current_state;
 
     public:
@@ -55,11 +55,11 @@ namespace ctvty {
       ctvty::Object*	clone() const;
 
     public:
-      void		Awake();
+      void		Initialize(Renderer*);
 
     public:
       bool		Trigger(const std::string&);
-      double		GetFrame();
+      double		GetFrame(Renderer&);
     };
   };
 };

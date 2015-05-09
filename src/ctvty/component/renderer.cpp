@@ -12,6 +12,7 @@
 #include "ctvty/component/renderer.hh"
 #include "ctvty/rendering/renderer.hh"
 #include "ctvty/component/transform.hh"
+#include "ctvty/component/animator.hh"
 
 REGISTER_FOR_SERIALIZATION(ctvty::component, Renderer);
 REGISTER_FOR_SERIALIZATION(ctvty::component::Renderer, Model3D);
@@ -39,16 +40,23 @@ namespace ctvty
 
     void	Renderer::Awake() {
       model = Application::Assets().GetAsset(file).LoadAs<Renderer::Model3D>();
-      if (!model)
+      if (!model) {
 	std::cerr << "Renderer error: no model definition at " << file << std::endl;
+	return ;
+      }
+      CreateAnimation("run", 0, 100);
+      SetAnimation("run");
+      for (Animator* animator : GetComponents<Animator>())
+	animator->Initialize(this);
     }
 
     void	Renderer::Render()
     {
-      if (model)
-	model->GetModel().Draw(transform->GetPosition(),
-			       transform->GetScale(),
-			       transform->GetRotation());
+      if (!model)
+	return ;
+      model->GetModel().Draw(transform->GetPosition(),
+			     transform->GetScale(),
+			     transform->GetRotation());
     }
     
     void	Renderer::CreateAnimation(const std::string &name, int FrameStart, int FrameEnd)
@@ -67,6 +75,12 @@ namespace ctvty
     {
       if (model)
 	model->GetModel().SetAnimation(name, loop);
+    }
+
+    float	Renderer::GetFrameDuration() {
+      if (model)
+	return model->GetModel().GetFrameDuration();
+      return 0.f;
     }
 
 

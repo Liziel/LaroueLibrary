@@ -26,14 +26,11 @@ namespace ctvty {
       return copy.as<Animator*>();
     }
 
-    void	Animator::Awake() {
-      Renderer*	renderer = GetComponent<Renderer>();
-
+    void	Animator::Initialize(Renderer* renderer) {
       for ( typename decltype(this->states)::value_type & pair : states)
 	pair.second->Create(renderer);
     }
 
-    
     bool	Animator::Trigger(const std::string& trigger) {
       if (states[current_state]->IsTransition(trigger)) {
 	current_state = states[current_state]->GetTransition(trigger);
@@ -43,10 +40,10 @@ namespace ctvty {
       return false;
     }
 
-    double	Animator::GetFrame() {
+    double	Animator::GetFrame(Renderer& renderer) {
       if (states[current_state]->HasStopped())
 	current_state = states[current_state]->GetEndTransition();
-      return states[current_state]->GetFrame(ctvty::event::Clock::GetClock().GetFixedDeltaTime());
+      return states[current_state]->GetFrame(renderer, ctvty::event::Clock::GetClock().GetFixedDeltaTime());
     }
 
 
@@ -109,9 +106,16 @@ namespace ctvty {
       return !loop && (animation_key > end_animation_key - start_animation_key);
     }
 
-    double		Animator::State::GetFrame(double incr) {
-      ++animation_key;
-      return incr * animation_speed_modifier;
+    double		Animator::State::GetFrame(Renderer& renderer, double incr) {
+      renderer.SetAnimation(name);
+      if (renderer.GetFrameDuration() == 0.f)
+	return 0.;
+      if (animation_key > end_animation_key && !loop)
+	return 0.;
+      else if (animation_key > end_animation_key)
+	animation_key = 0;
+      animation_key += incr / (animation_speed_modifier * renderer.GetFrameDuration());
+      return animation_key * renderer.GetFrameDuration();
     }
     
   };

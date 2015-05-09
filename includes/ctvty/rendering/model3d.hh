@@ -14,6 +14,7 @@ namespace ctvty {
       virtual void		CreateAnimation(const std::string& name, int FrameStart, int FrameEnd) = 0;
       virtual void		PauseAnimation() = 0;
       virtual void		SetAnimation(const std::string& name, bool loop = true) = 0;
+      virtual float		GetFrameDuration() = 0;
 
     public:
       virtual void		Draw(const ctvty::utils::Vector3D& position,

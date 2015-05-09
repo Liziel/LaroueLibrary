@@ -23,6 +23,10 @@ namespace GdlImpl {
     model->setCurrentSubAnim(name, loop);
   }
 
+  float			Model3D::GetFrameDuration() {
+    return model->getFrameDuration();
+  }
+
   void			Model3D::Draw(const ctvty::utils::Vector3D& position,
 				      const ctvty::utils::Vector3D& scale,
 				      const ctvty::utils::Quaternion& rotation,

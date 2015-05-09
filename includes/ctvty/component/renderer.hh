@@ -46,6 +46,7 @@ namespace ctvty {
       void		CreateAnimation(const std::string& name, int FrameStart, int FrameEnd);
       void		PauseAnimation();
       void		SetAnimation(const std::string& name, bool loop = true);
+      float		GetFrameDuration();
     };
 
 
