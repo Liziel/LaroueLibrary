@@ -3,12 +3,6 @@
 	"childs" : [
 	],
 	"components" : [
-		{
-		    "object" : {
-			"file" : "models3d/bombe_health.json"
-		    },
-		    "type" : "ctvty::component::Renderer",
-		},
 	    {
 		"object" : {
 		    "+size" : {
@@ -30,7 +24,7 @@
 		    "isTrigger" : 0,
 		    "material" : {
 			"object" : {
-			    "bounciness" : 0.0,
+			    "bounciness" : 0.5,
 			    "dynamicFriction" : 0.005,
 			    "staticFriction" : 0,
 			},

@@ -47,7 +47,7 @@
 					"isTrigger" : 0,
 					"material" : {
 						"object" : {
-							"bounciness" : 0,
+							"bounciness" : 0.5,
 							"dynamicFriction" : 0,
 							"staticFriction" : 0,
 						},
@@ -81,9 +81,9 @@
 				},
 				"scale" : {
 					"object" : {
-						"x" : 0.01,
-						"y" : 0.01,
-						"z" : 0.01,
+						"x" : 0.02,
+						"y" : 0.02,
+						"z" : 0.02,
 					},
 					"type" : "ctvty::utils::Vector3D",
 				},

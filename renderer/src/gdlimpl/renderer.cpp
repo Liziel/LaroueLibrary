@@ -31,7 +31,33 @@ namespace GdlImpl {
     
   }
 
-  void		Renderer::Pre3DRendering() {
+  ctvty::rendering::Camera*
+		Renderer::CreateCamera() {
+    Camera* camera = new Camera(*this);
+    cameras.push_back(camera);
+    return camera;
+  }
+
+  void		Renderer::UnregisterCamera(Camera* camera) {
+    cameras.remove_if([&camera](Camera* _compare) {return _compare == camera;});
+  }
+
+  std::size_t	Renderer::RegisteredCameras() {
+    return cameras.size();
+  }
+
+  void		Renderer::Pre3DRendering(int camera_id) {
+    Camera* camera = nullptr;
+
+    if (cameras.size()) {
+      std::list<Camera*>::iterator it = cameras.begin();
+      std::advance(it, camera_id);
+      camera = *it;
+      glViewport(camera->GetViewPort().baseX,
+		 camera->GetViewPort().baseY,
+		 camera->GetViewPort().width,
+		 camera->GetViewPort().height);
+    }
 
     {
       glm::mat4 projection =
@@ -42,12 +68,24 @@ namespace GdlImpl {
     }
 
     {
-      glm::mat4 transformation
-	= glm::lookAt(
-		      glm::vec3(camera_position.x, camera_position.y, camera_position.z),
-		      glm::vec3(camera_lookAt.x, camera_lookAt.y, camera_lookAt.z),
-		      glm::vec3(camera_up.x, camera_up.y, camera_up.z)
-		      );
+      glm::mat4 transformation;
+      if (camera == nullptr)
+	transformation
+	  = glm::lookAt(
+			glm::vec3(camera_position.x, camera_position.y, camera_position.z),
+			glm::vec3(camera_lookAt.x, camera_lookAt.y, camera_lookAt.z),
+			glm::vec3(camera_up.x, camera_up.y, camera_up.z)
+			);
+      else
+	transformation
+	  = glm::lookAt(
+			glm::vec3(camera->GetPosition().x, camera->GetPosition().y, camera->GetPosition().z),
+			glm::vec3(camera->GetLookAt().x, camera->GetLookAt().y, camera->GetLookAt().z),
+			glm::vec3(camera->GetRotation().RotatedVector(ctvty::utils::Vector3D::up).x,
+				  camera->GetRotation().RotatedVector(ctvty::utils::Vector3D::up).y,
+				  camera->GetRotation().RotatedVector(ctvty::utils::Vector3D::up).z)
+			);
+      
       _shader.setUniform("view", transformation);
     }
 
@@ -73,9 +111,9 @@ namespace GdlImpl {
     gdl::SdlContext::stop();
   }
 
-  void		Renderer::SetCameraPosition(const ctvty::utils::Vector3D& p,
-					    const ctvty::utils::Vector3D& l,
-					    const ctvty::utils::Quaternion& e) {
+  void		Renderer::SetDefaultCameraPosition(const ctvty::utils::Vector3D& p,
+						   const ctvty::utils::Vector3D& l,
+						   const ctvty::utils::Quaternion& e) {
     camera_position = p;
     camera_lookAt = l;
     camera_up = e.RotatedVector(ctvty::utils::Vector3D::up);

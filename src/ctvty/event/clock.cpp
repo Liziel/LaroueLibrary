@@ -69,11 +69,21 @@ namespace ctvty {
 
 	{
 	  std::list<GameObject*> fathers_copy(ctvty::GameObject::accessParentsGameObjects());
-	  ctvty::rendering::Renderer::GetRenderer().Pre3DRendering();
-	  std::for_each(fathers_copy.begin(),
-			fathers_copy.end(),
-			[this] (GameObject* gameObject) { if (!end) gameObject->BroadcastMessage("Render"); }
-			);
+	  if (ctvty::rendering::Renderer::GetRenderer().RegisteredCameras() == 0) {
+	    ctvty::rendering::Renderer::GetRenderer().Pre3DRendering();
+	    std::for_each(fathers_copy.begin(),
+			  fathers_copy.end(),
+			  [this] (GameObject* gameObject) { if (!end) gameObject->BroadcastMessage("Render"); }
+			  );
+	  } else {
+	    for (std::size_t i = 0; i < ctvty::rendering::Renderer::GetRenderer().RegisteredCameras(); ++i) {
+	      ctvty::rendering::Renderer::GetRenderer().Pre3DRendering(i);
+	      std::for_each(fathers_copy.begin(),
+			    fathers_copy.end(),
+			    [this] (GameObject* gameObject) { if (!end) gameObject->BroadcastMessage("Render"); }
+			    );
+	    }
+	  }
 	  ctvty::rendering::Renderer::GetRenderer().PreHUDRendering();
 	  std::for_each(fathers_copy.begin(),
 			fathers_copy.end(),

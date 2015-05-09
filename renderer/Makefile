@@ -8,7 +8,8 @@ INCLUDES	+= -I ./includes
 ##############################
 ### Gdl Implementation
 GdlImpl		= src/gdlimpl/renderer.cpp\
-		src/gdlimpl/model3d.cpp
+		src/gdlimpl/model3d.cpp\
+		src/gdlimpl/camera.cpp
 
 ##############################
 CXXSRC		+= $(GdlImpl)

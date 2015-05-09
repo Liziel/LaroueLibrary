@@ -8,6 +8,7 @@
 # include "ctvty/rendering/renderer.hh"
 
 # include "gdlimpl/model3d.hh"
+# include "gdlimpl/camera.hh"
 
 namespace GdlImpl {
   
@@ -20,6 +21,9 @@ namespace GdlImpl {
 
   private:
     std::size_t				width, height;
+  public:
+    inline std::size_t			GetWidth() { return width; }
+    inline std::size_t			GetHeight() { return height; }
 
   private:
     ctvty::utils::Vector3D		camera_position, camera_lookAt, camera_up;
@@ -33,16 +37,25 @@ namespace GdlImpl {
 						   const std::string& window_name) final;
     void				Update() final;
 
-    void				Pre3DRendering() final;
+  private:
+    std::list<Camera*>			cameras;
+  public:
+    ctvty::rendering::Camera*		CreateCamera() final;
+    void				UnregisterCamera(Camera*);
+    std::size_t				RegisteredCameras() final;
+
+
+  public:
+    void				Pre3DRendering(int camera_id) final;
     void				PreHUDRendering() final;
     void				Flush() final;
 
     void				Quit() final;
 
   public:
-    void				SetCameraPosition(const ctvty::utils::Vector3D& position,
-							  const ctvty::utils::Vector3D& lookAt,
-							  const ctvty::utils::Quaternion& eulerRotation) final;
+    void				SetDefaultCameraPosition(const ctvty::utils::Vector3D& position,
+								 const ctvty::utils::Vector3D& lookAt,
+								 const ctvty::utils::Quaternion& eulerRotation) final;
   };
 
 };

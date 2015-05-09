@@ -7,6 +7,7 @@
 # include "ctvty/utils/quaternion.hh"
 
 # include "ctvty/rendering/model3d.hh"
+# include "ctvty/rendering/camera.hh"
 
 namespace ctvty {
   namespace rendering {
@@ -24,17 +25,22 @@ namespace ctvty {
 
 	virtual void			Update() = 0;
 
-	virtual void			Pre3DRendering() = 0;
+      public:
+	virtual Camera*			CreateCamera() = 0;
+	virtual std::size_t		RegisteredCameras() = 0;
+
+      public:
+	virtual void			Pre3DRendering(int camera_id = -1) = 0;
 	virtual void			PreHUDRendering() = 0;
 	virtual void			Flush() = 0;
 
 	virtual void			Quit() = 0;
 
       public:
-	virtual void			SetCameraPosition(const ctvty::utils::Vector3D& position,
-							  const ctvty::utils::Vector3D& lookAt,
-							  const ctvty::utils::Quaternion& rotation
-							  = ctvty::utils::Vector3D::zero) = 0;
+	virtual void			SetDefaultCameraPosition(const ctvty::utils::Vector3D& position,
+								 const ctvty::utils::Vector3D& lookAt,
+								 const ctvty::utils::Quaternion& rotation
+								 = ctvty::utils::Quaternion::identity) = 0;
       };
 
     public:
@@ -49,8 +55,8 @@ namespace ctvty {
       static void			Quit();
 
     public:
-      static void			SetCameraPosition(const ctvty::utils::Vector3D& position,
-							  const ctvty::utils::Quaternion& rotation);
+      static void			SetDefaultCameraPosition(const ctvty::utils::Vector3D& position,
+								 const ctvty::utils::Quaternion& rotation);
     };
   };
 };
