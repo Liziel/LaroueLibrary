@@ -28,8 +28,8 @@ namespace GdlImpl {
       SetViewPort(0, 0, renderer.GetWidth(), renderer.GetHeight());
       break;
     case 2:
-      if (priority == 1)
-	SetViewPort(0, 0, renderer.GetWidth(), renderer.GetHeight());
+      if (priority != 1)
+	SetViewPort(0, 0, renderer.GetWidth(), renderer.GetHeight() / 2);
       else
 	SetViewPort(0, renderer.GetHeight() / 2, renderer.GetWidth(), renderer.GetHeight() / 2);
       break;
@@ -39,6 +39,7 @@ namespace GdlImpl {
       case 1 :
 	SetViewPort(0, renderer.GetHeight() / 2,
 		    renderer.GetWidth() / 2, renderer.GetHeight() / 2);
+	break;
       case 2 :
 	SetViewPort(renderer.GetWidth() / 2, renderer.GetHeight() / 2,
 		    renderer.GetWidth() / 2, renderer.GetHeight() / 2);

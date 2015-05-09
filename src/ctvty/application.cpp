@@ -76,6 +76,30 @@ namespace ctvty {
 							  .GetFile().GetPath());
       app = (Application*)serialization::Serializable::Instantiate(*serial);
       ctvty::rendering::Renderer::GetRenderer().Initialize(app->windowX, app->windowY, app->name);
+
+      ctvty::rendering::Camera* camera1 = ctvty::rendering::Renderer::GetRenderer().CreateCamera();
+      camera1->SetCameraPosition(utils::Vector3D::up * 20
+				+ utils::Vector3D::back * 10,
+				utils::Vector3D::up * 10
+				+ utils::Vector3D::right * 5,
+				utils::Quaternion::identity);
+      ctvty::rendering::Camera* camera2 = ctvty::rendering::Renderer::GetRenderer().CreateCamera();
+      camera2->SetCameraPosition(utils::Vector3D::up * 20
+				- utils::Vector3D::right * 10,
+				utils::Vector3D::up * 10
+				+ utils::Vector3D::right * 5,
+				utils::Quaternion::identity);
+      ctvty::rendering::Camera* camera3 = ctvty::rendering::Renderer::GetRenderer().CreateCamera();
+      camera3->SetCameraPosition(utils::Vector3D::up * 20
+				- utils::Vector3D::back * 10,
+				utils::Vector3D::up * 10
+				+ utils::Vector3D::right * 5,
+				utils::Quaternion::identity);
+
+      camera1->DetectViewPort(1);
+      camera2->DetectViewPort(2);
+      camera3->DetectViewPort(3);
+
       app->assets = assets;
       delete serial;
     }

@@ -28,7 +28,7 @@ namespace GdlImpl {
   }
 
   void		Renderer::Update() {
-    
+    _shader.bind();
   }
 
   ctvty::rendering::Camera*
@@ -48,7 +48,6 @@ namespace GdlImpl {
 
   void		Renderer::Pre3DRendering(int camera_id) {
     Camera* camera = nullptr;
-
     if (cameras.size()) {
       std::list<Camera*>::iterator it = cameras.begin();
       std::advance(it, camera_id);
@@ -60,9 +59,10 @@ namespace GdlImpl {
     }
 
     {
+      float per = (width / (1.f + (cameras.size() > 2))) / (height / (1.f + (cameras.size() > 1)));
       glm::mat4 projection =
 	glm::perspective(60.0f,
-			 static_cast<float>(width / height),
+			 per,
 			 0.1f, 100.0f);
       _shader.setUniform("projection", projection);
     }
@@ -89,9 +89,7 @@ namespace GdlImpl {
       _shader.setUniform("view", transformation);
     }
 
-    glClear(GL_COLOR_BUFFER_BIT
-	    | GL_DEPTH_BUFFER_BIT);
-    _shader.bind();
+    glClear(GL_DEPTH_BUFFER_BIT);
   }
 
   void		Renderer::PreHUDRendering() {
@@ -105,6 +103,7 @@ namespace GdlImpl {
 
   void		Renderer::Flush() {
     gdl::SdlContext::flush();
+    glClear(GL_COLOR_BUFFER_BIT);
   }
 
   void		Renderer::Quit() {

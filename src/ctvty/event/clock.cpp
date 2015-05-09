@@ -68,6 +68,7 @@ namespace ctvty {
 	}
 
 	{
+	  ctvty::rendering::Renderer::GetRenderer().Update();
 	  std::list<GameObject*> fathers_copy(ctvty::GameObject::accessParentsGameObjects());
 	  if (ctvty::rendering::Renderer::GetRenderer().RegisteredCameras() == 0) {
 	    ctvty::rendering::Renderer::GetRenderer().Pre3DRendering();
