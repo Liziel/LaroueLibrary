@@ -77,7 +77,6 @@ namespace ctvty {
       app = (Application*)serialization::Serializable::Instantiate(*serial);
       ctvty::rendering::Renderer::GetRenderer().Initialize(app->windowX, app->windowY, app->name);
 
-      ctvty::rendering::Camera* camera1 = ctvty::rendering::Renderer::GetRenderer().CreateCamera();
       camera1->SetCameraPosition(utils::Vector3D::up * 20
 				+ utils::Vector3D::back * 10,
 				utils::Vector3D::up * 10
