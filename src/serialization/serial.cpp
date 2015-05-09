@@ -39,17 +39,19 @@ namespace serialization {
 
     if (serial::boolean::isBoolean(cursor, end))
       return (new Serial(new serial::boolean(cursor, end)));
-    if (serial::object::isObject(cursor, end))
+    else if (serial::map::isMap(cursor, end))
+      return (new Serial(new serial::map(cursor, end)));
+    else if (serial::object::isObject(cursor, end))
       return (new Serial(new serial::object(cursor, end)));
-    if (serial::string::isString(cursor, end))
+    else if (serial::string::isString(cursor, end))
       return (new Serial(new serial::string(cursor, end)));
-    if (serial::list::isList(cursor, end))
+    else if (serial::list::isList(cursor, end))
       return (new Serial(new serial::list(cursor, end)));
-    if (serial::floating::isFloating(cursor, end))
+    else if (serial::floating::isFloating(cursor, end))
       return (new Serial(new serial::floating(cursor, end)));
-    if (serial::integer::isInteger(cursor, end))
+    else if (serial::integer::isInteger(cursor, end))
       return (new Serial(new serial::integer(cursor, end)));
-    if (serial::function::isFunction(cursor, end))
+    else if (serial::function::isFunction(cursor, end))
       return (new Serial(new serial::function(cursor, end)));
     return nullptr;
   }
@@ -172,6 +174,7 @@ namespace serialization {
 	std::string	key = string::makeString(cursor, end);
 	Serial::isBlank(cursor, end);
 
+	std::cout << "key " << key << std::endl;
 	Serial::isDelimiteur(cursor, end);
 
 	Serial::isBlank(cursor, end);
