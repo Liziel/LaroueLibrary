@@ -29,6 +29,7 @@ namespace ctvty {
     void	Animator::Initialize(Renderer* renderer) {
       for ( typename decltype(this->states)::value_type & pair : states)
 	pair.second->Create(renderer);
+      states[current_state]->StartPlaying();
     }
 
     bool	Animator::Trigger(const std::string& trigger) {
@@ -43,6 +44,7 @@ namespace ctvty {
     double	Animator::GetFrame(Renderer& renderer) {
       if (states[current_state]->HasStopped())
 	current_state = states[current_state]->GetEndTransition();
+      std::cout << "animator " << this << std::endl;
       return states[current_state]->GetFrame(renderer, ctvty::event::Clock::GetClock().GetFixedDeltaTime());
     }
 
@@ -67,7 +69,8 @@ namespace ctvty {
 	animation_speed_modifier = 1.f;
     }
 
-    void		Animator::State::Serialize(serialization::Archive& __serial) const {
+    void		Animator::State::Serialize(serialization::Archive& __serial_instance) const {
+      SERIALIZE_OBJECT_AS(ctvty::component::Animator::State, __serial_instance);
       __serial["name"] & name;
 
       if (loop == false)
@@ -114,6 +117,7 @@ namespace ctvty {
 	return 0.;
       else if (animation_key > end_animation_key)
 	animation_key = 0;
+      std::cout << animation_key << " " << renderer.GetFrameDuration() << std::endl;
       animation_key += incr / (animation_speed_modifier * renderer.GetFrameDuration());
       return animation_key * renderer.GetFrameDuration();
     }

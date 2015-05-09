@@ -70,7 +70,9 @@ namespace serialization {
     }
 
     bool	map::isMap(std::string::const_iterator& cursor, std::string::const_iterator) {
-      return *cursor == '{' && *cursor == '[';
+      std::string::const_iterator p = cursor;
+      ++p;
+      return *cursor == '{' && *p == '[';
     }
 
     bool	floating::isFloating(std::string::const_iterator& cursor, std::string::const_iterator) {
@@ -174,7 +176,6 @@ namespace serialization {
 	std::string	key = string::makeString(cursor, end);
 	Serial::isBlank(cursor, end);
 
-	std::cout << "key " << key << std::endl;
 	Serial::isDelimiteur(cursor, end);
 
 	Serial::isBlank(cursor, end);

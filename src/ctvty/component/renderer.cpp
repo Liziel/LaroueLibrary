@@ -44,6 +44,7 @@ namespace ctvty
 	std::cerr << "Renderer error: no model definition at " << file << std::endl;
 	return ;
       }
+      CreateAnimation("renderer_stop", 0, 0);
       for (Animator* animator : GetComponents<Animator>())
 	animator->Initialize(this);
     }
@@ -54,15 +55,18 @@ namespace ctvty
 	return ;
 
       Animator* animator = GetComponent<Animator>();
-      if (!animator)
+      if (!animator) {
+	SetAnimation("renderer_stop");
 	model->GetModel().Draw(transform->GetPosition(),
 			       transform->GetScale(),
 			       transform->GetRotation());
-      else	
+      }
+      else {
 	model->GetModel().Draw(transform->GetPosition(),
 			       transform->GetScale(),
 			       transform->GetRotation(),
 			       animator->GetFrame(*this));
+      }
     }
     
     void	Renderer::CreateAnimation(const std::string &name, int FrameStart, int FrameEnd)

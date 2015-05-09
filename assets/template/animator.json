@@ -5,16 +5,19 @@
 	"states" : {[
 
 	    "idle" : {
-		"name" : "idle",
-		"speed" : 1.0,
+		"object" : {
+		    "name" : "idle",
+		    "speed" : 1.0,
 
-		"start" : 0,
-		"end" : 100,
+		    "start" : 0,
+		    "end" : 100,
 
-		"transitions" : {[
-		    "boring" : "idle",
-		]},
-	    }
+		    "transitions" : {[
+			"boring" : "idle",
+		    ]},
+		},
+		"type" : "ctvty::component::Animator::State"
+	    },
 
 	]},
     },
