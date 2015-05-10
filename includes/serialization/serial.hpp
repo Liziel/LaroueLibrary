@@ -105,7 +105,9 @@ namespace serialization {
     }
 
     template<typename _type>
-    bool		is() const { return serial_info<_type>::is(serial); }
+    bool		is() const {
+      return serial_info<_type>::is(serial);
+    }
 
     template<typename _type>
     _type		as() const {

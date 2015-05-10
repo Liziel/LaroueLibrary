@@ -104,15 +104,19 @@ namespace serialization {
       std::string::const_iterator true_test = cursor;
 
       if ((std::size_t)std::distance(cursor, end) > sizeof("false")) {
-	std::advance(false_test, sizeof("false"));
-	if (std::string("false") == std::string(cursor, false_test))
+	std::advance(false_test, sizeof("false") - 1);
+	if (std::string("false") == std::string(cursor, false_test)) {
+	  cursor = false_test;
 	  return true;
+	}
       }
 
       if ((std::size_t)std::distance(cursor, end) > sizeof("true")) {
-	std::advance(true_test, sizeof("true"));
-	if (std::string("true") == std::string(cursor, true_test))
+	std::advance(true_test, sizeof("true") - 1);
+	if (std::string("true") == std::string(cursor, true_test)) {
+	  cursor = true_test;
 	  return true;
+	}
       }
 
       return false;
@@ -517,6 +521,8 @@ namespace serialization {
 
     const Serial&	object::operator[] (const std::string& _index) const {
       if (_serialized_object.find(_index) == _serialized_object.end())
+	throw error::undefined_variable_reference(_index);
+      if (_serialized_object.at(_index) == nullptr)
 	throw error::undefined_variable_reference(_index);
       return (*(_serialized_object.at(_index)));
     }

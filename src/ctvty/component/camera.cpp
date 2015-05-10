@@ -2,6 +2,7 @@
 #include "ctvty/rendering/renderer.hh"
 #include "ctvty/application.hh"
 #include "ctvty/component/transform.hh"
+#include "ctvty/debug.hpp"
 
 REGISTER_FOR_SERIALIZATION(ctvty::component, Camera);
 REGISTER_FOR_SERIALIZATION(ctvty::component::Camera, View);
@@ -15,7 +16,7 @@ namespace ctvty {
     Camera::	Camera(const serialization::Archive& __serial)
       : MonoBehaviour(nullptr, "Camera") {
       
-
+      std::cout << "Camera ctor" << std::endl;
       //first viewport
       if (__serial.exist("viewport")) {
 	__serial["viewport"] & view;
@@ -33,6 +34,7 @@ namespace ctvty {
 	__serial["offset"] & offset;
       else
 	offset.reset(new ctvty::utils::Vector3D(ctvty::utils::Vector3D::zero));
+      ctvty::debug::Logs("offset", offset);
 
       //then look At
       if (__serial.exist("free look")) {
@@ -42,13 +44,16 @@ namespace ctvty {
 	__serial["locked look"] & lookAt;
 	ltype = look::locked;
       } else if (__serial.exist("forward look")) {
-	if (!__serial["forward look"].is<bool>())
+	if (!__serial["forward look"].is<bool>()) {
+	  std::cout << "isn't " << std::endl;
 	  __serial["forward look"] & lookAt;
-	else
+	} else
 	  lookAt.reset(new ctvty::utils::Vector3D(ctvty::utils::Vector3D::forward));
 	ltype = look::forward;
+      } else {
+	lookAt.reset(new ctvty::utils::Vector3D(ctvty::utils::Vector3D::forward));
+	ltype = look::forward;
       }
-
     }
 
     void	Camera::Serialize(serialization::Archive& __serial_instance) const {
@@ -106,7 +111,6 @@ namespace ctvty {
       } else if (ltype == look::free) {
 	_lookAt   = *lookAt + _position;
       }
-
       camera->SetCameraPosition(_position, _lookAt, _rotation);
     }
 
