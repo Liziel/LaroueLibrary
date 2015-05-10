@@ -44,6 +44,11 @@ namespace ctvty {
     std::size_t			windowX, windowY;
 
   public:
+    static inline std::size_t	WindowHeight() { return GetApplication()->windowY; }
+    static inline std::size_t	WindowWidth() { return GetApplication()->windowX; }
+
+
+  public:
     ~Application();
     Application(const serialization::Archive&);
     void			Serialize(serialization::Archive&) const override;

@@ -29,10 +29,13 @@ namespace GdlImpl {
     };
   private:
     ViewPort	view;
+    bool	autoViewPort;
+    int		priority;
   public:
     void			SetViewPort(std::size_t baseX, std::size_t baseY,
 					    std::size_t width, std::size_t height) final;
     void			DetectViewPort(int priority) final;
+    void			DetectViewPort();
     ViewPort&			GetViewPort();
 
   public:

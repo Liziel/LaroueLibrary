@@ -52,6 +52,7 @@ namespace GdlImpl {
       std::list<Camera*>::iterator it = cameras.begin();
       std::advance(it, camera_id);
       camera = *it;
+      camera->DetectViewPort();
       glViewport(camera->GetViewPort().baseX,
 		 camera->GetViewPort().baseY,
 		 camera->GetViewPort().width,

@@ -1,9 +1,11 @@
+#include <cstdlib>
+#include <algorithm>
 #include "gdlimpl/renderer.hh"
 #include "gdlimpl/camera.hh"
 
 namespace GdlImpl {
   Camera::	Camera(Renderer& p)
-    : renderer(p), rotation(ctvty::utils::Quaternion::identity) {}
+    : renderer(p), rotation(ctvty::utils::Quaternion::identity), autoViewPort(false), priority(-1) {}
 
   void		Camera::SetCameraPosition(const ctvty::utils::Vector3D& _position,
 				  const ctvty::utils::Vector3D& _lookAt,
@@ -20,10 +22,23 @@ namespace GdlImpl {
     view.baseY = baseY;
     view.width = width;
     view.height = height;
+    autoViewPort = false;
   }
 
-  void			Camera::DetectViewPort(int priority) {
-    switch (renderer.RegisteredCameras()) {
+  void			Camera::DetectViewPort(int _priority) {
+    autoViewPort = true;
+    priority = _priority;
+  }
+
+  void			Camera::DetectViewPort() {
+    if (!autoViewPort)
+      return ;
+
+    std::size_t priority_cameras = 0;
+    std::for_each(renderer.Cameras().begin(), renderer.Cameras().end(),
+		  [&priority_cameras] (const Camera* c) { if (c->autoViewPort) ++priority_cameras; });
+
+    switch (priority_cameras) {
     case 1:
       SetViewPort(0, 0, renderer.GetWidth(), renderer.GetHeight());
       break;
@@ -55,6 +70,7 @@ namespace GdlImpl {
       }
       break;
     }
+    autoViewPort = true;
   }
 
   Camera::ViewPort&	Camera::GetViewPort() {

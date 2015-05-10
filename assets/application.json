@@ -1,8 +1,8 @@
 {
 	"object" : {
 	    "name" : "My First Ctvty application",
-	    "windowX" : 1920,
-	    "windowY" : 1080,
+	    "windowX" : 1000,
+	    "windowY" : 800,
 
 	    "fps" : 60,
 

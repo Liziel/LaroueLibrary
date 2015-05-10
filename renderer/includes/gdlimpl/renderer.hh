@@ -43,6 +43,7 @@ namespace GdlImpl {
     ctvty::rendering::Camera*		CreateCamera() final;
     void				UnregisterCamera(Camera*);
     std::size_t				RegisteredCameras() final;
+    inline const std::list<Camera*>&	Cameras() { return cameras; }
 
 
   public:
