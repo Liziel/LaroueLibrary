@@ -6,6 +6,8 @@ namespace ctvty {
     
     class Camera {
     public:
+      virtual ~Camera() {}
+    public:
       virtual void			SetCameraPosition(const ctvty::utils::Vector3D& position,
 							  const ctvty::utils::Vector3D& lookAt,
 							  const ctvty::utils::Quaternion& rotation

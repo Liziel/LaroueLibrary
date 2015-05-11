@@ -2,6 +2,8 @@
 
 #include "gdlimpl/renderer.hh"
 
+#include "ctvty/debug.hpp"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -60,7 +62,11 @@ namespace GdlImpl {
     }
 
     {
-      float per = (width / (1.f + (cameras.size() > 2))) / (height / (1.f + (cameras.size() > 1)));
+      float per;
+      if (camera != nullptr)
+	per = camera->GetViewPort().width / camera->GetViewPort().height;
+      else
+	per = width / height;
       glm::mat4 projection =
 	glm::perspective(60.0f,
 			 per,
@@ -77,7 +83,7 @@ namespace GdlImpl {
 			glm::vec3(camera_lookAt.x, camera_lookAt.y, camera_lookAt.z),
 			glm::vec3(camera_up.x, camera_up.y, camera_up.z)
 			);
-      else
+      else {
 	transformation
 	  = glm::lookAt(
 			glm::vec3(camera->GetPosition().x, camera->GetPosition().y, camera->GetPosition().z),
@@ -86,6 +92,7 @@ namespace GdlImpl {
 				  camera->GetRotation().RotatedVector(ctvty::utils::Vector3D::up).y,
 				  camera->GetRotation().RotatedVector(ctvty::utils::Vector3D::up).z)
 			);
+      }
       
       _shader.setUniform("view", transformation);
     }

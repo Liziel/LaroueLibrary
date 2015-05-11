@@ -270,12 +270,21 @@ namespace serialization {
     }
 
     floating::			floating(std::string::const_iterator& cursor, std::string::const_iterator) {
+      bool neg = false;
+
+      if (*cursor == '-') {
+	neg = true;
+	++cursor;
+      }
       std::string::const_iterator	beg = cursor;
 
       while (std::isdigit(*cursor)) ++ cursor;
       ++cursor;//skip dot
       while (std::isdigit(*cursor)) ++ cursor;
-      _serialized_floating = std::stold(std::string(beg, cursor));
+      if (neg)
+	_serialized_floating = -std::stold(std::string(beg, cursor));
+      else
+	_serialized_floating = std::stold(std::string(beg, cursor));
     }
 
     boolean::			boolean(std::string::const_iterator& cursor, std::string::const_iterator end) {

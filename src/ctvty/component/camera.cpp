@@ -100,11 +100,10 @@ namespace ctvty {
       ctvty::utils::Vector3D _position = 
 	transform->GetPosition() + *offset;
       ctvty::utils::Quaternion _rotation =
-	ctvty::utils::Quaternion::identity;
+	transform->GetRotation();
       ctvty::utils::Vector3D _lookAt;
 
       if (ltype == look::forward) {
-	_rotation = transform->GetRotation();
 	_lookAt   = _rotation.RotatedVector(*lookAt) + _position;
       } else if (ltype == look::locked) {
 	_lookAt	  = *lookAt;

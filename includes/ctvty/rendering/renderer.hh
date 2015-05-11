@@ -16,6 +16,9 @@ namespace ctvty {
     public:
       class Implementation {
       public:
+	virtual ~Implementation() {}
+
+      public:
 	virtual Model3D*		Load3DModel(const std::string&) = 0;
 
       public:

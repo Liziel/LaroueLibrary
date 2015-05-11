@@ -36,10 +36,10 @@
 		},
 		"rotation" : {
 		    "object" : {
-			"w" : 1,
-			"x" : 1,
-			"y" : 1,
-			"z" : 1,
+			"euler" : true
+			"x" : -1.6,
+			"y" : 0,
+			"z" : 0,
 		    },
 		    "type" : "ctvty::utils::Quaternion",
 		},

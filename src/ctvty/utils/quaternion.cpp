@@ -13,10 +13,14 @@ namespace ctvty {
       : Quaternion(r.x, r.y, r.z, _w) { }
 
     Quaternion::	Quaternion(const serialization::Archive& __serial) {
-      __serial["x"] & x;
-      __serial["y"] & y;
-      __serial["z"] & z;
-      __serial["w"] & w;
+	__serial["x"] & x;
+	__serial["y"] & y;
+	__serial["z"] & z;
+      if (__serial.exist("euler")) {
+	*this = Euler(ctvty::utils::Vector3D(x, y, z));
+      } else {
+	__serial["w"] & w;
+      }
     }
 
     Quaternion::	~Quaternion() { }

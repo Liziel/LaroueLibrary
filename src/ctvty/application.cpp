@@ -91,16 +91,8 @@ namespace ctvty {
 				+ utils::Vector3D::right * 5,
 				utils::Quaternion::identity);
 
-      ctvty::rendering::Camera* camera3 = ctvty::rendering::Renderer::GetRenderer().CreateCamera();
-      camera3->SetCameraPosition(utils::Vector3D::up * 20
-				- utils::Vector3D::back * 10,
-				utils::Vector3D::up * 10
-				+ utils::Vector3D::right * 5,
-				utils::Quaternion::identity);
-
       camera1->DetectViewPort(1);
       camera2->DetectViewPort(2);
-      camera3->DetectViewPort(4);
 
       app->assets = assets;
       delete serial;

@@ -11,6 +11,9 @@ namespace ctvty {
 
     class Model3D {
     public:
+      virtual ~Model3D() {}
+
+    public:
       virtual void		CreateAnimation(const std::string& name, int FrameStart, int FrameEnd) = 0;
       virtual void		PauseAnimation() = 0;
       virtual void		SetAnimation(const std::string& name, bool loop = true) = 0;

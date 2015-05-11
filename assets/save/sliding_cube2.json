@@ -18,16 +18,16 @@
 			"forward look" : {
 			    "object" : {
 				"x" : -1,
-				"y" : -1,
+				"y" : -0.1,
 				"z" : 0,
 			    },
 			    "type" : "ctvty::utils::Vector3D",
 			},
 			"offset" : {
 			    "object" : {
-				"x" : 2,
-				"y" : 4,
-				"z" : 0,
+				"x" : 0.5,
+				"y" : 1.4,
+				"z" : 1,
 			    },
 			    "type" : "ctvty::utils::Vector3D",
 			},
@@ -102,7 +102,7 @@
 		    },
 		    "rotation" : {
 			"object" : {
-			    "w" : 1,
+			    "euler" : 0,
 			    "x" : 0,
 			    "y" : 0,
 			    "z" : 0,
