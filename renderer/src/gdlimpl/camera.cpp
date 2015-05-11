@@ -7,6 +7,10 @@ namespace GdlImpl {
   Camera::	Camera(Renderer& p)
     : renderer(p), rotation(ctvty::utils::Quaternion::identity), autoViewPort(false), priority(-1) {}
 
+  Camera::	~Camera() {
+    renderer.UnregisterCamera(this);
+  }
+
   void		Camera::SetCameraPosition(const ctvty::utils::Vector3D& _position,
 				  const ctvty::utils::Vector3D& _lookAt,
 				  const ctvty::utils::Quaternion& _rotation) {

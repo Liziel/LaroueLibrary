@@ -126,7 +126,7 @@ namespace ctvty {
     }
 
     void		Camera::View::Serialize(serialization::Archive& __serial_instance) const {
-      SERIALIZE_OBJECT_AS(Camera::View::Serialize, __serial_instance);
+      SERIALIZE_OBJECT_AS(ctvty::component::Camera::View, __serial_instance);
       __serial["x"] & x;
       __serial["y"] & y;
       __serial["width"] & width;

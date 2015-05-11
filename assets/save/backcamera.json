@@ -1,0 +1,59 @@
+{
+    "object" : {
+
+	"childs" : [
+	],
+
+	"components" : [
+	    {
+		"type" : "ctvty::component::Camera",
+		"object" : {
+		    "viewport id" : 3
+		    "locked look" : {
+			"object" : {
+			    "x" : 5,
+			    "y" : 10,
+			    "z" : 0,
+			},
+			"type" : "ctvty::utils::Vector3D",
+		    },
+		}
+	    },
+	],
+
+	"name" : "template GameObject"
+	"tag" : "undefined"
+
+	"transform" : {
+	    "object" : {
+		"position" : {
+		    "object" : {
+			"x" : -20,
+			"y" : 20,
+			"z" : 0,
+		    },
+		    "type" : "ctvty::utils::Vector3D",
+		},
+		"rotation" : {
+		    "object" : {
+			"w" : 1,
+			"x" : 1,
+			"y" : 1,
+			"z" : 1,
+		    },
+		    "type" : "ctvty::utils::Quaternion",
+		},
+		"scale" : {
+		    "object" : {
+			"x" : 1,
+			"y" : 1,
+			"z" : 1,
+		    },
+		    "type" : "ctvty::utils::Vector3D",
+		},
+	    },
+	    "type" : "ctvty::component::Transform",
+	}
+    },
+    "type" : "ctvty::GameObject"
+}

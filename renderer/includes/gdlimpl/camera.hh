@@ -11,7 +11,7 @@ namespace GdlImpl {
     Renderer&	renderer;
   public:
     Camera(Renderer&);
-
+    ~Camera();
 
   private:
     ctvty::utils::Vector3D	position;

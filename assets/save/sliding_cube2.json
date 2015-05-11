@@ -6,7 +6,15 @@
 		{
 		    "type" : "ctvty::component::Camera",
 		    "object" : {
-			"viewport id" : 3,
+			"viewport" : {
+			    "type" : "ctvty::component::Camera::View",
+			    "object" : {
+				"x" : 100,
+				"y" : 100,
+				"width" : 800,
+				"height" : 600,
+			    },
+			},
 			"forward look" : {
 			    "object" : {
 				"x" : -1,
