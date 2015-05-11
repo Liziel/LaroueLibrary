@@ -19,7 +19,7 @@
 
 				"object" : {
 				    "name" : "idle",
-				    "speed" : .6,
+				    "speed" : 0.2,
 
 				    "start" : 0,
 				    "end" : 100,

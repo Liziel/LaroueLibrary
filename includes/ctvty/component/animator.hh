@@ -40,12 +40,14 @@ namespace ctvty {
 	void		Create(Renderer*);
 	void		StartPlaying();
 	bool		HasStopped();
-	double		GetFrame(Renderer&, double increment);
+	void		CalcFrame(Renderer&, double increment);
+	double		GetFrame(Renderer&);
       };
       
     private:
       std::map< std::string, std::shared_ptr<State> >		states;
       std::string						current_state;
+      bool							refresh;
 
     public:
 			Animator(const serialization::Archive&);
@@ -53,6 +55,9 @@ namespace ctvty {
 
     public:
       ctvty::Object*	clone() const;
+
+    public:
+      void		Update();
 
     public:
       void		Initialize(Renderer*);

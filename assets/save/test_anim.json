@@ -19,9 +19,27 @@
 
 				"object" : {
 				    "name" : "idle",
-				    "speed" : .2,
+				    "speed" : 0.8,
 
 				    "start" : 0,
+				    "end" : 50,
+
+				    "next_state" : "deinflate"
+
+				    "transitions" : {[
+					"boring" : "idle",
+				    ]},
+				},
+				"type" : "ctvty::component::Animator::State"
+			    },
+
+			    "deinflate" : {
+
+				"object" : {
+				    "name" : "deinflate",
+				    "speed" : 0.8,
+
+				    "start" : 50,
 				    "end" : 100,
 
 				    "transitions" : {[
@@ -29,7 +47,8 @@
 				    ]},
 				},
 				"type" : "ctvty::component::Animator::State"
-			    }
+			    },
+			    
 
 			]},
 		    },

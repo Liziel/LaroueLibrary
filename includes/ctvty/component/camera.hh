@@ -28,6 +28,8 @@ namespace ctvty {
       std::shared_ptr<View>	view;
       int			priority;
       enum view			vtype;
+      float			tilt;
+
     private:
       std::shared_ptr<ctvty::rendering::Camera>
 				camera;

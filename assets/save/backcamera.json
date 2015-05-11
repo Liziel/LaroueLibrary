@@ -8,15 +8,16 @@
 	    {
 		"type" : "ctvty::component::Camera",
 		"object" : {
-		    "viewport id" : 3
+		    "viewport id" : 3,
 		    "locked look" : {
 			"object" : {
-			    "x" : 5,
+			    "x" : 0,
 			    "y" : 10,
 			    "z" : 0,
 			},
 			"type" : "ctvty::utils::Vector3D",
 		    },
+		    "tilt" : 0,
 		}
 	    },
 	],
@@ -36,10 +37,10 @@
 		},
 		"rotation" : {
 		    "object" : {
-			"euler" : true
-			"x" : -1.6,
+			"x" : 0,
 			"y" : 0,
 			"z" : 0,
+			"w" : 0
 		    },
 		    "type" : "ctvty::utils::Quaternion",
 		},

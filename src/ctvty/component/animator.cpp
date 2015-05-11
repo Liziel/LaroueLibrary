@@ -41,11 +41,18 @@ namespace ctvty {
       return false;
     }
 
+    void	Animator::Update() {
+      refresh = true;
+    }
+
     double	Animator::GetFrame(Renderer& renderer) {
       if (states[current_state]->HasStopped())
 	current_state = states[current_state]->GetEndTransition();
-      std::cout << "animator " << this << std::endl;
-      return states[current_state]->GetFrame(renderer, ctvty::event::Clock::GetClock().GetFixedDeltaTime());
+      if (refresh) {
+	states[current_state]->CalcFrame(renderer, ctvty::event::Clock::GetClock().GetFixedDeltaTime());
+	refresh = false;
+      }
+      return states[current_state]->GetFrame(renderer);
     }
 
 
@@ -109,7 +116,11 @@ namespace ctvty {
       return !loop && (animation_key > end_animation_key - start_animation_key);
     }
 
-    double		Animator::State::GetFrame(Renderer& renderer, double incr) {
+    void		Animator::State::CalcFrame(Renderer& renderer, double incr) {
+      animation_key += incr / (animation_speed_modifier * renderer.GetFrameDuration());
+    }
+
+    double		Animator::State::GetFrame(Renderer& renderer) {
       renderer.SetAnimation(name);
       if (renderer.GetFrameDuration() == 0.f)
 	return 0.;
@@ -117,8 +128,6 @@ namespace ctvty {
 	return 0.;
       else if (animation_key > end_animation_key)
 	animation_key = 0;
-      std::cout << animation_key << " " << renderer.GetFrameDuration() << std::endl;
-      animation_key += incr / (animation_speed_modifier * renderer.GetFrameDuration());
       return animation_key * renderer.GetFrameDuration();
     }
     

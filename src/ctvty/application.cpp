@@ -79,7 +79,7 @@ namespace ctvty {
 
       ctvty::rendering::Camera* camera1 = ctvty::rendering::Renderer::GetRenderer().CreateCamera();
       camera1->SetCameraPosition(utils::Vector3D::up * 20
-				- utils::Vector3D::right * 10,
+				- utils::Vector3D::back * 10,
 				utils::Vector3D::up * 10
 				+ utils::Vector3D::right * 5,
 				utils::Quaternion::identity);

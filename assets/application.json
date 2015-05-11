@@ -4,9 +4,9 @@
 	    "windowX" : 1000,
 	    "windowY" : 800,
 
-	    "fps" : 60,
+	    "fps" : 40,
 
-	    "load" : "base2",
+	    "load" : "base",
 	    "scenes" : [
 		{
 		    "object" : {

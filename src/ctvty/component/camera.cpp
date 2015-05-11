@@ -29,6 +29,11 @@ namespace ctvty {
 	vtype = view::global;
       }
 
+      if (__serial.exist("tilt"))
+	__serial["tilt"] & tilt;
+      else
+	tilt = 0.f;
+
       //then offset
       if (__serial.exist("offset"))
 	__serial["offset"] & offset;
@@ -73,6 +78,9 @@ namespace ctvty {
 	__serial["locked look"] & lookAt;
       else
 	__serial["forward look"] & lookAt;
+
+      if (tilt != 0)
+	__serial["tilt"] & tilt;
     }
 
 
@@ -100,16 +108,19 @@ namespace ctvty {
       ctvty::utils::Vector3D _position = 
 	transform->GetPosition() + *offset;
       ctvty::utils::Quaternion _rotation =
-	transform->GetRotation();
+	ctvty::utils::Quaternion::identity;
       ctvty::utils::Vector3D _lookAt;
 
       if (ltype == look::forward) {
+	_rotation = transform->GetRotation();
 	_lookAt   = _rotation.RotatedVector(*lookAt) + _position;
       } else if (ltype == look::locked) {
 	_lookAt	  = *lookAt;
       } else if (ltype == look::free) {
 	_lookAt   = *lookAt + _position;
       }
+      if (tilt)
+	_rotation = _rotation * ctvty::utils::Quaternion::Euler({tilt, 0, 0});
       camera->SetCameraPosition(_position, _lookAt, _rotation);
     }
 
