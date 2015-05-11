@@ -18,7 +18,8 @@ CtvTyUtils	=src/ctvty/utils/vector3d.cpp\
 		src/ctvty/utils/quaternion.cpp\
 		src/ctvty/utils/boundingbox.cpp\
 		src/ctvty/utils/face.cpp\
-		src/ctvty/utils/contactpoint.cpp
+		src/ctvty/utils/contactpoint.cpp\
+		src/ctvty/utils/collision.cpp
 
 CtvTyPhysics	= src/ctvty/physics/material.cpp
 

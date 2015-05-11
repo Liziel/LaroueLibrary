@@ -19,6 +19,9 @@ namespace ctvty {
     public:
       Collision(const Collision&) = default;
       Collision() = default;
+
+    public:
+      ~Collision();
     };
   }
 };

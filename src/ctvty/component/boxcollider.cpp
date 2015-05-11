@@ -1,3 +1,4 @@
+#include <list>
 #include <future>
 #include "ctvty/component/boxcollider.hh"
 #include "ctvty/component/transform.hh"
@@ -120,6 +121,8 @@ namespace ctvty{
       CalculateVertices();
     }
 
+    void	list_predecl() {std::list<ctvty::component::Collider const*> merde;}
+    
     ctvstd::Optional<utils::Collision>
     BoxCollider::CollisionImpact(const utils::Vector3D& v, const utils::Vector3D& d) const {
       utils::Vector3D vertex(transform->GetRotation().RotatedVector(v - transform->GetPosition() - *offset));

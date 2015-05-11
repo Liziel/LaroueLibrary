@@ -24,6 +24,7 @@ namespace ctvty {
 	  defined,//the view port correspond toits user definition
 	  global//the view port is of the size of the window
       };
+      
     private:
       std::shared_ptr<View>	view;
       int			priority;
