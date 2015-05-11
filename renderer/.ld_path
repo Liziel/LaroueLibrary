@@ -1,0 +1,3 @@
+LDFLAGS		+= \
+	-L $(PWD)/renderer/libraries/GdlLibrary/libs/	\
+	-lgdl_gl -lGLEW -lGL -lSDL2 -ldl -lrt -lfbxsdk -lpthread

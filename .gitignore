@@ -33,6 +33,7 @@
 !*.a
 renderer.a
 !*.inl
+!.ld_path
 
 # and .so
 !*.so
