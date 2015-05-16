@@ -36,6 +36,7 @@ CtvTy		= src/ctvty/gameObject.cpp \
 		src/ctvty/object.cpp\
 		src/ctvty/behaviour.cpp\
 		src/ctvty/application.cpp\
+		src/ctvty/event.cpp\
 		$(CtvTyEvent) $(CtvTyAssets) $(CtvTyUtils) $(CtvTyComponents) $(CtvTyPhysics)
 
 ### Serial -> Json Serialisation
@@ -60,7 +61,7 @@ CSRC		+=
 
 STATIC_LIBRARY	?= renderer/renderer.a
 
-FLAGS		= -W -Wall -Wextra $(INCLUDES)
+FLAGS		= -W -Wall -Wextra $(INCLUDES)  -I renderer/libraries/GdlLibrary/includes/
 CFLAGS		+= $(FLAGS) -Wall
 CXXFLAGS	+= $(FLAGS) -std=c++11
 LDFLAGS		+= -lpthread
