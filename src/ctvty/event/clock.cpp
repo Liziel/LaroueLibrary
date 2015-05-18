@@ -2,6 +2,7 @@
 #include "ctvty/gameObject.hpp"
 #include "ctvty/event/clock.hh"
 #include "ctvty/rendering/renderer.hh"
+#include "ctvty/event.hh"
 
 namespace ctvty {
   namespace event {
@@ -55,6 +56,7 @@ namespace ctvty {
 		      GameObject::accessParentsGameObjects().end(),
 		      [] (GameObject* gameObject) { gameObject->BroadcastMessage("FixedUpdate"); }
 		      );
+	Event::Refresh();
 	for (DelayedAction* action : std::list<DelayedAction*>(delayedActions))
 	  action->Refresh();
 

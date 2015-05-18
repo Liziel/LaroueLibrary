@@ -2,6 +2,7 @@
 #include "ctvty/event.hh"
 
 namespace ctvty {
+
   std::shared_ptr<Event>&		Event::setcurrent() {
     static std::shared_ptr<Event>	_current;
 
@@ -42,6 +43,10 @@ namespace ctvty {
     return e;
   }
 
+
+  Event::Event()
+    : _type(Type::quit), _button(0), _character(0), _keycode(0) {
+  }
 
   Event::Event(char c, int k, bool s)
     : Event(){

@@ -79,7 +79,7 @@ namespace ctvty {
     utils::Vector3D		_position;
 
   public:
-    Event() = default;
+    Event();
     Event(char character, int keycode, bool state);
     Event(const utils::Vector3D& delta, const utils::Vector3D& position);
     Event(int button, bool state, const utils::Vector3D& position);
