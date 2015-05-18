@@ -4,6 +4,9 @@
 # include <memory>
 # include "serialization/serializable.hh"
 
+# include "ctvty/utils/vector3d.hh"
+# include "ctvty/event.hh"
+
 namespace ctvty {
   class Input  : public serialization::Serializable {
   public:
@@ -12,36 +15,42 @@ namespace ctvty {
 
   public:
     static void				receiveEvent(const ctvty::Event* const);
-    static void				assignInput(const std::string&, const ctvty::Event* const);
+    static void				AssignInput(const std::string&, const ctvty::Event* const);
 
   public:
 					Input(const serialization::Archive&);
-    void				Serialize(serialiation::Archive&) const;
+    void				Serialize(serialization::Archive&) const;
 
   public:
-    std::shared_ptr<Input>&	singleton() {
+    inline
+    static std::shared_ptr<Input>&	singleton() {
       static std::shared_ptr<Input> _singleton(nullptr);
 
       return _singleton;
     }
 
   public:
-    struct configuration : public serialization::Serialize {
-      std::string		base_name;
-      std::list<std::string>	alternative_base_name;
+    struct configuration : public serialization::Serializable {
+      std::list<std::string>	base_names;//temporary member
+
       enum class type {
 	mouseXaxis, mouseYaxis,
 	mousex, mousey,
 	key,
 	button,
       } associated;
+      int			key;
+      float			value;
 
     public:
-      
+      void	Serialize(serialization::Archive&) const override;
+		configuration(const serialization::Archive&);
+		configuration() = default ;
     };
 
   private:
     std::map<std::string, std::shared_ptr<configuration> >	config_map;
+    ctvty::utils::Vector3D					mouse;
   };
   
 };

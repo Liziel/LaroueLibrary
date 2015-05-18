@@ -18,7 +18,7 @@ namespace ctvty {
     };
   public:
     inline
-    enum Type		type() { return _type; }
+    enum Type		type() const { return _type; }
 
     /*
      * for mouse button,
@@ -30,7 +30,7 @@ namespace ctvty {
      */
   public:
     inline
-    int				button() { return _button; }
+    int				button() const { return _button; }
 
     /*
      * for key,
@@ -38,23 +38,23 @@ namespace ctvty {
      */
   public:
     inline
-    char			character() { return _character; }
+    char			character() const { return _character; }
     inline
-    int				keycode() { return _keycode; }
+    int				keycode() const { return _keycode; }
 
     /*
      * for mouse motion
      */
   public:
     inline
-    const utils::Vector3D&	delta() { return _delta; }
+    const utils::Vector3D&	delta() const { return _delta; }
 
     /*
      * for mouse motion or button
      */
   public:
     inline
-    const utils::Vector3D&	position() { return _position; }
+    const utils::Vector3D&	position() const { return _position; }
 
   private:
     static std::shared_ptr<Event>&		setcurrent();
