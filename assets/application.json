@@ -6,7 +6,7 @@
 
 	    "fps" : 40,
 
-	    "load" : "base2",
+	    "load" : "base3",
 	    "scenes" : [
 		{
 		    "object" : {
@@ -37,8 +37,8 @@
 		    "object" : {
 			"name" : "base3",
 			"objects" : [
+			    asset("save/backcamera.json"),
 			    asset("save/test_anim.json"),
-			    asset("save/test_anim2.json"),
 			],
 		    },
 		    "type" : "ctvty::Application::Scene",

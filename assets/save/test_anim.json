@@ -19,12 +19,10 @@
 
 				"object" : {
 				    "name" : "idle",
-				    "speed" : 0.8,
+				    "speed" : 1.0,
 
 				    "start" : 0,
-				    "end" : 50,
-
-				    "next_state" : "deinflate"
+				    "end" : 100,
 
 				    "transitions" : {[
 					"boring" : "idle",
@@ -100,10 +98,10 @@
 		},
 		"rotation" : {
 		    "object" : {
-			"w" : 1,
-			"x" : 0,
+			"x" : 180,
 			"y" : 0,
 			"z" : 0,
+			"w" : 0
 		    },
 		    "type" : "ctvty::utils::Quaternion",
 		},

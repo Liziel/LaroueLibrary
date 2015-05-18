@@ -13,7 +13,7 @@
 #include "ctvty/rendering/renderer.hh"
 #include "ctvty/component/transform.hh"
 #include "ctvty/component/animator.hh"
-
+#include "ctvty/debug.hpp"
 REGISTER_FOR_SERIALIZATION(ctvty::component, Renderer);
 REGISTER_FOR_SERIALIZATION(ctvty::component::Renderer, Model3D);
 

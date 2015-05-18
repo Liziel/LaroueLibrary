@@ -32,7 +32,7 @@ namespace GdlImpl {
 				      const ctvty::utils::Quaternion& rotation,
 				      double time) {
     glm::mat4 transform(1);
-    ctvty::utils::Vector3D	r = rotation.Euler();
+    ctvty::utils::Vector3D	r = rotation.Complex();
 
     transform = glm::translate(transform, glm::vec3(position.x, position.y, -position.z));
     transform = glm::rotate(transform, r.x, glm::vec3(1., 0., 0.));
