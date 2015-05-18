@@ -3,6 +3,7 @@
 #include "ctvty/event/clock.hh"
 #include "ctvty/rendering/renderer.hh"
 #include "ctvty/event.hh"
+#include "ctvty/application.hh"
 
 namespace ctvty {
   namespace event {
@@ -67,6 +68,20 @@ namespace ctvty {
 			fathers_copy.end(),
 			[this] (GameObject* gameObject) { if (!end) gameObject->BroadcastMessage("Update"); }
 			);
+	}
+
+	{
+	  std::list<GameObject*> fathers_copy(ctvty::GameObject::accessParentsGameObjects());
+	  Event* e;
+	  while ((e = Event::Eat()) != nullptr) {
+	    if (e->type() == Event::Type::quit)
+	      Application::Quit();
+	    else
+	      std::for_each(fathers_copy.begin(),
+			    fathers_copy.end(),
+			    [this] (GameObject* gameObject) { if (!end) gameObject->BroadcastMessage("OnGui"); }
+			    );
+	  }
 	}
 
 	{

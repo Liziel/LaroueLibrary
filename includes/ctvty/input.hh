@@ -5,7 +5,6 @@
 # include "serialization/serializable.hh"
 
 namespace ctvty {
-
   class Input  : public serialization::Serializable {
   public:
     static float			GetKeyState(const std::string&);
@@ -13,13 +12,11 @@ namespace ctvty {
 
   public:
     static void				receiveEvent(const ctvty::Event* const);
+    static void				assignInput(const std::string&, const ctvty::Event* const);
 
   public:
 					Input(const serialization::Archive&);
     void				Serialize(serialiation::Archive&) const;
-
-  private:
-    
 
   public:
     std::shared_ptr<Input>&	singleton() {
@@ -27,6 +24,24 @@ namespace ctvty {
 
       return _singleton;
     }
+
+  public:
+    struct configuration : public serialization::Serialize {
+      std::string		base_name;
+      std::list<std::string>	alternative_base_name;
+      enum class type {
+	mouseXaxis, mouseYaxis,
+	mousex, mousey,
+	key,
+	button,
+      } associated;
+
+    public:
+      
+    };
+
+  private:
+    std::map<std::string, std::shared_ptr<configuration> >	config_map;
   };
   
 };

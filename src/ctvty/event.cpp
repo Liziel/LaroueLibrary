@@ -38,6 +38,10 @@ namespace ctvty {
   }
 
   Event*				Event::Eat() {
+    if (!events.size()) {
+      setcurrent().reset();
+      return nullptr;
+    }
     Event* e = events.front(); events.pop();
     setcurrent().reset(e);
     return e;
