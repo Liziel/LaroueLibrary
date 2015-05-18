@@ -55,7 +55,6 @@ namespace user_defined {
 		<< std::endl << std::endl << std::endl;
     }
 
-
     void		EventTester::Render() {
     }
   };

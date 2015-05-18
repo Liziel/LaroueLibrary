@@ -27,6 +27,7 @@
 			"objects" : [
 			    asset("save/colliding_cube.json"),
 			    asset("save/sliding_cube1.json"),
+			    asset("save/backcamera.json"),
 			    asset("save/sliding_cube2.json"),
 			],
 		    },
@@ -38,7 +39,6 @@
 			"objects" : [
 			    asset("save/test_anim.json"),
 			    asset("save/test_anim2.json"),
-			    asset("save/backcamera.json"),
 			],
 		    },
 		    "type" : "ctvty::Application::Scene",

@@ -1,0 +1,15 @@
+{
+    "type" : "ctvty::Input",
+    "object" : {
+	"config" : [
+	    {
+		"type" : "ctvty::Input::configuration",
+		"object" : {
+		    "names" : [ "mouseXaxis", "cameraDirection", "toto" ],
+		    "mouse axis" : "x"
+		}
+
+	    }
+	],
+    }
+}
