@@ -1,6 +1,7 @@
 #include "ctvty/application.hh"
 #include "ctvty/event/clock.hh"
 #include "ctvty/rendering/renderer.hh"
+#include "ctvty/input.hh"
 
 namespace ctvty {
 
@@ -66,6 +67,10 @@ namespace ctvty {
 	std::cerr << "application error: application.json not found, the application will quit" << std::endl;
 	return false;
       }
+      if (!(assets->GetAsset("inputs.json").GetFile())) {
+	std::cerr << "application error: inputs.json not found, the application will quit" << std::endl;
+	return false;
+      }
       ctvty::rendering::Renderer::GetRenderer().SetDefaultCameraPosition(utils::Vector3D::up * 20
 									 - utils::Vector3D::back * 10,
 									 utils::Vector3D::up * 10
@@ -74,25 +79,18 @@ namespace ctvty {
 									 );
       serial = serialization::Serial::InstantiateFromFile(assets->GetAsset("application.json")
 							  .GetFile().GetPath());
+      if (!serial) {
+	std::cerr << "application error: application.json empty, the application will quit" << std::endl;
+	return false;
+      }
       app = (Application*)serialization::Serializable::Instantiate(*serial);
+      serial = serialization::Serial::InstantiateFromFile(assets->GetAsset("inputs.json").GetFile().GetPath());
+      if (!serial) {
+	std::cerr << "application error: inputs.json empty, the application will quit" << std::endl;
+	return false;
+      }
+      Input::singleton().reset((Input*)serialization::Serializable::Instantiate(*serial));
       ctvty::rendering::Renderer::GetRenderer().Initialize(app->windowX, app->windowY, app->name);
-
-      ctvty::rendering::Camera* camera1 = ctvty::rendering::Renderer::GetRenderer().CreateCamera();
-      camera1->SetCameraPosition(utils::Vector3D::up * 20
-				- utils::Vector3D::back * 10,
-				utils::Vector3D::up * 10
-				+ utils::Vector3D::right * 5,
-				utils::Quaternion::identity);
-
-      ctvty::rendering::Camera* camera2 = ctvty::rendering::Renderer::GetRenderer().CreateCamera();
-      camera2->SetCameraPosition(utils::Vector3D::up * 20
-				- utils::Vector3D::right * 10,
-				utils::Vector3D::up * 10
-				+ utils::Vector3D::right * 5,
-				utils::Quaternion::identity);
-
-      camera1->DetectViewPort(1);
-      camera2->DetectViewPort(2);
 
       app->assets = assets;
       delete serial;
