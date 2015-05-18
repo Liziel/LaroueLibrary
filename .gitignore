@@ -29,6 +29,10 @@
 !*.tga
 !*.dae
 
+#unignore .vp and .fp
+!*.vp
+!*.fp
+
 #same for gdl .a
 !*.a
 renderer.a
