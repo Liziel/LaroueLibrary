@@ -5,7 +5,7 @@
 	"components" : [
 		{
 		    "object" : {
-			"file" : "models3d/Cube_en_bois.json"
+			"file" : "models3d/marvin.json"
 		    },
 		    "type" : "ctvty::component::Renderer",
 		},
@@ -19,10 +19,10 @@
 
 				"object" : {
 				    "name" : "idle",
-				    "speed" : 0.8,
+				    "speed" : 1.0,
 
 				    "start" : 0,
-				    "end" : 50,
+				    "end" : 49,
 
 				    "transitions" : {[
 					"boring" : "idle",
@@ -83,7 +83,7 @@
 		    "object" : {
 			"euler" : true,
 			"x" : 3.10,
-			"y" : 5.2,
+			"y" : 4.5,
 			"z" : 3.14,
 			"w" : 1,
 		    },
@@ -91,9 +91,9 @@
 		},
 		"scale" : {
 		    "object" : {
-			"x" : 0.03,
-			"y" : 0.03,
-			"z" : 0.03,
+			"x" : 0.06,
+			"y" : 0.06,
+			"z" : 0.06,
 		    },
 		    "type" : "ctvty::utils::Vector3D",
 		},

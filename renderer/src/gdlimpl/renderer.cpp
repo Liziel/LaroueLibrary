@@ -27,6 +27,7 @@ namespace GdlImpl {
     _shader.load("./renderer/libraries/GdlLibrary/shaders/basic.fp", GL_FRAGMENT_SHADER);
     _shader.load("./renderer/libraries/GdlLibrary/shaders/basic.vp", GL_VERTEX_SHADER);
     _shader.build();
+    glEnable(GL_DEPTH_TEST);
   }
 
   void		Renderer::Update() {
@@ -98,6 +99,7 @@ namespace GdlImpl {
     }
 
     glClear(GL_DEPTH_BUFFER_BIT);
+    _shader.bind();
   }
 
   void		Renderer::PreHUDRendering() {
@@ -107,6 +109,7 @@ namespace GdlImpl {
 		 -1.0f, 1.0f);
     _shader.setUniform("projection", projection);
     _shader.setUniform("view", glm::mat4(1));
+    _shader.bind();
   }
 
   void		Renderer::Flush() {

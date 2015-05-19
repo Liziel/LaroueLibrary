@@ -45,10 +45,9 @@ namespace ctvty
 	return ;
       }
       CreateAnimation("renderer_stop", 0, 0);
-      CreateAnimation("test", 0, 50);
-      SetAnimation("test");
       for (Animator* animator : GetComponents<Animator>())
 	animator->Initialize(this);
+      SetAnimation("idle");
     }
 
     void	Renderer::Render()
@@ -64,10 +63,11 @@ namespace ctvty
 			       transform->GetRotation());
       }
       else {
+	SetAnimation("idle");
 	model->GetModel().Draw(transform->GetPosition(),
 			       transform->GetScale(),
-			       transform->GetRotation());
-			       //,animator->GetFrame(*this));
+			       transform->GetRotation()
+			       ,animator->GetFrame(*this));
       }
     }
     

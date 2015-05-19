@@ -121,14 +121,16 @@ namespace ctvty {
     }
 
     double		Animator::State::GetFrame(Renderer& renderer) {
+      renderer.CreateAnimation(name, animation_key, animation_key + 2);
       renderer.SetAnimation(name);
       if (renderer.GetFrameDuration() == 0.f)
-	return 0.;
+	return 0;
       if (animation_key > end_animation_key && !loop)
-	return 0.;
-      else if (animation_key > end_animation_key)
+	return 0;
+      else if (animation_key > end_animation_key) {
 	animation_key = 0;
-      return animation_key * renderer.GetFrameDuration();
+      }
+      return 0;
     }
     
   };

@@ -4,7 +4,7 @@
 	    "windowX" : 1000,
 	    "windowY" : 800,
 
-	    "fps" : 30,
+	    "fps" : 40,
 
 	    "load" : "base3",
 	    "scenes" : [
@@ -38,6 +38,7 @@
 			"name" : "base3",
 			"objects" : [
 			    asset("save/backcamera.json"),
+			    asset("save/duplicate.json"),
 			    asset("save/test_anim.json"),
 			],
 		    },
