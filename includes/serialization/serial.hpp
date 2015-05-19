@@ -15,9 +15,9 @@
 
 # include <exception>
 
+# include <memory>
+
 namespace std {
-  template<typename t>
-  class shared_ptr;
 };
 
 namespace serialization {
@@ -261,7 +261,8 @@ namespace serialization {
       template<typename iterator>
       map(iterator begin, iterator end) {
 	for (; begin != end; ++begin) {
-	  _serialized_map.emplace_back(Serial::Instantiate(begin->first), Serial::Instantiate(begin->second));
+	  _serialized_map.emplace_back(new Serial(serial_info< decltype(begin->first) >::make(begin->first)),
+				       new Serial (serial_info< decltype(begin->second) >::make(begin->second)));
 	}
       }
     };
@@ -453,11 +454,51 @@ namespace serialization {
     static serial::interface* make(const std::shared_ptr<_type>& _variable) { return new serial::object(_variable.get()); }
   };
 
+  template<typename _type>
+  struct serial_info< std::unique_ptr<_type>,
+		      typename std::enable_if< std::is_assignable<Serializable*&, _type*>::value >::type > {
+    using type = serial::object;
+    static std::unique_ptr<_type> get(serial::interface* _interface) {
+      return std::unique_ptr<_type> (dynamic_cast<_type*> (SerializableInstantiate(*(dynamic_cast<serial::object*>(_interface)))));
+    }
+    static bool  is(serial::interface* _interface) { return dynamic_cast<serial::object*>(_interface) != nullptr; }
+    static void	 set(serial::interface* _interface, std::unique_ptr<_type>& _variable) { _variable = get(_interface); }
+    static serial::interface* make(const std::unique_ptr<_type>& _variable) { return new serial::object(_variable.get()); }
+  };
+
   /*
-   * List serial_info, for stl container
+   * For Unique ptr
    */
   template<typename _type, typename _pass>
   struct _do_pass { using type = void; };
+
+  template<typename _type>//unique ptr for constructible member
+  struct serial_info< std::unique_ptr<_type>
+		      , typename _do_pass< typename serial_info< _type >::type, void >::type > {
+    using type = typename serial_info< _type >::type;
+    static std::unique_ptr<_type> get(serial::interface* _interface) {
+      return std::unique_ptr<_type> ( new _type(serial_info< _type>::get(_interface) ) );
+    }
+    static bool is(serial::interface* _interface) { return serial_info< _type>::is(_interface); }
+    static void set(serial::interface* _interface, std::unique_ptr<_type>& _variable) { _variable.reset( new _type(serial_info< _type>::get(_interface) ) ); }
+    static serial::interface* make(const std::unique_ptr<_type>& _variable) { return new type (*_variable); }
+  };
+
+  template<typename _type>//unique ptr for constructible member
+  struct serial_info< std::shared_ptr<_type> 
+		      , typename _do_pass< typename serial_info< _type >::type, void >::type > {
+    using type = typename serial_info< _type >::type;
+    static std::shared_ptr<_type> get(serial::interface* _interface) {
+      return std::shared_ptr<_type> ( new _type(serial_info< _type>::get(_interface) ) );
+    }
+    static bool is(serial::interface* _interface) { return serial_info< _type>::is(_interface); }
+    static void set(serial::interface* _interface, std::shared_ptr<_type>& _variable) { _variable.reset( new _type(serial_info< _type>::get(_interface) ) ); }
+    static serial::interface* make(const std::shared_ptr<_type>& _variable) { return new type (*_variable); }
+  };
+
+  /*
+   * List serial_info, for stl container
+   */
   template<typename _type>
   struct serial_info < _type,
 		       typename _do_pass<typename serial_info< typename _type::value_type >::type,
@@ -474,7 +515,7 @@ namespace serialization {
     }
     static bool  is(serial::interface* _interface) { return dynamic_cast<serial::list*>(_interface) != nullptr; }
     static void	 set(serial::interface* _interface, _type& _variable) { _variable = get(_interface); }
-    static serial::interface* make(_type _variable) { return new serial::list(_variable.begin(), _variable.end()); }
+    static serial::interface* make(const _type& _variable) { return new serial::list(_variable.begin(), _variable.end()); }
   };
 
   /*
@@ -491,14 +532,20 @@ namespace serialization {
 
       std::for_each(dynamic_cast<serial::map*>(_interface)->begin(), dynamic_cast<serial::map*>(_interface)->end(),
 		    [&_map] (std::pair<const Serial*, const Serial*> serial) {
-		      _map.emplace(serial.first->as<typename _type::key_type>(),
-				   serial.second->as<typename _type::mapped_type>());
+		      _map.emplace(std::move(serial.first->as<typename _type::key_type>()),
+				   std::move(serial.second->as<typename _type::mapped_type>()));
 		    });
       return _map;
     }
     static bool  is(serial::interface* _interface) { return dynamic_cast<serial::map*>(_interface) != nullptr; }
-    static void	 set(serial::interface* _interface, _type& _variable) { _variable = get(_interface); }
-    static serial::interface* make(_type _variable) { return new serial::map(_variable.begin(), _variable.end()); }
+    static void	 set(serial::interface* _interface, _type& _variable) {
+      std::for_each(dynamic_cast<serial::map*>(_interface)->begin(), dynamic_cast<serial::map*>(_interface)->end(),
+		    [&_variable] (std::pair<const Serial*, const Serial*> serial) {
+		      _variable.emplace(std::move(serial.first->as<typename _type::key_type>()),
+				   std::move(serial.second->as<typename _type::mapped_type>()));
+		    });      
+    }
+    static serial::interface* make(const _type& _variable) { return new serial::map(_variable.begin(), _variable.end()); }
   };
 
   /*
@@ -540,7 +587,7 @@ namespace serialization {
     }
     static void	 set(serial::interface* _interface, _type& _variable) { _variable = static_cast<_type>(get(_interface)); }
     static serial::interface* make(_type _variable) { return new serial::integer(static_cast<long>(_variable)); }
-  };
+  };  
 
   /*
    * Floating serial_info

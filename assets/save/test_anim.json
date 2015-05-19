@@ -22,7 +22,7 @@
 				    "speed" : 1.0,
 
 				    "start" : 0,
-				    "end" : 49,
+				    "end" : 80,
 
 				    "transitions" : {[
 					"boring" : "idle",
@@ -91,9 +91,9 @@
 		},
 		"scale" : {
 		    "object" : {
-			"x" : 0.06,
-			"y" : 0.06,
-			"z" : 0.06,
+			"x" : 0.03,
+			"y" : 0.03,
+			"z" : 0.03,
 		    },
 		    "type" : "ctvty::utils::Vector3D",
 		},

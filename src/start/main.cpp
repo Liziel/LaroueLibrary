@@ -36,7 +36,7 @@ int main(int ac, char** av) {
   if (0)
     {
       serialization::Serial json;
-
+      json & std::unique_ptr<std::string>();
       json & new ctvty::component::Animator::State();
       std::cout << json.Stringify() << std::endl;
     }

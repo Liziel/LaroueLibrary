@@ -26,6 +26,7 @@ namespace ctvty {
     private:
       std::string			file;
       std::shared_ptr<Model3D>		model;
+      std::unique_ptr<utils::Vector3D>	rotation;
 
     public:
       /*

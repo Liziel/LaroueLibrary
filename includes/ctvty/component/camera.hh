@@ -50,7 +50,16 @@ namespace ctvty {
 				lookAt;
       enum look			ltype;
 
+    private:
+      std::unique_ptr<std::string>	hud_name;
 
+    public:
+      inline
+      std::unique_ptr<std::string>&	Name() { return hud_name; }
+      inline
+      std::shared_ptr<View>&		GetView() { return view; }
+
+    private:
 		Camera();
     public:
 		Camera(const serialization::Archive&);

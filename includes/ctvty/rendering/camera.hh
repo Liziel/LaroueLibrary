@@ -1,6 +1,9 @@
 #ifndef Camera_hh__
 # define Camera_hh__
 
+# include "ctvty/utils/vector3d.hh"
+# include "ctvty/utils/quaternion.hh"
+
 namespace ctvty {
   namespace rendering {
     

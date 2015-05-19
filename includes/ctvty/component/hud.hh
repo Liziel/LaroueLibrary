@@ -7,7 +7,7 @@
 
 # include "ctvty/rendering/texture.hh"
 # include "ctvty/rendering/hud.hh"
-# include "ctvty/monobehviour.hpp"
+# include "ctvty/monobehaviour.hpp"
 
 namespace ctvty {
   namespace component {
@@ -60,32 +60,60 @@ namespace ctvty {
     private:
       std::shared_ptr<ctvty::rendering::Hud>
 			model;
-
     public:
+      void		genModel();
+
+    private:
+      float		offx;
+      float		offy;
       float		sizex;
       float		sizey;
+    public:
+
+
+    private:
+      bool		enabled;
+    public:
+      
 
     public:
       void		Serialize(serialization::Archive&) const;
 			Hud(const serialization::Archive&);
     };
 
-
-    class Canvas : public Monobehaviour<Canvas> {
+    class Canvas : public MonoBehaviour<Canvas> {
     private:
-      std::map<std::string, Hud>	components;
+      std::map<std::string, std::unique_ptr<Hud*> >	childrens;
+
+    private:
+      bool				WorldSpaceDefinition;
+      bool				ScreenSpaceDefinition;
+
+    private:
+      std::unique_ptr<utils::Vector3D>	WorldSpaceNormal;
+
+    private:
+      float				offX, offY;
+    private:
+      float				sizeX, sizeY;
+
+      /*
+       * define the viewport it's affiched in
+       * in case its world space defined will also be rendered by the said camera 
+       */
+    private:
+      std::string			RenderCamera;
 
     public:
-      float				sizex;
-      float				sizey;
-
-    public:
+      void				Awake();
       void				OnGui();
       
     public:
-      void		Serialiaze(serialization::Archive&) const;
+      void		Serialize(serialization::Archive&) const override;
 			Canvas(const serialization::Archive&);
-    }
+      Object*		clone() const override;
+    };
+
   };
 };
 

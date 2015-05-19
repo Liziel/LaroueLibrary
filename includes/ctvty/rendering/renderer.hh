@@ -8,6 +8,8 @@
 
 # include "ctvty/rendering/model3d.hh"
 # include "ctvty/rendering/camera.hh"
+# include "ctvty/rendering/hud.hh"
+# include "ctvty/rendering/texture.hh"
 
 namespace ctvty {
   namespace rendering {
@@ -20,7 +22,8 @@ namespace ctvty {
 
       public:
 	virtual Model3D*		Load3DModel(const std::string&) = 0;
-
+	virtual Texture*		LoadTexture(const std::string&) = 0;
+	
       public:
 	virtual void			Initialize(std::size_t width,
 						   std::size_t height,
@@ -31,6 +34,9 @@ namespace ctvty {
       public:
 	virtual Camera*			CreateCamera() = 0;
 	virtual std::size_t		RegisteredCameras() = 0;
+
+      public:
+	virtual Hud			CreateHud() = 0;
 
       public:
 	virtual void			Pre3DRendering(int camera_id = -1) = 0;
