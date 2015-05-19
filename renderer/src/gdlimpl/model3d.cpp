@@ -1,5 +1,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/transform.hpp>
 
 #include "gdlimpl/renderer.hh"
 #include "gdlimpl/model3d.hh"
@@ -31,14 +32,12 @@ namespace GdlImpl {
 				      const ctvty::utils::Vector3D& scale,
 				      const ctvty::utils::Quaternion& rotation,
 				      double time) {
-    glm::mat4 transform(1);
     ctvty::utils::Vector3D	r = rotation.Complex();
+    glm::mat4 transform = glm::scale(scale.x, scale.y, scale.z);
+    transform *= glm::rotate((r.x / glm::pi<float>()) * 180.f, glm::vec3(1., 0., 0.));
+    transform *= glm::rotate((r.y / glm::pi<float>()) * 180.f, glm::vec3(0., 1., 0.));
+    transform *= glm::rotate((r.z / glm::pi<float>()) * 180.f, glm::vec3(0., 0., 1.));
 
-    transform = glm::translate(transform, glm::vec3(position.x, position.y, -position.z));
-    transform = glm::rotate(transform, r.x, glm::vec3(1., 0., 0.));
-    transform = glm::rotate(transform, r.y, glm::vec3(0., 1., 0.));
-    transform = glm::rotate(transform, r.z, glm::vec3(0., 0., 1.));
-    transform = glm::scale(transform, glm::vec3(scale.x, scale.y, scale.z));
     model->draw(renderer.GetShader(), transform, time);
   }
 };

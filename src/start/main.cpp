@@ -30,7 +30,6 @@ int main(int ac, char** av) {
       if (!initialization_succes)
 	return (-1);
       std::cout << "after init" << std::endl;
-      ctvty::Application::Quit(5.f);
       ctvty::Application::Start();
     }
 

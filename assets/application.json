@@ -4,7 +4,7 @@
 	    "windowX" : 1000,
 	    "windowY" : 800,
 
-	    "fps" : 40,
+	    "fps" : 30,
 
 	    "load" : "base3",
 	    "scenes" : [
