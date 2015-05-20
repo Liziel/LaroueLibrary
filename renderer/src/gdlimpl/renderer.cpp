@@ -1,11 +1,10 @@
 #include <iostream>
-
-#include "gdlimpl/renderer.hh"
-
-#include "ctvty/debug.hpp"
-
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+
+#include "gdlimpl/renderer.hh"
+#include "gdlimpl/texture.hh"
+#include "ctvty/debug.hpp"
 
 namespace ctvty {
   namespace rendering {
@@ -14,6 +13,7 @@ namespace ctvty {
       static ::GdlImpl::Renderer	renderer;
       return renderer;
     }
+
   };
 };
 
@@ -132,5 +132,15 @@ namespace GdlImpl {
   ctvty::rendering::Model3D*
 		Renderer::Load3DModel(const std::string& path) {
     return new Model3D(*this, path);
+  }
+
+  ctvty::rendering::Texture*
+		Renderer::LoadTexture(const std::string& path) {
+    return new Texture(path);
+  }
+
+  ctvty::rendering::Hud*
+		Renderer::CreateHud() {
+    return nullptr;
   }
 };

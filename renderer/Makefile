@@ -9,7 +9,8 @@ INCLUDES	+= -I ./includes
 ### Gdl Implementation
 GdlImpl		= src/gdlimpl/renderer.cpp\
 		src/gdlimpl/model3d.cpp\
-		src/gdlimpl/camera.cpp
+		src/gdlimpl/camera.cpp\
+		src/gdlimpl/texture.cpp
 
 ##############################
 CXXSRC		+= $(GdlImpl)

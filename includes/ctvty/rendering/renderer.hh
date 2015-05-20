@@ -36,7 +36,7 @@ namespace ctvty {
 	virtual std::size_t		RegisteredCameras() = 0;
 
       public:
-	virtual Hud			CreateHud() = 0;
+	virtual Hud*			CreateHud() = 0;
 
       public:
 	virtual void			Pre3DRendering(int camera_id = -1) = 0;

@@ -30,6 +30,7 @@ namespace GdlImpl {
 
   public:
     ctvty::rendering::Model3D*		Load3DModel(const std::string&) final;
+    ctvty::rendering::Texture*		LoadTexture(const std::string&) final;
 
   public:
     void				Initialize(std::size_t width,
@@ -45,6 +46,8 @@ namespace GdlImpl {
     std::size_t				RegisteredCameras() final;
     inline const std::list<Camera*>&	Cameras() { return cameras; }
 
+  public:
+    ctvty::rendering::Hud*		CreateHud() final;
 
   public:
     void				Pre3DRendering(int camera_id) final;
