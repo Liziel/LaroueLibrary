@@ -39,6 +39,13 @@ namespace GdlImpl {
     ViewPort&			GetViewPort();
 
   public:
+    std::string			name;
+  public:
+    inline
+    const std::string&		GetName() { return name; }
+    void			SetName(const std::string&) final;
+
+  public:
     inline ctvty::utils::Vector3D&	GetPosition() { return position; }
     inline ctvty::utils::Vector3D&	GetLookAt() { return lookAt; }
     inline ctvty::utils::Quaternion&	GetRotation() { return rotation; }

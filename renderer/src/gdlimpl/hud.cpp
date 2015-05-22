@@ -1,0 +1,73 @@
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/transform.hpp>
+
+#include <iostream>
+
+#include "gdlimpl/hud.hh"
+#include "gdlimpl/renderer.hh"
+
+namespace GdlImpl {
+  Hud::			Hud(Renderer& renderer)
+    : _renderer(renderer), _rotation(ctvty::utils::Quaternion::identity) {
+
+    _geometry.pushVertex(glm::vec3(0,	0, 0));
+    _geometry.pushVertex(glm::vec3(1.f, 0, 0));
+    _geometry.pushVertex(glm::vec3(1.f, 1.f, 0)); 
+    _geometry.pushVertex(glm::vec3(0,	1.f, 0)); 
+
+    _geometry.pushUv(glm::vec2(0.0f, 1.0f)); 
+    _geometry.pushUv(glm::vec2(1.0f, 1.0f)); 
+    _geometry.pushUv(glm::vec2(1.0f, 0.0f)); 
+    _geometry.pushUv(glm::vec2(0.0f, 0.0f)); 
+    
+    _geometry.build();
+  }
+
+  void			Hud::SetTexture(std::shared_ptr<ctvty::rendering::Texture>& texture) {
+    _texture = texture;
+  }
+
+  void			Hud::SetText(const std::string& text) {
+    _text = text;
+  }
+
+  void			Hud::Associate(std::shared_ptr<ctvty::rendering::Camera>& associated) {
+    _associated = associated;
+  }
+
+  void			Hud::SetPosition(float sizex, float sizey,
+					 float offx, float offy) {
+    _sizex = sizex;
+    _sizey = sizey;
+    _offx = offx;
+    _offy = offy;
+  }
+
+  void			Hud::SetWorldSpace(const ctvty::utils::Quaternion& rotation,
+					   const ctvty::utils::Vector3D& position) {
+    _rotation = rotation;
+    _position = position;
+    _space = space::world;
+  }
+
+  void			Hud::SetScreenSpace(int level) {
+    _level = level;
+    _space = space::screen;
+  }
+
+  void			Hud::Draw() {
+    glm::mat4 transform;
+
+    if (_texture)
+      _texture->Bind();
+    if (_space == space::screen) {
+      transform = glm::scale(_sizex * _renderer.GetWidth(), _sizey * _renderer.GetHeight(), 0.f);
+      transform *= glm::translate(0.f,0.f,0.f);
+      std::cout << "oui " << _sizex << " " << _sizey << std::endl;
+    } else {
+      
+    }
+    _geometry.draw(_renderer.GetShader(), transform, GL_QUADS);
+  }
+};

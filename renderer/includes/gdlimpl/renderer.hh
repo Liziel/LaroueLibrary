@@ -9,6 +9,7 @@
 
 # include "gdlimpl/model3d.hh"
 # include "gdlimpl/camera.hh"
+# include "gdlimpl/hud.hh"
 
 namespace GdlImpl {
   
@@ -46,12 +47,15 @@ namespace GdlImpl {
     std::size_t				RegisteredCameras() final;
     inline const std::list<Camera*>&	Cameras() { return cameras; }
 
+  private:
+    std::list<Hud*>			huds;
   public:
     ctvty::rendering::Hud*		CreateHud() final;
 
   public:
     void				Pre3DRendering(int camera_id) final;
-    void				PreHUDRendering() final;
+    void				PreHUDRendering(int camera_id) final;
+    void				MainHUDRendering() final;
     void				Flush() final;
 
     void				Quit() final;

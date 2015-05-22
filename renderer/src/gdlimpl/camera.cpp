@@ -77,6 +77,10 @@ namespace GdlImpl {
     autoViewPort = true;
   }
 
+  void			Camera::SetName(const std::string& _name) {
+    name = _name;
+  }
+
   Camera::ViewPort&	Camera::GetViewPort() {
     return view;
   }

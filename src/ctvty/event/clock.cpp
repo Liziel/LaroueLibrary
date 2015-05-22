@@ -87,22 +87,15 @@ namespace ctvty {
 	{
 	  ctvty::rendering::Renderer::GetRenderer().Update();
 	  std::list<GameObject*> fathers_copy(ctvty::GameObject::accessParentsGameObjects());
-	  if (ctvty::rendering::Renderer::GetRenderer().RegisteredCameras() == 0) {
-	    ctvty::rendering::Renderer::GetRenderer().Pre3DRendering();
+	  for (std::size_t i = 0; i < ctvty::rendering::Renderer::GetRenderer().RegisteredCameras(); ++i) {
+	    ctvty::rendering::Renderer::GetRenderer().Pre3DRendering(i);
 	    std::for_each(fathers_copy.begin(),
 			  fathers_copy.end(),
 			  [this] (GameObject* gameObject) { if (!end) gameObject->BroadcastMessage("Render"); }
 			  );
-	  } else {
-	    for (std::size_t i = 0; i < ctvty::rendering::Renderer::GetRenderer().RegisteredCameras(); ++i) {
-	      ctvty::rendering::Renderer::GetRenderer().Pre3DRendering(i);
-	      std::for_each(fathers_copy.begin(),
-			    fathers_copy.end(),
-			    [this] (GameObject* gameObject) { if (!end) gameObject->BroadcastMessage("Render"); }
-			    );
-	    }
+	    ctvty::rendering::Renderer::GetRenderer().PreHUDRendering(i);
 	  }
-	  ctvty::rendering::Renderer::GetRenderer().PreHUDRendering();
+	  ctvty::rendering::Renderer::GetRenderer().MainHUDRendering();
 	  std::for_each(fathers_copy.begin(),
 			fathers_copy.end(),
 			[this] (GameObject* gameObject) { if (!end) gameObject->BroadcastMessage("OnGui"); }

@@ -1,6 +1,8 @@
 #ifndef EventTester_hh__
 # define EventTester_hh__
 
+# include <memory>
+
 # include "ctvty/monobehaviour.hpp"
 
 # include "ctvty/utils/collision.hh"
@@ -12,7 +14,8 @@ namespace user_defined {
     
     class EventTester : public ctvty::MonoBehaviour<EventTester> {
     private:
-      ctvty::rendering::Model3D*	model3D;
+      std::shared_ptr<ctvty::rendering::Texture>	texture;
+      ctvty::rendering::Hud*				hud;
 
     public:
 			EventTester();

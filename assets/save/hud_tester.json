@@ -1,0 +1,45 @@
+{
+    "object" : {
+	"childs" : [
+	],
+	"components" : [
+	    {
+		"object" : {},
+		"type" : "user_defined::component::EventTester",
+	    },
+	],
+	"name" : "Colliding Cube",
+	"tag" : "cubes",
+	"transform" : {
+	    "object" : {
+		"position" : {
+		    "object" : {
+			"x" : 0,
+			"y" : 0,
+			"z" : 0,
+		    },
+		    "type" : "ctvty::utils::Vector3D",
+		},
+		"rotation" : {
+		    "object" : {
+			"w" : 1,
+			"x" : 0,
+			"y" : 0,
+			"z" : 0,
+		    },
+		    "type" : "ctvty::utils::Quaternion",
+		},
+		"scale" : {
+		    "object" : {
+			"x" : 0.0,
+			"y" : 0.0,
+			"z" : 0.0,
+		    },
+		    "type" : "ctvty::utils::Vector3D",
+		},
+	    },
+	    "type" : "ctvty::component::Transform",
+	},
+    },
+    "type" : "ctvty::GameObject",
+}

@@ -48,7 +48,7 @@ namespace ctvty {
 
       __serial["offset x"]	& offx;
       __serial["offset y"]	& offy;
-      
+
       __serial["offset x"]	& offx;
       __serial["offset y"]	& offy;
 

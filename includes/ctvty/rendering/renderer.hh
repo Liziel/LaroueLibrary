@@ -40,7 +40,8 @@ namespace ctvty {
 
       public:
 	virtual void			Pre3DRendering(int camera_id = -1) = 0;
-	virtual void			PreHUDRendering() = 0;
+	virtual void			PreHUDRendering(int camera_id) = 0;
+	virtual void			MainHUDRendering() = 0;
 	virtual void			Flush() = 0;
 
 	virtual void			Quit() = 0;

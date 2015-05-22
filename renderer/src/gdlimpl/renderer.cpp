@@ -2,6 +2,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "gdlimpl/hud.hh"
 #include "gdlimpl/renderer.hh"
 #include "gdlimpl/texture.hh"
 #include "ctvty/debug.hpp"
@@ -51,23 +52,18 @@ namespace GdlImpl {
 
   void		Renderer::Pre3DRendering(int camera_id) {
     Camera* camera = nullptr;
-    if (cameras.size()) {
-      std::list<Camera*>::iterator it = cameras.begin();
-      std::advance(it, camera_id);
-      camera = *it;
-      camera->DetectViewPort();
-      glViewport(camera->GetViewPort().baseX,
-		 camera->GetViewPort().baseY,
-		 camera->GetViewPort().width,
-		 camera->GetViewPort().height);
-    }
+    std::list<Camera*>::iterator it = cameras.begin();
+    std::advance(it, camera_id);
+    camera = *it;
+    camera->DetectViewPort();
+    glViewport(camera->GetViewPort().baseX,
+	       camera->GetViewPort().baseY,
+	       camera->GetViewPort().width,
+	       camera->GetViewPort().height);
 
     {
-      float per;
-      if (camera != nullptr)
-	per = camera->GetViewPort().width / camera->GetViewPort().height;
-      else
-	per = width / height;
+      float per =
+	camera->GetViewPort().width / camera->GetViewPort().height;
       glm::mat4 projection =
 	glm::perspective(60.0f,
 			 per,
@@ -77,14 +73,6 @@ namespace GdlImpl {
 
     {
       glm::mat4 transformation;
-      if (camera == nullptr)
-	transformation
-	  = glm::lookAt(
-			glm::vec3(camera_position.x, camera_position.y, camera_position.z),
-			glm::vec3(camera_lookAt.x, camera_lookAt.y, camera_lookAt.z),
-			glm::vec3(camera_up.x, camera_up.y, camera_up.z)
-			);
-      else {
 	transformation
 	  = glm::lookAt(
 			glm::vec3(camera->GetPosition().x, camera->GetPosition().y, camera->GetPosition().z),
@@ -93,7 +81,6 @@ namespace GdlImpl {
 				  camera->GetRotation().RotatedVector(ctvty::utils::Vector3D::up).y,
 				  camera->GetRotation().RotatedVector(ctvty::utils::Vector3D::up).z)
 			);
-      }
       
       _shader.setUniform("view", transformation);
     }
@@ -102,14 +89,44 @@ namespace GdlImpl {
     _shader.bind();
   }
 
-  void		Renderer::PreHUDRendering() {
+  void		Renderer::PreHUDRendering(int camera_id) {
+    Camera* camera = nullptr;
+    std::list<Camera*>::iterator it = cameras.begin();
+    std::advance(it, camera_id);
+    camera = *it;
+    camera->DetectViewPort();
+    glViewport(camera->GetViewPort().baseX,
+	       camera->GetViewPort().baseY,
+	       camera->GetViewPort().width,
+	       camera->GetViewPort().height);
+
     glm::mat4 projection =
       glm::ortho(0.0f,
-		 static_cast<float>(width), static_cast<float>(height), 0.0f,
+		 static_cast<float>(camera->GetViewPort().width),
+		 static_cast<float>(camera->GetViewPort().height), 0.0f,
 		 -1.0f, 1.0f);
     _shader.setUniform("projection", projection);
     _shader.setUniform("view", glm::mat4(1));
     _shader.bind();
+    glClear(GL_DEPTH_BUFFER_BIT);
+  }
+
+  void		Renderer::MainHUDRendering() {
+    glViewport(0.f, 0.f,
+	       width, height);
+    std::list<Hud*> mainhud = huds;
+    glm::mat4 projection =
+      glm::ortho(0.0f,
+		 static_cast<float>(width), static_cast<float>(height), 0.0f);
+    mainhud.remove_if([] (Hud* hud) {
+	return (bool)hud->GetAssociatedCamera() && hud->getSpace() == Hud::space::screen;
+      });
+    _shader.setUniform("projection", projection);
+    _shader.setUniform("view", glm::mat4(1));
+    _shader.bind();
+    glClear(GL_DEPTH_BUFFER_BIT);
+    for (auto hud : mainhud)
+      hud->Draw();
   }
 
   void		Renderer::Flush() {
@@ -141,6 +158,8 @@ namespace GdlImpl {
 
   ctvty::rendering::Hud*
 		Renderer::CreateHud() {
-    return nullptr;
+    Hud* n = new Hud(*this);
+    huds.push_back(n);
+    return n;
   }
 };

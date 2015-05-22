@@ -38,7 +38,6 @@ namespace GdlImpl {
     transform *= glm::rotate((r.y / glm::pi<float>()) * 180.f, glm::vec3(0., 1., 0.));
     transform *= glm::rotate((r.z / glm::pi<float>()) * 180.f, glm::vec3(0., 0., 1.));
     transform *= glm::translate(position.x, position.y, position.z);
-    std::cout << model->getAnimationFrameNumber(0) << std::endl;
     model->draw(renderer.GetShader(), transform, time);
   }
 };

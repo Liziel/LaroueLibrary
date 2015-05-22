@@ -4,14 +4,15 @@
 	    "windowX" : 1000,
 	    "windowY" : 800,
 
-	    "fps" : 30,
+	    "fps" : 70,
 
-	    "load" : "base3",
+	    "load" : "base",
 	    "scenes" : [
 		{
 		    "object" : {
 			"name" : "base",
 			"objects" : [
+			    asset("save/backcamera.json"),
 			    asset("save/colliding_side.json"),
 			    asset("save/colliding_cube.json"),
 			    asset("save/falling_cube.json"),
@@ -40,11 +41,16 @@
 			    asset("save/backcamera.json"),
 			    asset("save/duplicate.json"),
 			    asset("save/test_anim.json"),
-			    asset("save/test_anim.json"),
-			    asset("save/test_anim.json"),
-			    asset("save/test_anim.json"),
-			    asset("save/test_anim.json"),
-			    asset("save/test_anim.json"),
+			],
+		    },
+		    "type" : "ctvty::Application::Scene",
+		},
+		{
+		    "object" : {
+			"name" : "hud testing",
+			"objects" : [
+			    asset("save/backcamera.json"),
+			    asset("save/hud_tester.json"),
 			],
 		    },
 		    "type" : "ctvty::Application::Scene",

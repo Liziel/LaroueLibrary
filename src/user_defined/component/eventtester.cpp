@@ -11,13 +11,15 @@ namespace user_defined {
 
 
     EventTester::		EventTester()
-      : MonoBehaviour(nullptr, "EventTester"),
-	model3D(ctvty::rendering::Renderer::GetRenderer().Load3DModel("assets/models3d/Bombe Health/Health.FBX")) {}
+      : MonoBehaviour(nullptr, "EventTester") {
+      std::cout << "ctor" << std::endl;
+    }
 
 
     EventTester::		EventTester(const serialization::Archive&)
-      : MonoBehaviour(nullptr, "EventTester"),
-	model3D(ctvty::rendering::Renderer::GetRenderer().Load3DModel("assets/models3d/Bombe Health/Health.FBX")) {}
+      : MonoBehaviour(nullptr, "EventTester") {
+      std::cout << "ctor" << std::endl;
+    }
 
     void			EventTester::Serialize(serialization::Archive& __serial_instance) const {
       SERIALIZE_OBJECT_AS(user_defined::component::EventTester, __serial_instance);
@@ -30,10 +32,14 @@ namespace user_defined {
     }
 
     void			EventTester::Update() {
-      ctvty::debug::Logs(transform->GetPosition());
     }
 
     void			EventTester::Awake() {
+      texture.reset(ctvty::rendering::Renderer::GetRenderer().LoadTexture("assets/texture/exit.tga"));
+      hud = ctvty::rendering::Renderer::GetRenderer().CreateHud();
+      hud->SetTexture(texture);
+      hud->SetPosition(0.8, 0.1 , 0.1, 0.1);
+      hud->SetScreenSpace(0);
     }
 
     /*			Collision Events Tests			*/

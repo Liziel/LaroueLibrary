@@ -5,7 +5,7 @@
 	"components" : [
 		{
 		    "object" : {
-			"file" : "models3d/bombe_health.json"
+			"file" : "models3d/ziggs.json"
 		    },
 		    "type" : "ctvty::component::Renderer",
 		},
