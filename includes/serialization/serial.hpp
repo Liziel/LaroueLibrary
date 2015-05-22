@@ -17,6 +17,8 @@
 
 # include <memory>
 
+# include <algorithm>
+
 namespace std {
 };
 

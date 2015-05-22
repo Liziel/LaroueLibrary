@@ -5,7 +5,6 @@
 # include <string>
 # include <functional>
 # include <typeinfo>
-# include <regex>
 
 #include "serialization/archive.hh"
 
@@ -46,11 +45,9 @@ namespace serialization {
   template<typename _type>
   int	Registration<_type>::_register([] () -> int {
       std::string		name(__PRETTY_FUNCTION__);
-      std::regex		regex(".* \\[.* = (.*)\\]");
-      std::smatch		sm;
-
-      std::regex_match	(name, sm, regex); name = sm[1];
-
+      name = name.substr(name.find('['));
+      name = name.substr(name.find('='));
+      name = name.substr(2, name.find(']') - 2);
       Serializable::CreateSerializableInvoker<_type>(name);
       return (0);
     }());
