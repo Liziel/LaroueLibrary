@@ -93,13 +93,7 @@ namespace ctvty {
 			  fathers_copy.end(),
 			  [this] (GameObject* gameObject) { if (!end) gameObject->BroadcastMessage("Render"); }
 			  );
-	    ctvty::rendering::Renderer::GetRenderer().PreHUDRendering(i);
 	  }
-	  ctvty::rendering::Renderer::GetRenderer().MainHUDRendering();
-	  std::for_each(fathers_copy.begin(),
-			fathers_copy.end(),
-			[this] (GameObject* gameObject) { if (!end) gameObject->BroadcastMessage("OnGui"); }
-			);
 	  ctvty::rendering::Renderer::GetRenderer().Flush();
 	}
       }
