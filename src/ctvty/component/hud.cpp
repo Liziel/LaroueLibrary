@@ -41,9 +41,10 @@ namespace ctvty {
 	__serial["text"] & text;
       }
 
-      texture.reset();
+      texture_path.rese();
+      texture_path.reset();
       if (__serial.exist("texture")) {
-	__serial["texture"] & texture;
+	__serial["texture"] & texture_path;
       }
 
       __serial["offset x"]	& offx;
@@ -52,21 +53,86 @@ namespace ctvty {
       __serial["offset x"]	& offx;
       __serial["offset y"]	& offy;
 
+      __serial["level"]		& level;
+
       __serial["enabled"]	& enabled;
+    }
+
+    void		Hud::Serialize(serializatino::Archive& __serial) const {
+      if (onClickEnabled) {
+	__serial["onClickEvent"] & onClickEvent;
+      }
+
+      if (onHoverEnabled) {
+	__serial["onHoverEvent"] & onHoverEvent;
+      }
+      
+      if (text_enabled) {
+	__serial["text"] & text;
+      }
+
+      if (texture_path) {
+	__serial["texture"]	& texture_path;
+      }
+
+      __serial["offset x"]	& offx;
+      __serial["offset y"]	& offy;
+
+      if (__serial.exist("offset x"))
+	__serial["offset x"]	& offx;
+      else
+	offx = 0.f;
+      if (__serial.exist("offset y"))
+	__serial["offset y"]	& offy;
+      else
+	offy = 0.f;
+
+      __serial["level"]		& level;
+      __serial["enabled"]	& enabled;
+    }
+
+    void		Hud::genScreenModel(float canvas_sizeX, float canvas_sizeY,
+					    float canvas_offX, float canvas_sizeX) {
+      model.reset(ctvty::rendering::Renderer::GetRenderer().CreateHud());
+      if (texture_path) {
+	texture.reset(ctvty::rendering::Renderer::GetRenderer().LoadTexture(*texture_path));
+	model->SetTexture();
+      }
+      if (text_enabled) {
+	model->SetText(text);
+      }
+      model->SetPosition(sizex * canvas_sizeX, sizey * canvasSizeY,
+			 offx * canvas_sizeX + canvas_offX, offx * canvas_sizeX + canvas_offX);
+      model->SetScreenSpace(level);
+    }
+
+    void		Hud::genWorldModel(float canvas_sizeX, float canvas_sizeY,
+					    float canvas_offX, float canvas_sizeX) {
+      model.reset(ctvty::rendering::Renderer::GetRenderer().CreateHud());
+      if (texture_path) {
+	texture.reset(ctvty::rendering::Renderer::GetRenderer().LoadTexture(*texture_path));
+	model->SetTexture();
+      }
+      if (text_enabled) {
+	model->SetText(text);
+      }
+      model->SetPosition(sizex * canvas_sizeX, sizey * canvasSizeY,
+			 offx * canvas_sizeX + canvas_offX, offx * canvas_sizeX + canvas_offX);
+      model->SetWorldModel(transform->GetRotation(),
+			   trnasform->GetPosition());
     }
 
 
     Canvas::		Canvas(const serialization::Archive& __serial)
       : MonoBehaviour<Canvas>(nullptr, "Canvas") {
+
       WorldSpaceDefinition	= __serial.exist("WorldSpace") && __serial["WorldSpace"].as<bool>();
       ScreenSpaceDefinition	= __serial.exist("ScreenSpace") && __serial["ScreenSpace"].as<bool>();
 
-      if (WorldSpaceDefinition) {
-	__serial["WorldSpace normal"] & WorldSpaceNormal;
+      if (ScreenSpaceDefinition) {
+	__serial["offset x"]	& offX;
+	__serial["offset y"]	& offY;
       }
-
-      __serial["offset x"]	& offX;
-      __serial["offset y"]	& offY;
 
       __serial["size x"]	& sizeX;
       __serial["size y"]	& sizeY;
@@ -100,6 +166,15 @@ namespace ctvty {
 
     Object*		Canvas::clone() const {
       return new Canvas{ serialization::Archive(this) };
+    }
+
+    void		Canvas::Awake() {
+      for (auto children : childrens) {
+	if (WoldSpaceDefinition)
+	  children.second->genScreenModel(sizeX, sizeY, offx, offy);
+	else
+	  children.second->genWorldMoel(sizeX, sizeY);
+      }
     }
   };
 };

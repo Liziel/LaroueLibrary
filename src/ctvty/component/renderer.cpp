@@ -21,15 +21,22 @@ namespace ctvty
 {
   namespace component
   {
+
     Renderer::Renderer(const std::string& path)
       : MonoBehaviour(nullptr, "Renderer"), file(path) {}
-    Renderer::Renderer(const serialization::Archive &archive)
-      : Renderer(archive["file"].as<std::string>())
-    { }
+
+    Renderer::Renderer(const serialization::Archive &__serial)
+      : Renderer(__serial["file"].as<std::string>())
+    {
+      if (__serial.exist("rotation"))
+	__serial["rotation"] & rotation;
+    }
 
     void	Renderer::Serialize(serialization::Archive& instance_archive) const {
       SERIALIZE_OBJECT_AS(ctvty::component::Renderer, instance_archive);
       __serial["file"] & file;
+      if (rotation)
+	__serial["rotation"] & rotation;
       if (model)
 	Application::Assets().GetAsset(file).Save(model);
     }
@@ -45,9 +52,9 @@ namespace ctvty
 	return ;
       }
       CreateAnimation("renderer_stop", 0, 0);
-      for (Animator* animator : GetComponents<Animator>())
+      Animator* animator = GetComponent<Animator>();
+      if (animator)
 	animator->Initialize(this);
-      SetAnimation("idle");
     }
 
     void	Renderer::Render()
@@ -60,14 +67,13 @@ namespace ctvty
 	SetAnimation("renderer_stop");
 	model->GetModel().Draw(transform->GetPosition(),
 			       transform->GetScale(),
-			       transform->GetRotation());
+			       (rotation ? *rotation * transform->GetRotation() : transform->GetRotation()));
       }
       else {
-	SetAnimation("idle");
 	model->GetModel().Draw(transform->GetPosition(),
 			       transform->GetScale(),
-			       transform->GetRotation()
-			       ,animator->GetFrame(*this));
+			       (rotation ? *rotation * transform->GetRotation() : transform->GetRotation()),
+			       animator->GetFrame(*this));
       }
     }
     

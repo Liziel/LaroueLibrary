@@ -24,9 +24,9 @@ namespace ctvty {
 	void		Serialize(serialization::Archive&) const;
       };
     private:
-      std::string			file;
-      std::shared_ptr<Model3D>		model;
-      std::unique_ptr<utils::Vector3D>	rotation;
+      std::string				file;
+      std::shared_ptr<Model3D>			model;
+      std::unique_ptr<utils::Quaternion>	rotation;
 
     public:
       /*

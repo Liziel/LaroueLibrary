@@ -31,7 +31,7 @@
 		    "object" : {
 			"x" : -20,
 			"y" : 20,
-			"z" : 0,
+			"z" : -20,
 		    },
 		    "type" : "ctvty::utils::Vector3D",
 		},

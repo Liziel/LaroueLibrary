@@ -5,7 +5,16 @@
 	"components" : [
 		{
 		    "object" : {
-			"file" : "models3d/ziggs.json"
+			"file" : "models3d/ziggs.json",
+			"rotation" : {
+			    "type" : "ctvty::utils::Quaternion"
+			    "object" : {
+				"euler" : true,
+				"x" : 3.10,
+				"y" : 4.5,
+				"z" : 3.14,
+			    }
+			},
 		    },
 		    "type" : "ctvty::component::Renderer",
 		},
@@ -81,11 +90,10 @@
 		},
 		"rotation" : {
 		    "object" : {
-			"euler" : true,
-			"x" : 3.10,
-			"y" : 4.5,
-			"z" : 3.14,
-			"w" : 1,
+			"x" : 0,
+			"y" : 0,
+			"z" : 0,
+			"w" : 1
 		    },
 		    "type" : "ctvty::utils::Quaternion",
 		},

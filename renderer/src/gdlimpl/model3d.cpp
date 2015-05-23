@@ -33,11 +33,12 @@ namespace GdlImpl {
 				      const ctvty::utils::Quaternion& rotation,
 				      double time) {
     ctvty::utils::Vector3D	r = rotation.Complex();
-    glm::mat4 transform = glm::scale(scale.x, scale.y, scale.z);
+    glm::mat4 transform; 
+    transform = glm::translate(position.x, position.y, position.z);
+    transform *= glm::scale(scale.x, scale.y, scale.z);
     transform *= glm::rotate((r.x / glm::pi<float>()) * 180.f, glm::vec3(1., 0., 0.));
     transform *= glm::rotate((r.y / glm::pi<float>()) * 180.f, glm::vec3(0., 1., 0.));
     transform *= glm::rotate((r.z / glm::pi<float>()) * 180.f, glm::vec3(0., 0., 1.));
-    transform *= glm::translate(position.x, position.y, position.z);
     model->draw(renderer.GetShader(), transform, time);
   }
 };

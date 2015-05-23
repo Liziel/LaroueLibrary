@@ -54,6 +54,8 @@ namespace ctvty {
       void		SetText(const std::string&);
 
     private:
+      std::unique_ptr<std::string>
+			texture_path;
       std::shared_ptr<Texture>
 			texture;
 
@@ -61,20 +63,27 @@ namespace ctvty {
       std::shared_ptr<ctvty::rendering::Hud>
 			model;
     public:
-      void		genModel();
+      void		genScreenModel(float, float, float, float);
+      void		genWorldModel(float, float);
 
     private:
       float		offx;
       float		offy;
       float		sizex;
       float		sizey;
-    public:
-
+      
+    private:
+      int		level;
 
     private:
       bool		enabled;
     public:
-      
+      inline
+      void		disable() { enabled = false; }
+      inline
+      void		enable() { enabled = true; }
+      inline
+      bool		state() { return enabled; }
 
     public:
       void		Serialize(serialization::Archive&) const;
@@ -88,9 +97,6 @@ namespace ctvty {
     private:
       bool				WorldSpaceDefinition;
       bool				ScreenSpaceDefinition;
-
-    private:
-      std::unique_ptr<utils::Vector3D>	WorldSpaceNormal;
 
     private:
       float				offX, offY;
@@ -112,6 +118,12 @@ namespace ctvty {
       void		Serialize(serialization::Archive&) const override;
 			Canvas(const serialization::Archive&);
       Object*		clone() const override;
+
+    public:
+      inline
+      bool		exist(const std::string& key) { return childrens.find() != childrens.end(); }
+      inline
+      Hud*&		operator[](const std::string& key) { return childrens[key]; }
     };
 
   };

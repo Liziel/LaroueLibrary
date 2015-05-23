@@ -26,6 +26,10 @@ namespace ctvty {
       virtual void	SetWorldSpace(const ctvty::utils::Quaternion& rotation,
 				       const ctvty::utils::Vector3D& position) = 0;
       virtual void	SetScreenSpace(int level) = 0;
+
+    public:
+      virtual void	Enable() = 0;
+      virtual void	Disable() = 0;
     };
   };
 };

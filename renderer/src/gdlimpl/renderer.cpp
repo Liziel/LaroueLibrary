@@ -119,7 +119,7 @@ namespace GdlImpl {
       glm::ortho(0.0f,
 		 static_cast<float>(width), static_cast<float>(height), 0.0f);
     mainhud.remove_if([] (Hud* hud) {
-	return (bool)hud->GetAssociatedCamera() && hud->getSpace() == Hud::space::screen;
+	return !hud->GetAssociatedCamera() || hud->getSpace() != Hud::space::screen || !hud->state();
       });
     _shader.setUniform("projection", projection);
     _shader.setUniform("view", glm::mat4(1));

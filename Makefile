@@ -30,7 +30,7 @@ CtvTyComponents	=src/ctvty/component/transform.cpp\
 		src/ctvty/component/renderer.cpp\
 		src/ctvty/component/animator.cpp\
 		src/ctvty/component/camera.cpp \
-		#src/ctvty/component/hud.cpp
+		src/ctvty/component/hud.cpp
 
 CtvTy		= src/ctvty/gameObject.cpp \
 		src/ctvty/component.cpp\

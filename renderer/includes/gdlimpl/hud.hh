@@ -68,6 +68,14 @@ namespace GdlImpl {
 
   public:
     void			Draw();
+
+  private:
+    bool			enabled;
+  public:
+    void		Enable() final;
+    void		Disable() final;
+    inline
+    bool		state() { return enabled; }
   };
 };
 

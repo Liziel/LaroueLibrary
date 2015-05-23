@@ -5,7 +5,16 @@
 	    "components" : [
 		{
 		    "object" : {
-			"file" : "models3d/bombe_health.json"
+			"file" : "models3d/bombe_health.json",
+			"rotation" : {
+			    "type" : "ctvty::utils::Quaternion"
+			    "object" : {
+				"euler" : true,
+				"x" : 0,
+				"y" : 0,
+				"z" : 0
+			    },
+			}
 		    },
 		    "type" : "ctvty::component::Renderer",
 		},

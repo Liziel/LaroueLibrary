@@ -13,8 +13,8 @@ namespace GdlImpl {
 
     _geometry.pushVertex(glm::vec3(0,	0, 0));
     _geometry.pushVertex(glm::vec3(1.f, 0, 0));
-    _geometry.pushVertex(glm::vec3(1.f, 1.f, 0)); 
-    _geometry.pushVertex(glm::vec3(0,	1.f, 0)); 
+    _geometry.pushVertex(glm::vec3(1.f, 1.f, 0));
+    _geometry.pushVertex(glm::vec3(0,	1.f, 0));
 
     _geometry.pushUv(glm::vec2(0.0f, 1.0f)); 
     _geometry.pushUv(glm::vec2(1.0f, 1.0f)); 
@@ -62,12 +62,19 @@ namespace GdlImpl {
     if (_texture)
       _texture->Bind();
     if (_space == space::screen) {
-      transform = glm::scale(_sizex * _renderer.GetWidth(), _sizey * _renderer.GetHeight(), 0.f);
-      transform *= glm::translate(0.f,0.f,0.f);
-      std::cout << "oui " << _sizex << " " << _sizey << std::endl;
+      transform = glm::translate(_offx * _renderer.GetWidth(), _offy * _renderer.GetHeight(), 0.f);
+      transform *= glm::scale(_sizex * _renderer.GetWidth(), _sizey * _renderer.GetHeight(), 0.f);
     } else {
       
     }
     _geometry.draw(_renderer.GetShader(), transform, GL_QUADS);
+  }
+
+  void			Hud::Enable() {
+    enabled = true;
+  }
+
+  void			Hud::Disable() {
+    enabled = false;
   }
 };
