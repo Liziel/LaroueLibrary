@@ -13,6 +13,7 @@ namespace GdlImpl {
   class Model3D : public ctvty::rendering::Model3D {
   private:
     std::string			path;
+    bool			loadStatus;
     std::unique_ptr<gdl::Model>	model;
 
   public:
