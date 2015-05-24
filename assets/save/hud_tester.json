@@ -7,6 +7,45 @@
 		"object" : {},
 		"type" : "user_defined::component::EventTester",
 	    },
+	    {
+		"type" : "ctvty::component::Canvas",
+		"object" : {
+		    "ScreenSpace" : true,
+
+		    "offset x" : 0.1
+		    "offset y" : 0.1
+
+		    "size x" : 0.8
+		    "size y" : 0.1
+
+		    "childrens" : {[
+			"exit" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"onClickEvent" : "exit click",
+				"onHoverEvent" : "exit hover",
+
+				"offset x" : 1.0,
+				"offset y" : 1.0,
+
+				"size x" : 1.0,
+				"size y" : 1.0,
+
+				"level" : 0,
+				
+				"enabled" : true,
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture",
+				    "object" : {
+					"wrapper" : "textures/exit.json",
+				    },
+				}
+			    }
+			},
+		    ]}
+		}
+	    }
 	],
 	"name" : "Colliding Cube",
 	"tag" : "cubes",

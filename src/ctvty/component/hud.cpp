@@ -39,8 +39,8 @@ namespace ctvty {
 	__serial["texture"] & texture;
       }
 
-      __serial["offset x"]	& offx;
-      __serial["offset y"]	& offy;
+      __serial["size x"]	& sizex;
+      __serial["size y"]	& sizey;
 
       if (__serial.exist("offset x"))
 	__serial["offset x"]	& offx;
@@ -56,7 +56,8 @@ namespace ctvty {
       __serial["enabled"]	& enabled;
     }
 
-    void		Hud::Serialize(serialization::Archive& __serial) const {
+    void		Hud::Serialize(serialization::Archive& __serial_instance) const {
+      SERIALIZE_OBJECT_AS(ctvty::component::Hud, __serial_instance);
       if (onClickEnabled) {
 	__serial["onClickEvent"] & onClickEvent;
       }
@@ -73,8 +74,8 @@ namespace ctvty {
 	__serial["texture"]	& texture;
       }
 
-      __serial["offset x"]	& offx;
-      __serial["offset y"]	& offy;
+      __serial["size x"]	& sizex;
+      __serial["size y"]	& sizey;
 
       __serial["offset x"]	& offx;
       __serial["offset y"]	& offy;
@@ -86,7 +87,7 @@ namespace ctvty {
     void		Hud::genScreenModel(float canvas_sizeX, float canvas_sizeY,
 					    float canvas_offX, float canvas_offY) {
       model.reset(ctvty::rendering::Renderer::GetRenderer().CreateHud());
-      if (texture) {
+      if (texture && *texture) {
 	texture->delayedInstantiation();
 	model->SetTexture(texture->GetShared());
       }
@@ -102,7 +103,7 @@ namespace ctvty {
 					   const utils::Vector3D& position,
 					   const utils::Quaternion& rotation) {
       model.reset(ctvty::rendering::Renderer::GetRenderer().CreateHud());
-      if (texture) {
+      if (texture && *texture) {
 	texture->delayedInstantiation();
 	model->SetTexture(texture->GetShared());
       }
@@ -117,8 +118,8 @@ namespace ctvty {
     Canvas::		Canvas(const serialization::Archive& __serial)
       : MonoBehaviour<Canvas>(nullptr, "Canvas") {
 
-      WorldSpaceDefinition	= __serial.exist("WorldSpace") && __serial["WorldSpace"].as<bool>();
-      ScreenSpaceDefinition	= __serial.exist("ScreenSpace") && __serial["ScreenSpace"].as<bool>();
+      WorldSpaceDefinition	= (__serial.exist("WorldSpace"));
+      ScreenSpaceDefinition	= (__serial.exist("ScreenSpace"));
 
       if (ScreenSpaceDefinition) {
 	__serial["offset x"]	& offX;
@@ -172,7 +173,8 @@ namespace ctvty {
 	  children.second->genWorldModel(sizeX, sizeY,
 					 transform->GetPosition(),
 					 transform->GetRotation());
-	children.second->GetModel()->Associate(camera->getCamera());	
+	if (camera)
+	  children.second->GetModel()->Associate(camera->getCamera());	
       }
     }
 
