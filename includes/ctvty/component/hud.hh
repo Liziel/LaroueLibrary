@@ -5,28 +5,13 @@
 # include <memory>
 # include <map>
 
-# include "ctvty/rendering/texture.hh"
-# include "ctvty/rendering/hud.hh"
 # include "ctvty/monobehaviour.hpp"
+
+# include "ctvty/assets/texture.hh"
+# include "ctvty/rendering/hud.hh"
 
 namespace ctvty {
   namespace component {
-
-    class Texture : public serialization::Serializable {
-    private:
-      std::string					path;
-      std::shared_ptr<ctvty::rendering::Texture>	texture;
-
-    public:
-      inline
-      ctvty::rendering::Texture&			GetTexture() {
-	return *texture;
-      }
-
-    public:
-      void		Serialize(serialization::Archive&) const;
-			Texture(const serialization::Archive&);
-    };
     
     class Hud : public serialization::Serializable {
     private:
@@ -45,7 +30,7 @@ namespace ctvty {
       inline
       bool			isHoverable() { return onClickEnabled; }
       inline
-      const std::string&	onHover() { return onClickEvent; }      
+      const std::string&	onHover() { return onClickEvent; }
 
     private:
       bool		text_enabled;
@@ -54,17 +39,20 @@ namespace ctvty {
       void		SetText(const std::string&);
 
     private:
-      std::unique_ptr<std::string>
-			texture_path;
-      std::shared_ptr<Texture>
+      std::unique_ptr<asset::Texture>
 			texture;
 
     private:
       std::shared_ptr<ctvty::rendering::Hud>
 			model;
     public:
+      inline
+      std::shared_ptr<ctvty::rendering::Hud>&
+			GetModel() { return model; }
       void		genScreenModel(float, float, float, float);
-      void		genWorldModel(float, float);
+      void		genWorldModel(float, float,
+				      const ctvty::utils::Vector3D&,
+				      const ctvty::utils::Quaternion&);
 
     private:
       float		offx;
@@ -73,7 +61,7 @@ namespace ctvty {
       float		sizey;
       
     private:
-      int		level;
+      float		level;
 
     private:
       bool		enabled;
@@ -92,7 +80,7 @@ namespace ctvty {
 
     class Canvas : public MonoBehaviour<Canvas> {
     private:
-      std::map<std::string, std::unique_ptr<Hud*> >	childrens;
+      std::map<std::string, std::unique_ptr<Hud> >	childrens;
 
     private:
       bool				WorldSpaceDefinition;
@@ -121,9 +109,9 @@ namespace ctvty {
 
     public:
       inline
-      bool		exist(const std::string& key) { return childrens.find() != childrens.end(); }
+      bool		exist(const std::string& key) { return childrens.find(key) != childrens.end(); }
       inline
-      Hud*&		operator[](const std::string& key) { return childrens[key]; }
+      std::unique_ptr<Hud>&		operator[](const std::string& key) { return childrens[key]; }
     };
 
   };

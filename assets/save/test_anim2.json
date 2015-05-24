@@ -5,7 +5,12 @@
 	"components" : [
 		{
 		    "object" : {
-			"file" : "models3d/bombe_health.json"
+			"model" : {
+			    "type" : "ctvty::asset::Model3D",
+			    "object" : {
+				"path" : "assets/model3d/Ziggs/Ziggs.FBX",
+			    }
+			},
 		    },
 		    "type" : "ctvty::component::Renderer",
 		},

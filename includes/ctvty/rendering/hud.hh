@@ -18,7 +18,7 @@ namespace ctvty {
       virtual void	SetText(const std::string&) = 0;
       
     public:
-      virtual void	Associate(std::shared_ptr<Camera>&) = 0;
+      virtual void	Associate(const std::shared_ptr<Camera>&) = 0;
       virtual void	SetPosition(float sizex, float sizey,
 				    float offx = 0, float offy = 0) = 0;
 
@@ -30,6 +30,9 @@ namespace ctvty {
     public:
       virtual void	Enable() = 0;
       virtual void	Disable() = 0;
+
+    public:
+      virtual bool	IsInside(float screenX, float screenY) = 0;
     };
   };
 };

@@ -10,47 +10,38 @@
 
 #include "ctvty/application.hh"
 #include "ctvty/component/renderer.hh"
-#include "ctvty/rendering/renderer.hh"
+
 #include "ctvty/component/transform.hh"
 #include "ctvty/component/animator.hh"
-#include "ctvty/debug.hpp"
+
 REGISTER_FOR_SERIALIZATION(ctvty::component, Renderer);
-REGISTER_FOR_SERIALIZATION(ctvty::component::Renderer, Model3D);
 
 namespace ctvty
 {
   namespace component
   {
 
-    Renderer::Renderer(const std::string& path)
-      : MonoBehaviour(nullptr, "Renderer"), file(path) {}
-
     Renderer::Renderer(const serialization::Archive &__serial)
-      : Renderer(__serial["file"].as<std::string>())
+      : MonoBehaviour(nullptr, "Renderer")
     {
       if (__serial.exist("rotation"))
 	__serial["rotation"] & rotation;
+      __serial["model"] & model;
     }
 
-    void	Renderer::Serialize(serialization::Archive& instance_archive) const {
-      SERIALIZE_OBJECT_AS(ctvty::component::Renderer, instance_archive);
-      __serial["file"] & file;
+    void	Renderer::Serialize(serialization::Archive& __serial_instance) const {
+      SERIALIZE_OBJECT_AS(ctvty::component::Renderer, __serial_instance);
+      __serial["model"] & model;
       if (rotation)
 	__serial["rotation"] & rotation;
-      if (model)
-	Application::Assets().GetAsset(file).Save(model);
     }
 
     Object*	Renderer::clone() const {
-      return new Renderer(file);
+      return serialization::serial_info<Object*>::get(serialization::Archive(this));
     }
 
     void	Renderer::Awake() {
-      model = Application::Assets().GetAsset(file).LoadAs<Renderer::Model3D>();
-      if (!model) {
-	std::cerr << "Renderer error: no model definition at " << file << std::endl;
-	return ;
-      }
+      model->delayedInstantiation();
       CreateAnimation("renderer_stop", 0, 0);
       Animator* animator = GetComponent<Animator>();
       if (animator)
@@ -59,9 +50,6 @@ namespace ctvty
 
     void	Renderer::Render()
     {
-      if (!model)
-	return ;
-
       Animator* animator = GetComponent<Animator>();
       if (!animator) {
 	SetAnimation("renderer_stop");
@@ -79,39 +67,21 @@ namespace ctvty
     
     void	Renderer::CreateAnimation(const std::string &name, int FrameStart, int FrameEnd)
     {
-      if (model)
-	model->GetModel().CreateAnimation(name, FrameStart, FrameEnd);
+      model->GetModel().CreateAnimation(name, FrameStart, FrameEnd);
     }
     
     void	Renderer::PauseAnimation()
     {
-      if (model)
-	model->GetModel().PauseAnimation();
+      model->GetModel().PauseAnimation();
     }
 
     void	Renderer::SetAnimation(const std::string &name, bool loop)
     {
-      if (model)
-	model->GetModel().SetAnimation(name, loop);
+      model->GetModel().SetAnimation(name, loop);
     }
 
     float	Renderer::GetFrameDuration() {
-      if (model)
-	return model->GetModel().GetFrameDuration();
-      return 0.f;
+      return model->GetModel().GetFrameDuration();
     }
-
-
-
-    Renderer::Model3D::		Model3D(const serialization::Archive& archive) {
-      archive["path"] & path;
-      model.reset(ctvty::rendering::Renderer::GetRenderer().Load3DModel(path));
-    }
-
-    void			Renderer::Model3D::Serialize(serialization::Archive& archive_instance) const {
-      SERIALIZE_OBJECT_AS(ctvty::component::Renderer::Model3D, archive_instance)
-      __serial["path"] & path;
-    }
-    
   };
 };

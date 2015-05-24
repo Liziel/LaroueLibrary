@@ -12,7 +12,10 @@ CtvTyEvent	=src/ctvty/event/clock.cpp\
 		src/ctvty/event/delayed.cpp
 
 CtvTyAssets	=src/ctvty/assets/assets.cpp\
-		src/ctvty/assets/asset.cpp
+		src/ctvty/assets/asset.cpp\
+		src/ctvty/assets/texture.cpp\
+		src/ctvty/assets/model3d.cpp
+
 
 CtvTyUtils	=src/ctvty/utils/vector3d.cpp\
 		src/ctvty/utils/quaternion.cpp\

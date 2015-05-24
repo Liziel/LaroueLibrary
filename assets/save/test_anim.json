@@ -5,7 +5,12 @@
 	"components" : [
 		{
 		    "object" : {
-			"file" : "models3d/ziggs.json",
+			"model" : {
+			    "type" : "ctvty::asset::Model3D",
+			    "object" : {
+				"path" : "assets/model3d/Ziggs/Ziggs.FBX",
+			    }
+			},
 			"rotation" : {
 			    "type" : "ctvty::utils::Quaternion"
 			    "object" : {

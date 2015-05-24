@@ -33,7 +33,7 @@ namespace GdlImpl {
     inline
     std::shared_ptr<ctvty::rendering::Camera>
 		GetAssociatedCamera() {return _associated; }
-    void	Associate(std::shared_ptr<ctvty::rendering::Camera>&) final;
+    void	Associate(const std::shared_ptr<ctvty::rendering::Camera>&) final;
 
   private:
     float	_offx, _offy, _sizex, _sizey;
@@ -47,6 +47,9 @@ namespace GdlImpl {
     void	SetWorldSpace(const ctvty::utils::Quaternion& rotation,
 			      const ctvty::utils::Vector3D& position) final;
     void	SetScreenSpace(int level) final;
+
+  public:
+    bool	IsInside(float screenX, float screenY) final;
 
   private:
     space	_space;

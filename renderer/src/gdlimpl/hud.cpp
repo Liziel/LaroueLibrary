@@ -32,7 +32,7 @@ namespace GdlImpl {
     _text = text;
   }
 
-  void			Hud::Associate(std::shared_ptr<ctvty::rendering::Camera>& associated) {
+  void			Hud::Associate(const std::shared_ptr<ctvty::rendering::Camera>& associated) {
     _associated = associated;
   }
 
@@ -76,5 +76,16 @@ namespace GdlImpl {
 
   void			Hud::Disable() {
     enabled = false;
+  }
+
+  bool			Hud::IsInside(float x, float y) {
+    if (_space == space::screen) {
+      return
+	y > _offy * _renderer.GetHeight() &&
+	y < _offy * _renderer.GetHeight()  + _offx * _renderer.GetHeight() &&
+	x > _offx * _renderer.GetWidth() &&
+	x < _offx * _renderer.GetWidth() + _sizex * _renderer.GetWidth();
+    }
+    return false;
   }
 };

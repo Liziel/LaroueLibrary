@@ -1,6 +1,0 @@
-{
-    "object" : {
-	"path" : "assets/models3d/marvin/marvin.fbx"
-    },
-    "type" : "ctvty::component::Renderer::Model3D",
-}

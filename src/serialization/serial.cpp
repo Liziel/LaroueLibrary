@@ -513,7 +513,7 @@ namespace serialization {
   /*
    * serial::object definitions
    */
-  Serializable*	SerializableInstantiate(serial::object& serial) {
+  Serializable*	SerializableInstantiate(const serial::object& serial) {
     return Serializable::Instantiate(serial);
   }
   namespace serial {

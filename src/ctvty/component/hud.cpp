@@ -1,25 +1,18 @@
 #include "ctvty/component/hud.hh"
+#include "ctvty/component/transform.hh"
+
 #include "ctvty/component/camera.hh"
-#include "ctvty/rendering/camera.hh"
+
 #include "ctvty/rendering/renderer.hh"
 
-REGISTER_FOR_SERIALIZATION(ctvty::component, Texture);
+#include "ctvty/application.hh"
+#include "ctvty/event.hh"
+
 REGISTER_FOR_SERIALIZATION(ctvty::component, Hud);
 REGISTER_FOR_SERIALIZATION(ctvty::component, Canvas);
 
 namespace ctvty {
   namespace component {
-
-    Texture::		Texture(const serialization::Archive& __serial) {
-      __serial["path"] & path;
-      texture.reset(ctvty::rendering::Renderer::GetRenderer().LoadTexture(path));
-    }
-
-    void		Texture::Serialize(serialization::Archive& __serial_instance) const {
-      SERIALIZE_OBJECT_AS(ctvty::component::Texture, __serial_instance);
-      __serial["path"] & path;
-    }
-
 
     Hud::		Hud(const serialization::Archive& __serial) {
 
@@ -41,38 +34,9 @@ namespace ctvty {
 	__serial["text"] & text;
       }
 
-      texture_path.rese();
-      texture_path.reset();
+      texture.reset();
       if (__serial.exist("texture")) {
-	__serial["texture"] & texture_path;
-      }
-
-      __serial["offset x"]	& offx;
-      __serial["offset y"]	& offy;
-
-      __serial["offset x"]	& offx;
-      __serial["offset y"]	& offy;
-
-      __serial["level"]		& level;
-
-      __serial["enabled"]	& enabled;
-    }
-
-    void		Hud::Serialize(serializatino::Archive& __serial) const {
-      if (onClickEnabled) {
-	__serial["onClickEvent"] & onClickEvent;
-      }
-
-      if (onHoverEnabled) {
-	__serial["onHoverEvent"] & onHoverEvent;
-      }
-      
-      if (text_enabled) {
-	__serial["text"] & text;
-      }
-
-      if (texture_path) {
-	__serial["texture"]	& texture_path;
+	__serial["texture"] & texture;
       }
 
       __serial["offset x"]	& offx;
@@ -88,40 +52,67 @@ namespace ctvty {
 	offy = 0.f;
 
       __serial["level"]		& level;
+
+      __serial["enabled"]	& enabled;
+    }
+
+    void		Hud::Serialize(serialization::Archive& __serial) const {
+      if (onClickEnabled) {
+	__serial["onClickEvent"] & onClickEvent;
+      }
+
+      if (onHoverEnabled) {
+	__serial["onHoverEvent"] & onHoverEvent;
+      }
+      
+      if (text_enabled) {
+	__serial["text"] & text;
+      }
+
+      if (texture) {
+	__serial["texture"]	& texture;
+      }
+
+      __serial["offset x"]	& offx;
+      __serial["offset y"]	& offy;
+
+      __serial["offset x"]	& offx;
+      __serial["offset y"]	& offy;
+
+      __serial["level"]		& level;
       __serial["enabled"]	& enabled;
     }
 
     void		Hud::genScreenModel(float canvas_sizeX, float canvas_sizeY,
-					    float canvas_offX, float canvas_sizeX) {
+					    float canvas_offX, float canvas_offY) {
       model.reset(ctvty::rendering::Renderer::GetRenderer().CreateHud());
-      if (texture_path) {
-	texture.reset(ctvty::rendering::Renderer::GetRenderer().LoadTexture(*texture_path));
-	model->SetTexture();
+      if (texture) {
+	texture->delayedInstantiation();
+	model->SetTexture(texture->GetTexture());
       }
       if (text_enabled) {
 	model->SetText(text);
       }
-      model->SetPosition(sizex * canvas_sizeX, sizey * canvasSizeY,
-			 offx * canvas_sizeX + canvas_offX, offx * canvas_sizeX + canvas_offX);
+      model->SetPosition(sizex * canvas_sizeX, sizey * canvas_sizeY,
+			 offx * canvas_sizeX + canvas_offX, offy * canvas_sizeY + canvas_offY);
       model->SetScreenSpace(level);
     }
 
     void		Hud::genWorldModel(float canvas_sizeX, float canvas_sizeY,
-					    float canvas_offX, float canvas_sizeX) {
+					   const utils::Vector3D& position,
+					   const utils::Quaternion& rotation) {
       model.reset(ctvty::rendering::Renderer::GetRenderer().CreateHud());
-      if (texture_path) {
-	texture.reset(ctvty::rendering::Renderer::GetRenderer().LoadTexture(*texture_path));
-	model->SetTexture();
+      if (texture) {
+	texture->delayedInstantiation();
+	model->SetTexture(texture->GetTexture());
       }
       if (text_enabled) {
 	model->SetText(text);
       }
-      model->SetPosition(sizex * canvas_sizeX, sizey * canvasSizeY,
-			 offx * canvas_sizeX + canvas_offX, offx * canvas_sizeX + canvas_offX);
-      model->SetWorldModel(transform->GetRotation(),
-			   trnasform->GetPosition());
+      model->SetPosition(sizex * canvas_sizeX, sizey * canvas_sizeY);
+      model->SetWorldSpace(rotation,
+			   position + rotation.RotatedVector(ctvty::utils::Vector3D::back) * level);
     }
-
 
     Canvas::		Canvas(const serialization::Archive& __serial)
       : MonoBehaviour<Canvas>(nullptr, "Canvas") {
@@ -169,11 +160,40 @@ namespace ctvty {
     }
 
     void		Canvas::Awake() {
-      for (auto children : childrens) {
-	if (WoldSpaceDefinition)
-	  children.second->genScreenModel(sizeX, sizeY, offx, offy);
+      Camera*	camera = nullptr;
+      if (RenderCamera != "GuiCamera")
+	{
+	  std::list<Camera*> cameras = Object::FindObjectsOfType<Camera>();
+	  for (Camera* _camera : cameras)
+	    if (_camera->Name() && *(_camera->Name()) == RenderCamera)
+	      camera = _camera;
+	}
+
+      for (auto& children : childrens) {
+	if (WorldSpaceDefinition)
+	  children.second->genScreenModel(sizeX, sizeY, offX, offY);
 	else
-	  children.second->genWorldMoel(sizeX, sizeY);
+	  children.second->genWorldModel(sizeX, sizeY,
+					 transform->GetPosition(),
+					 transform->GetRotation());
+	children.second->GetModel()->Associate(camera->getCamera());	
+      }
+    }
+
+    void		Canvas::OnGui() {
+      const std::shared_ptr<Event>	e ( ctvty::Event::current() );
+
+      if (e->type() == Event::Type::mousemotion) {
+	for (auto& children : childrens)
+	  if (children.second->isHoverable()
+	      && children.second->GetModel()->IsInside(e->position().x, e->position().y))
+	    BroadcastMessage(children.second->onHover());
+	    
+      } else if (e->type() == Event::Type::mousebuttondown) {
+	for (auto& children : childrens)
+	  if (children.second->isClickable()
+	      && children.second->GetModel()->IsInside(e->position().x, e->position().y))
+	    BroadcastMessage(children.second->onClick());
       }
     }
   };

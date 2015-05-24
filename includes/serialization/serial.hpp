@@ -420,11 +420,14 @@ namespace serialization {
   /*
    * Object serial_info, (on Serializable *)
    */
-  Serializable*	SerializableInstantiate(serial::object& serial);
+  Serializable*	SerializableInstantiate(const serial::object& serial);
   template<typename _type>
   struct serial_info< _type,
 		      typename std::enable_if< std::is_assignable<Serializable*&, _type>::value >::type > {
     using type = serial::object;
+    static _type get(const serial::object& _serial) {
+      return dynamic_cast<_type> (SerializableInstantiate(_serial));
+    }
     static _type get(serial::interface* _interface) {
       return dynamic_cast<_type> (SerializableInstantiate(*(dynamic_cast<serial::object*>(_interface))));
     }

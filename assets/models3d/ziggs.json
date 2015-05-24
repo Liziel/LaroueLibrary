@@ -1,6 +1,0 @@
-{
-    "object" : {
-	"path" : "assets/models3d/Ziggs/Ziggs.FBX"
-    },
-    "type" : "ctvty::component::Renderer::Model3D",
-}

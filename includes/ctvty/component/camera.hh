@@ -34,6 +34,11 @@ namespace ctvty {
     private:
       std::shared_ptr<ctvty::rendering::Camera>
 				camera;
+    public:
+      inline
+      const std::shared_ptr<ctvty::rendering::Camera>&
+				getCamera() { return camera; }
+
 
     private:
       std::shared_ptr<ctvty::utils::Vector3D>

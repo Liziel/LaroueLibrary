@@ -12,13 +12,11 @@ namespace user_defined {
 
     EventTester::		EventTester()
       : MonoBehaviour(nullptr, "EventTester") {
-      std::cout << "ctor" << std::endl;
     }
 
 
     EventTester::		EventTester(const serialization::Archive&)
       : MonoBehaviour(nullptr, "EventTester") {
-      std::cout << "ctor" << std::endl;
     }
 
     void			EventTester::Serialize(serialization::Archive& __serial_instance) const {
