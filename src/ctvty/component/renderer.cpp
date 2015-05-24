@@ -36,10 +36,6 @@ namespace ctvty
 	__serial["rotation"] & rotation;
     }
 
-    Object*	Renderer::clone() const {
-      return serialization::serial_info<Object*>::get(serialization::Archive(this));
-    }
-
     void	Renderer::Awake() {
       model->delayedInstantiation();
       CreateAnimation("renderer_stop", 0, 0);

@@ -17,9 +17,6 @@ namespace ctvty {
       void		Serialize(serialization::Archive&) const override;
 
     public:
-      ctvty::Object*	clone() const override;
-
-    public:
       void		Awake();
       void		Render();
 

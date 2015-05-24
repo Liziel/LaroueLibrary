@@ -8,7 +8,7 @@
 			"model" : {
 			    "type" : "ctvty::asset::Model3D",
 			    "object" : {
-				"path" : "assets/model3d/Ziggs/Ziggs.FBX",
+				"path" : "assets/models3d/Ziggs/Ziggs.FBX",
 			    }
 			},
 			"rotation" : {
@@ -33,7 +33,7 @@
 
 				"object" : {
 				    "name" : "idle",
-				    "speed" : 1.0,
+				    "speed" : 0.2,
 
 				    "start" : 0,
 				    "end" : 100,

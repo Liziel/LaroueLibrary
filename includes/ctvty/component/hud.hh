@@ -105,7 +105,6 @@ namespace ctvty {
     public:
       void		Serialize(serialization::Archive&) const override;
 			Canvas(const serialization::Archive&);
-      Object*		clone() const override;
 
     public:
       inline

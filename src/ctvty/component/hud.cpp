@@ -155,10 +155,6 @@ namespace ctvty {
       __serial["Render Camera"] & RenderCamera;
     }
 
-    Object*		Canvas::clone() const {
-      return new Canvas{ serialization::Archive(this) };
-    }
-
     void		Canvas::Awake() {
       Camera*	camera = nullptr;
       if (RenderCamera != "GuiCamera")
