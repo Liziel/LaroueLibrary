@@ -1,10 +1,10 @@
 #include "ctvty/component/transform.hh"
 #include "ctvty/utils/vector3d.hh"
 
+REGISTER_FOR_SERIALIZATION(ctvty::component, Transform);
+
 namespace ctvty {
   namespace component {
-
-    REGISTER_FOR_SERIALIZATION(ctvty::component, Transform);
 
     Transform::		Transform(GameObject* gameObject, 
 				  utils::Vector3D* p , utils::Quaternion* r, utils::Vector3D* s)

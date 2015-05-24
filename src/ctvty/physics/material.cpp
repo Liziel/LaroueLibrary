@@ -1,11 +1,10 @@
 #include "ctvty/physics/material.hh"
 
+REGISTER_FOR_SERIALIZATION(ctvty::physics, Material);
 
 namespace ctvty {
   namespace physics {
     
-    REGISTER_FOR_SERIALIZATION(ctvty::physics, Material);
-
     Material::	Material()
       : bounciness(0), staticFriction(0), dynamicFriction(0) {}
 

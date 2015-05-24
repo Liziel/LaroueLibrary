@@ -4,11 +4,10 @@
 #include "ctvty/debug.hpp"
 #include "ctvty/component/rigidbody.hh"
 
+REGISTER_FOR_SERIALIZATION(user_defined::component, EventTester);
+
 namespace user_defined {
   namespace component {
-
-    REGISTER_FOR_SERIALIZATION(user_defined::component, EventTester);
-
 
     EventTester::		EventTester()
       : MonoBehaviour(nullptr, "EventTester") {

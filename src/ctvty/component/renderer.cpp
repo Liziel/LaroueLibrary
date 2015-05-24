@@ -46,6 +46,8 @@ namespace ctvty
 
     void	Renderer::Render()
     {
+      if (!model || !*model)
+	return ;
       Animator* animator = GetComponent<Animator>();
       if (!animator) {
 	SetAnimation("renderer_stop");
@@ -63,20 +65,25 @@ namespace ctvty
     
     void	Renderer::CreateAnimation(const std::string &name, int FrameStart, int FrameEnd)
     {
-      model->GetModel().CreateAnimation(name, FrameStart, FrameEnd);
+      if (model && *model)
+	model->GetModel().CreateAnimation(name, FrameStart, FrameEnd);
     }
     
     void	Renderer::PauseAnimation()
     {
-      model->GetModel().PauseAnimation();
+      if (model && *model)
+	model->GetModel().PauseAnimation();
     }
 
     void	Renderer::SetAnimation(const std::string &name, bool loop)
     {
-      model->GetModel().SetAnimation(name, loop);
+      if (model && *model)
+	model->GetModel().SetAnimation(name, loop);
     }
 
     float	Renderer::GetFrameDuration() {
+      if ( !(model || *model) )
+	return 0.f;
       return model->GetModel().GetFrameDuration();
     }
   };

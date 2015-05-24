@@ -3,9 +3,9 @@
 
 #include "ctvty/component/transform.hh"
 
-namespace ctvty {
+REGISTER_FOR_SERIALIZATION(ctvty, GameObject);
 
-  REGISTER_FOR_SERIALIZATION(ctvty, GameObject);
+namespace ctvty {
 
   /*
    * Ctor & Dtor

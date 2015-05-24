@@ -5,11 +5,10 @@
 #include "ctvty/utils/collision.hh"
 #include "ctvty/component/transform.hh"
 
+REGISTER_FOR_SERIALIZATION(ctvty::component, RigidBody);
+
 namespace ctvty {
   namespace component {
-
-    REGISTER_FOR_SERIALIZATION(ctvty::component, RigidBody);
-
     
     RigidBody::		RigidBody(GameObject* parent)
       : MonoBehaviour<RigidBody>(parent, "RigidBody"),

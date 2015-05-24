@@ -8,13 +8,31 @@ namespace ctvty {
   namespace asset {
 
     class Model3D : public serialization::Serializable {
+    public:
+      class Wrapper : public serialization::Serializable {
+      private:
+	std::string					path;
+
+      public:
+	std::shared_ptr<ctvty::rendering::Model3D>	model;	
+
+      public:
+			Wrapper(const serialization::Archive&);
+	void		Serialize(serialization::Archive&) const;
+      };
+
     private:
-      std::string					path;
-      std::shared_ptr<ctvty::rendering::Model3D>	model;
+      std::string					wrapper;
+      std::shared_ptr<Wrapper>				_object;
+
     public:
       inline
+      std::shared_ptr<ctvty::rendering::Model3D>&	GetShared() {
+	return (_object->model);
+      }
+      inline
       ctvty::rendering::Model3D&			GetModel() {
-	return *model;
+	return *(_object->model);
       }
 
     public:
@@ -22,7 +40,7 @@ namespace ctvty {
       void		Serialize(serialization::Archive&) const;
 
     public:
-      operator bool() { return (bool) model; }
+      operator bool() { return (bool) (_object && _object->model); }
       void		delayedInstantiation();
     };
 

@@ -1,10 +1,10 @@
 #include <cmath>
 #include "ctvty/utils/vector3d.hh"
 
+REGISTER_FOR_SERIALIZATION(ctvty::utils, Vector3D);
+
 namespace ctvty {
   namespace utils {
-
-    REGISTER_FOR_SERIALIZATION(ctvty::utils, Vector3D);
 
     Vector3D::		Vector3D()
       : Vector3D(zero) {}

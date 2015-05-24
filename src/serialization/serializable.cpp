@@ -24,26 +24,33 @@ namespace serialization {
     if (getAllocationMap().end() == getAllocationMap().find(archive["type"].as<std::string>()))
       throw error::undefined_type_reference(archive["type"].as<std::string>());
     try {
-      return getAllocationMap() [archive["type"].as<std::string>()] (archive["object"].as<const Archive&>());
+      return getAllocationMap() .at(archive["type"].as<std::string>()) (archive["object"].as<const Archive&>());
     } catch (const error::undefined_type_reference& e) {
       throw error::backtrace_serial_error(archive["type"].as<std::string>(), e.what());
     } catch (const error::undefined_variable_reference& e) {
       throw error::backtrace_serial_error(archive["type"].as<std::string>(), e.what());
     } catch (const error::backtrace_serial_error& e) {
       throw error::backtrace_serial_error(archive["type"].as<std::string>(), e.what());
+    } catch (const std::out_of_range&) {
+      throw error::undefined_type_reference(archive["type"].as<std::string>());
     }
   }
 
   Serializable*			Serializable::Instantiate(const Serial& serial) {
     const Archive&		archive = serial.as<const Archive&>();
+
     try {
-      return getAllocationMap() [archive["type"].as<std::string>()] (archive["object"].as<const Archive&>());
+      return getAllocationMap() .at(archive["type"].as<std::string>()) (archive["object"].as<const Archive&>());
+    } catch (const error::incorrect_object& e) {
+      throw error::backtrace_serial_error(archive["type"].as<std::string>(), e.what());
     } catch (const error::undefined_type_reference& e) {
       throw error::backtrace_serial_error(archive["type"].as<std::string>(), e.what());
     } catch (const error::undefined_variable_reference& e) {
       throw error::backtrace_serial_error(archive["type"].as<std::string>(), e.what());
     } catch (const error::backtrace_serial_error& e) {
       throw error::backtrace_serial_error(archive["type"].as<std::string>(), e.what());
+    } catch (const std::out_of_range&) {
+      throw error::undefined_type_reference(archive["type"].as<std::string>());
     }
   }
 };

@@ -3,10 +3,10 @@
 #include "ctvty/rendering/renderer.hh"
 #include "ctvty/input.hh"
 
-namespace ctvty {
+REGISTER_FOR_SERIALIZATION(ctvty, Application);
+REGISTER_FOR_SERIALIZATION(ctvty::Application, Scene);
 
-  REGISTER_FOR_SERIALIZATION(ctvty, Application);
-  REGISTER_FOR_SERIALIZATION(ctvty::Application, Scene);
+namespace ctvty {
 
   Application::		Application(const serialization::Archive& __serial)
     : leave_state(false), delayed_quit(nullptr) {

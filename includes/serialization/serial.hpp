@@ -38,6 +38,12 @@ namespace serialization {
     public:
       backtrace_serial_error(const std::string& type, const std::string& _what);
     };
+
+    class incorrect_object : public std::runtime_error {
+    public:
+      incorrect_object()
+	: std::runtime_error("wrong object definition") {}
+    };
   };
   class Serializable;
 

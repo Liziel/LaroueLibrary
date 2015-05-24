@@ -53,9 +53,14 @@ namespace serialization {
     }());
 };
 
+template<typename __register>
+void	register_for_serialization(void);
+
 # define REGISTER_FOR_SERIALIZATION(__namespace__, __type__)		\
-  void	 register_for_serialization_ ## __type__ () {			\
-    (void)serialization::Registration< __namespace__ :: __type__ >::_register; \
+  template<>								\
+  void	 register_for_serialization< __namespace__ :: __type__ > (void) { \
+    (void)serialization::Registration< __namespace__ :: __type__ >	\
+      ::_register;							\
   }
 
 # define SERIALIZE_OBJECT_AS(__type__, __serial__)			\

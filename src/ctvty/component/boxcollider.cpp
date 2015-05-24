@@ -3,9 +3,10 @@
 #include "ctvty/component/boxcollider.hh"
 #include "ctvty/component/transform.hh"
 
+REGISTER_FOR_SERIALIZATION(ctvty::component, BoxCollider);
+
 namespace ctvty{
   namespace component {
-    REGISTER_FOR_SERIALIZATION(ctvty::component, BoxCollider);
     
     BoxCollider::		BoxCollider(GameObject* gameObject)
       : Collider(gameObject, "BoxCollider"),

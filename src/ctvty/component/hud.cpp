@@ -88,7 +88,7 @@ namespace ctvty {
       model.reset(ctvty::rendering::Renderer::GetRenderer().CreateHud());
       if (texture) {
 	texture->delayedInstantiation();
-	model->SetTexture(texture->GetTexture());
+	model->SetTexture(texture->GetShared());
       }
       if (text_enabled) {
 	model->SetText(text);
@@ -104,7 +104,7 @@ namespace ctvty {
       model.reset(ctvty::rendering::Renderer::GetRenderer().CreateHud());
       if (texture) {
 	texture->delayedInstantiation();
-	model->SetTexture(texture->GetTexture());
+	model->SetTexture(texture->GetShared());
       }
       if (text_enabled) {
 	model->SetText(text);
