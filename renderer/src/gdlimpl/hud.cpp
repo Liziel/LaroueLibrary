@@ -82,7 +82,7 @@ namespace GdlImpl {
     if (_space == space::screen) {
       return
 	y > _offy * _renderer.GetHeight() &&
-	y < _offy * _renderer.GetHeight()  + _offx * _renderer.GetHeight() &&
+	y < _offy * _renderer.GetHeight()  + _sizey * _renderer.GetHeight() &&
 	x > _offx * _renderer.GetWidth() &&
 	x < _offx * _renderer.GetWidth() + _sizex * _renderer.GetWidth();
     }

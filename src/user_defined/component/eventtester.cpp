@@ -11,11 +11,13 @@ namespace user_defined {
 
     EventTester::		EventTester()
       : MonoBehaviour(nullptr, "EventTester") {
+      RegisterListener("exit click", &EventTester::ExitClick);
     }
 
 
     EventTester::		EventTester(const serialization::Archive&)
       : MonoBehaviour(nullptr, "EventTester") {
+      RegisterListener("exit click", &EventTester::ExitClick);
     }
 
     void			EventTester::Serialize(serialization::Archive& __serial_instance) const {
@@ -37,6 +39,7 @@ namespace user_defined {
       hud->SetTexture(texture);
       hud->SetPosition(0.8, 0.1 , 0.1, 0.1);
       hud->SetScreenSpace(0);
+      hud->Enable();
     }
 
     /*			Collision Events Tests			*/
@@ -56,6 +59,10 @@ namespace user_defined {
       std::cerr << std::endl << std::endl << std::endl
 		<< "On Collision Exit"
 		<< std::endl << std::endl << std::endl;
+    }
+
+    void		EventTester::ExitClick() {
+      std::cout << "Exit Click" << std::endl;
     }
 
     void		EventTester::Render() {

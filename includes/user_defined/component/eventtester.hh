@@ -34,6 +34,9 @@ namespace user_defined {
       void		OnCollisionExit(const ctvty::utils::Collision*);
 
     public:
+      void		ExitClick();
+
+    public:
       void		Render();
 
     public:

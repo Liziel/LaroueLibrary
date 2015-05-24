@@ -8,6 +8,8 @@
 #include "ctvty/application.hh"
 #include "ctvty/event.hh"
 
+#include "ctvty/debug.hpp"
+
 REGISTER_FOR_SERIALIZATION(ctvty::component, Hud);
 REGISTER_FOR_SERIALIZATION(ctvty::component, Canvas);
 
@@ -42,18 +44,14 @@ namespace ctvty {
       __serial["size x"]	& sizex;
       __serial["size y"]	& sizey;
 
-      if (__serial.exist("offset x"))
-	__serial["offset x"]	& offx;
-      else
-	offx = 0.f;
-      if (__serial.exist("offset y"))
-	__serial["offset y"]	& offy;
-      else
-	offy = 0.f;
+      __serial["offset x"]	& offx;
+      __serial["offset y"]	& offy;
 
       __serial["level"]		& level;
-
-      __serial["enabled"]	& enabled;
+      
+      enabled = false;
+      if (__serial.exist("enabled"))
+	__serial["enabled"]	& enabled;
     }
 
     void		Hud::Serialize(serialization::Archive& __serial_instance) const {
@@ -81,15 +79,17 @@ namespace ctvty {
       __serial["offset y"]	& offy;
 
       __serial["level"]		& level;
+
       __serial["enabled"]	& enabled;
     }
 
     void		Hud::genScreenModel(float canvas_sizeX, float canvas_sizeY,
 					    float canvas_offX, float canvas_offY) {
       model.reset(ctvty::rendering::Renderer::GetRenderer().CreateHud());
-      if (texture && *texture) {
+      if (texture) {
 	texture->delayedInstantiation();
-	model->SetTexture(texture->GetShared());
+	if (*texture)
+	  model->SetTexture(texture->GetShared());
       }
       if (text_enabled) {
 	model->SetText(text);
@@ -97,22 +97,26 @@ namespace ctvty {
       model->SetPosition(sizex * canvas_sizeX, sizey * canvas_sizeY,
 			 offx * canvas_sizeX + canvas_offX, offy * canvas_sizeY + canvas_offY);
       model->SetScreenSpace(level);
+      model->Enable();
     }
 
     void		Hud::genWorldModel(float canvas_sizeX, float canvas_sizeY,
 					   const utils::Vector3D& position,
 					   const utils::Quaternion& rotation) {
       model.reset(ctvty::rendering::Renderer::GetRenderer().CreateHud());
-      if (texture && *texture) {
+      if (texture) {
 	texture->delayedInstantiation();
-	model->SetTexture(texture->GetShared());
+	if (*texture)
+	  model->SetTexture(texture->GetShared());
       }
       if (text_enabled) {
 	model->SetText(text);
       }
-      model->SetPosition(sizex * canvas_sizeX, sizey * canvas_sizeY);
+      model->SetPosition(sizex * canvas_sizeX, sizey * canvas_sizeY,
+			 offx * canvas_sizeX, offy * canvas_sizeY);
       model->SetWorldSpace(rotation,
 			   position + rotation.RotatedVector(ctvty::utils::Vector3D::back) * level);
+      model->Enable();
     }
 
     Canvas::		Canvas(const serialization::Archive& __serial)
@@ -167,7 +171,7 @@ namespace ctvty {
 	}
 
       for (auto& children : childrens) {
-	if (WorldSpaceDefinition)
+	if (ScreenSpaceDefinition)
 	  children.second->genScreenModel(sizeX, sizeY, offX, offY);
 	else
 	  children.second->genWorldModel(sizeX, sizeY,
@@ -188,10 +192,12 @@ namespace ctvty {
 	    BroadcastMessage(children.second->onHover());
 	    
       } else if (e->type() == Event::Type::mousebuttondown) {
-	for (auto& children : childrens)
+	for (auto& children : childrens) {
 	  if (children.second->isClickable()
-	      && children.second->GetModel()->IsInside(e->position().x, e->position().y))
+	      && children.second->GetModel()->IsInside(e->position().x, e->position().y)) {
 	    BroadcastMessage(children.second->onClick());
+	  }
+	}
       }
     }
   };
