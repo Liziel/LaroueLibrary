@@ -27,7 +27,9 @@ namespace ctvty {
     /*
      * intern method corrsponding to the Instantiate & Destroy static methodes
      */
-    virtual Object*		clone() const = 0;
+    virtual Object*		clone() const {
+      return serialization::serial_info<Object*>::get(serialization::Archive(this));
+    }
     virtual void		intern_Destroy() {}
 
   private:
