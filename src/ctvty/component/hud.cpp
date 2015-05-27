@@ -34,6 +34,7 @@ namespace ctvty {
       if (__serial.exist("text")) {
 	text_enabled = true;
 	__serial["text"] & text;
+	__serial["police"] & police;
       }
 
       texture.reset();
@@ -85,7 +86,7 @@ namespace ctvty {
 
     void		Hud::genScreenModel(float canvas_sizeX, float canvas_sizeY,
 					    float canvas_offX, float canvas_offY) {
-      model.reset(ctvty::rendering::Renderer::GetRenderer().CreateHud());
+      model = ctvty::rendering::Renderer::GetRenderer().CreateHud();
       if (texture) {
 	texture->delayedInstantiation();
 	if (*texture)
@@ -103,7 +104,7 @@ namespace ctvty {
     void		Hud::genWorldModel(float canvas_sizeX, float canvas_sizeY,
 					   const utils::Vector3D& position,
 					   const utils::Quaternion& rotation) {
-      model.reset(ctvty::rendering::Renderer::GetRenderer().CreateHud());
+      model = ctvty::rendering::Renderer::GetRenderer().CreateHud();
       if (texture) {
 	texture->delayedInstantiation();
 	if (*texture)
@@ -186,11 +187,11 @@ namespace ctvty {
       const std::shared_ptr<Event>	e ( ctvty::Event::current() );
 
       if (e->type() == Event::Type::mousemotion) {
-	for (auto& children : childrens)
+	for (auto& children : childrens) {
 	  if (children.second->isHoverable()
 	      && children.second->GetModel()->IsInside(e->position().x, e->position().y))
 	    BroadcastMessage(children.second->onHover());
-	    
+	}
       } else if (e->type() == Event::Type::mousebuttondown) {
 	for (auto& children : childrens) {
 	  if (children.second->isClickable()

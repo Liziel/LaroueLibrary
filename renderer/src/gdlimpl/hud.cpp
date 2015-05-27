@@ -8,8 +8,10 @@
 #include "gdlimpl/renderer.hh"
 
 namespace GdlImpl {
-  Hud::			Hud(Renderer& renderer)
-    : _renderer(renderer), _rotation(ctvty::utils::Quaternion::identity) {
+  Hud::			Hud(Renderer& renderer, std::list< std::weak_ptr<Hud> >* l)
+    : _renderer(renderer),
+      _self_container(l),
+      _rotation(ctvty::utils::Quaternion::identity) {
 
     _geometry.pushVertex(glm::vec3(0,	0, 0));
     _geometry.pushVertex(glm::vec3(1.f, 0, 0));
@@ -54,6 +56,10 @@ namespace GdlImpl {
   void			Hud::SetScreenSpace(int level) {
     _level = level;
     _space = space::screen;
+    if (_self_container)
+      _self_container->remove_if([this](std::weak_ptr<Hud> t) { return t.expired() || this == t.lock().get(); } );
+    if (!_associated)
+      _self_container = _renderer.AddScreenHud(_self);
   }
 
   void			Hud::Draw() {

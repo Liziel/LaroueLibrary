@@ -8,8 +8,17 @@
 			"model" : {
 			    "type" : "ctvty::asset::Model3D",
 			    "object" : {
-				"wrapper" : "assets/model3d/Ziggs/Ziggs.FBX",
-			    }
+				"wrapper" : "models3d/ziggs.json",
+			    },
+			},
+			"rotation" : {
+			    "type" : "ctvty::utils::Quaternion"
+			    "object" : {
+				"euler" : true,
+				"x" : 0,
+				"y" : 3.14,
+				"z" : 0,
+			    },
 			},
 		    },
 		    "type" : "ctvty::component::Renderer",
@@ -86,9 +95,9 @@
 				},
 				"scale" : {
 					"object" : {
-						"x" : 0.01,
-						"y" : 0.01,
-						"z" : 0.01,
+						"x" : 0.02,
+						"y" : 0.02,
+						"z" : 0.02,
 					},
 					"type" : "ctvty::utils::Vector3D",
 				},

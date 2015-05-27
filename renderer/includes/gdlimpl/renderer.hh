@@ -48,9 +48,15 @@ namespace GdlImpl {
     inline const std::list<Camera*>&	Cameras() { return cameras; }
 
   private:
-    std::list<Hud*>			huds;
+    std::list< std::weak_ptr<Hud> >			inactivesHuds;
+    std::map< int, std::list< std::weak_ptr<Hud> > >	screenhuds;
   public:
-    ctvty::rendering::Hud*		CreateHud() final;
+    std::shared_ptr<ctvty::rendering::Hud>
+					CreateHud() final;
+    std::list<std::weak_ptr<Hud>>*	AddScreenHud(std::weak_ptr<Hud> self) {
+      screenhuds[self.lock()->GetLevel()].push_back(self);
+      return & (screenhuds[self.lock()->GetLevel()]);
+    }
 
   public:
     void				Pre3DRendering(int camera_id) final;

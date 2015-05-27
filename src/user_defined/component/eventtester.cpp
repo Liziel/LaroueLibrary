@@ -34,7 +34,7 @@ namespace user_defined {
     }
 
     void			EventTester::Awake() {
-      texture.reset(ctvty::rendering::Renderer::GetRenderer().LoadTexture("assets/textures/exit.tga"));
+      texture.reset(ctvty::rendering::Renderer::GetRenderer().LoadTexture("assets/textures/fire.tga"));
       hud = ctvty::rendering::Renderer::GetRenderer().CreateHud();
       hud->SetTexture(texture);
       hud->SetPosition(0.8, 0.1 , 0.1, 0.1);

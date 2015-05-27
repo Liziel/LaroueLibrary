@@ -15,7 +15,7 @@ namespace user_defined {
     class EventTester : public ctvty::MonoBehaviour<EventTester> {
     private:
       std::shared_ptr<ctvty::rendering::Texture>	texture;
-      ctvty::rendering::Hud*				hud;
+      std::shared_ptr<ctvty::rendering::Hud>		hud;
 
     public:
 			EventTester();

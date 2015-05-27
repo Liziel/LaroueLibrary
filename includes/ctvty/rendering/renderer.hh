@@ -36,7 +36,7 @@ namespace ctvty {
 	virtual std::size_t		RegisteredCameras() = 0;
 
       public:
-	virtual Hud*			CreateHud() = 0;
+	virtual std::shared_ptr<Hud>	CreateHud() = 0;
 
       public:
 	virtual void			Pre3DRendering(int camera_id = -1) = 0;
@@ -55,18 +55,6 @@ namespace ctvty {
 
     public:
       static Implementation&		GetRenderer();
-
-    public:
-      static void			Initialize(std::size_t width,
-						   std::size_t height,
-						   const std::string& window_name);
-      static void			Update();
-      static void			Flush();
-      static void			Quit();
-
-    public:
-      static void			SetDefaultCameraPosition(const ctvty::utils::Vector3D& position,
-								 const ctvty::utils::Quaternion& rotation);
     };
   };
 };

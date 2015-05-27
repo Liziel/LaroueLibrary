@@ -7,6 +7,7 @@
 
 # include "ctvty/monobehaviour.hpp"
 
+# include "ctvty/assets/police.hh"
 # include "ctvty/assets/texture.hh"
 # include "ctvty/rendering/hud.hh"
 
@@ -28,11 +29,13 @@ namespace ctvty {
       std::string	onHoverEvent;
     public:
       inline
-      bool			isHoverable() { return onClickEnabled; }
+      bool			isHoverable() { return onHoverEnabled; }
       inline
-      const std::string&	onHover() { return onClickEvent; }
+      const std::string&	onHover() { return onHoverEvent; }
 
     private:
+      std::shared_ptr<asset::Police::Wrapper>
+			police;
       bool		text_enabled;
       std::string	text;
     public:

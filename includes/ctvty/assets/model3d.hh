@@ -40,6 +40,7 @@ namespace ctvty {
       void		Serialize(serialization::Archive&) const;
 
     public:
+      inline
       operator bool() { return (bool) (_object && _object->model); }
       void		delayedInstantiation();
     };

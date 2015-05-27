@@ -29,6 +29,8 @@ namespace GdlImpl {
     _shader.load("./renderer/libraries/GdlLibrary/shaders/basic.vp", GL_VERTEX_SHADER);
     _shader.build();
     glEnable(GL_DEPTH_TEST);
+    glEnable (GL_BLEND);
+    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   }
 
   void		Renderer::Update() {
@@ -114,21 +116,23 @@ namespace GdlImpl {
   void		Renderer::MainHUDRendering() {
     glViewport(0.f, 0.f,
 	       width, height);
-    std::list<Hud*> mainhud = huds;
     glm::mat4 projection =
       glm::ortho(0.0f,
 		 static_cast<float>(width), static_cast<float>(height), 0.0f);
-    mainhud.remove_if([] (Hud* hud) {
-	return hud->GetAssociatedCamera() ||
-	  hud->getSpace() != Hud::space::screen ||
-	  !hud->state();
-      });
     _shader.setUniform("projection", projection);
     _shader.setUniform("view", glm::mat4(1));
     _shader.bind();
     glClear(GL_DEPTH_BUFFER_BIT);
-    for (auto hud : mainhud)
-      hud->Draw();
+    for (auto& huds : screenhuds) {
+      for (auto it = huds.second.begin();
+	   huds.second.end() != it; ++it) {
+	if (!it->expired())
+	  it->lock()->Draw();
+	else
+	  it = huds.second.erase(it);
+      }
+      glClear(GL_DEPTH_BUFFER_BIT);
+    }
   }
 
   void		Renderer::Flush() {
@@ -158,10 +162,11 @@ namespace GdlImpl {
     return new Texture(path);
   }
 
-  ctvty::rendering::Hud*
+  std::shared_ptr<ctvty::rendering::Hud>
 		Renderer::CreateHud() {
-    Hud* n = new Hud(*this);
-    huds.push_back(n);
+    std::shared_ptr<Hud> n ( new Hud(*this, &inactivesHuds) );
+    n->SetWeakRef(n);
+    inactivesHuds.push_back(n);
     return n;
   }
 };

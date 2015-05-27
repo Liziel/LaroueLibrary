@@ -8,7 +8,7 @@
 			"model" : {
 			    "type" : "ctvty::asset::Model3D",
 			    "object" : {
-				"wrapper" : "assets/model3d/Ziggs/Ziggs.FBX",
+				"wrapper" : "models3d/ziggs.json",
 			    }
 			},
 			"rotation" : {
