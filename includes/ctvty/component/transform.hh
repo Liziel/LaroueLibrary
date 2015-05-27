@@ -38,6 +38,9 @@ namespace ctvty {
       Object*		clone() const override;
 
     public:
+      void		Awake();
+
+    public:
       void		SetPosition(const utils::Vector3D&);
       void		Translate(const utils::Vector3D&);
 

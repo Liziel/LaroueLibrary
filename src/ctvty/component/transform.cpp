@@ -38,8 +38,9 @@ namespace ctvty {
       return new Transform(nullptr, *position, *rotation, *scale);
     }
 
-    void		Transform::SetParent(Transform* t) {
-      parent = t;
+    void		Transform::Awake() {
+      if (gameObject->HasParent())
+	parent = gameObject->GetParent().GetTransformation();
     }
     
     void		Transform::Translate(const utils::Vector3D& t) {

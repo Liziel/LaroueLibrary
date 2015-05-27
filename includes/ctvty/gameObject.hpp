@@ -38,6 +38,9 @@ namespace ctvty {
      */
     std::list<GameObject*>			childs;
     GameObject*					parent;
+  public:
+    inline bool					HasParent() { return parent != nullptr; }
+    inline GameObject&				GetParent() { return *parent; }
 
   private:
     /*
