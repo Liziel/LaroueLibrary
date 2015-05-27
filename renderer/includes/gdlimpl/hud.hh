@@ -25,9 +25,12 @@ namespace GdlImpl {
     std::shared_ptr<ctvty::rendering::Texture>		_texture;
     ctvstd::Optional<std::string>			_text;
     std::shared_ptr<ctvty::asset::Police::Wrapper>	_police;
+    SDL_Color						color;
+    SDL_Surface*					texture;
+
   public:
     void	SetTexture(std::shared_ptr<ctvty::rendering::Texture>&) final;
-    void	SetText(const std::string&, std::shared_ptr<ctvty::asset::Police::Wrapper>&) final;
+    void	SetText(const std::string&, std::shared_ptr<ctvty::asset::Police::Wrapper>, int, int, int) final;
 
   private:
     std::shared_ptr<ctvty::rendering::Camera> _associated;

@@ -38,6 +38,7 @@ namespace ctvty {
 			police;
       bool		text_enabled;
       std::string	text;
+      int		r,g,b;
     public:
       void		SetText(const std::string&);
 

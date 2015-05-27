@@ -30,8 +30,12 @@ namespace GdlImpl {
     _texture = texture;
   }
 
-  void			Hud::SetText(const std::string& text) {
+  void			Hud::SetText(const std::string& text,
+				     std::shared_ptr<ctvty::asset::Police::Wrapper> police,
+				     int r, int g, int b) {
     _text = text;
+    _police = police;
+    color = { r, g, b };
   }
 
   void			Hud::Associate(const std::shared_ptr<ctvty::rendering::Camera>& associated) {
@@ -67,6 +71,8 @@ namespace GdlImpl {
 
     if (_texture)
       _texture->Bind();
+    if (_text) {
+    }
     if (_space == space::screen) {
       transform = glm::translate(_offx * _renderer.GetWidth(), _offy * _renderer.GetHeight(), 0.f);
       transform *= glm::scale(_sizex * _renderer.GetWidth(), _sizey * _renderer.GetHeight(), 0.f);

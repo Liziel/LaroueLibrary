@@ -35,6 +35,9 @@ namespace ctvty {
 	text_enabled = true;
 	__serial["text"] & text;
 	__serial["police"] & police;
+	__serial["red"] & r;
+	__serial["green"] & g;
+	__serial["black"] & b;
       }
 
       texture.reset();
@@ -67,6 +70,10 @@ namespace ctvty {
       
       if (text_enabled) {
 	__serial["text"] & text;
+	__serial["police"] & police;
+	__serial["red"] & r;
+	__serial["green"] & g;
+	__serial["black"] & b;
       }
 
       if (texture) {
@@ -94,7 +101,7 @@ namespace ctvty {
       }
       if (text_enabled) {
 	police->delayedInstantiation();
-	model->SetText(text, police->GetShared());
+	model->SetText(text, police->GetShared(), r, g, b);
       }
       model->SetPosition(sizex * canvas_sizeX, sizey * canvas_sizeY,
 			 offx * canvas_sizeX + canvas_offX, offy * canvas_sizeY + canvas_offY);
@@ -112,7 +119,7 @@ namespace ctvty {
 	  model->SetTexture(texture->GetShared());
       }
       if (text_enabled) {
-	model->SetText(text, police->GetShared());
+	model->SetText(text, police->GetShared(), r, g, b);
       }
       model->SetPosition(sizex * canvas_sizeX, sizey * canvas_sizeY,
 			 offx * canvas_sizeX, offy * canvas_sizeY);
