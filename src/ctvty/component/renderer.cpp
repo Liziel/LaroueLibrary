@@ -51,14 +51,16 @@ namespace ctvty
       Animator* animator = GetComponent<Animator>();
       if (!animator) {
 	SetAnimation("renderer_stop");
-	model->GetModel().Draw(transform->GetPosition(),
-			       transform->GetScale(),
-			       (rotation ? *rotation * transform->GetRotation() : transform->GetRotation()));
+	model->GetModel().Draw(transform->GetHierarchyPosition(),
+			       transform->GetHierarchyScale(),
+			       (rotation ? *rotation * transform->GetHierarchyRotation() :
+				transform->GetHierarchyRotation()));
       }
       else {
-	model->GetModel().Draw(transform->GetPosition(),
-			       transform->GetScale(),
-			       (rotation ? *rotation * transform->GetRotation() : transform->GetRotation()),
+	model->GetModel().Draw(transform->GetHierarchyPosition(),
+			       transform->GetHierarchyScale(),
+			       (rotation ? *rotation * transform->GetHierarchyRotation() :
+				transform->GetHierarchyRotation()),
 			       animator->GetFrame(*this));
       }
     }

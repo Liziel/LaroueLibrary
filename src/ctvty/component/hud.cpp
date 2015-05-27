@@ -93,7 +93,8 @@ namespace ctvty {
 	  model->SetTexture(texture->GetShared());
       }
       if (text_enabled) {
-	model->SetText(text);
+	police->delayedInstantiation();
+	model->SetText(text, police->GetShared());
       }
       model->SetPosition(sizex * canvas_sizeX, sizey * canvas_sizeY,
 			 offx * canvas_sizeX + canvas_offX, offy * canvas_sizeY + canvas_offY);
@@ -111,7 +112,7 @@ namespace ctvty {
 	  model->SetTexture(texture->GetShared());
       }
       if (text_enabled) {
-	model->SetText(text);
+	model->SetText(text, police->GetShared());
       }
       model->SetPosition(sizex * canvas_sizeX, sizey * canvas_sizeY,
 			 offx * canvas_sizeX, offy * canvas_sizeY);
@@ -176,8 +177,8 @@ namespace ctvty {
 	  children.second->genScreenModel(sizeX, sizeY, offX, offY);
 	else
 	  children.second->genWorldModel(sizeX, sizeY,
-					 transform->GetPosition(),
-					 transform->GetRotation());
+					 transform->GetHierarchyPosition(),
+					 transform->GetHierarchyRotation());
 	if (camera)
 	  children.second->GetModel()->Associate(camera->getCamera());	
       }

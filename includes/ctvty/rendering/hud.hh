@@ -3,6 +3,7 @@
 
 # include <string>
 # include "ctvty/utils/vector3d.hh"
+# include "ctvty/assets/police.hh"
 # include "ctvty/rendering/camera.hh"
 # include "ctvty/rendering/texture.hh"
 
@@ -15,7 +16,7 @@ namespace ctvty {
 
     public:
       virtual void	SetTexture(std::shared_ptr<ctvty::rendering::Texture>&) = 0;
-      virtual void	SetText(const std::string&) = 0;
+      virtual void	SetText(const std::string&, std::shared_ptr<asset::Police::Wrapper>) = 0;
       
     public:
       virtual void	Associate(const std::shared_ptr<Camera>&) = 0;

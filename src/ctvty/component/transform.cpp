@@ -58,40 +58,17 @@ namespace ctvty {
       *rotation = *rotation * q;
     }
 
-
-    inline
-    const utils::Vector3D&	Transform::GetPosition() const {
-      return *position;
+    const utils::Vector3D	Transform::GetHierarchyPosition() const {
+      return *position + (parent ? parent->GetHierarchyPosition() : ctvty::utils::Vector3D::zero);
     }
 
-    inline
-    const utils::Quaternion&	Transform::GetRotation() const {
-      return *rotation;
+    const utils::Quaternion	Transform::GetHierarchyRotation() const {
+      return *rotation * (parent ? parent->GetHierarchyRotation() : ctvty::utils::Quaternion::identity);
     }
 
-    inline
-    const utils::Vector3D&	Transform::GetScale() const {
-      return *scale;
+    const utils::Vector3D	Transform::GetHierarchyScale() const {
+      return *scale + (parent ? parent->GetHierarchyScale() : ctvty::utils::Vector3D::zero);
     }
 
-    utils::Vector3D&		Transform::GetPosition() {
-      return const_cast<utils::Vector3D&>(static_cast<const Transform&>(*this).GetPosition());
-    }
-
-    utils::Quaternion&		Transform::GetRotation() {
-      return const_cast<utils::Quaternion&>(static_cast<const Transform&>(*this).GetRotation());
-    }
-
-    utils::Vector3D&		Transform::GetScale() {
-      return const_cast<utils::Vector3D&>(static_cast<const Transform&>(*this).GetScale());
-    }
-
-    const utils::Vector3D	Transform::GetRealPosition() const {
-      return (parent ? parent->GetRealPosition() : utils::Vector3D::zero) + *position;
-    }
-
-    const utils::Quaternion	Transform::GetRealRotation() const {
-      return (parent ? parent->GetRealRotation() : utils::Quaternion::identity) * *rotation;
-    }
   };
 };

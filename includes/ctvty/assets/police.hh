@@ -41,7 +41,7 @@ namespace ctvty {
       }
       inline
       std::shared_ptr<Wrapper>	GetShared() {
-
+	return _object;
       }
 
     public:

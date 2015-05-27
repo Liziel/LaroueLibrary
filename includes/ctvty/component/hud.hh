@@ -34,7 +34,7 @@ namespace ctvty {
       const std::string&	onHover() { return onHoverEvent; }
 
     private:
-      std::shared_ptr<asset::Police::Wrapper>
+      std::shared_ptr<asset::Police>
 			police;
       bool		text_enabled;
       std::string	text;

@@ -47,18 +47,22 @@ namespace ctvty {
       void		Rotate(const utils::Quaternion&);
 
     public:
-      const utils::Vector3D	GetRealPosition() const;
-      const utils::Quaternion	GetRealRotation() const;
+      inline const utils::Vector3D&	GetPosition() const { return * position; }
+      inline const utils::Quaternion&	GetRotation() const { return * rotation; }
+      inline const utils::Vector3D&	GetScale() const { return * scale; }
 
     public:
-      const utils::Vector3D&	GetPosition() const;
-      const utils::Quaternion&	GetRotation() const;
-      const utils::Vector3D&	GetScale() const;
+      inline utils::Vector3D&		GetPosition()
+      { return const_cast<utils::Vector3D&>(static_cast<const Transform&>(*this).GetPosition()); }
+      inline utils::Quaternion&		GetRotation()
+      { return const_cast<utils::Quaternion&>(static_cast<const Transform&>(*this).GetRotation()); }
+      inline utils::Vector3D&		GetScale()
+      { return const_cast<utils::Vector3D&>(static_cast<const Transform&>(*this).GetScale()); }
 
     public:
-      utils::Vector3D&		GetPosition();
-      utils::Quaternion&	GetRotation();
-      utils::Vector3D&		GetScale();
+      const utils::Vector3D	GetHierarchyPosition() const;
+      const utils::Quaternion	GetHierarchyRotation() const;
+      const utils::Vector3D	GetHierarchyScale() const;
 
     };
 

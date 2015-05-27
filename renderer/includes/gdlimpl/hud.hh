@@ -9,6 +9,7 @@ namespace GdlImpl {
 
   class Renderer;
   class Hud : public ctvty::rendering::Hud {
+
   private:
     Renderer& _renderer;
     gdl::Geometry _geometry;
@@ -19,13 +20,14 @@ namespace GdlImpl {
 			Hud(Renderer& renderer ,
 			    std::list< std::weak_ptr<Hud> >* self_container);
     inline void		SetWeakRef(std::weak_ptr<Hud> self ) { _self = self; }
+
   private:
-    std::shared_ptr<ctvty::rendering::Texture> _texture;
-    ctvstd::Optional<std::string>		_text;
-    
+    std::shared_ptr<ctvty::rendering::Texture>		_texture;
+    ctvstd::Optional<std::string>			_text;
+    std::shared_ptr<ctvty::asset::Police::Wrapper>	_police;
   public:
     void	SetTexture(std::shared_ptr<ctvty::rendering::Texture>&) final;
-    void	SetText(const std::string&) final;
+    void	SetText(const std::string&, std::shared_ptr<ctvty::asset::Police::Wrapper>&) final;
 
   private:
     std::shared_ptr<ctvty::rendering::Camera> _associated;
