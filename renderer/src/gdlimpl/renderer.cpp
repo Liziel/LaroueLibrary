@@ -2,10 +2,10 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "gdlimpl/hud.hh"
 #include "gdlimpl/renderer.hh"
 #include "gdlimpl/texture.hh"
 #include "ctvty/debug.hpp"
+
 
 namespace ctvty {
   namespace rendering {
@@ -30,7 +30,10 @@ namespace GdlImpl {
     _shader.build();
     glEnable(GL_DEPTH_TEST);
     glEnable (GL_BLEND);
+    glEnable (GL_TEXTURE);
     glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    if (TTF_Init() != 0)
+      std::cout << "TTF init: " << TTF_GetError() << std::endl;
   }
 
   void		Renderer::Update() {

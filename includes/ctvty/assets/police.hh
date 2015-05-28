@@ -4,7 +4,7 @@
 # include <memory>
 # include <string>
 
-# include <SDL/SDL_ttf.h>
+# include <SDL2/SDL_ttf.h>
 
 # include "serialization/serializable.hh"
 
@@ -21,10 +21,9 @@ namespace ctvty {
       private:
 	TTF_Font*		police;
       public:
-	inline
-	TTF_Font&		operator * () { return *police; }
-	inline
-	TTF_Font&		get() { return **this; }
+	inline TTF_Font&		operator * () { return *police; }
+	inline TTF_Font*		operator & () { return police; }
+	inline TTF_Font&		get() { return **this; }
       public:
 	~Wrapper();
 			Wrapper(const serialization::Archive&);

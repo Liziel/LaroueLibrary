@@ -4,30 +4,33 @@
 
 #include <iostream>
 
-#include "gdlimpl/hud.hh"
 #include "gdlimpl/renderer.hh"
+#include "gdlimpl/hud.hh"
 
 namespace GdlImpl {
   Hud::			Hud(Renderer& renderer, std::list< std::weak_ptr<Hud> >* l)
     : _renderer(renderer),
       _self_container(l),
-      _rotation(ctvty::utils::Quaternion::identity) {
-
-    _geometry.pushVertex(glm::vec3(0,	0, 0));
-    _geometry.pushVertex(glm::vec3(1.f, 0, 0));
-    _geometry.pushVertex(glm::vec3(1.f, 1.f, 0));
-    _geometry.pushVertex(glm::vec3(0,	1.f, 0));
-
-    _geometry.pushUv(glm::vec2(0.0f, 1.0f)); 
-    _geometry.pushUv(glm::vec2(1.0f, 1.0f)); 
-    _geometry.pushUv(glm::vec2(1.0f, 0.0f)); 
-    _geometry.pushUv(glm::vec2(0.0f, 0.0f)); 
-    
-    _geometry.build();
+      _rotation(ctvty::utils::Quaternion::identity),
+      texture(nullptr), geoInit(false) {
   }
 
   void			Hud::SetTexture(std::shared_ptr<ctvty::rendering::Texture>& texture) {
     _texture = texture;
+    if (!geoInit) {
+      _geometry.pushVertex(glm::vec3(0,	0, 0));
+      _geometry.pushVertex(glm::vec3(1.f, 0, 0));
+      _geometry.pushVertex(glm::vec3(1.f, 1.f, 0));
+      _geometry.pushVertex(glm::vec3(0,	1.f, 0));
+
+      _geometry.pushUv(glm::vec2(0.0f, 1.0f)); 
+      _geometry.pushUv(glm::vec2(1.0f, 1.0f));
+      _geometry.pushUv(glm::vec2(1.0f, 0.0f)); 
+      _geometry.pushUv(glm::vec2(0.0f, 0.0f));
+    
+      _geometry.build();
+      geoInit = true;
+    }
   }
 
   void			Hud::SetText(const std::string& text,
@@ -35,7 +38,26 @@ namespace GdlImpl {
 				     int r, int g, int b) {
     _text = text;
     _police = police;
-    color = { r, g, b };
+    color = { static_cast<Uint8>(r), static_cast<Uint8>(g), static_cast<Uint8>(b) };
+    if (&(*police) == nullptr)
+      return ;
+    if (texture)
+      SDL_FreeSurface(texture);
+    texture = TTF_RenderText_Blended(&(*police), text.c_str(), color);
+    if (!geoInit) {
+      _geometry.pushVertex(glm::vec3(0,	0, 0));
+      _geometry.pushVertex(glm::vec3(1.f, 0, 0));
+      _geometry.pushVertex(glm::vec3(1.f, 1.f, 0));
+      _geometry.pushVertex(glm::vec3(0,	1.f, 0));
+
+      _geometry.pushUv(glm::vec2(0.0f, 0.0f)); 
+      _geometry.pushUv(glm::vec2(1.0f, 0.0f));
+      _geometry.pushUv(glm::vec2(1.0f, 1.0f)); 
+      _geometry.pushUv(glm::vec2(0.0f, 1.0f));
+    
+      _geometry.build();
+      geoInit = true;
+    }
   }
 
   void			Hud::Associate(const std::shared_ptr<ctvty::rendering::Camera>& associated) {
@@ -68,10 +90,19 @@ namespace GdlImpl {
 
   void			Hud::Draw() {
     glm::mat4 transform;
+    unsigned text_texture = 0;
 
     if (_texture)
       _texture->Bind();
-    if (_text) {
+    if (_text && texture) {
+      glGenTextures(1, &text_texture);
+      glBindTexture(GL_TEXTURE_2D, text_texture);
+
+      glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+      glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+ 
+      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->w, texture->h, 0, GL_BGRA,
+		   GL_UNSIGNED_BYTE, texture->pixels);
     }
     if (_space == space::screen) {
       transform = glm::translate(_offx * _renderer.GetWidth(), _offy * _renderer.GetHeight(), 0.f);
@@ -80,6 +111,9 @@ namespace GdlImpl {
       
     }
     _geometry.draw(_renderer.GetShader(), transform, GL_QUADS);
+    if (_text) {
+      glDeleteTextures(1, &text_texture);
+    }
   }
 
   void			Hud::Enable() {

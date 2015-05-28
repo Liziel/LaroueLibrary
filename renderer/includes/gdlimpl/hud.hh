@@ -1,8 +1,11 @@
 #ifndef GdlHudImpl_hh__
 # define GdlHudImpl_hh__
+
 # include <memory>
+
 # include "Geometry.hh"
 # include "std/optional.hpp"
+
 # include "ctvty/rendering/hud.hh"
 
 namespace GdlImpl {
@@ -13,7 +16,7 @@ namespace GdlImpl {
   private:
     Renderer& _renderer;
     gdl::Geometry _geometry;
-
+    bool	geoInit;
     std::list< std::weak_ptr<Hud> >*	_self_container;
     std::weak_ptr< Hud >		_self;
   public:

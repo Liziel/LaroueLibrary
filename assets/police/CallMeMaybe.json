@@ -1,0 +1,7 @@
+{
+    "type" : "ctvty::asset::Police::Wrapper",
+    "object" : {
+	"path" : "./assets/police/CallMeMaybe.ttf",
+	"size" : 65
+	},
+}

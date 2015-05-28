@@ -51,6 +51,7 @@
 			"objects" : [
 			    asset("save/backcamera.json"),
 			    asset("save/hud_tester.json"),
+			    asset("save/hud_police.json"),
 			],
 		    },
 		    "type" : "ctvty::Application::Scene",

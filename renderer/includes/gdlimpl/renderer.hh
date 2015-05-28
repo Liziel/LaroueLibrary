@@ -2,6 +2,7 @@
 # define GdlRenderer_hh__
 
 /* Gdl Includes */
+# undef _SDL_H
 # include "SdlContext.hh"
 # include "BasicShader.hh"
 
@@ -9,6 +10,7 @@
 
 # include "gdlimpl/model3d.hh"
 # include "gdlimpl/camera.hh"
+# include "gdlimpl/hud.hh"
 
 namespace GdlImpl {
   

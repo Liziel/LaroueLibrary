@@ -37,7 +37,7 @@ namespace ctvty {
 	__serial["police"] & police;
 	__serial["red"] & r;
 	__serial["green"] & g;
-	__serial["black"] & b;
+	__serial["blue"] & b;
       }
 
       texture.reset();
@@ -73,7 +73,7 @@ namespace ctvty {
 	__serial["police"] & police;
 	__serial["red"] & r;
 	__serial["green"] & g;
-	__serial["black"] & b;
+	__serial["blue"] & b;
       }
 
       if (texture) {
