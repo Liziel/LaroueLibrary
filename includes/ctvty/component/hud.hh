@@ -14,7 +14,19 @@
 namespace ctvty {
   namespace component {
     
+    class Canvas;
     class Hud : public serialization::Serializable {
+    private:
+      Canvas*		parent;
+      std::string	name;
+    public:
+      inline void		SetParent(Canvas* _parent) { parent = _parent; }
+      inline void		SetName(std::string _name) { name = _name; }
+
+    public:
+      inline Canvas*		GetCanvas() { return parent; }
+      inline std::string	GetName() { return name; }
+
     private:
       bool		onClickEnabled;
       std::string	onClickEvent;
@@ -41,6 +53,7 @@ namespace ctvty {
       int		r,g,b;
     public:
       void		SetText(const std::string&);
+      void		SetTextColor();
 
     private:
       std::unique_ptr<asset::Texture>

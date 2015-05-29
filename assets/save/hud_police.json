@@ -22,7 +22,7 @@
 			"exit" : {
 			    "type" : "ctvty::component::Hud"
 			    "object" : {
-				"onClickEvent" : "exit click",
+				"onClickEvent" : "text click",
 				"onHoverEvent" : "exit hover",
 
 				"offset x" : 0.0,

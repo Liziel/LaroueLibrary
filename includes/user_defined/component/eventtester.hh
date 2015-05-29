@@ -7,16 +7,12 @@
 
 # include "ctvty/utils/collision.hh"
 
-# include "ctvty/rendering/renderer.hh"
+# include "ctvty/component/hud.hh"
 
 namespace user_defined {
   namespace component {
     
     class EventTester : public ctvty::MonoBehaviour<EventTester> {
-    private:
-      std::shared_ptr<ctvty::rendering::Texture>	texture;
-      std::shared_ptr<ctvty::rendering::Hud>		hud;
-
     public:
 			EventTester();
 
@@ -35,6 +31,7 @@ namespace user_defined {
 
     public:
       void		ExitClick();
+      void		TextClick(ctvty::component::Hud*);
 
     public:
       void		Render();

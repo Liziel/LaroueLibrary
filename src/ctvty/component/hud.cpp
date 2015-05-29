@@ -109,6 +109,11 @@ namespace ctvty {
       model->Enable();
     }
 
+    void		Hud::SetText(const std::string& _text) {
+      text = _text;
+      model->SetText(text, police->GetShared(), r, g, b);
+    }
+
     void		Hud::genWorldModel(float canvas_sizeX, float canvas_sizeY,
 					   const utils::Vector3D& position,
 					   const utils::Quaternion& rotation) {
@@ -143,6 +148,8 @@ namespace ctvty {
       __serial["size y"]	& sizeY;
 
       __serial["childrens"]	& childrens;
+      for (auto& pair : childrens)
+	pair.second->SetParent(this);
 
       if (__serial.exist("Render Camera"))
 	__serial["Render Camera"] & RenderCamera;
@@ -197,14 +204,15 @@ namespace ctvty {
       if (e->type() == Event::Type::mousemotion) {
 	for (auto& children : childrens) {
 	  if (children.second->isHoverable()
-	      && children.second->GetModel()->IsInside(e->position().x, e->position().y))
-	    BroadcastMessage(children.second->onHover());
+	      && children.second->GetModel()->IsInside(e->position().x, e->position().y)) {
+	    BroadcastMessage(children.second->onHover(), children.second.get());
+	  }
 	}
       } else if (e->type() == Event::Type::mousebuttondown) {
 	for (auto& children : childrens) {
 	  if (children.second->isClickable()
 	      && children.second->GetModel()->IsInside(e->position().x, e->position().y)) {
-	    BroadcastMessage(children.second->onClick());
+	    BroadcastMessage(children.second->onClick(), children.second.get());
 	  }
 	}
       }

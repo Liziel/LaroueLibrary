@@ -2,22 +2,27 @@
 #include "user_defined/component/eventtester.hh"
 #include "ctvty/component/transform.hh"
 #include "ctvty/debug.hpp"
-#include "ctvty/component/rigidbody.hh"
+#include "ctvty/component/hud.hh"
 
 REGISTER_FOR_SERIALIZATION(user_defined::component, EventTester);
 
 namespace user_defined {
   namespace component {
+    std::chrono::time_point<std::chrono::system_clock> begin;
 
     EventTester::		EventTester()
       : MonoBehaviour(nullptr, "EventTester") {
+      begin = std::chrono::high_resolution_clock::now();
       RegisterListener("exit click", &EventTester::ExitClick);
+      RegisterListener("text click", &EventTester::TextClick);
     }
 
 
     EventTester::		EventTester(const serialization::Archive&)
       : MonoBehaviour(nullptr, "EventTester") {
+      begin = std::chrono::high_resolution_clock::now();
       RegisterListener("exit click", &EventTester::ExitClick);
+      RegisterListener("text click", &EventTester::TextClick);
     }
 
     void			EventTester::Serialize(serialization::Archive& __serial_instance) const {
@@ -34,12 +39,6 @@ namespace user_defined {
     }
 
     void			EventTester::Awake() {
-      texture.reset(ctvty::rendering::Renderer::GetRenderer().LoadTexture("assets/textures/fire.tga"));
-      hud = ctvty::rendering::Renderer::GetRenderer().CreateHud();
-      hud->SetTexture(texture);
-      hud->SetPosition(0.8, 0.1 , 0.1, 0.1);
-      hud->SetScreenSpace(0);
-      hud->Enable();
     }
 
     /*			Collision Events Tests			*/
@@ -63,6 +62,12 @@ namespace user_defined {
 
     void		EventTester::ExitClick() {
       std::cout << "Exit Click" << std::endl;
+    }
+
+    void		EventTester::TextClick(ctvty::component::Hud* hud) {
+      serialization::Serial json;
+      json & static_cast<std::chrono::duration<double>>(std::chrono::high_resolution_clock::now() - begin).count();
+      hud->SetText(json.Stringify());
     }
 
     void		EventTester::Render() {

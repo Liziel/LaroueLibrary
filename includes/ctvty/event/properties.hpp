@@ -145,8 +145,8 @@ namespace ctvty {
 
     public:
       void operator() (ctvty::event::parameters::values _values) {
-	if (_values.size() < sizeof ... (parameters))
-	  throw std::runtime_error("not enough operands");
+	if (_values.size() != sizeof ... (parameters))
+	  return ;
 	unfolder<sizeof ... (parameters)>::apply(_values, dynamic_cast<_class*>(_this_), _fn);
       }
     };
