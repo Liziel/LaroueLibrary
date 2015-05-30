@@ -36,6 +36,13 @@ namespace user_defined {
     }
 
     void			EventTester::Update() {
+      ctvty::component::Canvas* canvas = GetComponent<ctvty::component::Canvas>();
+      if (canvas->Exist("text")) {
+	serialization::Serial json;
+
+	json & static_cast<std::chrono::duration<double>>(std::chrono::high_resolution_clock::now() - begin).count();
+	(*canvas)["text"]->SetText(json.Stringify().substr(0, json.Stringify().find('.')));
+      }
     }
 
     void			EventTester::Awake() {

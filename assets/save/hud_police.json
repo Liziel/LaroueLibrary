@@ -19,7 +19,7 @@
 		    "size y" : 0.8
 
 		    "childrens" : {[
-			"exit" : {
+			"text" : {
 			    "type" : "ctvty::component::Hud"
 			    "object" : {
 				"onClickEvent" : "text click",
