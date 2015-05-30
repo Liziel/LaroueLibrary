@@ -56,7 +56,9 @@ FileSystem	= src/filesystem/file.cpp \
 ### UserDefined
 UDComponent	= src/user_defined/component/eventtester.cpp
 
-UserDefined	= $(UDComponent)
+UDHelper	= src/user_defined/helper/tga_dict.cpp
+
+UserDefined	= $(UDComponent) $(UDHelper)
 
 ### Main -> where we start the ctvty application
 Main		= src/start/main.cpp
