@@ -56,8 +56,11 @@ namespace ctvty {
       void		SetTextColor();
 
     private:
-      std::unique_ptr<asset::Texture>
+      std::shared_ptr<asset::Texture>
 			texture;
+    public:
+      inline
+      void		SetTexture(std::shared_ptr< asset::Texture > _texture) { texture = _texture; }
 
     private:
       std::shared_ptr<ctvty::rendering::Hud>
@@ -97,7 +100,7 @@ namespace ctvty {
 
     class Canvas : public MonoBehaviour<Canvas> {
     private:
-      std::map<std::string, std::unique_ptr<Hud> >	childrens;
+      std::map<std::string, std::shared_ptr<Hud> >	childrens;
 
     private:
       bool				WorldSpaceDefinition;
@@ -125,9 +128,15 @@ namespace ctvty {
 
     public:
       inline
-      bool		exist(const std::string& key) { return childrens.find(key) != childrens.end(); }
+      bool			Exist(const std::string& key) { return childrens.find(key) != childrens.end(); }
       inline
-      std::unique_ptr<Hud>&		operator[](const std::string& key) { return childrens[key]; }
+      std::shared_ptr<Hud>	operator[](const std::string& key) { return childrens[key]; }
+
+    public:
+      inline
+      void			Add(const std::string& key, std::shared_ptr<Hud> value) {
+	childrens.emplace(key, value);
+      }
     };
 
   };

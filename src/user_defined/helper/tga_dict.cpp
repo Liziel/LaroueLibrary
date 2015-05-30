@@ -14,8 +14,9 @@ namespace user_defined {
       __serial["dictionary"]	& dict;
     }
 
-    std::shared_ptr< ctvty::asset::Police >		TgaDict::operator[](const char c) {
+    std::shared_ptr< ctvty::asset::Texture >		TgaDict::operator[](const char c) {
       return dict[c];
     }
+
   };
 };
