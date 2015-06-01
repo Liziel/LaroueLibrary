@@ -1,0 +1,100 @@
+{
+	"object" : {
+		"childs" : [
+		],
+		"components" : [
+		{
+		    "object" : {
+			"model" : {
+			    "type" : "ctvty::asset::Model3D",
+			    "object" : {
+				"wrapper" : "assets/model3d/Ziggs/Ziggs.FBX",
+			    }
+			},
+		    },
+		    "type" : "ctvty::component::Renderer",
+		},
+		{
+				"object" : {
+					"detectCollision" : 1,
+					"detectionMode" : 0,
+					"isKinematic" : 0,
+					"mass" : 1,
+					"velocity" : {
+						"object" : {
+							"x" : 7,
+							"y" : 0,
+							"z" : 0,
+						},
+						"type" : "ctvty::utils::Vector3D",
+					},
+				},
+				"type" : "ctvty::component::RigidBody",
+			},
+		{
+				"object" : {
+					"+size" : {
+						"object" : {
+							"x" : 1,
+							"y" : 3,
+							"z" : 3,
+						},
+						"type" : "ctvty::utils::Vector3D",
+					},
+					"-size" : {
+						"object" : {
+							"x" : 3,
+							"y" : 1,
+							"z" : 3,
+						},
+						"type" : "ctvty::utils::Vector3D",
+					},
+					"isTrigger" : 0,
+					"material" : {
+						"object" : {
+							"bounciness" : 0.5,
+							"dynamicFriction" : 0,
+							"staticFriction" : 0,
+						},
+						"type" : "ctvty::physics::Material",
+					},
+					"scale" : 1.0,
+				},
+				"type" : "ctvty::component::BoxCollider",
+			},
+		],
+		"name" : "Sliding Cube 1",
+		"tag" : "cubes",
+		"transform" : {
+			"object" : {
+				"position" : {
+					"object" : {
+						"x" : -15,
+						"y" : 1.1,
+						"z" : 0.0,
+					},
+					"type" : "ctvty::utils::Vector3D",
+				},
+				"rotation" : {
+					"object" : {
+						"w" : 1,
+						"x" : 0,
+						"y" : 0,
+						"z" : 0,
+					},
+					"type" : "ctvty::utils::Quaternion",
+				},
+				"scale" : {
+					"object" : {
+						"x" : 0.02,
+						"y" : 0.02,
+						"z" : 0.02,
+					},
+					"type" : "ctvty::utils::Vector3D",
+				},
+			},
+			"type" : "ctvty::component::Transform",
+		},
+	},
+	"type" : "ctvty::GameObject",
+}

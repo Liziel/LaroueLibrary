@@ -9,6 +9,7 @@
 		"type" : "ctvty::component::Camera",
 		"object" : {
 		    "viewport id" : 1,
+		    "name" : "caam",
 		    "locked look" : {
 			"object" : {
 			    "x" : 0,

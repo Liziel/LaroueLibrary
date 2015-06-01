@@ -9,16 +9,16 @@ namespace ctvty {
     Transform::		Transform(GameObject* gameObject, 
 				  utils::Vector3D* p , utils::Quaternion* r, utils::Vector3D* s)
       : MonoBehaviour<Transform>(gameObject, "Transform"),
-	scale(s), position(p), rotation(r) { }
+	scale(s), position(p), rotation(r), parent(nullptr) { }
 
     Transform::		Transform(GameObject* gameObject,
 				  const utils::Vector3D& p , const utils::Quaternion& r, const utils::Vector3D& s)
       : MonoBehaviour<Transform>(gameObject, "Transform"),
-	scale(new utils::Vector3D(s)), position(new utils::Vector3D(p)), rotation(new utils::Quaternion(r)) { }
+	scale(new utils::Vector3D(s)), position(new utils::Vector3D(p)), rotation(new utils::Quaternion(r)), parent(nullptr) { }
 
     Transform::		Transform(const serialization::Archive& __serial)
       : MonoBehaviour<Transform>(nullptr, "Transform"),
-	scale(nullptr), position(nullptr), rotation(nullptr) {
+	scale(nullptr), position(nullptr), rotation(nullptr), parent(nullptr) {
       if (__serial.exist("scale"))
 	__serial["scale"] & scale;
       else

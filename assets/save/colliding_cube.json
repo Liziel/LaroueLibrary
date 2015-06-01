@@ -4,6 +4,44 @@
 	],
 	"components" : [
 	    {
+		"type" : "ctvty::component::Canvas",
+		"object" : {
+		    "WorldSpace" : true,
+
+		    "Render Camera" : "caam"
+
+		    "size x" : 10
+		    "size y" : 10
+
+		    "childrens" : {[
+			"exit" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"onClickEvent" : "exit click",
+				"onHoverEvent" : "exit hover",
+
+				"offset x" : 0.0,
+				"offset y" : 0.0,
+
+				"size x" : 1.0,
+				"size y" : 1.0,
+
+				"level" : -1,
+				
+				"enabled" : true,
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture",
+				    "object" : {
+					"wrapper" : "textures/exit.json",
+				    },
+				}
+			    }
+			},
+		    ]}
+		}
+	    }
+	    {
 		"object" : {
 		    "+size" : {
 			"object" : {

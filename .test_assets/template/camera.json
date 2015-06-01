@@ -1,0 +1,52 @@
+{
+    "type" : "ctvty::component::Camera",
+    "object" : {
+
+	//first viewport 3 way to define it:
+	"viewport" : { "type" : "ctvty::component::Camera::View", "object" : {
+	    "x" : 0, "y" : 0, "width" : 200, "height" : 150
+	} },//will define it in a view port of the given size
+	"viewport id" : 0,//will determine its place with other camera who's got a viewport id
+	//or nothing -> the camera will take the whole window
+
+	
+	"offset" : { // can be skipped
+	    "type" : "ctvty::utils::Vector3D",
+	    "object" : {
+		"x" : 0,
+		"y" : 5,
+		"z" : 0,
+	    },
+	},
+
+	//then lookAt definition, see component/camera .hh
+	"free look" : {
+	    "type" : "ctvty::utils::Vector3D",
+	    "object" : {
+		"x" : 2,
+		"y" : 2,
+		"z" : 0,
+	    },
+	},
+	"locked look" : {
+	    "type" : "ctvty::utils::Vector3D",
+	    "object" : {
+		"x" : 0,
+		"y" : 0,
+		"z" : 0,
+	    },
+	},
+	"forward look" : true
+	// or
+	"forward look" : {
+	    "type" : "ctvty::utils::Vector3D",
+	    "object" : {
+		"x" : 0,
+		"y" : 0,
+		"z" : 1,
+	    },
+	},
+
+
+    }
+}

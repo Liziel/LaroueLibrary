@@ -4,9 +4,9 @@
 	    "windowX" : 1000,
 	    "windowY" : 800,
 
-	    "fps" : 40,
+	    "fps" : 20,
 
-	    "load" : "hud testing",
+	    "load" : "base",
 	    "scenes" : [
 		{
 		    "object" : {

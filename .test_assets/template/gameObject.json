@@ -1,0 +1,16 @@
+{
+    "object" : {
+
+	"childs" : [//childs GameObjects, can be skipped
+	],
+
+	"components" : [//the differents component attached to this gameObject	    
+	],
+
+	"name" : "template GameObject"
+	"tag" : "undefined"
+
+	"transform" : {/* the transform base component of this gameobject (see transform.json and .hh*/ }
+    },
+    "type" : "ctvty::GameObject"
+}

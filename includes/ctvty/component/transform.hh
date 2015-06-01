@@ -12,13 +12,13 @@ namespace ctvty {
      */
     class Transform : public MonoBehaviour<Transform>{
     private:
-      std::shared_ptr<utils::Vector3D>		scale;
-      std::shared_ptr<utils::Vector3D>		position;
-      std::shared_ptr<utils::Quaternion>	rotation;
+      std::unique_ptr<utils::Vector3D>		scale;
+      std::unique_ptr<utils::Vector3D>		position;
+      std::unique_ptr<utils::Quaternion>	rotation;
 
     private:
       Transform*		parent;
-      std::list<Transform*>	childs;
+
     public:
       void		SetParent(Transform*);
 

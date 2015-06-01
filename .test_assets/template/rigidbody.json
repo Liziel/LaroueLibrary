@@ -1,0 +1,23 @@
+{
+    "object" : {
+
+	"detectCollision" : 1,// pass throught?
+
+	"detectionMode" : 0,// always 0! rest is not codded
+
+	"isKinematic" : false, //receive force? (gravity , on Collision?)
+
+	"mass" : 1,
+
+	"velocity" : {//base velocity
+	    "object" : {
+		"x" : 4,
+		"y" : 0,
+		"z" : 0,
+	    },
+	    "type" : "ctvty::utils::Vector3D",
+	},
+
+    },
+    "type" : "ctvty::component::RigidBody",
+},

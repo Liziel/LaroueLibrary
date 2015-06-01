@@ -1,0 +1,6 @@
+{
+    "object" : {
+	"path" : "path.fbx"
+    },
+    "type" : "ctvty::component::Renderer::Model3D",
+}

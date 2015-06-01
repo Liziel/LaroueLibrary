@@ -20,7 +20,7 @@ namespace ctvty {
      * true by default;
      */
     void		SetEnable(bool state);
-
+    inline bool		Enabled() {return enabled;}
   public:
     /*
      * An evolution to the DoImplement method to match the enabled/disabled pattern

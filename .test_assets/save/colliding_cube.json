@@ -1,0 +1,110 @@
+{
+    "object" : {
+	"childs" : [
+	],
+	"components" : [
+	    {
+		"type" : "ctvty::component::Canvas",
+		"object" : {
+		    "WorldSpace" : true,
+
+		    "Render Camera" : "caam"
+
+		    "size x" : 10
+		    "size y" : 10
+
+		    "childrens" : {[
+			"exit" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"onClickEvent" : "exit click",
+				"onHoverEvent" : "exit hover",
+
+				"offset x" : 0.0,
+				"offset y" : 0.0,
+
+				"size x" : 1.0,
+				"size y" : 1.0,
+
+				"level" : -1,
+				
+				"enabled" : true,
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture",
+				    "object" : {
+					"wrapper" : "textures/exit.json",
+				    },
+				}
+			    }
+			},
+		    ]}
+		}
+	    }
+	    {
+		"object" : {
+		    "+size" : {
+			"object" : {
+			    "x" : 20,
+			    "y" : 5,
+			    "z" : 20,
+			},
+			"type" : "ctvty::utils::Vector3D",
+		    },
+		    "-size" : {
+			"object" : {
+			    "x" : 20,
+			    "y" : 20,
+			    "z" : 20,
+			},
+			"type" : "ctvty::utils::Vector3D",
+		    },
+		    "isTrigger" : 0,
+		    "material" : {
+			"object" : {
+			    "bounciness" : 0.5,
+			    "dynamicFriction" : 0.005,
+			    "staticFriction" : 0,
+			},
+			"type" : "ctvty::physics::Material",
+		    },
+		    "scale" : 1.0,
+		},
+		"type" : "ctvty::component::BoxCollider",
+	    },
+	],
+	"name" : "Colliding Cube",
+	"tag" : "cubes",
+	"transform" : {
+	    "object" : {
+		"position" : {
+		    "object" : {
+			"x" : 0,
+			"y" : -5,
+			"z" : 0.1,
+		    },
+		    "type" : "ctvty::utils::Vector3D",
+		},
+		"rotation" : {
+		    "object" : {
+			"w" : 1,
+			"x" : 0,
+			"y" : 0,
+			"z" : 0,
+		    },
+		    "type" : "ctvty::utils::Quaternion",
+		},
+		"scale" : {
+		    "object" : {
+			"x" : 0.4,
+			"y" : 0.01,
+			"z" : 0.4,
+		    },
+		    "type" : "ctvty::utils::Vector3D",
+		},
+	    },
+	    "type" : "ctvty::component::Transform",
+	},
+    },
+    "type" : "ctvty::GameObject",
+}

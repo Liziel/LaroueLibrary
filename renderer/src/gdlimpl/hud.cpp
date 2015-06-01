@@ -108,7 +108,12 @@ namespace GdlImpl {
       transform = glm::translate(_offx * _renderer.GetWidth(), _offy * _renderer.GetHeight(), 0.f);
       transform *= glm::scale(_sizex * _renderer.GetWidth(), _sizey * _renderer.GetHeight(), 0.f);
     } else {
-      
+      ctvty::utils::Vector3D	r = _rotation.Complex();
+      transform = glm::translate(_position.x, _position.y, _position.z);
+      transform *= glm::scale(_sizex, _sizey, 0.f);
+      transform *= glm::rotate((r.x / glm::pi<float>()) * 180.f, glm::vec3(1., 0., 0.));
+      transform *= glm::rotate((r.y / glm::pi<float>()) * 180.f, glm::vec3(0., 1., 0.));
+      transform *= glm::rotate((r.z / glm::pi<float>()) * 180.f, glm::vec3(0., 0., 1.));
     }
     _geometry.draw(_renderer.GetShader(), transform, GL_QUADS);
     if (_text) {

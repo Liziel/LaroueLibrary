@@ -219,6 +219,8 @@ namespace ctvty {
       fathers.push_back(this);
     for (GameObject* child : childs)
       child->SetActive(state);
+    for (Component* component : components)
+      component->SetEnable(state);
     activation_state = state;
     if (state == true)
       SendMessage("Start");

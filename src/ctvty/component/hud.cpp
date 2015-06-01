@@ -182,8 +182,10 @@ namespace ctvty {
 	{
 	  std::list<Camera*> cameras = Object::FindObjectsOfType<Camera>();
 	  for (Camera* _camera : cameras)
-	    if (_camera->Name() && *(_camera->Name()) == RenderCamera)
+	    if (_camera->Name() && *(_camera->Name()) == RenderCamera && _camera->Enabled()) {
 	      camera = _camera;
+	      std::cout << "fetch" << _camera << std::endl;
+	    }
 	}
 
       for (auto& children : childrens) {
@@ -194,7 +196,7 @@ namespace ctvty {
 					 transform->GetHierarchyPosition(),
 					 transform->GetHierarchyRotation());
 	if (camera)
-	  children.second->GetModel()->Associate(camera->getCamera());	
+	  children.second->GetModel()->Associate(camera->getCamera());
       }
     }
 

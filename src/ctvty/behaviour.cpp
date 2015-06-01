@@ -3,7 +3,7 @@
 namespace ctvty {
   Behaviour::	Behaviour(GameObject* parent,
 		       const std::string& name)
-    : Component(parent, name), enabled(true) {}
+    : Component(parent, name), enabled(false) {}
 
   void		Behaviour::SetEnable(bool state) {
     if (enabled == state)

@@ -15,6 +15,10 @@ namespace ctvty {
     Camera::	Camera(const serialization::Archive& __serial)
       : MonoBehaviour(nullptr, "Camera") {
       
+      if (__serial.exist("name")) {
+	__serial["name"] & hud_name;
+      }
+
       //first viewport
       if (__serial.exist("viewport")) {
 	__serial["viewport"] & view;
@@ -60,6 +64,10 @@ namespace ctvty {
     void	Camera::Serialize(serialization::Archive& __serial_instance) const {
       SERIALIZE_OBJECT_AS(ctvty::component::Camera, __serial_instance);
       
+      if (hud_name) {
+	__serial["name"] & hud_name;
+      }
+      
       if (vtype == view::defined) {
 	__serial["viewport"] & view;
       } else if (vtype == view::automatic) {
@@ -93,6 +101,7 @@ namespace ctvty {
 	camera->SetViewPort(view->x, view->y, view->width, view->height);
       else if (vtype == view::automatic)
 	camera->DetectViewPort(priority);
+      std::cout << "awake" << this << std::endl;
     }
 
     void	Camera::Update() {
