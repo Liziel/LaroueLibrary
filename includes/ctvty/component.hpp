@@ -32,7 +32,7 @@ namespace ctvty {
 
   public:
     virtual void				AttachParent(GameObject*);
-    virtual inline void				SetEnable(bool) {}
+    virtual void				SetEnable(bool) {}
 
   protected:
     /*

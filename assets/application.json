@@ -6,56 +6,17 @@
 
 	    "fps" : 20,
 
-	    "load" : "base",
+	    "load" : "menu principale",
 	    "scenes" : [
 		{
-		    "object" : {
-			"name" : "base",
-			"objects" : [
-			    asset("save/backcamera.json"),
-			    asset("save/colliding_side.json"),
-			    asset("save/colliding_cube.json"),
-			    asset("save/falling_cube.json"),
-			    asset("save/falling_cube2.json"),
-			    asset("save/falling_cube3.json"),
-			],
-		    },
 		    "type" : "ctvty::Application::Scene",
-		},
-		{
-		    "object" : {
-			"name" : "base2",
+		    "object" : { 
+			"name" : "menu principale",
 			"objects" : [
-			    asset("save/colliding_cube.json"),
-			    asset("save/sliding_cube1.json"),
-			    asset("save/backcamera.json"),
-			    asset("save/sliding_cube2.json"),
+			    asset("menu/objects/principal.json"),
 			],
-		    },
-		    "type" : "ctvty::Application::Scene",
-		},
-		{
-		    "object" : {
-			"name" : "base3",
-			"objects" : [
-			    asset("save/backcamera.json"),
-			    asset("save/duplicate.json"),
-			    asset("save/test_anim.json"),
-			],
-		    },
-		    "type" : "ctvty::Application::Scene",
-		},
-		{
-		    "object" : {
-			"name" : "hud testing",
-			"objects" : [
-			    asset("save/backcamera.json"),
-			    asset("save/hud_tester.json"),
-			    asset("save/hud_police.json"),
-			],
-		    },
-		    "type" : "ctvty::Application::Scene",
-		},
+		    }
+		}
 	    ],
 	},
     "type" : "ctvty::Application",

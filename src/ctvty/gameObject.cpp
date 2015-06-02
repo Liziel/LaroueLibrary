@@ -201,8 +201,9 @@ namespace ctvty {
     if (events_map[methodName] == false)
       return ;
     for (Component* component : components)
-      if (component->DoImplement(methodName))
+      if (component->DoImplement(methodName)) {
 	(*component)[methodName](params);
+      }
   }
 
   void				GameObject::SendMessageUpwards(const std::string& methodName,
@@ -222,8 +223,6 @@ namespace ctvty {
     for (Component* component : components)
       component->SetEnable(state);
     activation_state = state;
-    if (state == true)
-      SendMessage("Start");
   }
 
   bool				GameObject::IsActive() {

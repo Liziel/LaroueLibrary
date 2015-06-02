@@ -94,6 +94,7 @@ namespace ctvty {
     void		Hud::genScreenModel(float canvas_sizeX, float canvas_sizeY,
 					    float canvas_offX, float canvas_offY) {
       model = ctvty::rendering::Renderer::GetRenderer().CreateHud();
+      std::cout << "delayed instance" << std::endl;
       if (texture) {
 	texture->delayedInstantiation();
 	if (*texture)
@@ -148,6 +149,7 @@ namespace ctvty {
       __serial["size y"]	& sizeY;
 
       __serial["childrens"]	& childrens;
+
       for (auto& pair : childrens)
 	pair.second->SetParent(this);
 
@@ -167,7 +169,7 @@ namespace ctvty {
       __serial["size y"]	& sizeY;
 
       __serial["childrens"]	& childrens;
-
+      std::cout << "childrens count " << childrens.size() << std::endl;
       if (WorldSpaceDefinition)
 	__serial["WorldSpace"] & true;
       else
@@ -188,7 +190,9 @@ namespace ctvty {
 	    }
 	}
 
+      std::cout << "before for" << std::endl;
       for (auto& children : childrens) {
+	std::cout << "in for" << std::endl;
 	if (ScreenSpaceDefinition)
 	  children.second->genScreenModel(sizeX, sizeY, offX, offY);
 	else
