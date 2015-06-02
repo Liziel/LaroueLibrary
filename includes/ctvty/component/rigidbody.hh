@@ -88,7 +88,8 @@ namespace ctvty {
       void			EndMovement(utils::Vector3D& movement,
 					    const utils::Collision& collideds);
 
-      void			CheckTrigger();
+      void			DetectTriggers();
+      
     };
 
   };

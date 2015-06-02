@@ -68,6 +68,7 @@ namespace ctvty {
       std::list<Collider*>	colliders
 	= Object::FindObjectsOfType<Collider>(); colliders.remove_if([=](Collider* collider) {
 	    return collider->GetGameObject() == gameObject
+	      || collider->IsTrigger()
 	      || !collider->GetGameObject()->IsActive();
 	  });
 
@@ -187,6 +188,7 @@ namespace ctvty {
 	colliders_collisions.clear();
 	last_collision = ctvstd::none;
       }
+      DetectTriggers();
     }
 
     void			RigidBody::EndMovement(utils::Vector3D& movement,
@@ -225,6 +227,46 @@ namespace ctvty {
       }
       colliders_collisions.insert(colliders_collisions.end(),
 				collidings.begin(), collidings.end());
+      DetectTriggers();
+    }
+
+    void			RigidBody::DetectTriggers() {
+      std::list<Collider*>	triggers
+	= Object::FindObjectsOfType<Collider>(); triggers.remove_if([=](Collider* collider) {
+	    return collider->GetGameObject() == gameObject
+	      || !collider->IsTrigger()
+	      || !collider->GetGameObject()->IsActive();
+	  });
+      utils::BoundingBox3D			box  = boundingBox + (transform->GetPosition());
+      for (auto trigger = triggers.begin(); trigger != triggers.end(); ++trigger) {
+	utils::BoundingBox3D rhs = (*trigger)->GetBoundingBox()
+	  + (*trigger)->GetGameObject()->GetTransformation()->GetPosition();	
+	if (!rhs.Intersect(box) || !box.Intersect(rhs))
+	  trigger = triggers.erase(trigger);
+      }
+
+      colliders_trigger.remove_if([this, &triggers](const Collider* _trigger) {
+	  for (auto trigger = triggers.begin(); trigger != triggers.end(); ++trigger) {
+	    if (*trigger == _trigger) {
+	      for (Collider* triggered : sub_colliders)
+		_trigger->BroadcastMessage("OnTriggerStay", &triggered);
+	      BroadcastMessage("OnCollisionStay", &_trigger);
+	      trigger = triggers.erase(trigger);
+	      return false;
+	    }
+	  }
+	  for (Collider* triggered : sub_colliders)
+	    _trigger->BroadcastMessage("OnTriggerExit", &triggered);
+	  BroadcastMessage("OnCollisionExit", &_trigger);
+	  return true;
+	});
+      
+      for (Collider* trigger : triggers) {
+	for (Collider* triggered : sub_colliders)
+	  trigger->BroadcastMessage("OnTriggerEnter", triggered);
+	BroadcastMessage("OnTriggerEnter", trigger);
+      }
+
     }
 
   };
