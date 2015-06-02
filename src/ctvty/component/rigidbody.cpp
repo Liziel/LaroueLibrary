@@ -54,8 +54,9 @@ namespace ctvty {
     }
 
     void		RigidBody::FixedUpdate() {
-      GetVelocity() += (utils::Vector3D::down * World::gravity)
-	* event::Clock::GetClock().GetFixedDeltaTime();
+      if (!isKinematic)
+	GetVelocity() += (utils::Vector3D::down * World::gravity)
+	  * event::Clock::GetClock().GetFixedDeltaTime();
       utils::Vector3D movement = GetVelocity();
 
       movement *= event::Clock::GetClock().GetFixedDeltaTime();
@@ -153,9 +154,11 @@ namespace ctvty {
 	  cumulated.collider_to.push_back(collision.collider_from);
 	}
 
-	if (dynamicFriction)
-	  GetVelocity() -= -GetVelocity().ProjectOnPlane(collisionNormal) * dynamicFriction;
-	GetVelocity() += bounce;
+	if (!isKinematic) {
+	  if (dynamicFriction)
+	    GetVelocity() -= -GetVelocity().ProjectOnPlane(collisionNormal) * dynamicFriction;
+	  GetVelocity() += bounce;
+	}
 	momentum =
 	  (momentum - penetration);
 	position += 
