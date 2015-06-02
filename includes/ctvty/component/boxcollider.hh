@@ -53,6 +53,9 @@ namespace ctvty {
 						      const utils::Quaternion& roatation,
 						      const utils::Vector3D& direction) const override;
 
+      ctvstd::Optional<float>		RayCollision(const utils::Vector3D& origin,
+						     const utils::Vector3D& direction) const override;
+
     };
 
   };

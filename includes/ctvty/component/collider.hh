@@ -43,6 +43,9 @@ namespace ctvty {
 						  const utils::Quaternion&	quaternion,
 						  const utils::Vector3D&	direction) const;
 
+      virtual ctvstd::Optional<float>		RayCollision(const utils::Vector3D& origin,
+							     const utils::Vector3D& direction) const = 0;
+
     protected:
       Collider(GameObject* parent, const std::string&);
     };

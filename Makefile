@@ -25,7 +25,8 @@ CtvTyUtils	=src/ctvty/utils/vector3d.cpp\
 		src/ctvty/utils/contactpoint.cpp\
 		src/ctvty/utils/collision.cpp
 
-CtvTyPhysics	= src/ctvty/physics/material.cpp
+CtvTyPhysics	= src/ctvty/physics/material.cpp\
+		src/ctvty/physics/raycast.cpp\
 
 CtvTyComponents	=src/ctvty/component/transform.cpp\
 		src/ctvty/component/rigidbody.cpp\

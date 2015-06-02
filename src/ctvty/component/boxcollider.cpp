@@ -254,7 +254,7 @@ namespace ctvty{
     }
 
     ctvstd::Optional<utils::Collision> 
-    BoxCollider::CollisionImpl(const Collider*		contact_collider,
+				BoxCollider::CollisionImpl(const Collider*		contact_collider,
 							   const utils::Vector3D&	position,
 							   const utils::Quaternion&	rotation,
 							   const utils::Vector3D&	direction) const {
@@ -263,6 +263,20 @@ namespace ctvty{
 					position, rotation, direction);
     }
 
+    ctvstd::Optional<float>	BoxCollider::RayCollision(const utils::Vector3D& origin,
+						     const utils::Vector3D& direction) const {
+      ctvstd::Optional<float>	distance(ctvstd::none);
+      for (std::shared_ptr<utils::Face> face : faces) {
+	ctvstd::Optional<float>	_distance(ctvstd::none);
+	if (( _distance = face->GetCollisionDistance(origin, direction) )) {
+	  if (distance && *_distance < *distance)
+	    distance = _distance;
+	  else
+	    distance = _distance;
+	}
+      }
+      return distance;
+    }
 
   };
 };
