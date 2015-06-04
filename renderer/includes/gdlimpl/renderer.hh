@@ -11,15 +11,16 @@
 # include "gdlimpl/model3d.hh"
 # include "gdlimpl/camera.hh"
 # include "gdlimpl/hud.hh"
+# include "gdlimpl/shader.hh"
 
 namespace GdlImpl {
   
   class Renderer : public gdl::SdlContext, public ctvty::rendering::Renderer::Implementation {
   private:
     gdl::BasicShader			_shader;
+    std::shared_ptr<Shader>		_next_shader_use;
   public:
-    inline
-    gdl::BasicShader&			GetShader() { return _shader; }
+    gdl::BasicShader&			GetShader();
 
   private:
     std::size_t				width, height;
@@ -58,6 +59,14 @@ namespace GdlImpl {
       screenhuds[self.lock()->GetLevel()].push_back(self);
       return & (screenhuds[self.lock()->GetLevel()]);
     }
+
+  private:
+    std::list< Shader* >		shaders;
+  public:
+    std::shared_ptr<ctvty::rendering::Shader>
+					CreateShader(const std::string&, const std::string&) final;
+    void				UseShaderAtNextDraw(std::shared_ptr<ctvty::rendering::Shader>) final;
+    void				UnsetShader(Shader*);
 
   public:
     void				Pre3DRendering(int camera_id) final;

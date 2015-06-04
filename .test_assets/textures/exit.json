@@ -1,6 +1,6 @@
 {
     "type" : "ctvty::asset::Texture::Wrapper",
     "object" : {
-	"path" : "assets/textures/exit.tga",
+	"path" : ".test_assets/textures/exit.tga",
 	},
 }

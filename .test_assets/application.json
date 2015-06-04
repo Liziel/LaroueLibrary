@@ -6,7 +6,7 @@
 
 	    "fps" : 20,
 
-	    "load" : "hud testing",
+	    "load" : "base",
 	    "scenes" : [
 		{
 		    "object" : {

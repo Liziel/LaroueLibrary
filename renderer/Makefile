@@ -11,7 +11,8 @@ GdlImpl		= src/gdlimpl/renderer.cpp\
 		src/gdlimpl/model3d.cpp\
 		src/gdlimpl/camera.cpp\
 		src/gdlimpl/texture.cpp\
-		src/gdlimpl/hud.cpp
+		src/gdlimpl/hud.cpp\
+		src/gdlimpl/shader.cpp
 
 ##############################
 CXXSRC		+= $(GdlImpl)

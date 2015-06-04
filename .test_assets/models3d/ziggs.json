@@ -1,6 +1,6 @@
 {
     "type" : "ctvty::asset::Model3D::Wrapper",
     "object" : {
-	"path" : "assets/models3d/Ziggs/Ziggs.FBX",
+	"path" : ".test_assets/models3d/Ziggs/ziggs.json",
 	},
 }

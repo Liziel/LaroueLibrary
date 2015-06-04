@@ -22,6 +22,7 @@ namespace GdlImpl {
   void		Renderer::Initialize(std::size_t w,
 				     std::size_t h,
 				     const std::string& window_name) {
+    _next_shader_use = nullptr;
     width = w;
     height = h;
     gdl::SdlContext::start(w, h, window_name);
@@ -34,6 +35,15 @@ namespace GdlImpl {
     glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     if (TTF_Init() != 0)
       std::cout << "TTF init: " << TTF_GetError() << std::endl;
+  }
+
+  gdl::BasicShader&			Renderer::GetShader() {
+    if (_next_shader_use != nullptr) {
+      gdl::BasicShader& _next = _next_shader_use->GetShader();
+      _next_shader_use = nullptr;
+      return _next;
+    }
+    return _shader;
   }
 
   void		Renderer::Update() {
@@ -74,6 +84,8 @@ namespace GdlImpl {
 			 per,
 			 0.1f, 100.0f);
       _shader.setUniform("projection", projection);
+      for (Shader* shader : shaders)
+	shader->GetShader().setUniform("projection", projection);
     }
 
     {
@@ -88,6 +100,8 @@ namespace GdlImpl {
 			);
       
       _shader.setUniform("view", transformation);
+      for (Shader* shader : shaders)
+	shader->GetShader().setUniform("view", transformation);
     }
 
     glClear(GL_DEPTH_BUFFER_BIT);
@@ -111,7 +125,11 @@ namespace GdlImpl {
 		 static_cast<float>(camera->GetViewPort().height), 0.0f,
 		 -1.0f, 1.0f);
     _shader.setUniform("projection", projection);
+    for (Shader* shader : shaders)
+      shader->GetShader().setUniform("projection", projection);
     _shader.setUniform("view", glm::mat4(1));
+    for (Shader* shader : shaders)
+      shader->GetShader().setUniform("view", glm::mat4(1));
     _shader.bind();
     glClear(GL_DEPTH_BUFFER_BIT);
   }
@@ -123,7 +141,11 @@ namespace GdlImpl {
       glm::ortho(0.0f,
 		 static_cast<float>(width), static_cast<float>(height), 0.0f);
     _shader.setUniform("projection", projection);
+    for (Shader* shader : shaders)
+      shader->GetShader().setUniform("projection", projection);
     _shader.setUniform("view", glm::mat4(1));
+    for (Shader* shader : shaders)
+      shader->GetShader().setUniform("view", glm::mat4(1));
     _shader.bind();
     glClear(GL_DEPTH_BUFFER_BIT);
     for (auto& huds : screenhuds) {
@@ -171,5 +193,20 @@ namespace GdlImpl {
     n->SetWeakRef(n);
     inactivesHuds.push_back(n);
     return n;
+  }
+
+  std::shared_ptr<ctvty::rendering::Shader>
+		Renderer::CreateShader(const std::string& a, const std::string& b) {
+    Shader* shader = new Shader(*this, a, b);
+    shaders.push_back(shader);
+    return  std::shared_ptr<ctvty::rendering::Shader>{ shader };
+  }
+
+  void		Renderer::UseShaderAtNextDraw(std::shared_ptr<ctvty::rendering::Shader> shader) {
+    _next_shader_use = std::dynamic_pointer_cast<Shader>(shader);
+  }
+
+  void		Renderer::UnsetShader(GdlImpl::Shader* shader) {
+    shaders.remove_if([shader](GdlImpl::Shader* __shader) { return __shader == shader; });
   }
 };

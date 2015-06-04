@@ -10,6 +10,7 @@
 # include "ctvty/rendering/camera.hh"
 # include "ctvty/rendering/hud.hh"
 # include "ctvty/rendering/texture.hh"
+# include "ctvty/rendering/shader.hh"
 
 namespace ctvty {
   namespace rendering {
@@ -37,6 +38,11 @@ namespace ctvty {
 
       public:
 	virtual std::shared_ptr<Hud>	CreateHud() = 0;
+
+      public:
+	virtual void			UseShaderAtNextDraw(std::shared_ptr<Shader>) = 0;
+	virtual std::shared_ptr<Shader>	CreateShader(const std::string& vertex_p,
+						     const std::string& fragment_p) = 0;
 
       public:
 	virtual void			Pre3DRendering(int camera_id = -1) = 0;
