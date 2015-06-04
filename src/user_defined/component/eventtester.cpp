@@ -67,7 +67,9 @@ namespace user_defined {
 		<< std::endl << std::endl << std::endl;
     }
 
-    void		EventTester::ExitClick() {
+    void		EventTester::ExitClick(ctvty::component::Hud* hud) {
+      hud->disable();
+      (hud->GetCanvas())["exit overed"]->enable();
       std::cout << "Exit Click" << std::endl;
     }
 

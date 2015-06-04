@@ -6,91 +6,86 @@
 
 	"components" : [
 	    {
-		"type" : "ctvty::component::Canvas"
+		"type" : "user_defined::component::MenuPrincipal",
+		"object" : {},
+	    },
+	    {
+		"type" : "ctvty::component::Canvas",
 		"object" : {
-		    "ScreenSpace" : true
+		    "ScreenSpace" : true,
 
-		    "offset x" : 0.0,
-		    "offset y" : 0.0,
+		    "offset x" : 0.1
+		    "offset y" : 0.1
 
-		    "size x" : 1.0,
-		    "size y" : 1.0,
+		    "size x" : 0.8
+		    "size y" : 0.8
 
 		    "childrens" : {[
-			"play" : {
-			    "type" : "ctvty::component::Hud"
-			    "object" : {
-				"onClickEvent" : "goto play",
-				"onHoverEvent" : "play hover",
-
-				"offset x" : 0.2,
-				"offset y" : 0.1,
-
-				"size x" : 0.6
-				"size y" : 0.2
-
-				"level" : 1
-
-				"enabled" : true
-
-				"texture" : {
-				    "type" : "ctvty::asset::Texture"
-				    "object" : {
-					"wrapper" : "menu/textures/play.json"
-				    }
-				}
-			    }
-			},
 
 			"exit" : {
 			    "type" : "ctvty::component::Hud"
 			    "object" : {
-				"onClickEvent" : "goto exit",
-				"onHoverEvent" : "exit hover",
+				"onClickEvent" : "exit click",
+				"onOverEvent" : "exit over",
+				"onExitOverEvent" : "exit over exit",
 
-				"offset x" : 0.2,
-				"offset y" : 0.8,
+				"offset x" : 0.0,
+				"offset y" : 0.0,
 
-				"size x" : 0.3
-				"size y" : 0.1
+				"size x" : 1.0,
+				"size y" : 1.0,
 
-				"level" : 1
-
-				"enabled" : true
+				"level" : -1,
+				
+				"enabled" : true,
 
 				"texture" : {
-				    "type" : "ctvty::asset::Texture"
+				    "type" : "ctvty::asset::Texture",
 				    "object" : {
-					"wrapper" : "menu/textures/exit.json"
-				    }
+					"wrapper" : "textures/exit.json",
+				    },
 				}
 			    }
-			}
-
+			},
 		    ]}
+
 		}
 	    }
+
 	],
 
-	"name" : "Menu Principal",
-	"tag" : "menu",
+	"name" : "menu principal"
+	"tag" : "menu"
 
 	"transform" : {
-	    "type" : "ctvty::component::Transform",
 	    "object" : {
 		"position" : {
+		    "object" : {
+			"x" : 0,
+			"y" : -5,
+			"z" : 0.1,
+		    },
 		    "type" : "ctvty::utils::Vector3D",
-		    "object" : { "x" : 0, "y" : 0, "z" : 0 }
-		},
-		"scale" : {
-		    "type" : "ctvty::utils::Vector3D",
-		    "object" : { "x" : 1.0, "y" : 1.0, "z" : 1.0 }
 		},
 		"rotation" : {
+		    "object" : {
+			"w" : 1,
+			"x" : 0,
+			"y" : 0,
+			"z" : 0,
+		    },
 		    "type" : "ctvty::utils::Quaternion",
-		    "object" : { "x" : 0.0, "y" : 0.0, "z" : 0.0, "w" : 0.0 }
-		}
+		},
+		"scale" : {
+		    "object" : {
+			"x" : 1,
+			"y" : 1,
+			"z" : 1,
+		    },
+		    "type" : "ctvty::utils::Vector3D",
+		},
 	    },
-	},
+	    "type" : "ctvty::component::Transform",
+	}
     }
 }

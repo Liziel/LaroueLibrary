@@ -30,7 +30,7 @@ namespace user_defined {
       void		OnCollisionExit(const ctvty::utils::Collision*);
 
     public:
-      void		ExitClick();
+      void		ExitClick(ctvty::component::Hud*);
       void		TextClick(ctvty::component::Hud*);
 
     public:

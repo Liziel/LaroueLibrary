@@ -41,3 +41,5 @@ renderer.a
 
 # and .so
 !*.so
+
+!*.explanation

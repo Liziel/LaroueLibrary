@@ -24,7 +24,7 @@ namespace ctvty {
       inline void		SetName(std::string _name) { name = _name; }
 
     public:
-      inline Canvas*		GetCanvas() { return parent; }
+      inline Canvas&		GetCanvas() { return *parent; }
       inline std::string	GetName() { return name; }
 
     private:
@@ -37,13 +37,23 @@ namespace ctvty {
       const std::string&	onClick() { return onClickEvent; }
 
     private:
-      bool		onHoverEnabled;
-      std::string	onHoverEvent;
+      bool		onExitOverEnabled;
+      std::string	onExitOverEvent;
+    public:
+      inline bool		isExitOverable() { return onExitOverEnabled; }
+      inline const std::string&	onExitOver() { return onOverEvent; }
+
+    public:
+      bool		overed;
+
+    private:
+      bool		onOverEnabled;
+      std::string	onOverEvent;
     public:
       inline
-      bool			isHoverable() { return onHoverEnabled; }
+      bool			isOverable() { return onOverEnabled; }
       inline
-      const std::string&	onHover() { return onHoverEvent; }
+      const std::string&	onOver() { return onOverEvent; }
 
     private:
       std::shared_ptr<asset::Police>

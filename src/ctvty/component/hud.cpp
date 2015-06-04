@@ -16,7 +16,7 @@ REGISTER_FOR_SERIALIZATION(ctvty::component, Canvas);
 namespace ctvty {
   namespace component {
 
-    Hud::		Hud(const serialization::Archive& __serial) {
+    Hud::		Hud(const serialization::Archive& __serial) : overed(false) {
 
       onClickEnabled = false;
       if (__serial.exist("onClickEvent")) {
@@ -24,10 +24,16 @@ namespace ctvty {
 	__serial["onClickEvent"] & onClickEvent;
       }
 
-      onHoverEnabled = false;
-      if (__serial.exist("onHoverEvent")) {
-	onHoverEnabled = true;
-	__serial["onHoverEvent"] & onHoverEvent;
+      onOverEnabled = false;
+      if (__serial.exist("onOverEvent")) {
+	onOverEnabled = true;
+	__serial["onOverEvent"] & onOverEvent;
+      }
+
+      onExitOverEnabled = false;
+      if (__serial.exist("onExitOverEvent")) {
+	onOverEnabled = true;
+	__serial["onExitOverEvent"] & onExitOverEvent;
       }
 
       text_enabled = false;
@@ -64,8 +70,12 @@ namespace ctvty {
 	__serial["onClickEvent"] & onClickEvent;
       }
 
-      if (onHoverEnabled) {
-	__serial["onHoverEvent"] & onHoverEvent;
+      if (onOverEnabled) {
+	__serial["onOverEvent"] & onOverEvent;
+      }
+
+      if (onExitOverEnabled) {
+	__serial["onExitOverEvent"] & onExitOverEvent;
       }
       
       if (text_enabled) {
@@ -209,10 +219,12 @@ namespace ctvty {
 
       if (e->type() == Event::Type::mousemotion) {
 	for (auto& children : childrens) {
-	  if (children.second->isHoverable()
-	      && children.second->GetModel()->IsInside(e->position().x, e->position().y)) {
-	    BroadcastMessage(children.second->onHover(), children.second.get());
-	  }
+	  if (children.second->GetModel()->IsInside(e->position().x, e->position().y)) {
+	    if (children.second->isOverable() && !children.second->overed)
+	      BroadcastMessage(children.second->onOver(), children.second.get());
+	    children.second->overed = true;
+	  } else if (children.second->overed && children.second->isExitOverable())
+	    BroadcastMessage(children.second->onExitOver(), children.second.get());
 	}
       } else if (e->type() == Event::Type::mousebuttondown) {
 	for (auto& children : childrens) {

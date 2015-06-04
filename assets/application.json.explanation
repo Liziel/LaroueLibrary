@@ -8,7 +8,8 @@
 
 	"load" : "menu principale",
 	"scenes" : [
-	    {
+
+	    { // << c'est une scene
 		"type" : "ctvty::Application::Scene",
 		"object" : { 
 		    "name" : "menu principale",
@@ -17,6 +18,7 @@
 		    ],
 		}
 	    }
+
 	],
 
     },
