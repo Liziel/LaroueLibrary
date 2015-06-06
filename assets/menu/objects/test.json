@@ -1,0 +1,91 @@
+{
+    "type" : "ctvty::GameObject"
+    "object" : {
+	"childs" : [
+	],
+
+	"components" : [
+	    {
+		"type" : "user_defined::component::MenuPrincipal",
+		"object" : {},
+	    },
+	    {
+		"type" : "ctvty::component::Canvas",
+		"object" : {
+		    "ScreenSpace" : true,
+
+		    "offset x" : 0.1
+		    "offset y" : 0.1
+
+		    "size x" : 0.8
+		    "size y" : 0.8
+
+		    "childrens" : {[
+
+			"exit" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"onClickEvent" : "exit click",
+				"onOverEvent" : "exit over",
+				"onExitOverEvent" : "exit over exit",
+
+				"offset x" : 0.0,
+				"offset y" : 0.0,
+
+				"size x" : 1.0,
+				"size y" : 1.0,
+
+				"level" : -1,
+				
+				"enabled" : true,
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture",
+				    "object" : {
+					"wrapper" : "textures/exit.json",
+				    },
+				}
+			    }
+			},
+		    ]}
+
+		}
+	    }
+
+	],
+
+	"name" : "menu principal"
+	"tag" : "menu"
+
+	"transform" : {
+	    "object" : {
+		"position" : {
+		    "object" : {
+			"x" : 0,
+			"y" : -5,
+			"z" : 0.1,
+		    },
+		    "type" : "ctvty::utils::Vector3D",
+		},
+		"rotation" : {
+		    "object" : {
+			"w" : 1,
+			"x" : 0,
+			"y" : 0,
+			"z" : 0,
+		    },
+		    "type" : "ctvty::utils::Quaternion",
+		},
+		"scale" : {
+		    "object" : {
+			"x" : 1,
+			"y" : 1,
+			"z" : 1,
+		    },
+		    "type" : "ctvty::utils::Vector3D",
+		},
+	    },
+	    "type" : "ctvty::component::Transform",
+	}
+    }
+}

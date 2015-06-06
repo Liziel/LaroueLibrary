@@ -6,86 +6,285 @@
 
 	"components" : [
 	    {
-		"type" : "user_defined::component::MenuPrincipal",
-		"object" : {},
-	    },
-	    {
-		"type" : "ctvty::component::Canvas",
+		"type" : "ctvty::component::Canvas"
 		"object" : {
-		    "ScreenSpace" : true,
+		    "ScreenSpace" : true
 
-		    "offset x" : 0.1
-		    "offset y" : 0.1
+		    "offset x" : 0.0,
+		    "offset y" : 0.0,
 
-		    "size x" : 0.8
-		    "size y" : 0.8
+		    "size x" : 1.0,
+		    "size y" : 1.0,
 
 		    "childrens" : {[
+			"Wallpaper" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"offset x" : 0.0,
+				"offset y" : 0.0,
+
+				"size x" : 1.0
+				"size y" : 1.0
+
+				"level" : 0
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Wallpaper.json"
+				    }
+				}
+			    }
+			},
+
+			"title" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"offset x" : 0.1,
+				"offset y" : 0.1,
+
+				"size x" : 0.4
+				"size y" : 0.1
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Bomber_title.json"
+				    }
+				}
+			    }
+			},
+
+			"play" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"onClickEvent" : "play click",
+				"onOverEvent" : "play over",
+
+				"offset x" : 0.1,
+				"offset y" : 0.3,
+
+				"size x" : 0.2
+				"size y" : 0.1
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/play_nm.json"
+				    }
+				}
+			    }
+			},
+
+			"play overed" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"onClickEvent" : "play click",
+				"onOverEvent" : "play OnOver",
+
+				"offset x" : 0.1,
+				"offset y" : 0.3,
+
+				"size x" : 0.2
+				"size y" : 0.1
+
+				"level" : 1
+
+				"enabled" : false
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/play_over.json"
+				    }
+				}
+			    }
+			},
+
+			"options" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"onClickEvent" : "options credit",
+				"onOverEvent" : "options over",
+
+				"offset x" : 0.1,
+				"offset y" : 0.4,
+
+				"size x" : 0.3
+				"size y" : 0.1
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Options_nm.json"
+				    }
+				}
+			    }
+			},
+
+			"options overed" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"onClickEvent" : "options click",
+				"onOverEvent" : "options OnOver",
+
+				"offset x" : 0.1,
+				"offset y" : 0.4,
+
+				"size x" : 0.3
+				"size y" : 0.1
+
+				"level" : 1
+
+				"enabled" : false
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Options_over.json"
+				    }
+				}
+			    }
+			},
+
+			"credit" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"onClickEvent" : "credit click",
+				"onOverEvent" : "credit over",
+
+				"offset x" : 0.1,
+				"offset y" : 0.5,
+
+				"size x" : 0.3
+				"size y" : 0.1
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Credit_nm.json"
+				    }
+				}
+			    }
+			},
+
+			"credit overed" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"onClickEvent" : "credit click",
+				"onOverEvent" : "credit OnOver",
+
+				"offset x" : 0.1,
+				"offset y" : 0.5,
+
+				"size x" : 0.3
+				"size y" : 0.1
+
+				"level" : 1
+
+				"enabled" : false
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Options_over.json"
+				    }
+				}
+			    }
+			},
 
 			"exit" : {
 			    "type" : "ctvty::component::Hud"
 			    "object" : {
 				"onClickEvent" : "exit click",
 				"onOverEvent" : "exit over",
-				"onExitOverEvent" : "exit over exit",
 
-				"offset x" : 0.0,
-				"offset y" : 0.0,
+				"offset x" : 0.1,
+				"offset y" : 0.6,
 
-				"size x" : 1.0,
-				"size y" : 1.0,
+				"size x" : 0.3
+				"size y" : 0.1
 
-				"level" : -1,
-				
-				"enabled" : true,
+				"level" : 1
+
+				"enabled" : true
 
 				"texture" : {
-				    "type" : "ctvty::asset::Texture",
+				    "type" : "ctvty::asset::Texture"
 				    "object" : {
-					"wrapper" : "textures/exit.json",
-				    },
+					"wrapper" : "menu/textures/Exit_nm.json"
+				    }
 				}
 			    }
 			},
-		    ]}
 
+			"exit overed" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"onClickEvent" : "exit click",
+				"onExitOverEvent" : "exit OnOver",
+
+				"offset x" : 0.1,
+				"offset y" : 0.6,
+
+				"size x" : 0.3
+				"size y" : 0.1
+
+				"level" : 1
+
+				"enabled" : false
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Exit_over.json"
+				    }
+				}
+			    }
+			}
+
+		    ]}
 		}
 	    }
-
 	],
 
-	"name" : "menu principal"
-	"tag" : "menu"
+	"name" : "Menu Principal",
+	"tag" : "menu",
 
 	"transform" : {
+	    "type" : "ctvty::component::Transform",
 	    "object" : {
 		"position" : {
-		    "object" : {
-			"x" : 0,
-			"y" : -5,
-			"z" : 0.1,
-		    },
 		    "type" : "ctvty::utils::Vector3D",
-		},
-		"rotation" : {
-		    "object" : {
-			"w" : 1,
-			"x" : 0,
-			"y" : 0,
-			"z" : 0,
-		    },
-		    "type" : "ctvty::utils::Quaternion",
+		    "object" : { "x" : 0, "y" : 0, "z" : 0 }
 		},
 		"scale" : {
-		    "object" : {
-			"x" : 1,
-			"y" : 1,
-			"z" : 1,
-		    },
 		    "type" : "ctvty::utils::Vector3D",
+		    "object" : { "x" : 1.0, "y" : 1.0, "z" : 1.0 }
 		},
+		"rotation" : {
+		    "type" : "ctvty::utils::Quaternion",
+		    "object" : { "x" : 0.0, "y" : 0.0, "z" : 0.0, "w" : 0.0 }
+		}
 	    },
-	    "type" : "ctvty::component::Transform",
-	}
+	},
     }
 }
