@@ -44,13 +44,13 @@ namespace GdlImpl {
 				      double time) {
     if (!loadStatus)
       return ;
-    ctvty::utils::Vector3D	r = rotation.Complex();
+    ctvty::utils::Vector3D	r = rotation.Euler();
     glm::mat4 transform; 
     transform = glm::translate(position.x, position.y, position.z);
-    transform *= glm::scale(scale.x, scale.y, scale.z);
     transform *= glm::rotate((r.x / glm::pi<float>()) * 180.f, glm::vec3(1., 0., 0.));
     transform *= glm::rotate((r.y / glm::pi<float>()) * 180.f, glm::vec3(0., 1., 0.));
     transform *= glm::rotate((r.z / glm::pi<float>()) * 180.f, glm::vec3(0., 0., 1.));
+    transform *= glm::scale(scale.x, scale.y, scale.z);
     model->draw(renderer.GetShader(), transform, time);
   }
 };
