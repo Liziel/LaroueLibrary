@@ -7,7 +7,7 @@
 namespace user_defined {
   namespace component {
 
-    class MenuPrincipal : public MonoBehaviour<MenuPrincipal>{
+    class MenuPrincipal : public ctvty::MonoBehaviour<MenuPrincipal>{
     public:
 			MenuPrincipal(const serialization::Archive&);
       void		Serialize(serialization::Archive&) const;

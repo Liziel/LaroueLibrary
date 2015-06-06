@@ -1,4 +1,5 @@
 #include "user_defined/component/menu_principal.hh"
+#include "ctvty/application.hh"
 
 REGISTER_FOR_SERIALIZATION(user_defined::component, MenuPrincipal);
 
@@ -6,7 +7,7 @@ namespace user_defined {
   namespace component {
 
     MenuPrincipal::MenuPrincipal(const serialization::Archive&)
-      : MonoBehaviour("MenuPrincipal", nullptr) {
+      : ctvty::MonoBehaviour<MenuPrincipal>(nullptr, "MenuPrincipal") {
       RegisterListener("exit over", &MenuPrincipal::OverExit);
       RegisterListener("exit OnOver", &MenuPrincipal::OnOverExit);
       RegisterListener("exit click", &MenuPrincipal::Exit);
