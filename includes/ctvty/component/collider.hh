@@ -36,6 +36,7 @@ namespace ctvty {
 						      const utils::Vector3D&	position,
 						      const utils::Quaternion&	quaternion,
 						      const utils::Vector3D&	direction) const = 0;
+
     public:
       ctvstd::Optional<utils::Collision>
 					Collision(const std::list<Collider*>&	contact_colliders,
