@@ -3,12 +3,14 @@
 
 # include "ctvty/monobehaviour.hpp"
 # include "ctvty/assets/model3d.hh"
+# include "ctvty/assets/shader.hh"
 
 namespace ctvty {
   namespace component {
 
     class Renderer : public MonoBehaviour<Renderer> {
     private:
+      std::unique_ptr<asset::Shader>		shader;
       std::unique_ptr<asset::Model3D>		model;
       std::unique_ptr<utils::Quaternion>	rotation;
 

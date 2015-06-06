@@ -15,7 +15,8 @@ CtvTyAssets	=src/ctvty/assets/assets.cpp\
 		src/ctvty/assets/asset.cpp\
 		src/ctvty/assets/texture.cpp\
 		src/ctvty/assets/model3d.cpp\
-		src/ctvty/assets/police.cpp
+		src/ctvty/assets/police.cpp\
+		src/ctvty/assets/shader.cpp
 
 
 CtvTyUtils	=src/ctvty/utils/vector3d.cpp\

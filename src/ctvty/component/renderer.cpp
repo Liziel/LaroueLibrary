@@ -27,16 +27,22 @@ namespace ctvty
       if (__serial.exist("rotation"))
 	__serial["rotation"] & rotation;
       __serial["model"] & model;
+      if (__serial.exist("shader"))
+	__serial["shader"] & shader;
     }
 
     void	Renderer::Serialize(serialization::Archive& __serial_instance) const {
       SERIALIZE_OBJECT_AS(ctvty::component::Renderer, __serial_instance);
       __serial["model"] & model;
+      if (shader)
+	__serial["shader"] & shader;
       if (rotation)
 	__serial["rotation"] & rotation;
     }
 
     void	Renderer::Awake() {
+      if (shader)
+	shader->delayedInstantiation();
       model->delayedInstantiation();
       CreateAnimation("renderer_stop", 0, 0);
       Animator* animator = GetComponent<Animator>();
@@ -48,6 +54,8 @@ namespace ctvty
     {
       if (!model || !*model)
 	return ;
+      if (shader && *shader)
+	ctvty::rendering::Renderer::GetRenderer().UseShaderAtNextDraw(shader->GetShader());
       Animator* animator = GetComponent<Animator>();
       if (!animator) {
 	SetAnimation("renderer_stop");

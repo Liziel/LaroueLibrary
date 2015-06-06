@@ -1,13 +1,14 @@
 #ifndef AssetShader_hh__
 # define AssetShader_hh__
 
-# include <string>
+# include "serialization/serializable.hh"
 
 # include "ctvty/rendering/renderer.hh"
 # include "ctvty/rendering/shader.hh"
 
 namespace ctvty {
   namespace asset {
+
     class Shader : public serialization::Serializable{
     public:
       class Wrapper : public serialization::Serializable{
@@ -30,7 +31,8 @@ namespace ctvty {
       std::shared_ptr<ctvty::rendering::Shader>	GetShader() {
 	return _object->get();
       }
-
+      inline
+      operator	bool () { return static_cast<bool>(_object); }
     public:
 		Shader(const serialization::Archive&);
       void	Serialize( serialization::Archive& ) const;
