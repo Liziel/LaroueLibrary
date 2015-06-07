@@ -41,13 +41,14 @@ namespace GdlImpl {
     if (_next_shader_use != nullptr) {
       gdl::BasicShader& _next = _next_shader_use->GetShader();
       _next_shader_use = nullptr;
+      _next.bind();
       return _next;
     }
+    _shader.bind();
     return _shader;
   }
 
   void		Renderer::Update() {
-    _shader.bind();
   }
 
   ctvty::rendering::Camera*
@@ -105,7 +106,6 @@ namespace GdlImpl {
     }
 
     glClear(GL_DEPTH_BUFFER_BIT);
-    _shader.bind();
   }
 
   void		Renderer::PreHUDRendering(int camera_id) {
@@ -130,7 +130,6 @@ namespace GdlImpl {
     _shader.setUniform("view", glm::mat4(1));
     for (Shader* shader : shaders)
       shader->GetShader().setUniform("view", glm::mat4(1));
-    _shader.bind();
     glClear(GL_DEPTH_BUFFER_BIT);
   }
 
@@ -146,7 +145,6 @@ namespace GdlImpl {
     _shader.setUniform("view", glm::mat4(1));
     for (Shader* shader : shaders)
       shader->GetShader().setUniform("view", glm::mat4(1));
-    _shader.bind();
     glClear(GL_DEPTH_BUFFER_BIT);
     for (auto& huds : screenhuds) {
       for (auto it = huds.second.begin();
@@ -161,6 +159,7 @@ namespace GdlImpl {
   }
 
   void		Renderer::Flush() {
+    _shader.bind();
     gdl::SdlContext::flush();
     glClear(GL_COLOR_BUFFER_BIT);
   }

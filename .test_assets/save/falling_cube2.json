@@ -5,6 +5,12 @@
 		"components" : [
 		{
 		    "object" : {
+			"shader" : {
+			    "type" : "ctvty::asset::Shader"
+			    "object" : {
+				"wrapper" : "shaders/coloured.json"
+			    }
+			},
 			"model" : {
 			    "type" : "ctvty::asset::Model3D",
 			    "object" : {

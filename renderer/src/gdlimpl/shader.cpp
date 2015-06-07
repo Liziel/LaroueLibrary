@@ -5,6 +5,7 @@ namespace GdlImpl{
     : _renderer(renderer) {
     _shader.load(vertex, GL_VERTEX_SHADER);
     _shader.load(fragment, GL_FRAGMENT_SHADER);
+    _shader.build();
   }
 
   Shader::		~Shader() {

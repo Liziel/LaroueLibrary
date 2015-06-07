@@ -1,0 +1,7 @@
+{
+    "type" : "ctvty::asset::Shader::Wrapper",
+    "object" : {
+	"fragment shader" : ".test_assets/shaders/basic.fp"
+	"vertex shader" : ".test_assets/shaders/basic.vp"
+    }
+}

@@ -1,7 +1,0 @@
-{
-    "type" : "ctvty::asset::Texture::Wrapper",
-
-    "object" : {
-	"path" : "assets/menu/texture/exit.tga"
-    }
-}

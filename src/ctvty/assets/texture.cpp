@@ -22,7 +22,7 @@ namespace ctvty {
     void		Texture::delayedInstantiation() {
       _object = ctvty::Application::Assets().GetAsset(wrapper).LoadAs<Wrapper>();
       if (_object == nullptr)
-	std::cerr << "Model3d Couldn't be instantiated" << std::endl;
+	std::cerr << "Texture Wrapper {"<< wrapper <<"} Couldn't be instantiated" << std::endl;
     }
 
 
