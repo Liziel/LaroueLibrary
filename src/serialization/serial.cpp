@@ -106,7 +106,6 @@ namespace serialization {
       if ((std::size_t)std::distance(cursor, end) > sizeof("false")) {
 	std::advance(false_test, sizeof("false") - 1);
 	if (std::string("false") == std::string(cursor, false_test)) {
-	  cursor = false_test;
 	  return true;
 	}
       }
@@ -114,7 +113,6 @@ namespace serialization {
       if ((std::size_t)std::distance(cursor, end) > sizeof("true")) {
 	std::advance(true_test, sizeof("true") - 1);
 	if (std::string("true") == std::string(cursor, true_test)) {
-	  cursor = true_test;
 	  return true;
 	}
       }
@@ -292,15 +290,16 @@ namespace serialization {
       std::string::const_iterator true_test = cursor;
 
       if ((std::size_t)std::distance(cursor, end) > sizeof("false")) {
-	std::advance(false_test, sizeof("false"));
+	std::advance(false_test, sizeof("false") - 1);
 	if (std::string("false") == std::string(cursor, false_test)) {
 	  _serialized_boolean = false;
 	  cursor = false_test;
+	  return ;
 	}
       }
 
       if ((std::size_t)std::distance(cursor, end) > sizeof("true")) {
-	std::advance(true_test, sizeof("true"));
+	std::advance(true_test, sizeof("true") - 1);
 	if (std::string("true") == std::string(cursor, true_test)) {
 	  _serialized_boolean = true;
 	  cursor = true_test;

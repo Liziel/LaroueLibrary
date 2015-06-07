@@ -23,12 +23,12 @@
 				"offset x" : 0.0,
 				"offset y" : 0.0,
 
-				"size x" : 1.0
-				"size y" : 1.0
+				"size x" : 1.0,
+				"size y" : 1.0,
 
-				"level" : 0
+				"level" : 0,
 
-				"enabled" : true
+				"enabled" : true,
 
 				"texture" : {
 				    "type" : "ctvty::asset::Texture"
@@ -42,11 +42,11 @@
 			"title" : {
 			    "type" : "ctvty::component::Hud"
 			    "object" : {
-				"offset x" : 0.1,
-				"offset y" : 0.1,
+				"offset x" : 0.05,
+				"offset y" : 0.0,
 
-				"size x" : 0.4
-				"size y" : 0.1
+				"size x" : 0.6
+				"size y" : 0.15
 
 				"level" : 1
 
@@ -217,11 +217,11 @@
 				"onClickEvent" : "exit click",
 				"onOverEvent" : "exit over",
 
-				"offset x" : 0.1,
-				"offset y" : 0.6,
+				"offset x" : 0.02,
+				"offset y" : 0.9,
 
-				"size x" : 0.3
-				"size y" : 0.1
+				"size x" : 0.12
+				"size y" : 0.07
 
 				"level" : 1
 
@@ -242,11 +242,11 @@
 				"onClickEvent" : "exit click",
 				"onExitOverEvent" : "exit OnOver",
 
-				"offset x" : 0.1,
-				"offset y" : 0.6,
+				"offset x" : 0.02,
+				"offset y" : 0.9,
 
-				"size x" : 0.3
-				"size y" : 0.1
+				"size x" : 0.12
+				"size y" : 0.07
 
 				"level" : 1
 

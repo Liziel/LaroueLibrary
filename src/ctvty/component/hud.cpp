@@ -60,8 +60,9 @@ namespace ctvty {
       __serial["level"]		& level;
       
       enabled = false;
-      if (__serial.exist("enabled"))
+      if (__serial.exist("enabled")) {
 	__serial["enabled"]	& enabled;
+      }
     }
 
     void		Hud::Serialize(serialization::Archive& __serial_instance) const {
@@ -116,7 +117,14 @@ namespace ctvty {
       model->SetPosition(sizex * canvas_sizeX, sizey * canvas_sizeY,
 			 offx * canvas_sizeX + canvas_offX, offy * canvas_sizeY + canvas_offY);
       model->SetScreenSpace(level);
-      model->Enable();
+      std::cout << std::boolalpha << enabled << std::endl;
+      if (enabled) {
+	model->Enable();
+	std::cout << "oui" << std::endl;
+      } else {
+	model->Disable();
+	std::cout << "non" << std::endl;
+      }
     }
 
     void		Hud::SetText(const std::string& _text) {
@@ -140,7 +148,11 @@ namespace ctvty {
 			 offx * canvas_sizeX, offy * canvas_sizeY);
       model->SetWorldSpace(rotation,
 			   position + rotation.RotatedVector(ctvty::utils::Vector3D::back) * level);
-      model->Enable();
+      std::cout << std::boolalpha << enabled << std::endl;
+      if (enabled)
+	model->Enable();
+      else
+	model->Disable();
     }
 
     Canvas::		Canvas(const serialization::Archive& __serial)

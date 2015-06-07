@@ -149,9 +149,10 @@ namespace GdlImpl {
     for (auto& huds : screenhuds) {
       for (auto it = huds.second.begin();
 	   huds.second.end() != it; ++it) {
-	if (!it->expired())
-	  it->lock()->Draw();
-	else
+	if (!it->expired()) {
+	  if (it->lock()->state())
+	    it->lock()->Draw();
+	} else
 	  it = huds.second.erase(it);
       }
       glClear(GL_DEPTH_BUFFER_BIT);
