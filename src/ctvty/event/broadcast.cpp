@@ -5,16 +5,16 @@
 namespace ctvty {
   namespace event {
     BroadCast::BroadCast(GameObject* _target, Way _way, const std::string& _message, parameters::values _values)
-      : target(_target), way(_way), message(_message), values(_values) {}
+      : target(_target), way(_way), message(_message), values(_values), deletion(nullptr) { }
 
     BroadCast::BroadCast(const std::string& _message, parameters::values _values)
-      : BroadCast(nullptr, Way::down, _message, std::move(_values)) {}
+      : BroadCast(nullptr, Way::down, _message, std::move(_values)) { }
 
     BroadCast::BroadCast(GameObject* _target)
-      : BroadCast(_target, Way::deletion, "", {}) {}
+      : BroadCast(_target, Way::deletion, "deletion", {}) {}
 
     BroadCast::BroadCast(Object* _target)
-      : BroadCast(nullptr, Way::deletion, "", {}) {deletion = (_target);}
+      : BroadCast(nullptr, Way::deletion, "deletion", {}) {deletion = (_target); std::cout << "deletion" << std::endl; }
 
     BroadCast::~BroadCast() {
       for (auto value : values)
@@ -23,7 +23,9 @@ namespace ctvty {
 
 
     void	BroadCast::Dispatch() {
-      if (target == nullptr) {
+      std::cout << "dispatching " << message << " at " << static_cast<int>(way) << std::endl;
+      if (target == nullptr && deletion == nullptr) {
+	std::cout << "size " << GameObject::accessParentsGameObjects().size() << std::endl;
 	std::for_each(GameObject::accessParentsGameObjects().begin(),
 		      GameObject::accessParentsGameObjects().end(),
 		      [this] (GameObject* gameObject) {
@@ -62,7 +64,7 @@ namespace ctvty {
     bool	BroadCast::RemoveTarget(GameObject* removal) {
       if (target == nullptr)
 	removed.push_back(removal);
-      return removal == target;
+      return removal == target || removal == deletion;
     }
 
   };

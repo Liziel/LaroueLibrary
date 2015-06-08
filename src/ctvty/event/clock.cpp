@@ -51,7 +51,7 @@ namespace ctvty {
       OnGui.RemoveTarget(target);
       Render.RemoveTarget(target);
       for (auto it = broadcasts.begin(); it != broadcasts.end(); ++it)
-	if (it->RemoveTarget(target))
+	if (it->RemoveTarget(target) && it != broadcasts.begin())
 	  it = broadcasts.erase(it);
     }
 
@@ -89,6 +89,8 @@ namespace ctvty {
 	  }
 	}
 
+	while (broadcasts.size()) { broadcasts.front().Dispatch(); broadcasts.pop_front(); }
+
 	{//Renderer Dispatching By RENDER
 	  ctvty::rendering::Renderer::GetRenderer().Update();
 	  for (std::size_t i = 0; i < ctvty::rendering::Renderer::GetRenderer().RegisteredCameras(); ++i) {
@@ -99,6 +101,9 @@ namespace ctvty {
 	  ctvty::rendering::Renderer::GetRenderer().MainHUDRendering();
 	  ctvty::rendering::Renderer::GetRenderer().Flush();
 	}
+
+	while (broadcasts.size()) { broadcasts.front().Dispatch(); broadcasts.pop_front(); }
+
 
       }
     }

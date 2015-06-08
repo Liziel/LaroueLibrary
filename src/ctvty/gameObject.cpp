@@ -64,6 +64,7 @@ namespace ctvty {
     if (transform != nullptr)
       delete transform;
     gameObjects.remove_if([this] (GameObject* _comp) -> bool {return _comp == this;});
+    fathers.remove_if([this] (GameObject* _comp) -> bool {return _comp == this;});
   }
 
   /*
