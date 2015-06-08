@@ -1,0 +1,606 @@
+{
+    "type" : "ctvty::GameObject"
+    "object" : {
+	"childs" : [
+	],
+
+	"components" : [
+	    {
+		"type" : "user_defined::component::MenuPrincipal"
+		"object" : {
+		    
+		}
+	    },
+	    {
+		"type" : "ctvty::component::Canvas"
+		"object" : {
+		    "ScreenSpace" : true
+
+		    "offset x" : 0.0,
+		    "offset y" : 0.0,
+
+		    "size x" : 1.0,
+		    "size y" : 1.0,
+
+		    "childrens" : {[
+			"Wallpaper" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"offset x" : 0.0,
+				"offset y" : 0.0,
+
+				"size x" : 1.0,
+				"size y" : 1.0,
+
+				"level" : 0,
+
+				"enabled" : true,
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Wallpaper_options.json"
+				    }
+				}
+			    }
+			},
+
+			"title" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"offset x" : 0.05,
+				"offset y" : 0.0,
+
+				"size x" : 0.6
+				"size y" : 0.15
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Options_menu.json"
+				    }
+				}
+			    }
+			},
+
+			"up" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.05,
+				"offset y" : 0.3,
+
+				"size x" : 0.12
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Up.json"
+				    }
+				}
+			    }
+			},
+
+			"down" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.05,
+				"offset y" : 0.4,
+
+				"size x" : 0.18
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Down.json"
+				    }
+				}
+			    }
+			},
+
+			"left" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.05,
+				"offset y" : 0.5,
+
+				"size x" : 0.18
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Left.json"
+				    }
+				}
+			    }
+			},
+
+			"right" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.05,
+				"offset y" : 0.6,
+
+				"size x" : 0.18
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Right.json"
+				    }
+				}
+			    }
+			},
+
+			"put bomb" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.05,
+				"offset y" : 0.7,
+
+				"size x" : 0.20
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Put_bomb.json"
+				    }
+				}
+			    }
+			},
+
+			"throw bomb" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.05,
+				"offset y" : 0.8,
+
+				"size x" : 0.20
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Throw_bomb.json"
+				    }
+				}
+			    }
+			},
+
+			"player1" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.35,
+				"offset y" : 0.2,
+
+				"size x" : 0.20
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Player1.json"
+				    }
+				}
+			    }
+			},
+
+			"z" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.40,
+				"offset y" : 0.3,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Z.json"
+				    }
+				}
+			    }
+			},
+
+			"s" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.40,
+				"offset y" : 0.4,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/S.json"
+				    }
+				}
+			    }
+			},
+
+			"q" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.40,
+				"offset y" : 0.5,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Q.json"
+				    }
+				}
+			    }
+			},
+
+			"d" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.40,
+				"offset y" : 0.6,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/D.json"
+				    }
+				}
+			    }
+			},
+
+			"e" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.40,
+				"offset y" : 0.7,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/E.json"
+				    }
+				}
+			    }
+			},
+
+			"a" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.40,
+				"offset y" : 0.8,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/A.json"
+				    }
+				}
+			    }
+			},
+
+			"player2" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.65,
+				"offset y" : 0.2,
+
+				"size x" : 0.20
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Player2.json"
+				    }
+				}
+			    }
+			},
+
+			"arrow up" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.7,
+				"offset y" : 0.3,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Arrow_up.json"
+				    }
+				}
+			    }
+			},
+
+			"arrow down" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.7,
+				"offset y" : 0.4,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Arrow_down.json"
+				    }
+				}
+			    }
+			},
+
+			"arrow left" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.7,
+				"offset y" : 0.5,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Arrow_left.json"
+				    }
+				}
+			    }
+			},
+
+			"arrow right" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.7,
+				"offset y" : 0.6,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Arrow_right.json"
+				    }
+				}
+			    }
+			},
+
+			"o" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.7,
+				"offset y" : 0.7,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/O.json"
+				    }
+				}
+			    }
+			},
+
+			"p" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.70,
+				"offset y" : 0.8,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/P.json"
+				    }
+				}
+			    }
+			},
+
+			"exit" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"onClickEvent" : "exit click",
+				"onOverEvent" : "exit over",
+
+				"offset x" : 0.02,
+				"offset y" : 0.9,
+
+				"size x" : 0.12
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Exit_nm.json"
+				    }
+				}
+			    }
+			},
+
+			"exit overed" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"onClickEvent" : "exit click",
+				"onExitOverEvent" : "exit OnOver",
+
+				"offset x" : 0.02,
+				"offset y" : 0.9,
+
+				"size x" : 0.12
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : false
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Exit_over.json"
+				    }
+				}
+			    }
+			}
+
+		    ]}
+		}
+	    }
+	],
+
+	"name" : "Menu Principal",
+	"tag" : "menu",
+
+	"transform" : {
+	    "type" : "ctvty::component::Transform",
+	    "object" : {
+		"position" : {
+		    "type" : "ctvty::utils::Vector3D",
+		    "object" : { "x" : 0, "y" : 0, "z" : 0 }
+		},
+		"scale" : {
+		    "type" : "ctvty::utils::Vector3D",
+		    "object" : { "x" : 1.0, "y" : 1.0, "z" : 1.0 }
+		},
+		"rotation" : {
+		    "type" : "ctvty::utils::Quaternion",
+		    "object" : { "x" : 0.0, "y" : 0.0, "z" : 0.0, "w" : 0.0 }
+		}
+	    },
+	},
+    }
+}
