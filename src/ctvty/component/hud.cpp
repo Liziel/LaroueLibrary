@@ -32,7 +32,7 @@ namespace ctvty {
 
       onExitOverEnabled = false;
       if (__serial.exist("onExitOverEvent")) {
-	onOverEnabled = true;
+	onExitOverEnabled = true;
 	__serial["onExitOverEvent"] & onExitOverEvent;
       }
 
@@ -117,13 +117,10 @@ namespace ctvty {
       model->SetPosition(sizex * canvas_sizeX, sizey * canvas_sizeY,
 			 offx * canvas_sizeX + canvas_offX, offy * canvas_sizeY + canvas_offY);
       model->SetScreenSpace(level);
-      std::cout << std::boolalpha << enabled << std::endl;
       if (enabled) {
 	model->Enable();
-	std::cout << "oui" << std::endl;
       } else {
 	model->Disable();
-	std::cout << "non" << std::endl;
       }
     }
 
@@ -228,16 +225,22 @@ namespace ctvty {
 
       if (e->type() == Event::Type::mousemotion) {
 	for (auto& children : childrens) {
-	  if (children.second->GetModel()->IsInside(e->position().x, e->position().y)) {
+	  if (children.second->state() && children.second->GetModel()->IsInside(e->position().x, e->position().y)) {
 	    if (children.second->isOverable() && !children.second->overed)
 	      BroadcastMessage(children.second->onOver(), children.second.get());
 	    children.second->overed = true;
-	  } else if (children.second->overed && children.second->isExitOverable())
+	  } else if (children.second->state() && children.second->overed && children.second->isExitOverable()) {
+	    children.second->overed = false;
 	    BroadcastMessage(children.second->onExitOver(), children.second.get());
+	  }
+	  if (children.second->GetModel()->IsInside(e->position().x, e->position().y))
+	    children.second->overed = true;
+	  else
+	    children.second->overed = false;
 	}
       } else if (e->type() == Event::Type::mousebuttondown) {
 	for (auto& children : childrens) {
-	  if (children.second->isClickable()
+	  if (children.second->state() && children.second->isClickable()
 	      && children.second->GetModel()->IsInside(e->position().x, e->position().y)) {
 	    BroadcastMessage(children.second->onClick(), children.second.get());
 	  }

@@ -13,6 +13,7 @@ namespace user_defined {
       void		Serialize(serialization::Archive&) const;
 
     public:
+      void		Play(ctvty::component::Hud*);
       void		OverPlay(ctvty::component::Hud*);
       void		OnOverPlay(ctvty::component::Hud*);
 

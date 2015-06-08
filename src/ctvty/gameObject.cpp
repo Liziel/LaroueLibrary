@@ -1,5 +1,6 @@
 #include "ctvty/gameObject.hpp"
 #include "ctvty/component.hpp"
+#include "ctvty/event/clock.hh"
 
 #include "ctvty/component/transform.hh"
 
@@ -135,8 +136,6 @@ namespace ctvty {
   }
 
   void				GameObject::intern_Destroy() {
-    Object::intern_Destroy();
-
     SetParent(nullptr);
     for (GameObject*& child : std::list<GameObject*>(childs)) {
       Object::Destroy(child); child = nullptr;

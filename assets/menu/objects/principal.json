@@ -6,6 +6,12 @@
 
 	"components" : [
 	    {
+		"type" : "user_defined::component::MenuPrincipal"
+		"object" : {
+		    
+		}
+	    },
+	    {
 		"type" : "ctvty::component::Canvas"
 		"object" : {
 		    "ScreenSpace" : true
@@ -90,7 +96,7 @@
 			    "type" : "ctvty::component::Hud"
 			    "object" : {
 				"onClickEvent" : "play click",
-				"onOverEvent" : "play OnOver",
+				"onExitOverEvent" : "play OnOver",
 
 				"offset x" : 0.1,
 				"offset y" : 0.3,

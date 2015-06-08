@@ -67,20 +67,31 @@ namespace ctvty {
 
     template<typename ... parameters>
     void			BroadcastMessage(const std::string& methodName,
-						 parameters ... p) const{
-      std::vector<event::parameters::value*>	v(event::parameters::PackValues(p ... ));
-      BroadcastMessage(methodName, v);
-      for (event::parameters::value* _v : v)
-	delete _v;
+						 parameters ... p) const {
+      BroadcastMessage(methodName, event::parameters::PackValues(p ... ));
     }
+
 
     void			SendMessage(const std::string& methodName,
 					    event::parameters::values params
 						= event::parameters::PackValues());
 
+    template<typename ... parameters>
+    void		        SendMessage(const std::string& methodName,
+						 parameters ... p) const {
+      SendMessage(methodName, event::parameters::PackValues(p ... ));
+    }
+
+
     void			SendMessageUpwards(const std::string& methodName,
 						   event::parameters::values params
 							= event::parameters::PackValues());
+
+    template<typename ... parameters>
+    void			SendMessageUpwards(const std::string& methodName,
+						 parameters ... p) const {
+      SendMessageUpwards(methodName, event::parameters::PackValues(p ... ));
+    }
 
 
   public:

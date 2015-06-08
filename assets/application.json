@@ -6,12 +6,12 @@
 
 	"fps" : 20,
 
-	"load" : "menu principale",
+	"load" : "menu principal",
 	"scenes" : [
 	    {
 		"type" : "ctvty::Application::Scene",
 		"object" : { 
-		    "name" : "menu principale",
+		    "name" : "menu principal",
 		    "objects" : [
 			asset("menu/objects/principal.json"),
 		    ],

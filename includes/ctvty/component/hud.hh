@@ -41,7 +41,7 @@ namespace ctvty {
       std::string	onExitOverEvent;
     public:
       inline bool		isExitOverable() { return onExitOverEnabled; }
-      inline const std::string&	onExitOver() { return onOverEvent; }
+      inline const std::string&	onExitOver() { return onExitOverEvent; }
 
     public:
       bool		overed;
@@ -97,9 +97,9 @@ namespace ctvty {
       bool		enabled;
     public:
       inline
-      void		disable() { enabled = false; }
+      void		disable() { if (model) model->Disable(); enabled = false; }
       inline
-      void		enable() { enabled = true; }
+      void		enable() { if (model) model->Enable(); enabled = true; }
       inline
       bool		state() { return enabled; }
 

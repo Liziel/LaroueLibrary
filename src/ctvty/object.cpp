@@ -15,20 +15,20 @@ namespace ctvty {
     Objects.remove_if([this] (Object* _comp) -> bool {return _comp == this;});
   }
 
-  std::list<Object*>		Object::Objects({});
+  std::list<Object*>		Object::Objects( {} );
 
   /*
    * Destroy
    */
   void				Object::Destroy(Object* del) {
-    del->intern_Destroy();
-    delete del;
+    GameObject*			rmv;
+    ctvty::event::Clock::GetClock().AddBroadCast(del);
+    if ((rmv = dynamic_cast<GameObject*>(del)) != nullptr)
+      ctvty::event::Clock::GetClock().RemoveTarget(rmv);
   }
 
   void				Object::Destroy(Object* del, float delay) {
     new event::DelayedAction([del] () -> void { del->intern_Destroy(); delete del; }, delay);
-    del->intern_Destroy();
-    delete del;
   }
 
   /*
@@ -41,8 +41,8 @@ namespace ctvty {
     product = _template->clone();
     if ((gameObject = dynamic_cast<GameObject*>(product)) != nullptr) {
       gameObject->SetActive(true);
-      gameObject->BroadcastMessage("Awake");
-    }      
+      gameObject->BroadcastMessage("Awake", {});
+    }
     return (product);
   }
 

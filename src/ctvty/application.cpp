@@ -1,3 +1,5 @@
+#include <cstdlib>
+
 #include "ctvty/application.hh"
 #include "ctvty/event/clock.hh"
 #include "ctvty/rendering/renderer.hh"
@@ -109,7 +111,6 @@ namespace ctvty {
     Application*	app = GetApplication();
 
     std::list<GameObject*> fathers_copy(ctvty::GameObject::accessParentsGameObjects());
-    ctvty::GameObject::accessParentsGameObjects().clear();
     for (GameObject* gameObject : fathers_copy)
       Object::Destroy(gameObject);
     for (Scene* scene : app->scenes)
@@ -131,17 +132,17 @@ namespace ctvty {
   void			Application::Quit() {
     Application*	app = GetApplication();
 
+    if (app->leave_state == true)
+      return ;
     app->leave_state = true;
     for (GameObject* gameObject : ctvty::GameObject::accessParentsGameObjects())
-      gameObject->BroadcastMessage("OnApplicationQuit");
+      gameObject->BroadcastMessage("OnApplicationQuit", {});
     if (!app->leave_state)
       return ;
     event::Clock::GetClock().End();
     std::list<GameObject*> fathers_copy(ctvty::GameObject::accessParentsGameObjects());
     ctvty::GameObject::accessParentsGameObjects().clear();
-    for (GameObject* gameObject : fathers_copy)
-      Object::Destroy(gameObject);
-    delete app;
+    std::exit(0);
   }
 
   void			Application::Quit(float time) {
@@ -179,6 +180,5 @@ namespace ctvty {
   void			Application::Scene::Instantiate() const {
     for (GameObject* baseObject : objects)
       Object::Instantiate(baseObject);
-    std::cout << ctvty::GameObject::accessParentsGameObjects().size() << std::endl;
   }
 };

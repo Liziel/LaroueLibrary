@@ -9,8 +9,11 @@ namespace ctvty {
   namespace event {
 
     Clock::			Clock()
-      : frame_length((int64_t)(1000 / 60)), lastFrameRatio(1), end(false) {}
-
+      :	FixedUpdate("FixedUpdate"),
+	Update("Update"),
+	OnGui("OnGui"),
+	Render("Render"),
+	frame_length((int64_t)(1000 / 60)), lastFrameRatio(1), end(false) {}
 
     Clock&				Clock::GetClock() {
       static Clock			clock;
@@ -42,6 +45,16 @@ namespace ctvty {
       end = true;
     }
 
+    void				Clock::RemoveTarget(GameObject* target) {
+      FixedUpdate.RemoveTarget(target);
+      Update.RemoveTarget(target);
+      OnGui.RemoveTarget(target);
+      Render.RemoveTarget(target);
+      for (auto it = broadcasts.begin(); it != broadcasts.end(); ++it)
+	if (it->RemoveTarget(target))
+	  it = broadcasts.erase(it);
+    }
+
     void				Clock::Start() {
       std::chrono::time_point<std::chrono::system_clock>	fixed_beg, fixed_loop;
 
@@ -54,51 +67,39 @@ namespace ctvty {
 	  lastFrameRatio = (fixed_loop - fixed_beg) / frame_length;
 	fixedDeltaTime = std::chrono::high_resolution_clock::now() - fixed_beg;
 	fixed_beg = std::chrono::high_resolution_clock::now();
-	std::for_each(GameObject::accessParentsGameObjects().begin(),
-		      GameObject::accessParentsGameObjects().end(),
-		      [] (GameObject* gameObject) { gameObject->BroadcastMessage("FixedUpdate"); }
-		      );
+
 	Event::Refresh();
+
+	FixedUpdate.Dispatch();
+	while (broadcasts.size()) { broadcasts.front().Dispatch(); broadcasts.pop_front(); }
+
 	for (DelayedAction* action : std::list<DelayedAction*>(delayedActions))
 	  action->Refresh();
 
-	{
-	  std::list<GameObject*> fathers_copy(ctvty::GameObject::accessParentsGameObjects());
-	  ctvty::rendering::Renderer::GetRenderer().Update();
-	  std::for_each(fathers_copy.begin(),
-			fathers_copy.end(),
-			[this] (GameObject* gameObject) { if (!end) gameObject->BroadcastMessage("Update"); }
-			);
-	}
+	Update.Dispatch();
+	while (broadcasts.size()) { broadcasts.front().Dispatch(); broadcasts.pop_front(); }
 
-	{
-	  std::list<GameObject*> fathers_copy(ctvty::GameObject::accessParentsGameObjects());
+	{//Event Dispatching By ONGUI
 	  Event* e;
 	  while ((e = Event::Eat()) != nullptr) {
 	    if (e->type() == Event::Type::quit)
 	      Application::Quit();
 	    else
-	      std::for_each(fathers_copy.begin(),
-			    fathers_copy.end(),
-			    [this] (GameObject* gameObject) { if (!end) gameObject->BroadcastMessage("OnGui"); }
-			    );
+	      OnGui.Dispatch();
 	  }
 	}
 
-	{
+	{//Renderer Dispatching By RENDER
 	  ctvty::rendering::Renderer::GetRenderer().Update();
-	  std::list<GameObject*> fathers_copy(ctvty::GameObject::accessParentsGameObjects());
 	  for (std::size_t i = 0; i < ctvty::rendering::Renderer::GetRenderer().RegisteredCameras(); ++i) {
 	    ctvty::rendering::Renderer::GetRenderer().Pre3DRendering(i);
-	    std::for_each(fathers_copy.begin(),
-			  fathers_copy.end(),
-			  [this] (GameObject* gameObject) { if (!end) gameObject->BroadcastMessage("Render"); }
-			  );
+	    Render.Dispatch();
 	    ctvty::rendering::Renderer::GetRenderer().PreHUDRendering(i);
  	  }
 	  ctvty::rendering::Renderer::GetRenderer().MainHUDRendering();
 	  ctvty::rendering::Renderer::GetRenderer().Flush();
 	}
+
       }
     }
   };

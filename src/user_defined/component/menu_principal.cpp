@@ -13,18 +13,23 @@ namespace user_defined {
       RegisterListener("exit click", &MenuPrincipal::Exit);
       RegisterListener("play over", &MenuPrincipal::OverPlay);
       RegisterListener("play OnOver", &MenuPrincipal::OnOverPlay);
-      // RegisterListener("play click", &); // Lancement du jeu
+      RegisterListener("play click", &MenuPrincipal::Play); // Lancement du jeu
       RegisterListener("options over", &MenuPrincipal::OverOptions);
       RegisterListener("options OnOver", &MenuPrincipal::OnOverOptions);
-      // RegisterListener("options click", &); // Lancement menu des options
+      //RegisterListener("options click", &); // Lancement menu des options
       RegisterListener("credit over", &MenuPrincipal::OverCredit);
       RegisterListener("credit OnOver", &MenuPrincipal::OnOverCredit);
-      // RegisterListener("credit click", &); // Lancement des credits
+      //RegisterListener("credit click", &); // Lancement des credits
     }
 
     void		MenuPrincipal::Serialize(serialization::Archive& __serial_instance) const {
       SERIALIZE_OBJECT_AS(user_defined::component::MenuPrincipal, __serial_instance);
       (void)__serial;
+    }
+
+    void		MenuPrincipal::Play(ctvty::component::Hud*) {
+      std::cout << "load menu" << std::endl;
+      ctvty::Application::LoadScene("menu principal");
     }
 
     void		MenuPrincipal::OverPlay(ctvty::component::Hud* hud)
@@ -78,6 +83,6 @@ namespace user_defined {
     void		MenuPrincipal::Exit(ctvty::component::Hud*)
     {
       ctvty::Application::Quit();
-    }    
+    }
   };
 };

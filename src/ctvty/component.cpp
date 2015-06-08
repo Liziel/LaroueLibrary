@@ -1,5 +1,6 @@
 #include "ctvty/gameObject.hpp"
 #include "ctvty/component.hpp"
+#include "ctvty/event/clock.hh"
 
 namespace ctvty {
   /*
@@ -20,18 +21,27 @@ namespace ctvty {
    */
   void			Component::BroadcastMessage(const std::string& methodName,
 					 event::parameters::values params) const {
-    gameObject->BroadcastMessage(methodName, params);
+    ctvty::event::Clock::GetClock().AddBroadCast(gameObject,
+						 ctvty::event::BroadCast::Way::down,
+						 methodName,
+						 params);
   }
 
   void			Component::SendMessage(const std::string& methodName,
 				    event::parameters::values params) {
-    gameObject->SendMessage(methodName, params);
+    ctvty::event::Clock::GetClock().AddBroadCast(gameObject,
+						 ctvty::event::BroadCast::Way::self,
+						 methodName,
+						 params);
   }
 
 
   void			Component::SendMessageUpwards(const std::string& methodName,
 					   event::parameters::values params) {
-    gameObject->SendMessageUpwards(methodName, params);
+    ctvty::event::Clock::GetClock().AddBroadCast(gameObject,
+						 ctvty::event::BroadCast::Way::up,
+						 methodName,
+						 params);
   }
 
 

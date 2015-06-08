@@ -9,7 +9,8 @@ INCLUDES	+= -I ./includes
 ###################
 ### CtvTy -> unity conception
 CtvTyEvent	=src/ctvty/event/clock.cpp\
-		src/ctvty/event/delayed.cpp
+		src/ctvty/event/delayed.cpp\
+		src/ctvty/event/broadcast.cpp
 
 CtvTyAssets	=src/ctvty/assets/assets.cpp\
 		src/ctvty/assets/asset.cpp\

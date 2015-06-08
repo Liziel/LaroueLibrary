@@ -16,7 +16,7 @@ namespace ctvty {
      */
     const std::string name;
 
-  protected:
+  public:
     /*
      * basic Ctor & Dtor 
      */
@@ -30,7 +30,8 @@ namespace ctvty {
     virtual Object*		clone() const {
       return serialization::serial_info<Object*>::get(serialization::Archive(this));
     }
-    virtual void		intern_Destroy() {}
+    virtual void		intern_Destroy() {
+    }
 
   private:
     /*

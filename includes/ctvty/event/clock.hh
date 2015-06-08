@@ -1,9 +1,11 @@
 #ifndef Clock_hh__
 # define Clock_hh__
 
+#include <queue>
 #include <list>
 #include <chrono>
 #include "delayed.hh"
+#include "broadcast.hh"
 
 namespace ctvty {
   namespace event {
@@ -14,6 +16,18 @@ namespace ctvty {
      *  Calling End, will stop the dispatching at the end of the current frame and quit the clock
      */
     class Clock {
+    private:
+      std::list<BroadCast>		broadcasts;
+      BroadCast				FixedUpdate;
+      BroadCast				Update;
+      BroadCast				OnGui;
+      BroadCast				Render;
+    public:
+      template<typename ... broadcast_construction> inline
+      void			AddBroadCast(broadcast_construction&& ... params)
+      {broadcasts.emplace_back(params...);}
+      void			RemoveTarget(GameObject*);
+
     private:
       std::chrono::milliseconds		frame_length;
       std::chrono::duration<double>	fixedDeltaTime;
