@@ -28,6 +28,7 @@
 !*.FBX
 !*.tga
 !*.dae
+!*.mtl
 
 #unignore .vp and .fp
 !*.vp
