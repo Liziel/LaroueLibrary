@@ -31,7 +31,9 @@ namespace ctvty {
     public:
       BroadCast(GameObject*, Way, const std::string&, parameters::values = {});
       BroadCast(const std::string&, parameters::values = {});
-      BroadCast(GameObject*); BroadCast(Object*);
+      
+      BroadCast(GameObject*);
+      BroadCast(Object*);
 
     public:
       ~BroadCast();

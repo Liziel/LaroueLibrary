@@ -110,8 +110,7 @@ namespace ctvty {
   void			Application::LoadScene(const std::string& name) {
     Application*	app = GetApplication();
 
-    std::list<GameObject*> fathers_copy(ctvty::GameObject::accessParentsGameObjects());
-    for (GameObject* gameObject : fathers_copy)
+    for (GameObject* gameObject : ctvty::GameObject::accessParentsGameObjects())
       Object::Destroy(gameObject);
     for (Scene* scene : app->scenes)
       if (scene->GetName() == name) {

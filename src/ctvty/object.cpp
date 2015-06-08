@@ -22,9 +22,10 @@ namespace ctvty {
    */
   void				Object::Destroy(Object* del) {
     GameObject*			rmv;
-    ctvty::event::Clock::GetClock().AddBroadCast(del);
+
     if ((rmv = dynamic_cast<GameObject*>(del)) != nullptr)
       ctvty::event::Clock::GetClock().RemoveTarget(rmv);
+    ctvty::event::Clock::GetClock().AddBroadCast(del);
   }
 
   void				Object::Destroy(Object* del, float delay) {
@@ -42,6 +43,7 @@ namespace ctvty {
     if ((gameObject = dynamic_cast<GameObject*>(product)) != nullptr) {
       gameObject->SetActive(true);
       gameObject->BroadcastMessage("Awake", {});
+      ctvty::event::Clock::GetClock().RemoveTarget(gameObject);
     }
     return (product);
   }
