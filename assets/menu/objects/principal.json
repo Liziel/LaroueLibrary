@@ -120,7 +120,7 @@
 			"options" : {
 			    "type" : "ctvty::component::Hud"
 			    "object" : {
-				"onClickEvent" : "options credit",
+				"onClickEvent" : "options click",
 				"onOverEvent" : "options over",
 
 				"offset x" : 0.1,
@@ -146,7 +146,7 @@
 			    "type" : "ctvty::component::Hud"
 			    "object" : {
 				"onClickEvent" : "options click",
-				"onOverEvent" : "options OnOver",
+				"onExitOverEvent" : "options OnOver",
 
 				"offset x" : 0.1,
 				"offset y" : 0.4,
@@ -196,7 +196,7 @@
 			    "type" : "ctvty::component::Hud"
 			    "object" : {
 				"onClickEvent" : "credit click",
-				"onOverEvent" : "credit OnOver",
+				"onExitOverEvent" : "credit OnOver",
 
 				"offset x" : 0.1,
 				"offset y" : 0.5,
@@ -211,7 +211,7 @@
 				"texture" : {
 				    "type" : "ctvty::asset::Texture"
 				    "object" : {
-					"wrapper" : "menu/textures/Options_over.json"
+					"wrapper" : "menu/textures/Credit_over.json"
 				    }
 				}
 			    }
