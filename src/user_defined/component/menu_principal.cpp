@@ -28,7 +28,6 @@ namespace user_defined {
     }
 
     void		MenuPrincipal::Play(ctvty::component::Hud*) {
-      std::cout << "load menu" << std::endl;
       ctvty::Application::LoadScene("menu principal");
     }
 
