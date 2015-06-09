@@ -2,6 +2,6 @@
     "type" : "ctvty::asset::Texture::Wrapper",
 
     "object" : {
-        "path" : "assets/menu/textures/M.tga"
+        "path" : "menu/textures/M.tga"
     }
 }

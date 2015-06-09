@@ -37,7 +37,7 @@ namespace filesystem {
     /*
      * getPath() -> return the real path to the file
      */
-    std::string		GetPath() const;
+    virtual std::string		GetPath() const;
     std::string		GetName() const;
     operator		std::string() const;
   };

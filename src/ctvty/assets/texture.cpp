@@ -28,7 +28,8 @@ namespace ctvty {
 
     Texture::Wrapper::	Wrapper(const serialization::Archive& __serial) {
       __serial["path"] & path;
-      model.reset(ctvty::rendering::Renderer::GetRenderer().LoadTexture(path));
+      model.reset(ctvty::rendering::Renderer::GetRenderer()
+		  .LoadTexture(ctvty::Application::Assets().GetLocation() + path));
     }
 
     void		Texture::Wrapper::Serialize(serialization::Archive& __serial_instance) const {

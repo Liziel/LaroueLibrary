@@ -28,7 +28,8 @@ namespace ctvty {
 
     Model3D::Wrapper::	Wrapper(const serialization::Archive& __serial) {
       __serial["path"] & path;
-      model.reset(ctvty::rendering::Renderer::GetRenderer().Load3DModel(path));
+      model.reset(ctvty::rendering::Renderer::GetRenderer()
+		  .Load3DModel(ctvty::Application::Assets().GetLocation() + path));
     }
 
     void		Model3D::Wrapper::Serialize(serialization::Archive& __serial_instance) const {

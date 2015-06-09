@@ -2,6 +2,6 @@
     "type" : "ctvty::asset::Texture::Wrapper",
 
     "object" : {
-	"path" : "assets/menu/textures/Bomber_title.tga"
+	"path" : "menu/textures/Bomber_title.tga"
     }
 }

@@ -47,6 +47,9 @@ namespace ctvty {
 
     public:
       static std::map<std::string, Asset>&		GetCachedAssets();
+
+    public:
+      inline std::string		GetLocation() { return directory.GetPath(); }
     };
   };
 };

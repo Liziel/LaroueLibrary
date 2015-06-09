@@ -1,0 +1,6 @@
+{
+    "type" : "ctvty::asset::Model3D::Wrapper"
+    "object" : {
+	"path" : "game/models/destructible.obj"
+    }
+}

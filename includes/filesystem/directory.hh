@@ -43,7 +43,7 @@ namespace filesystem {
 
   public:
     void		Create();
-
+    virtual std::string	GetPath() const override { return File::GetPath() + "/"; }
   private:
     bool					valid;
     std::set<File, std::less<std::string> >	files;

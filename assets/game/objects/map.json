@@ -1,0 +1,53 @@
+{
+    "type" : "ctvty::GameObject"
+    "object" : {
+	"childs" : [
+	    
+	],
+	"components" : [
+	    {
+		"type" : "ctvty::component::Renderer"
+		"object" : {
+		    "model" : {
+			"type" : "ctvty::asset::Model3D"
+			"object" : {
+			    "wrapper" : "game/models/destructible.json"
+			}
+		    }
+		}
+	    }
+	],
+
+	"name" : "map"
+	"tag" : "undefined"
+
+	"transform" : {
+	    "type" : "ctvty::component::Transform",
+	    "object" : {
+		"position" : {
+		    "type" : "ctvty::utils::Vector3D"
+		    "object" : {
+			"x" : 0
+			"y" : 0
+			"z" : 0
+		    }
+		},
+		"scale" : {
+		    "type" : "ctvty::utils::Vector3D"
+		    "object" : {
+			"x" : 1
+			"y" : 1
+			"z" : 1
+		    }
+		},
+		"rotation" : {
+		    "type" : "ctvty::utils::Quaternion"
+		    "object" : {
+			"euler" : true,
+			"x" : 0, "y" : 0, "z" : 0
+		    }
+		}
+	    }
+	}
+    }
+}
