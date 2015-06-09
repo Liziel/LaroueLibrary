@@ -14,7 +14,7 @@ namespace ctvty {
       : BroadCast(_target, Way::deletion, "deletion", {}) {}
 
     BroadCast::BroadCast(Object* _target)
-      : BroadCast(nullptr, Way::deletion, "deletion", {}) {deletion = (_target); std::cout << "deletion" << std::endl; }
+      : BroadCast(nullptr, Way::deletion, "deletion", {}) { deletion = (_target); }
 
     BroadCast::~BroadCast() {
       for (auto value : values)
@@ -23,9 +23,7 @@ namespace ctvty {
 
 
     void	BroadCast::Dispatch() {
-      std::cout << "dispatching " << message << " at " << static_cast<int>(way) << std::endl;
       if (target == nullptr && deletion == nullptr) {
-	std::cout << "size " << GameObject::accessParentsGameObjects().size() << std::endl;
 	std::for_each(GameObject::accessParentsGameObjects().begin(),
 		      GameObject::accessParentsGameObjects().end(),
 		      [this] (GameObject* gameObject) {

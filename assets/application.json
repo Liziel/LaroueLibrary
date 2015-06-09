@@ -6,7 +6,7 @@
 
 	"fps" : 20,
 
-	"load" : "game template",
+	"load" : "menu principal",
 	"scenes" : [
 
 	    {

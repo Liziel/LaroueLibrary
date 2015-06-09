@@ -29,7 +29,7 @@ namespace ctvty {
     Police::Wrapper::	Wrapper(const serialization::Archive& __serial) {
       __serial["size"] & size;
       __serial["path"] & path;
-      police = TTF_OpenFont((ctvty::Application::Assets().GetLocation() + path.c_str)(), size);
+      police = TTF_OpenFont((ctvty::Application::Assets().GetLocation() + path).c_str(), size);
       if (!police)
 	std::cout << "error " << TTF_GetError() << std::endl;
     }
