@@ -32,7 +32,7 @@ namespace user_defined {
 
     void		MenuOptions::Exit(ctvty::component::Hud*)
     {
-      ctvty::Application::Quit();
+      ctvty::Application::LoadScene("menu principal");
     }
   };
 };
