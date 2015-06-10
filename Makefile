@@ -57,14 +57,9 @@ FileSystem	= src/filesystem/file.cpp \
 		src/filesystem/directory.cpp
 
 ### UserDefined
-<<<<<<< HEAD
 UDComponent	= \
-		src/user_defined/component/menu_principal.cpp
-=======
-UDComponent	= src/user_defined/component/eventtester.cpp \
 		src/user_defined/component/menu_principal.cpp \
 		src/user_defined/component/menu_options.cpp
->>>>>>> cf2453d0d05cbb0949d22afeda3a84f0d5e23ba0
 
 UDHelper	= src/user_defined/helper/tga_dict.cpp
 
