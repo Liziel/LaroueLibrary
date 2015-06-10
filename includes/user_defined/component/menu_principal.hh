@@ -17,6 +17,7 @@ namespace user_defined {
       void		OverPlay(ctvty::component::Hud*);
       void		OnOverPlay(ctvty::component::Hud*);
 
+      void		Options(ctvty::component::Hud*);
       void		OverOptions(ctvty::component::Hud*);
       void		OnOverOptions(ctvty::component::Hud*);
 

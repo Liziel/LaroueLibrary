@@ -16,7 +16,7 @@ namespace user_defined {
       RegisterListener("play click", &MenuPrincipal::Play); // Lancement du jeu
       RegisterListener("options over", &MenuPrincipal::OverOptions);
       RegisterListener("options OnOver", &MenuPrincipal::OnOverOptions);
-      //RegisterListener("options click", &); // Lancement menu des options
+      RegisterListener("options click", &MenuPrincipal::Options); // Lancement menu des options
       RegisterListener("credit over", &MenuPrincipal::OverCredit);
       RegisterListener("credit OnOver", &MenuPrincipal::OnOverCredit);
       //RegisterListener("credit click", &); // Lancement des credits
@@ -41,6 +41,11 @@ namespace user_defined {
     {
       hud->GetCanvas()["play overed"]->disable();
       hud->GetCanvas()["play"]->enable();
+    }
+
+    void		MenuPrincipal::Options(ctvty::component::Hud*)
+    {
+      ctvty::Application::LoadScene("menu options");
     }
 
     void		MenuPrincipal::OverOptions(ctvty::component::Hud* hud)

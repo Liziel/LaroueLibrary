@@ -6,7 +6,7 @@
 
 	"components" : [
 	    {
-		"type" : "user_defined::component::MenuPrincipal"
+		"type" : "user_defined::component::MenuOptions"
 		"object" : {
 		    
 		}
@@ -572,6 +572,443 @@
 				    "type" : "ctvty::asset::Texture"
 				    "object" : {
 					"wrapper" : "menu/textures/Exit_over.json"
+				    }
+				}
+			    }
+			},
+
+			"b" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.0,
+				"offset y" : 0.0,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : false
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/B.json"
+				    }
+				}
+			    }
+			},
+
+			"c" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.0,
+				"offset y" : 0.0,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : false
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/C.json"
+				    }
+				}
+			    }
+			},
+
+			"f" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.0,
+				"offset y" : 0.0,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : false
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/F.json"
+				    }
+				}
+			    }
+			},
+
+			"g" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.0,
+				"offset y" : 0.0,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : false
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/G.json"
+				    }
+				}
+			    }
+			},
+
+			"h" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.0,
+				"offset y" : 0.0,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : false
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/H.json"
+				    }
+				}
+			    }
+			},
+
+			"I" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.0,
+				"offset y" : 0.0,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : false
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/I.json"
+				    }
+				}
+			    }
+			},
+
+			"j" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.0,
+				"offset y" : 0.0,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : false
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/J.json"
+				    }
+				}
+			    }
+			},
+
+			"k" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.0,
+				"offset y" : 0.0,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : false
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/K.json"
+				    }
+				}
+			    }
+			},
+
+			"l" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.0,
+				"offset y" : 0.0,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : false
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/L.json"
+				    }
+				}
+			    }
+			},
+
+			"m" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.0,
+				"offset y" : 0.0,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : false
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/M.json"
+				    }
+				}
+			    }
+			},
+
+			"n" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.0,
+				"offset y" : 0.0,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : false
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/N.json"
+				    }
+				}
+			    }
+			},
+
+			"t" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.0,
+				"offset y" : 0.0,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : false
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/T.json"
+				    }
+				}
+			    }
+			},
+
+			"u" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.0,
+				"offset y" : 0.0,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : false
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/U.json"
+				    }
+				}
+			    }
+			},
+
+			"u" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.0,
+				"offset y" : 0.0,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : false
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/U.json"
+				    }
+				}
+			    }
+			},
+
+			"v" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.0,
+				"offset y" : 0.0,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : false
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/V.json"
+				    }
+				}
+			    }
+			},
+
+			"w" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.0,
+				"offset y" : 0.0,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : false
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/W.json"
+				    }
+				}
+			    }
+			},
+
+			"x" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.0,
+				"offset y" : 0.0,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : false
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/X.json"
+				    }
+				}
+			    }
+			},
+
+			"y" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.0,
+				"offset y" : 0.0,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : false
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Y.json"
+				    }
+				}
+			    }
+			},
+
+			"z" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+
+				"offset x" : 0.0,
+				"offset y" : 0.0,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : false
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Z.json"
 				    }
 				}
 			    }
