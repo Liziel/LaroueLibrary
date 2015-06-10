@@ -28,7 +28,7 @@ namespace user_defined {
     }
 
     void		MenuPrincipal::Play(ctvty::component::Hud*) {
-      ctvty::Application::LoadScene("menu principal");
+      ctvty::Application::LoadScene("game template");
     }
 
     void		MenuPrincipal::OverPlay(ctvty::component::Hud* hud)

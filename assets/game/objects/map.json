@@ -2,7 +2,58 @@
     "type" : "ctvty::GameObject"
     "object" : {
 	"childs" : [
-	    
+	    {
+		"type" : "ctvty::GameObject"
+		"object" : {
+		    "childs" : [ ]
+		    "components" : [
+			{
+			    "type" : "ctvty::component::Camera"
+			    "object" : {
+				"viewport id" : 1
+				"locked look" : {
+				    "type" : "ctvty::utils::Vector3D"
+				    "object" : {
+					"x" : 0
+					"y" : 0
+					"z" : 0
+				    }
+				}
+			    }
+			}
+		    ]
+
+		    "name" : "Map Camera",
+		    "tag" : "camera",
+
+		    "transform" : {
+			"type" : "ctvty::component::Transform"
+			"object" : {
+			    "position" : {
+				"type" : "ctvty::utils::Vector3D"
+				"object" : {
+				    "x" : -10
+				    "z" : -10
+				    "y" : -50
+				}
+			    },
+			    "rotation" : {
+				"type" : "ctvty::utils::Quaternion"
+				"object" : {
+				    "euler" : true, "x" : 0, "y" : 0, "z" : 0
+				}
+			    }
+			    "scale" : {
+				"type" : "ctvty::utils::Vector3D"
+				"object" : {
+				    "x" : 0, "y" : 0, "z" : 0
+				}
+			    }
+			}
+		    }
+
+		}
+	    }
 	],
 	"components" : [
 	    {
@@ -35,9 +86,9 @@
 		"scale" : {
 		    "type" : "ctvty::utils::Vector3D"
 		    "object" : {
-			"x" : 1
-			"y" : 1
-			"z" : 1
+			"x" : 1000
+			"y" : 1000
+			"z" : 1000
 		    }
 		},
 		"rotation" : {

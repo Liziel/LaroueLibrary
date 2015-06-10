@@ -2,6 +2,7 @@
 #include "ctvty/rendering/renderer.hh"
 #include "ctvty/application.hh"
 #include "ctvty/component/transform.hh"
+#include "ctvty/debug.hpp"
 
 REGISTER_FOR_SERIALIZATION(ctvty::component, Camera);
 REGISTER_FOR_SERIALIZATION(ctvty::component::Camera, View);
@@ -101,7 +102,7 @@ namespace ctvty {
 	camera->SetViewPort(view->x, view->y, view->width, view->height);
       else if (vtype == view::automatic)
 	camera->DetectViewPort(priority);
-      std::cout << "awake" << this << std::endl;
+      Camera::Update();
     }
 
     void	Camera::Update() {
@@ -111,13 +112,13 @@ namespace ctvty {
 	camera->SetViewPort(view->x, view->y, view->width, view->height);
       }
       ctvty::utils::Vector3D _position = 
-	transform->GetPosition() + *offset;
+	transform->GetHierarchyPosition() + *offset;
       ctvty::utils::Quaternion _rotation =
 	ctvty::utils::Quaternion::identity;
       ctvty::utils::Vector3D _lookAt;
 
       if (ltype == look::forward) {
-	_rotation = transform->GetRotation();
+	_rotation = transform->GetHierarchyRotation();
 	_lookAt   = _rotation.RotatedVector(*lookAt) + _position;
       } else if (ltype == look::locked) {
 	_lookAt	  = *lookAt;
