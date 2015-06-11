@@ -9,7 +9,7 @@
 		    "textured cube" : {
 			"type" : "ctvty::asset::Texture"
 			"object" : {
-			    "wrapper" : "game/textures/ice.json"
+			    "wrapper" : "game/textures/diamond.json"
 			}
 		    }
 		}

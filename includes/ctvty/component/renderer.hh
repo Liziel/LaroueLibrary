@@ -9,6 +9,7 @@
 namespace ctvty {
   namespace component {
 
+    class Animator;
     class Renderer : public MonoBehaviour<Renderer> {
     private:
       std::unique_ptr<asset::Shader>		shader;
@@ -16,6 +17,9 @@ namespace ctvty {
       std::unique_ptr<asset::Texture>		texture;
       std::unique_ptr<utils::Quaternion>	rotation;
       std::unique_ptr<rendering::Model3D>	cube;
+      
+    private:
+      Animator*					animator;
 
     public:
 			Renderer(const serialization::Archive&);

@@ -15,6 +15,9 @@ namespace user_defined {
       std::size_t				size_x;
       std::size_t				size_y;
 
+      std::unique_ptr<ctvty::GameObject>	player1;
+      std::unique_ptr<ctvty::GameObject>	player2;
+
       bool					directly_generated;
 
     public:
