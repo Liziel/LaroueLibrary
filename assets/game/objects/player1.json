@@ -71,7 +71,7 @@
 	    "object" : {
 		"scale" : {
 		    "type" : "ctvty::utils::Vector3D"
-		    "object" : {"x" : 10, "y" : 10, "z" : 10}
+		    "object" : {"x" : 1, "y" : 1, "z" : 1}
 		}
 		"position" : {
 		    "type" : "ctvty::utils::Vector3D"

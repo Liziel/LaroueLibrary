@@ -69,7 +69,7 @@ namespace ctvty
       if (shader && *shader)
 	ctvty::rendering::Renderer::GetRenderer().UseShaderAtNextDraw(shader->GetShader());
       if (!animator && model) {
-	std::cout << "draw" << std::endl;
+	ctvty::debug::Logs(transform->GetHierarchyPosition(), transform->GetHierarchyScale(), transform->GetHierarchyRotation());
 	SetAnimation("renderer_stop");
 	model->GetModel().Draw(transform->GetHierarchyPosition(),
 			       transform->GetHierarchyScale(),
