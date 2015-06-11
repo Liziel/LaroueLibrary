@@ -19,6 +19,9 @@ namespace user_defined {
       RegisterListener("options click", &MenuPrincipal::Options); // Lancement menu des options
       RegisterListener("credit over", &MenuPrincipal::OverCredit);
       RegisterListener("credit OnOver", &MenuPrincipal::OnOverCredit);
+      RegisterListener("load game over", &MenuPrincipal::OverLoadGame);
+      RegisterListener("load game OnOver", &MenuPrincipal::OnOverLoadGame);
+      //RegisterListener("load game click", &MenuPrincipal::LoadGame); // Lancement du menu de load des games
       //RegisterListener("credit click", &); // Lancement des credits
     }
 
@@ -58,6 +61,18 @@ namespace user_defined {
     {
       hud->GetCanvas()["options overed"]->disable();
       hud->GetCanvas()["options"]->enable();
+    }
+
+    void		MenuPrincipal::OverLoadGame(ctvty::component::Hud* hud)
+    {
+      hud->GetCanvas()["load game overed"]->enable();
+      hud->GetCanvas()["load game"]->disable();
+    }
+
+    void		MenuPrincipal::OnOverLoadGame(ctvty::component::Hud* hud)
+    {
+      hud->GetCanvas()["load game overed"]->disable();
+      hud->GetCanvas()["load game"]->enable();
     }
 
     void		MenuPrincipal::OverCredit(ctvty::component::Hud* hud)

@@ -1,0 +1,7 @@
+{
+    "type" : "ctvty::asset::Texture::Wrapper",
+
+    "object" : {
+        "path" : "menu/textures/7.tga"
+    }
+}

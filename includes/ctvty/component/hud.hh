@@ -74,7 +74,6 @@ namespace ctvty {
 	texture = _texture;
 	model->SetTexture(texture->GetShared());
       }
-
     private:
       std::shared_ptr<ctvty::rendering::Hud>
 			model;

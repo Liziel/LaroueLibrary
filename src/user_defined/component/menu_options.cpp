@@ -2,6 +2,10 @@
 #include "ctvty/application.hh"
 #include "ctvty/event.hh"
 #include "ctvty/input.hh"
+<<<<<<< HEAD
+=======
+#include "ctvty/debug.hpp"
+>>>>>>> 362174afcb4da01ed94fc4f1e01924aaedb544b8
 
 REGISTER_FOR_SERIALIZATION(user_defined::component, MenuOptions);
 
@@ -15,6 +19,16 @@ namespace user_defined {
       RegisterListener("exit click", &MenuOptions::Exit);
       RegisterListener("OnSetterClick", &MenuOptions::OnSetterClick);
       setting = false;
+    }
+
+    void	MenuOptions::awake()
+    {
+      if (GetComponent<ctvty::component::Canvas>() == nullptr)
+	return ;
+      ctvty::component::Canvas&	canvas = *GetComponent<ctvty::component::Canvas>();
+      // 1- ConfigurationExist for all binding shortcut
+      // 2- if 1! -> GetConfiguration for all binding shortcut
+      // canvas[input name].settexture as in OnGui
     }
 
     void		MenuOptions::Serialize(serialization::Archive& __serial_instance) const {
@@ -53,12 +67,18 @@ namespace user_defined {
 	return ;
       if (e->type() != ctvty::Event::Type::keydown)
 	return ;
-      std::cout << e->character() << std::endl;
+      std::cout << e->keycode() << std::endl;
       if (e->keycode() >= 'a' && e->keycode() <= 'z') {
 	texture.reset(new ctvty::asset::Texture(std::string("menu/textures/") +
 						static_cast<char>(e->keycode() - 'a' + 'A') + ".json"));
 	texture->delayedInstantiation();
 	setted->SetTexture(texture);
+      } else if (e->keycode() >= 1073741912 && e->keycode() <= 1073741921) {
+	texture.reset(new ctvty::asset::Texture(std::string("menu/textures/") +
+						static_cast<char>(e->keycode() - 1073741912 + 48)
+					        + ".json"));
+	texture->delayedInstantiation();
+	setted->SetTexture(texture);	  
       } else {
 	switch(e->keycode()) {
 	case 1073741906:
@@ -76,6 +96,14 @@ namespace user_defined {
 	case 1073741903:
 	  texture.reset(new ctvty::asset::Texture(std::string("menu/textures/") +
 						  "Arrow_right.json"));
+	  break;
+	case 32:
+	  texture.reset(new ctvty::asset::Texture(std::string("menu/textures/") +
+						  "Space.json"));
+	  break;
+	case 1073741922:
+	  texture.reset(new ctvty::asset::Texture(std::string("menu/textures/") +
+						  "0.json"));
 	  break;
 	default:
 	  setting = false;

@@ -167,6 +167,56 @@
 			    }
 			},
 
+			"load game" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"onClickEvent" : "load game click",
+				"onOverEvent" : "load game over",
+
+				"offset x" : 0.1,
+				"offset y" : 0.5,
+
+				"size x" : 0.3
+				"size y" : 0.1
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Load_game.json"
+				    }
+				}
+			    }
+			},
+
+			"load game overed" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"onClickEvent" : "load game click",
+				"onExitOverEvent" : "load game OnOver",
+
+				"offset x" : 0.1,
+				"offset y" : 0.5,
+
+				"size x" : 0.3
+				"size y" : 0.1
+
+				"level" : 1
+
+				"enabled" : false
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Load_game_over.json"
+				    }
+				}
+			    }
+			},
+
 			"credit" : {
 			    "type" : "ctvty::component::Hud"
 			    "object" : {
@@ -174,7 +224,7 @@
 				"onOverEvent" : "credit over",
 
 				"offset x" : 0.1,
-				"offset y" : 0.5,
+				"offset y" : 0.6,
 
 				"size x" : 0.3
 				"size y" : 0.1
@@ -199,7 +249,7 @@
 				"onExitOverEvent" : "credit OnOver",
 
 				"offset x" : 0.1,
-				"offset y" : 0.5,
+				"offset y" : 0.6,
 
 				"size x" : 0.3
 				"size y" : 0.1
