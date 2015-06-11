@@ -13,6 +13,72 @@ namespace GdlImpl {
       loadStatus = false;
   }
 
+  Model3D::		Model3D(Renderer& r)
+    : path(""), cube(new gdl::Geometry), renderer(r) {
+
+    cube->pushVertex(glm::vec3(0.5, -0.5, 0.5)); 
+    cube->pushVertex(glm::vec3(0.5, 0.5, 0.5)); 
+    cube->pushVertex(glm::vec3(-0.5, 0.5, 0.5)); 
+    cube->pushVertex(glm::vec3(-0.5, -0.5, 0.5)); 
+		
+    cube->pushUv(glm::vec2(0.0f, 0.0f)); 
+    cube->pushUv(glm::vec2(1.0f, 0.0f)); 
+    cube->pushUv(glm::vec2(1.0f, 1.0f)); 
+    cube->pushUv(glm::vec2(0.0f, 1.0f)); 
+		
+    cube->pushVertex(glm::vec3(0.5, -0.5, -0.5)); 
+    cube->pushVertex(glm::vec3(0.5, 0.5, -0.5)); 
+    cube->pushVertex(glm::vec3(-0.5, 0.5, -0.5)); 
+    cube->pushVertex(glm::vec3(-0.5, -0.5, -0.5)); 
+		
+    cube->pushUv(glm::vec2(0.0f, 0.0f)); 
+    cube->pushUv(glm::vec2(1.0f, 0.0f)); 
+    cube->pushUv(glm::vec2(1.0f, 1.0f)); 
+    cube->pushUv(glm::vec2(0.0f, 1.0f)); 
+		
+    cube->pushVertex(glm::vec3(0.5, -0.5, -0.5)); 
+    cube->pushVertex(glm::vec3(0.5, 0.5, -0.5)); 
+    cube->pushVertex(glm::vec3(0.5, 0.5, 0.5)); 
+    cube->pushVertex(glm::vec3(0.5, -0.5, 0.5)); 
+		
+    cube->pushUv(glm::vec2(0.0f, 0.0f)); 
+    cube->pushUv(glm::vec2(1.0f, 0.0f)); 
+    cube->pushUv(glm::vec2(1.0f, 1.0f)); 
+    cube->pushUv(glm::vec2(0.0f, 1.0f)); 
+		
+    cube->pushVertex(glm::vec3(-0.5, -0.5, 0.5)); 
+    cube->pushVertex(glm::vec3(-0.5, 0.5, 0.5)); 
+    cube->pushVertex(glm::vec3(-0.5, 0.5, -0.5)); 
+    cube->pushVertex(glm::vec3(-0.5, -0.5, -0.5)); 
+		
+    cube->pushUv(glm::vec2(0.0f, 0.0f)); 
+    cube->pushUv(glm::vec2(1.0f, 0.0f)); 
+    cube->pushUv(glm::vec2(1.0f, 1.0f)); 
+    cube->pushUv(glm::vec2(0.0f, 1.0f)); 
+		
+    cube->pushVertex(glm::vec3(0.5, 0.5, 0.5)); 
+    cube->pushVertex(glm::vec3(0.5, 0.5, -0.5)); 
+    cube->pushVertex(glm::vec3(-0.5, 0.5, -0.5)); 
+    cube->pushVertex(glm::vec3(-0.5, 0.5, 0.5)); 
+		
+    cube->pushUv(glm::vec2(0.0f, 0.0f));
+    cube->pushUv(glm::vec2(1.0f, 0.0f));
+    cube->pushUv(glm::vec2(1.0f, 1.0f));
+    cube->pushUv(glm::vec2(0.0f, 1.0f));
+		
+    cube->pushVertex(glm::vec3(0.5, -0.5, -0.5));
+    cube->pushVertex(glm::vec3(0.5, -0.5, 0.5));
+    cube->pushVertex(glm::vec3(-0.5, -0.5, 0.5));
+    cube->pushVertex(glm::vec3(-0.5, -0.5, -0.5));
+		
+    cube->pushUv(glm::vec2(0.0f, 0.0f));
+    cube->pushUv(glm::vec2(1.0f, 0.0f));
+    cube->pushUv(glm::vec2(1.0f, 1.0f));
+    cube->pushUv(glm::vec2(0.0f, 1.0f));
+		
+    cube->build();
+  }
+
   void			Model3D::CreateAnimation(const std::string& name,
 						 int frameStart, int frameEnd) {
     if (!loadStatus)
@@ -51,6 +117,9 @@ namespace GdlImpl {
     transform *= glm::rotate((r.y / glm::pi<float>()) * 180.f, glm::vec3(0., 1., 0.));
     transform *= glm::rotate((r.z / glm::pi<float>()) * 180.f, glm::vec3(0., 0., 1.));
     transform *= glm::scale(scale.x, scale.y, scale.z);
-    model->draw(renderer.GetShader(), transform, time);
+    if (model)
+      model->draw(renderer.GetShader(), transform, time);
+    else
+      cube->draw(renderer.GetShader(), transform, GL_QUADS);
   }
 };

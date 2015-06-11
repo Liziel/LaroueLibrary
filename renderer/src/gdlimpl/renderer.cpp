@@ -178,6 +178,11 @@ namespace GdlImpl {
   }
 
   ctvty::rendering::Model3D*
+		Renderer::CreateCube() {
+    return new Model3D(*this);
+  }
+
+  ctvty::rendering::Model3D*
 		Renderer::Load3DModel(const std::string& path) {
     return new Model3D(*this, path);
   }

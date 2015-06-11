@@ -4,6 +4,7 @@
 # include <memory>
 
 # include "Model.hh"
+# include "Geometry.hh"
 
 # include "ctvty/rendering/model3d.hh"
 
@@ -14,12 +15,14 @@ namespace GdlImpl {
   private:
     std::string			path;
     bool			loadStatus;
-    std::unique_ptr<gdl::Model>	model;
+    std::unique_ptr<gdl::Model>		model;
+    std::unique_ptr<gdl::Geometry>	cube;
 
   public:
     Renderer&			renderer;
 
   public:
+    Model3D(Renderer&);
     Model3D(Renderer&, const std::string&);
 
   public:

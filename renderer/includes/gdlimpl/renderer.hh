@@ -32,6 +32,7 @@ namespace GdlImpl {
     ctvty::utils::Vector3D		camera_position, camera_lookAt, camera_up;
 
   public:
+    ctvty::rendering::Model3D*		CreateCube() final;
     ctvty::rendering::Model3D*		Load3DModel(const std::string&) final;
     ctvty::rendering::Texture*		LoadTexture(const std::string&) final;
 

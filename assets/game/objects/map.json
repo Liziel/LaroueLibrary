@@ -86,9 +86,9 @@
 		"scale" : {
 		    "type" : "ctvty::utils::Vector3D"
 		    "object" : {
-			"x" : 1000
-			"y" : 1000
-			"z" : 1000
+			"x" : 0.1
+			"y" : 0.1
+			"z" : 0.1
 		    }
 		},
 		"rotation" : {

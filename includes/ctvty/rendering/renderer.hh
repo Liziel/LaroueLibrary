@@ -22,6 +22,7 @@ namespace ctvty {
 	virtual ~Implementation() {}
 
       public:
+	virtual Model3D*		CreateCube() = 0;
 	virtual Model3D*		Load3DModel(const std::string&) = 0;
 	virtual Texture*		LoadTexture(const std::string&) = 0;
 	
