@@ -1,0 +1,6 @@
+{
+    "type" : "user_defined::component::Ladder"
+    "object" : {
+	"path" : "log/logLadder.json"
+    }
+}
