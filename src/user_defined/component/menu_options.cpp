@@ -1,5 +1,6 @@
 #include "user_defined/component/menu_options.hh"
 #include "ctvty/application.hh"
+#include "ctvty/event.hh"
 
 REGISTER_FOR_SERIALIZATION(user_defined::component, MenuOptions);
 
@@ -11,6 +12,8 @@ namespace user_defined {
       RegisterListener("exit over", &MenuOptions::OverExit);
       RegisterListener("exit OnOver", &MenuOptions::OnOverExit);
       RegisterListener("exit click", &MenuOptions::Exit);
+      RegisterListener("OnSetterClick", &MenuOptions::OnSetterClick);
+      setting = false;
     }
 
     void		MenuOptions::Serialize(serialization::Archive& __serial_instance) const {
@@ -18,6 +21,12 @@ namespace user_defined {
       (void)__serial;
     }
 
+    void		MenuOptions::OnSetterClick(ctvty::component::Hud* hud) 
+    {
+      setting = true;
+      setted = hud;
+    }
+    
     void		MenuOptions::OverExit(ctvty::component::Hud* hud)
     {
       hud->GetCanvas()["exit overed"]->enable();
@@ -34,5 +43,50 @@ namespace user_defined {
     {
       ctvty::Application::LoadScene("menu principal");
     }
+
+    void		MenuOptions::OnGui() 
+    {
+      auto e = ctvty::Event::current();
+
+      if (!setting)
+	return ;
+      if (e->type() != ctvty::Event::Type::keydown)
+	return ;
+      std::cout << e->character() << std::endl;
+      if (e->keycode() >= 'a' && e->keycode() <= 'z') {
+	texture.reset(new ctvty::asset::Texture(std::string("menu/textures/") +
+						static_cast<char>(e->keycode() - 'a' + 'A') + ".json"));
+	texture->delayedInstantiation();
+	setted->SetTexture(texture);
+      } else {
+	switch(e->keycode()) {
+	case 1073741906:
+	  texture.reset(new ctvty::asset::Texture(std::string("menu/textures/") +
+						  "Arrow_up.json"));
+	  break;
+	case 1073741905:
+	  texture.reset(new ctvty::asset::Texture(std::string("menu/textures/") +
+						  "Arrow_down.json"));
+	  break;
+	case 1073741904:
+	  texture.reset(new ctvty::asset::Texture(std::string("menu/textures/") +
+						  "Arrow_left.json"));
+	  break;
+	case 1073741903:
+	  texture.reset(new ctvty::asset::Texture(std::string("menu/textures/") +
+						  "Arrow_right.json"));
+	  break;
+	default:
+	  setting = false;
+	  setted = nullptr;
+	  return ;
+	}
+	texture->delayedInstantiation();
+	setted->SetTexture(texture);
+      }
+      setting = false;
+      setted = nullptr;
+    }
+    
   };
 };
