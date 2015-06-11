@@ -145,7 +145,6 @@ namespace ctvty {
 			 offx * canvas_sizeX, offy * canvas_sizeY);
       model->SetWorldSpace(rotation,
 			   position + rotation.RotatedVector(ctvty::utils::Vector3D::back) * level);
-      std::cout << std::boolalpha << enabled << std::endl;
       if (enabled)
 	model->Enable();
       else

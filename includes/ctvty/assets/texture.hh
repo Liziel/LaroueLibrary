@@ -37,6 +37,7 @@ namespace ctvty {
     public:
       void		Serialize(serialization::Archive&) const;
 			Texture(const serialization::Archive&);
+			Texture(const std::string& path);
 
     public:
       operator bool() { return (bool) (_object && _object->model); }

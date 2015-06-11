@@ -12,6 +12,10 @@ namespace ctvty {
       archive["wrapper"] & wrapper;
     }
 
+    Texture::		Texture(const std::string& _wrapper) {
+      wrapper = _wrapper;
+    }
+
     void		Texture::Serialize(serialization::Archive& archive_instance) const {
       SERIALIZE_OBJECT_AS(ctvty::asset::Texture, archive_instance)
       __serial["wrapper"] & wrapper;
