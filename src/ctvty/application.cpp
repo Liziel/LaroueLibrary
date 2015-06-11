@@ -111,10 +111,10 @@ namespace ctvty {
     Application*	app = GetApplication();
 
     for (GameObject* gameObject : ctvty::GameObject::accessParentsGameObjects())
-      if (gameObject.IsDestroyableOnLoad())
+      if (gameObject->IsDestroyableOnLoad())
 	Object::Destroy(gameObject);
       else
-	gameObject.BroadcastMessage("OnLoadScene", name);
+	gameObject->BroadcastMessage("OnLoadScene", ctvty::event::parameters::PackValues(name));
     for (Scene* scene : app->scenes)
       if (scene->GetName() == name) {
 	scene->Instantiate();

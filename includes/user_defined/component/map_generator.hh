@@ -1,12 +1,12 @@
 #ifndef MapGenerator_hh__
 # define MapGenerator_hh__
 
-# include "ctvty/MonoBehaviour.hh"
+# include "ctvty/monobehaviour.hpp"
 
 namespace user_defined {
   namespace component {
     
-    class MapGenerator : public MonoBehaviour<MapGenerator> {
+    class MapGenerator : public ctvty::MonoBehaviour<MapGenerator> {
     private:
       std::unique_ptr<ctvty::GameObject>	ground;
       std::unique_ptr<ctvty::GameObject>	destructible;

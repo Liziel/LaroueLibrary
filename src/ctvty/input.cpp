@@ -64,6 +64,14 @@ namespace ctvty {
     c->base_names.push_back(s);
   }
 
+  Input::configuration&		Input::GetInputInfo(const std::string& id) {
+    return *(singleton()->config_map[id]);
+  }
+
+  bool				Input::ConfigurationExist(const std::string& id) {
+    return singleton()->config_map.end() != singleton()->config_map.find(id);
+  }
+
   Input::			Input(const serialization::Archive& __serial)
     : mouse(ctvty::utils::Vector3D::zero) {
     std::list< std::shared_ptr<configuration> > tmp;

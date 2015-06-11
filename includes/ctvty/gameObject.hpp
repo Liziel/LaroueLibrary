@@ -49,6 +49,8 @@ namespace ctvty {
     component::Transform*					transform;
   public:
     component::Transform*					GetTransformation();
+    inline void							SetTransformation(component::Transform* _transform)
+    { transform = _transform; }
 
   protected:
     /*

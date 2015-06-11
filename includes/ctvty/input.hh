@@ -8,6 +8,7 @@
 # include "ctvty/event.hh"
 
 namespace ctvty {
+
   class Input  : public serialization::Serializable {
   public:
     static float			GetKeyState(const std::string&);
@@ -16,6 +17,11 @@ namespace ctvty {
   public:
     static void				receiveEvent(const ctvty::Event* const);
     static void				AssignInput(const std::string&, const ctvty::Event* const);
+
+  public:
+    struct configuration;
+    static configuration&		GetInputInfo(const std::string&);
+    static bool				ConfigurationExist(const std::string&);
 
   public:
 					Input(const serialization::Archive&);

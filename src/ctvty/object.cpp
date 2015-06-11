@@ -1,6 +1,7 @@
 #include "ctvty/object.hpp"
 #include "ctvty/event/clock.hh"
 #include "ctvty/gameObject.hpp"
+#include "ctvty/component/transform.hh"
 
 namespace ctvty {
 
@@ -25,7 +26,7 @@ namespace ctvty {
 
     if ((rmv = dynamic_cast<GameObject*>(del)) != nullptr) {
       ctvty::event::Clock::GetClock().RemoveTarget(rmv);
-      rmv.BroadcastMessage("OnDestroy", {});
+      rmv->BroadcastMessage("OnDestroy", {});
     }
     ctvty::event::Clock::GetClock().AddBroadCast(del);
   }
@@ -43,6 +44,23 @@ namespace ctvty {
 
     product = _template->clone();
     if ((gameObject = dynamic_cast<GameObject*>(product)) != nullptr) {
+      gameObject->SetActive(true);
+      gameObject->BroadcastMessage("Awake", {});
+      ctvty::event::Clock::GetClock().RemoveTarget(gameObject);
+    }
+    return (product);
+  }
+
+  Object*			Object::Instantiate(Object* _template,
+						    const ctvty::utils::Vector3D& position,
+						    const ctvty::utils::Quaternion& rotation) {
+    Object*	product;
+    GameObject*	gameObject;
+
+    product = _template->clone();
+    if ((gameObject = dynamic_cast<GameObject*>(product)) != nullptr) {
+      delete gameObject->GetTransformation();
+      gameObject->SetTransformation(new component::Transform(gameObject, position, rotation));
       gameObject->SetActive(true);
       gameObject->BroadcastMessage("Awake", {});
       ctvty::event::Clock::GetClock().RemoveTarget(gameObject);

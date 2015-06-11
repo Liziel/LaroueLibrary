@@ -67,8 +67,8 @@ namespace ctvty {
      */
     static Object*		Instantiate(Object* copy);
     static Object*		Instantiate(Object* copy,
-					    utils::Vector3D position,
-					    utils::Quaternion rotation);
+					    const utils::Vector3D& position,
+					    const utils::Quaternion& rotation);
 
   public:
     /*

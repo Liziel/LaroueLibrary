@@ -1,6 +1,7 @@
 #include "user_defined/component/menu_options.hh"
 #include "ctvty/application.hh"
 #include "ctvty/event.hh"
+#include "ctvty/input.hh"
 
 REGISTER_FOR_SERIALIZATION(user_defined::component, MenuOptions);
 
@@ -84,6 +85,7 @@ namespace user_defined {
 	texture->delayedInstantiation();
 	setted->SetTexture(texture);
       }
+      ctvty::Input::AssignInput(setted->GetName(), e.get());
       setting = false;
       setted = nullptr;
     }
