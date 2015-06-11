@@ -1,15 +1,36 @@
 {
-    "type" : "ctvty::Input",
-    "object" : {
-	"config" : [
-	    {
-		"type" : "ctvty::Input::configuration",
-		"object" : {
-		    "names" : [ "mouseXaxis", "cameraDirection", "toto" ],
-		    "mouse axis" : "x"
-		}
-
-	    }
-	],
-    }
+	"object" : {
+		"config" : [
+		{
+				"object" : {
+					"mouse axis" : "x",
+					"names" : [
+					"mouseXaxis",
+					"cameraDirection",
+					"toto",
+					],
+				},
+				"type" : "ctvty::Input::configuration",
+			},
+		{
+				"object" : {
+					"key" : 122,
+					"names" : [
+					"down player 1"
+					],
+				},
+				"type" : "ctvty::Input::configuration",
+			},
+		{
+				"object" : {
+					"key" : 97,
+					"names" : [
+					"up player 1"
+					],
+				},
+				"type" : "ctvty::Input::configuration",
+			},
+		]
+	},
+	"type" : "ctvty::Input",
 }

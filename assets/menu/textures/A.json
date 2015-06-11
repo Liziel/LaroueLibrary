@@ -1,7 +1,6 @@
 {
-    "type" : "ctvty::asset::Texture::Wrapper",
-
-    "object" : {
-        "path" : "menu/textures/A.tga"
-    }
+	"object" : {
+		"path" : "menu/textures/A.tga"
+	},
+	"type" : "ctvty::asset::Texture::Wrapper",
 }

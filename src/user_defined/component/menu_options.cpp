@@ -1,6 +1,8 @@
 #include "user_defined/component/menu_options.hh"
 #include "ctvty/application.hh"
 #include "ctvty/event.hh"
+#include "ctvty/input.hh"
+#include "ctvty/debug.hpp"
 
 REGISTER_FOR_SERIALIZATION(user_defined::component, MenuOptions);
 
@@ -14,6 +16,16 @@ namespace user_defined {
       RegisterListener("exit click", &MenuOptions::Exit);
       RegisterListener("OnSetterClick", &MenuOptions::OnSetterClick);
       setting = false;
+    }
+
+    void	MenuOptions::awake()
+    {
+      if (GetComponent<ctvty::component::Canvas>() == nullptr)
+	return ;
+      ctvty::component::Canvas&	canvas = *GetComponent<ctvty::component::Canvas>();
+      // 1- ConfigurationExist for all binding shortcut
+      // 2- if 1! -> GetConfiguration for all binding shortcut
+      // canvas[input name].settexture as in OnGui
     }
 
     void		MenuOptions::Serialize(serialization::Archive& __serial_instance) const {
@@ -98,6 +110,8 @@ namespace user_defined {
 	texture->delayedInstantiation();
 	setted->SetTexture(texture);
       }
+      ctvty::Input::AssignInput(setted->GetName(), e.get());
+      ctvty::debug::Log(ctvty::Input::singleton());
       setting = false;
       setted = nullptr;
     }

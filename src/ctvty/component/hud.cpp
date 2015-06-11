@@ -216,6 +216,7 @@ namespace ctvty {
 					 transform->GetHierarchyRotation());
 	if (camera)
 	  children.second->GetModel()->Associate(camera->getCamera());
+	children.second->SetName(children.first);
       }
     }
 

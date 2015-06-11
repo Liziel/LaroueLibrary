@@ -21,6 +21,9 @@ namespace user_defined {
       void		OverOptions(ctvty::component::Hud*);
       void		OnOverOptions(ctvty::component::Hud*);
 
+      void	        OverLoadGame(ctvty::component::Hud*);
+      void		OnOverLoadGame(ctvty::component::Hud*);
+
       void		OverCredit(ctvty::component::Hud*);
       void		OnOverCredit(ctvty::component::Hud*);
 

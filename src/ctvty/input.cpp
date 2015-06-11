@@ -1,4 +1,5 @@
 #include "ctvty/input.hh"
+#include "ctvty/application.hh"
 
 REGISTER_FOR_SERIALIZATION(ctvty, Input);
 REGISTER_FOR_SERIALIZATION(ctvty::Input, configuration);
@@ -62,6 +63,7 @@ namespace ctvty {
       singleton()->config_map[s]->base_names.remove_if([s](const std::string& _s) -> bool { return _s == s; });
     singleton()->config_map[s].reset(c);
     c->base_names.push_back(s);
+    ctvty::Application::Assets().GetAsset("inputs.json").Save(singleton());
   }
 
   Input::			Input(const serialization::Archive& __serial)
@@ -115,7 +117,7 @@ namespace ctvty {
   }
 
   void				Input::configuration::Serialize(serialization::Archive& __serial_instance) const {
-    SERIALIZE_OBJECT_AS(ctvty::Input::Serialization, __serial_instance);
+    SERIALIZE_OBJECT_AS(ctvty::Input::configuration, __serial_instance);
 
     switch (associated) {
     case type::mouseXaxis:
@@ -137,5 +139,6 @@ namespace ctvty {
       __serial["button"] & key;
       break;
     };
+    __serial["names"] & base_names;
   }
 };
