@@ -83,6 +83,7 @@ namespace ctvty {
       ATTACH_THIS_TO(OnDisable);
       ATTACH_THIS_TO(OnEnable);
       ATTACH_THIS_TO(OnGui);
+      ATTACH_THIS_TO(OnLoadScene);
     }
 
   private:
@@ -100,6 +101,7 @@ namespace ctvty {
     ATTACHED_TO_EVENT(OnTriggerEnter,		std::declval<const component::Collider*>());
     ATTACHED_TO_EVENT(OnTriggerExit,		std::declval<const component::Collider*>());
     ATTACHED_TO_EVENT(OnTriggerStay,		std::declval<const component::Collider*>());
+    ATTACHED_TO_EVENT(OnLoadScene,		std::declval<const std::string&>());
     ATTACHED_TO_EVENT(OnDestroy,);
     ATTACHED_TO_EVENT(OnDisable,);
     ATTACHED_TO_EVENT(OnEnable,);

@@ -14,7 +14,7 @@ namespace GdlImpl {
   }
 
   Model3D::		Model3D(Renderer& r)
-    : path(""), cube(new gdl::Geometry), renderer(r) {
+    : path(""), model(nullptr), cube(new gdl::Geometry), renderer(r) {
 
     cube->pushVertex(glm::vec3(0.5, -0.5, 0.5)); 
     cube->pushVertex(glm::vec3(0.5, 0.5, 0.5)); 
@@ -77,6 +77,7 @@ namespace GdlImpl {
     cube->pushUv(glm::vec2(0.0f, 1.0f));
 		
     cube->build();
+    loadStatus = true;
   }
 
   void			Model3D::CreateAnimation(const std::string& name,
@@ -119,7 +120,8 @@ namespace GdlImpl {
     transform *= glm::scale(scale.x, scale.y, scale.z);
     if (model)
       model->draw(renderer.GetShader(), transform, time);
-    else
+    else {
       cube->draw(renderer.GetShader(), transform, GL_QUADS);
+    }
   }
 };

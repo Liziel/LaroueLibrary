@@ -34,7 +34,7 @@
 				"object" : {
 				    "x" : -10
 				    "z" : -10
-				    "y" : -50
+				    "y" : 20
 				}
 			    },
 			    "rotation" : {
@@ -57,14 +57,16 @@
 	],
 	"components" : [
 	    {
-		"type" : "ctvty::component::Renderer"
+		"type" : "user_defined::component::MapGenerator"
 		"object" : {
-		    "model" : {
-			"type" : "ctvty::asset::Model3D"
-			"object" : {
-			    "wrapper" : "game/models/destructible.json"
-			}
-		    }
+		    "ground" : asset("game/objects/ground.json")
+		    "destructible" : asset("game/objects/destructible.json")
+		    "indestructible" : asset("game/objects/indestructible.json")
+		    
+		    "size x" : 50
+		    "size y" : 50
+
+		    "directly generated" : true
 		}
 	    }
 	],
@@ -86,9 +88,9 @@
 		"scale" : {
 		    "type" : "ctvty::utils::Vector3D"
 		    "object" : {
-			"x" : 0.1
-			"y" : 0.1
-			"z" : 0.1
+			"x" : 10
+			"y" : 10
+			"z" : 10
 		    }
 		},
 		"rotation" : {

@@ -1,0 +1,84 @@
+{
+    "type" : "ctvty::GameObject"
+    "object" : {
+	"childs" : []
+	"components" : [
+	    {
+		"type" : "ctvty::component::Renderer"
+		"object" : {
+		    "textured cube" : {
+			"type" : "ctvty::asset::Texture"
+			"object" : {
+			    "wrapper" : "game/textures/ice.json"
+			}
+		    }
+		}
+	    },
+	    {
+		"type" : "ctvty::component::BoxCollider"
+		"object" : {
+		    "+size" : {
+			"object" : {
+			    "x" : 0.5,
+			    "y" : 0.5,
+			    "z" : 0.5,
+			},
+			"type" : "ctvty::utils::Vector3D",
+		    },
+		    "-size" : {
+			"object" : {
+			    "x" : 0.5,
+			    "y" : 0.5,
+			    "z" : 0.5,
+			},
+			"type" : "ctvty::utils::Vector3D",
+		    },
+
+		    "isTrigger" : false,
+
+		    "material" : {
+			"object" : {
+			    "bounciness" : 0.0,
+			    "dynamicFriction" : 0.0,
+			    "staticFriction" : 0.0,
+			},
+			"type" : "ctvty::physics::Material",
+		    },
+		}
+	    }
+	]
+
+	"name" : "destructible"
+	"tag" : "map"
+
+	"transform" : {
+	    "type" : "ctvty::component::Transform",
+	    "object" : {
+		"position" : {
+		    "type" : "ctvty::utils::Vector3D"
+		    "object" : {
+			"x" : 0
+			"y" : 0
+			"z" : 0
+		    }
+		},
+		"scale" : {
+		    "type" : "ctvty::utils::Vector3D"
+		    "object" : {
+			"x" : 1
+			"y" : 1
+			"z" : 1
+		    }
+		},
+		"rotation" : {
+		    "type" : "ctvty::utils::Quaternion"
+		    "object" : {
+			"euler" : true,
+			"x" : 0, "y" : 0, "z" : 0
+		    }
+		}
+	    }
+	}
+
+    }
+}

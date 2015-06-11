@@ -1,6 +1,0 @@
-{
-    "type" : "ctvty::asset::Model3D::Wrapper"
-    "object" : {
-	"path" : "game/models/untitled.fbx"
-    }
-}

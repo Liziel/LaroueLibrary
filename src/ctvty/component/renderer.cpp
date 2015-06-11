@@ -26,14 +26,20 @@ namespace ctvty
     {
       if (__serial.exist("rotation"))
 	__serial["rotation"] & rotation;
-      __serial["model"] & model;
+      if (__serial.exist("model"))
+	__serial["model"] & model;
+      else
+	__serial["textured cube"] & texture;
       if (__serial.exist("shader"))
 	__serial["shader"] & shader;
     }
 
     void	Renderer::Serialize(serialization::Archive& __serial_instance) const {
       SERIALIZE_OBJECT_AS(ctvty::component::Renderer, __serial_instance);
-      __serial["model"] & model;
+      if (model)
+	__serial["model"] & model;
+      else
+	__serial["textured cube"] & texture;
       if (shader)
 	__serial["shader"] & shader;
       if (rotation)
@@ -43,33 +49,45 @@ namespace ctvty
     void	Renderer::Awake() {
       if (shader)
 	shader->delayedInstantiation();
-      model->delayedInstantiation();
-      CreateAnimation("renderer_stop", 0, 0);
-      Animator* animator = GetComponent<Animator>();
-      if (animator)
-	animator->Initialize(this);
+      if (model) {
+	model->delayedInstantiation();
+	CreateAnimation("renderer_stop", 0, 0);
+	Animator* animator = GetComponent<Animator>();
+	if (animator)
+	  animator->Initialize(this);
+      }
+      else {
+	texture->delayedInstantiation();
+	cube.reset(rendering::Renderer::GetRenderer().CreateCube());
+      }
     }
 
     void	Renderer::Render()
     {
-      if (!model || !*model)
+      if ((!model || !*model) && !cube)
 	return ;
       if (shader && *shader)
 	ctvty::rendering::Renderer::GetRenderer().UseShaderAtNextDraw(shader->GetShader());
       Animator* animator = GetComponent<Animator>();
-      if (!animator) {
+      if (!animator && model) {
 	SetAnimation("renderer_stop");
 	model->GetModel().Draw(transform->GetHierarchyPosition(),
 			       transform->GetHierarchyScale(),
 			       (rotation ? *rotation * transform->GetHierarchyRotation() :
 				transform->GetHierarchyRotation()));
       }
-      else {
+      else if (model) {
 	model->GetModel().Draw(transform->GetHierarchyPosition(),
 			       transform->GetHierarchyScale(),
 			       (rotation ? *rotation * transform->GetHierarchyRotation() :
 				transform->GetHierarchyRotation()),
 			       animator->GetFrame(*this));
+      } else {
+	texture->GetTexture().Bind();
+	cube->Draw(transform->GetHierarchyPosition(),
+		   transform->GetHierarchyScale(),
+		   (rotation ? *rotation * transform->GetHierarchyRotation() :
+		    transform->GetHierarchyRotation()));
       }
     }
     

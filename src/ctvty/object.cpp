@@ -23,8 +23,10 @@ namespace ctvty {
   void				Object::Destroy(Object* del) {
     GameObject*			rmv;
 
-    if ((rmv = dynamic_cast<GameObject*>(del)) != nullptr)
+    if ((rmv = dynamic_cast<GameObject*>(del)) != nullptr) {
       ctvty::event::Clock::GetClock().RemoveTarget(rmv);
+      rmv.BroadcastMessage("OnDestroy", {});
+    }
     ctvty::event::Clock::GetClock().AddBroadCast(del);
   }
 

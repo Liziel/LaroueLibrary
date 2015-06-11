@@ -1,5 +1,5 @@
-#ifndef Asset_Texture_hh__
-# define Asset_Texture_hh__
+#ifndef Asset_Model3D_hh__
+# define Asset_Model3D_hh__
 
 # include "serialization/serializable.hh"
 # include "ctvty/rendering/model3d.hh"
