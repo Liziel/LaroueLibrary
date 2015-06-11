@@ -52,12 +52,18 @@ namespace user_defined {
 	return ;
       if (e->type() != ctvty::Event::Type::keydown)
 	return ;
-      std::cout << e->character() << std::endl;
+      std::cout << e->keycode() << std::endl;
       if (e->keycode() >= 'a' && e->keycode() <= 'z') {
 	texture.reset(new ctvty::asset::Texture(std::string("menu/textures/") +
 						static_cast<char>(e->keycode() - 'a' + 'A') + ".json"));
 	texture->delayedInstantiation();
 	setted->SetTexture(texture);
+      } else if (e->keycode() >= 1073741912 && e->keycode() <= 1073741921) {
+	texture.reset(new ctvty::asset::Texture(std::string("menu/textures/") +
+						static_cast<char>(e->keycode() - 1073741912 + 48)
+					        + ".json"));
+	texture->delayedInstantiation();
+	setted->SetTexture(texture);	  
       } else {
 	switch(e->keycode()) {
 	case 1073741906:
@@ -75,6 +81,14 @@ namespace user_defined {
 	case 1073741903:
 	  texture.reset(new ctvty::asset::Texture(std::string("menu/textures/") +
 						  "Arrow_right.json"));
+	  break;
+	case 32:
+	  texture.reset(new ctvty::asset::Texture(std::string("menu/textures/") +
+						  "Space.json"));
+	  break;
+	case 1073741922:
+	  texture.reset(new ctvty::asset::Texture(std::string("menu/textures/") +
+						  "0.json"));
 	  break;
 	default:
 	  setting = false;
