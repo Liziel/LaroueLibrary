@@ -1,0 +1,9 @@
+{
+    "type" : "user_defined::component::ScoreLog"
+    "object" : {
+	"log" : {[
+	    "toto" : 10000,
+	    "looser" : 1
+	]}
+    }
+}

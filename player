@@ -1,0 +1,16 @@
+Player Components:
+	- Vie
+	  - Event : IDied !
+	    - Object::Destroyed(gameObject);
+	  - Event : TakeDamage
+	    - Perte de vue, mais comment...
+	    - No life, u dead !
+	  - Event : Heal
+	- Move
+	  - Event : Boost(float time);
+	    - + Vitesse
+	  - Touches pour move
+	- RigidBody
+	- Collider2D
+	- Renderer
+	- Animator
