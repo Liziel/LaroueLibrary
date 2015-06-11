@@ -2,10 +2,6 @@
 #include "ctvty/application.hh"
 #include "ctvty/event.hh"
 #include "ctvty/input.hh"
-<<<<<<< HEAD
-=======
-#include "ctvty/debug.hpp"
->>>>>>> 362174afcb4da01ed94fc4f1e01924aaedb544b8
 
 REGISTER_FOR_SERIALIZATION(user_defined::component, MenuOptions);
 
@@ -21,7 +17,7 @@ namespace user_defined {
       setting = false;
     }
 
-    void	MenuOptions::awake()
+    void	MenuOptions::Awake()
     {
       if (GetComponent<ctvty::component::Canvas>() == nullptr)
 	return ;
