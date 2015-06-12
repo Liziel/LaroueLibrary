@@ -1,6 +1,6 @@
 {
 	"object" : {
-		"path" : "menu/textures/A.tga"
+		"path" : "menu/textures/Off_over.tga"
 	},
 	"type" : "ctvty::asset::Texture::Wrapper",
 }

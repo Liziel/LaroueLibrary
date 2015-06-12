@@ -23,15 +23,6 @@
 			},
 		{
 				"object" : {
-					"key" : 122,
-					"names" : [
-					"down player 1"
-					],
-				},
-				"type" : "ctvty::Input::configuration",
-			},
-		{
-				"object" : {
 					"key" : 116,
 					"names" : [
 					"down player 2"
@@ -113,9 +104,18 @@
 			},
 		{
 				"object" : {
-					"key" : 97,
+					"key" : 122,
 					"names" : [
 					"up player 1"
+					],
+				},
+				"type" : "ctvty::Input::configuration",
+			},
+		{
+				"object" : {
+					"key" : 101,
+					"names" : [
+					"down player 1"
 					],
 				},
 				"type" : "ctvty::Input::configuration",

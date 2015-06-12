@@ -24,6 +24,7 @@ namespace ctvty {
     }
 
     void		Texture::delayedInstantiation() {
+      std::cout << "path : " << wrapper << std::endl;
       _object = ctvty::Application::Assets().GetAsset(wrapper).LoadAs<Wrapper>();
       if (_object == nullptr)
 	std::cerr << "Texture Wrapper {"<< wrapper <<"} Couldn't be instantiated" << std::endl;

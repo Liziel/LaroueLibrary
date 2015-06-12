@@ -72,7 +72,8 @@ namespace ctvty {
       inline
       void		SetTexture(std::shared_ptr< asset::Texture > _texture) {
 	texture = _texture;
-	model->SetTexture(texture->GetShared());
+	if (model)
+	  model->SetTexture(texture->GetShared());
       }
     private:
       std::shared_ptr<ctvty::rendering::Hud>
