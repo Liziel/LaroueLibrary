@@ -13,6 +13,7 @@ namespace user_defined
       {
 	  RegisterListener("video over", &OptionsSelection::OverVideo);
 	  RegisterListener("video OnOver", &OptionsSelection::OnOverVideo);
+	  RegisterListener("video click", &OptionsSelection::Video);
 	  RegisterListener("configuration over", &OptionsSelection::OverConfiguration);
 	  RegisterListener("configuration OnOver", &OptionsSelection::OnOverConfiguration);
 	  RegisterListener("shortcuts over", &OptionsSelection::OverShortcuts);
@@ -39,6 +40,11 @@ namespace user_defined
       {
 	hud->GetCanvas()["video overed"]->disable();
 	hud->GetCanvas()["video"]->enable();
+      }
+
+      void		OptionsSelection::Video(ctvty::component::Hud*)
+      {
+	ctvty::Application::LoadScene("menu video");
       }
 
       void		OptionsSelection::OverConfiguration(ctvty::component::Hud* hud)

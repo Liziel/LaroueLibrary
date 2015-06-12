@@ -40,6 +40,16 @@
 	    },
 
 	    {
+		"type" : "ctvty::Application::Scene",
+		"object" : { 
+		    "name" : "menu video",
+		    "objects" : [
+			asset("menu/objects/menu_video.json"),
+		    ],
+		}
+	    },
+
+	    {
 		"type" : "ctvty::Application::Scene"
 		"object" : {
 		    "name" : "game template"
