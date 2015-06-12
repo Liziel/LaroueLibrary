@@ -53,3 +53,40 @@ namespace user_defined {
     }
   };
 };
+
+namespace user_defined
+{
+  namespace component
+  {
+    MenuLadder::MenuLadder(const serialization::Archive&)
+      : ctvty::Monobehaviour<MenuLadder>(nullptr, "MenuLadder")
+    {
+      RegisterListener("exit over", &MenuLadder::OverExit);
+      RegisterListener("exit OnOver", &MenuLadder::OnOverExit);
+      RegisterListener("exit click", &MenuLadder::Exit);
+    }
+
+    void	        MenuLadder::Serialize(serialization::Archive& __serial_instance) const
+    {
+      SERIALIZE_OBJECT_AS(user_defined::component::MenuLadder, __serial_instance);
+      (void)__serial;
+    }
+
+    void		MenuLadder::OverExit(ctvty::component::Hud* hud)
+    {
+      hud->GetCanvas()["exit overed"]->enable();
+      hud->GetCanvas()["exit"]->disable();
+    }
+
+    void		MenuLadder::OnOverExit(ctvty::component::Hud* hud)
+    {
+      hud->GetCanvas()["exit overed"]->disable();
+      hud->GetCanvas()["exit"]->enable();
+    }
+
+    void		MenuLadder::Exit(ctvty::component::Hud*)
+    {
+      ctvty::Application::Quit();
+    }
+  };
+};

@@ -40,4 +40,22 @@ namespace user_defined
   };
 };
 
+namespace user_defined
+{
+  namespace component
+  {
+    class MenuLadder : public ctvty::Monobehaviour<MenuLadder>
+    {
+    public:
+      MenuLadder(const serialization::Archive&);
+      void	serialize(serialization::Archive&) const;
+
+    public:
+      void	OverExit(ctvty::component::Hud*);
+      void	OnOverExit(ctvty::component::Hud*);
+      void	Exit(ctvty::component::Hud*);
+    };
+  };
+};
+
 #endif

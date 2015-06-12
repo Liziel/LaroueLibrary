@@ -22,9 +22,16 @@ namespace user_defined {
       if (GetComponent<ctvty::component::Canvas>() == nullptr)
 	return ;
       ctvty::component::Canvas&	canvas = *GetComponent<ctvty::component::Canvas>();
-      // 1- ConfigurationExist for all binding shortcut
-      // 2- if 1! -> GetConfiguration for all binding shortcut
-      // canvas[input name].settexture as in OnGui
+      std::list<std::string>	inputs = 
+	{
+	  "up player 1", "up player 2", "down player 1", "down player 2", "left player 1",
+	  "left player 2", "right player 1", "right player 2", "put bomb player 1",
+	  "put bomb player 2", "throw bomb player 1", "throw bomb player 2"
+	};
+      std::for_each(inputs.begin(), inputs.end(), [this, &canvas] (const std::string& name) {
+	  if (ctvty::Input::ConfigurationExist(name) && ctvty::Input::GetInputInfo(name).associated == ctvty::Input::configuration::type::key)
+	    SetHud(canvas[name].get(), ctvty::Input::GetInputInfo(name).key);
+	});
     }
 
     void		MenuOptions::Serialize(serialization::Archive& __serial_instance) const {
@@ -52,31 +59,25 @@ namespace user_defined {
 
     void		MenuOptions::Exit(ctvty::component::Hud*)
     {
-      ctvty::Application::LoadScene("menu principal");
+      ctvty::Application::LoadScene("options selection");
     }
 
-    void		MenuOptions::OnGui() 
+    void		MenuOptions::SetHud(ctvty::component::Hud* hud, int keycode)
     {
-      auto e = ctvty::Event::current();
-
-      if (!setting)
-	return ;
-      if (e->type() != ctvty::Event::Type::keydown)
-	return ;
-      std::cout << e->keycode() << std::endl;
-      if (e->keycode() >= 'a' && e->keycode() <= 'z') {
+      if (keycode >= 'a' && keycode <= 'z') {
 	texture.reset(new ctvty::asset::Texture(std::string("menu/textures/") +
-						static_cast<char>(e->keycode() - 'a' + 'A') + ".json"));
+						static_cast<char>(keycode - 'a' + 'A') + ".json"));
 	texture->delayedInstantiation();
-	setted->SetTexture(texture);
-      } else if (e->keycode() >= 1073741912 && e->keycode() <= 1073741921) {
+	std::cout << "texture " << hud << std::endl;
+	hud->SetTexture(texture);
+      } else if (keycode >= 1073741912 && keycode <= 1073741921) {
 	texture.reset(new ctvty::asset::Texture(std::string("menu/textures/") +
-						static_cast<char>(e->keycode() - 1073741912 + 48)
+						static_cast<char>(keycode - 1073741864)
 					        + ".json"));
 	texture->delayedInstantiation();
-	setted->SetTexture(texture);	  
+	hud->SetTexture(texture);	  
       } else {
-	switch(e->keycode()) {
+	switch(keycode) {
 	case 1073741906:
 	  texture.reset(new ctvty::asset::Texture(std::string("menu/textures/") +
 						  "Arrow_up.json"));
@@ -103,12 +104,24 @@ namespace user_defined {
 	  break;
 	default:
 	  setting = false;
-	  setted = nullptr;
+	  hud = nullptr;
 	  return ;
 	}
 	texture->delayedInstantiation();
-	setted->SetTexture(texture);
+	hud->SetTexture(texture);
       }
+    }    
+
+    void		MenuOptions::OnGui() 
+    {
+      auto e = ctvty::Event::current();
+
+      if (!setting)
+	return ;
+      if (e->type() != ctvty::Event::Type::keydown)
+	return ;
+      std::cout << e->keycode() << std::endl;
+      SetHud(setted, e->keycode());
       ctvty::Input::AssignInput(setted->GetName(), e.get());
       setting = false;
       setted = nullptr;

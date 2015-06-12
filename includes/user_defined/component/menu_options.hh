@@ -29,6 +29,7 @@ namespace user_defined
     public:
       void		OnGui();
       void		Awake();
+      void		SetHud(ctvty::component::Hud*, int);
     };
   };
 };

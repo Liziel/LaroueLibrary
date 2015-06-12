@@ -48,7 +48,7 @@ namespace user_defined {
 
     void		MenuPrincipal::Options(ctvty::component::Hud*)
     {
-      ctvty::Application::LoadScene("menu options");
+      ctvty::Application::LoadScene("options selection");
     }
 
     void		MenuPrincipal::OverOptions(ctvty::component::Hud* hud)

@@ -1,6 +1,6 @@
 {
 	"object" : {
-		"path" : "menu/textures/A.tga"
+		"path" : "menu/textures/1366x768.tga"
 	},
 	"type" : "ctvty::asset::Texture::Wrapper",
 }
