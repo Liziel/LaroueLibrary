@@ -6,7 +6,7 @@
 
 	"components" : [
 	    {
-		"type" : "user_defined::component::MenuVideo"
+		"type" : "user_defined::component::MenuConfiguration"
 		"object" : {
 		    
 		}
@@ -51,75 +51,51 @@
 				"offset x" : 0.32,
 				"offset y" : 0.01,
 
-				"size x" : 0.3,
-				"size y" : 0.12,
+				"size x" : 0.4
+				"size y" : 0.12
 
-				"level" : 1,
+				"level" : 1
 
-				"enabled" : true,
+				"enabled" : true
 
 				"texture" : {
 				    "type" : "ctvty::asset::Texture"
 				    "object" : {
-					"wrapper" : "menu/textures/Video.json"
+					"wrapper" : "menu/textures/Configuration.json"
 				    }
 				}
 			    }
 			},
 
-			"resolution" : {
+			"size first" : {
 			    "type" : "ctvty::component::Hud"
 			    "object" : {
 				"offset x" : 0.02,
-				"offset y" : 0.3,
-
-				"size x" : 0.3,
-				"size y" : 0.07,
-
-				"level" : 1,
-
-				"enabled" : true,
-
-				"texture" : {
-				    "type" : "ctvty::asset::Texture"
-				    "object" : {
-					"wrapper" : "menu/textures/Resolution.json"
-				    }
-				}
-			    }
-			},
-
-			"1920x1080" : {
-			    "type" : "ctvty::component::Hud"
-			    "object" : {
-				"onClickEvent" : "1920x1080 click",
-
-				"offset x" : 0.38,
 				"offset y" : 0.2,
 
-				"size x" : 0.2,
+				"size x" : 0.15,
 				"size y" : 0.07,
 
 				"level" : 1
 
-				"enabled" : false
+				"enabled" : true
 
 				"texture" : {
 				    "type" : "ctvty::asset::Texture"
 				    "object" : {
-					"wrapper" : "menu/textures/1920x1080.json"
+					"wrapper" : "menu/textures/Size.json"
 				    }
 				}
 			    }
 			},
 
-			"1920x1080 overed" : {
+			"x" : {
 			    "type" : "ctvty::component::Hud"
 			    "object" : {
-				"offset x" : 0.38,
+				"offset x" : 0.17,
 				"offset y" : 0.2,
 
-				"size x" : 0.2,
+				"size x" : 0.07,
 				"size y" : 0.07,
 
 				"level" : 1
@@ -129,21 +105,20 @@
 				"texture" : {
 				    "type" : "ctvty::asset::Texture"
 				    "object" : {
-					"wrapper" : "menu/textures/1920x1080_over.json"
+					"wrapper" : "menu/textures/X.json"
 				    }
 				}
 			    }
 			},
 
-			"1366x768" : {
+			"size x d" : {
 			    "type" : "ctvty::component::Hud"
 			    "object" : {
-				"onClickEvent" : "1366x768 click",
 
-				"offset x" : 0.38,
-				"offset y" : 0.3,
+				"offset x" : 0.4,
+				"offset y" : 0.2,
 
-				"size x" : 0.2,
+				"size x" : 0.07,
 				"size y" : 0.07,
 
 				"level" : 1
@@ -153,43 +128,20 @@
 				"texture" : {
 				    "type" : "ctvty::asset::Texture"
 				    "object" : {
-					"wrapper" : "menu/textures/1366x768.json"
+					"wrapper" : "menu/textures/3.json"
 				    }
 				}
 			    }
 			},
 
-			"1366x768 overed" : {
+			"size x u" : {
 			    "type" : "ctvty::component::Hud"
 			    "object" : {
-				"offset x" : 0.38,
-				"offset y" : 0.3,
 
-				"size x" : 0.2,
-				"size y" : 0.07,
+				"offset x" : 0.47,
+				"offset y" : 0.2,
 
-				"level" : 1
-
-				"enabled" : false
-
-				"texture" : {
-				    "type" : "ctvty::asset::Texture"
-				    "object" : {
-					"wrapper" : "menu/textures/1366x768_over.json"
-				    }
-				}
-			    }
-			},
-
-			"800x600" : {
-			    "type" : "ctvty::component::Hud"
-			    "object" : {
-				"onClickEvent" : "800x600 click",
-
-				"offset x" : 0.38,
-				"offset y" : 0.4,
-
-				"size x" : 0.2,
+				"size x" : 0.07,
 				"size y" : 0.07,
 
 				"level" : 1
@@ -199,62 +151,228 @@
 				"texture" : {
 				    "type" : "ctvty::asset::Texture"
 				    "object" : {
-					"wrapper" : "menu/textures/800x600.json"
+					"wrapper" : "menu/textures/0.json"
 				    }
 				}
 			    }
 			},
 
-			"800x600 overed" : {
+			"up size x" : {
 			    "type" : "ctvty::component::Hud"
 			    "object" : {
-				"offset x" : 0.38,
-				"offset y" : 0.4,
+				"onClickEvent" : "up size x click",
 
-				"size x" : 0.2,
-				"size y" : 0.07,
+				"offset x" : 0.6,
+				"offset y" : 0.15,
+
+				"size x" : 0.07
+				"size y" : 0.07
 
 				"level" : 1
 
-				"enabled" : false
+				"enabled" : true
 
 				"texture" : {
 				    "type" : "ctvty::asset::Texture"
 				    "object" : {
-					"wrapper" : "menu/textures/800x600_over.json"
+					"wrapper" : "menu/textures/Arrow_up.json"
 				    }
 				}
 			    }
 			},
 
-			"fullscreen" : {
+			"down size x" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"onClickEvent" : "down size x click",
+
+				"offset x" : 0.6,
+				"offset y" : 0.25,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Arrow_down.json"
+				    }
+				}
+			    }
+			},
+
+			"size second" : {
 			    "type" : "ctvty::component::Hud"
 			    "object" : {
 				"offset x" : 0.02,
-				"offset y" : 0.7,
+				"offset y" : 0.4,
 
-				"size x" : 0.3,
+				"size x" : 0.15,
 				"size y" : 0.07,
 
-				"level" : 1,
+				"level" : 1
 
-				"enabled" : true,
+				"enabled" : true
 
 				"texture" : {
 				    "type" : "ctvty::asset::Texture"
 				    "object" : {
-					"wrapper" : "menu/textures/Fullscreen.json"
+					"wrapper" : "menu/textures/Size.json"
 				    }
 				}
 			    }
 			},
 
-			"on" : {
+			"y" : {
 			    "type" : "ctvty::component::Hud"
 			    "object" : {
-				"onClickEvent" : "on click",
+				"offset x" : 0.17,
+				"offset y" : 0.4,
 
-				"offset x" : 0.38,
+				"size x" : 0.07,
+				"size y" : 0.07,
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Y.json"
+				    }
+				}
+			    }
+			},
+
+			"size y d" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"onClickEvent" : "OnSetterClick"
+
+				"offset x" : 0.4,
+				"offset y" : 0.4,
+
+				"size x" : 0.07,
+				"size y" : 0.07,
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/3.json"
+				    }
+				}
+			    }
+			},
+
+			"size y u" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"onClickEvent" : "OnSetterClick"
+
+				"offset x" : 0.47,
+				"offset y" : 0.4,
+
+				"size x" : 0.07,
+				"size y" : 0.07,
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/0.json"
+				    }
+				}
+			    }
+			},
+
+			"up size y" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"onClickEvent" : "up size y click",
+
+				"offset x" : 0.6,
+				"offset y" : 0.35,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Arrow_up.json"
+				    }
+				}
+			    }
+			},
+
+			"down size y" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"onClickEvent" : "down size y click",
+
+				"offset x" : 0.6,
+				"offset y" : 0.45,
+
+				"size x" : 0.07
+				"size y" : 0.07
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Arrow_down.json"
+				    }
+				}
+			    }
+			},
+
+			"player" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"offset x" : 0.02,
+				"offset y" : 0.6,
+
+				"size x" : 0.2,
+				"size y" : 0.07,
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Player.json"
+				    }
+				}
+			    }
+			},
+
+			"1 player" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"onClickEvent" : "1 player click",
+
+				"offset x" : 0.4,
 				"offset y" : 0.6,
 
 				"size x" : 0.07,
@@ -267,16 +385,16 @@
 				"texture" : {
 				    "type" : "ctvty::asset::Texture"
 				    "object" : {
-					"wrapper" : "menu/textures/On.json"
+					"wrapper" : "menu/textures/1.json"
 				    }
 				}
 			    }
 			},
 
-			"on overed" : {
+			"1 player overed" : {
 			    "type" : "ctvty::component::Hud"
 			    "object" : {
-				"offset x" : 0.38,
+				"offset x" : 0.4,
 				"offset y" : 0.6,
 
 				"size x" : 0.07,
@@ -289,19 +407,19 @@
 				"texture" : {
 				    "type" : "ctvty::asset::Texture"
 				    "object" : {
-					"wrapper" : "menu/textures/On_over.json"
+					"wrapper" : "menu/textures/1_over.json"
 				    }
 				}
 			    }
 			},
 
-			"off" : {
+			"2 player" : {
 			    "type" : "ctvty::component::Hud"
 			    "object" : {
-				"onClickEvent" : "off click",
+				"onClickEvent" : "2 player click",
 
-				"offset x" : 0.38,
-				"offset y" : 0.8,
+				"offset x" : 0.6,
+				"offset y" : 0.6,
 
 				"size x" : 0.07,
 				"size y" : 0.07,
@@ -313,17 +431,17 @@
 				"texture" : {
 				    "type" : "ctvty::asset::Texture"
 				    "object" : {
-					"wrapper" : "menu/textures/Off.json"
+					"wrapper" : "menu/textures/2.json"
 				    }
 				}
 			    }
 			},
 
-			"off overed" : {
+			"2 player overed" : {
 			    "type" : "ctvty::component::Hud"
 			    "object" : {
-				"offset x" : 0.38,
-				"offset y" : 0.8,
+				"offset x" : 0.6,
+				"offset y" : 0.6,
 
 				"size x" : 0.07,
 				"size y" : 0.07,
@@ -335,7 +453,121 @@
 				"texture" : {
 				    "type" : "ctvty::asset::Texture"
 				    "object" : {
-					"wrapper" : "menu/textures/Off_over.json"
+					"wrapper" : "menu/textures/2_over.json"
+				    }
+				}
+			    }
+			},
+
+			"ia" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"offset x" : 0.02,
+				"offset y" : 0.75,
+
+				"size x" : 0.1,
+				"size y" : 0.07,
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Ia.json"
+				    }
+				}
+			    }
+			},
+
+			"1 ia" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"onClickEvent" : "1 ia click",
+
+				"offset x" : 0.4,
+				"offset y" : 0.75,
+
+				"size x" : 0.07,
+				"size y" : 0.07,
+
+				"level" : 1
+
+				"enabled" : false
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/1.json"
+				    }
+				}
+			    }
+			},
+
+			"1 ia overed" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"offset x" : 0.4,
+				"offset y" : 0.75,
+
+				"size x" : 0.07,
+				"size y" : 0.07,
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/1_over.json"
+				    }
+				}
+			    }
+			},
+
+			"2 ia" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"onClickEvent" : "2 ia click",
+
+				"offset x" : 0.6,
+				"offset y" : 0.75,
+
+				"size x" : 0.07,
+				"size y" : 0.07,
+
+				"level" : 1
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/2.json"
+				    }
+				}
+			    }
+			},
+
+			"2 ia overed" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"offset x" : 0.6,
+				"offset y" : 0.75,
+
+				"size x" : 0.07,
+				"size y" : 0.07,
+
+				"level" : 1
+
+				"enabled" : false
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/2_over.json"
 				    }
 				}
 			    }
@@ -350,8 +582,8 @@
 				"offset x" : 0.85,
 				"offset y" : 0.9,
 
-				"size x" : 0.12,
-				"size y" : 0.07,
+				"size x" : 0.12
+				"size y" : 0.07
 
 				"level" : 1
 
@@ -375,8 +607,8 @@
 				"offset x" : 0.85,
 				"offset y" : 0.9,
 
-				"size x" : 0.12,
-				"size y" : 0.07,
+				"size x" : 0.12
+				"size y" : 0.07
 
 				"level" : 1
 
@@ -400,8 +632,8 @@
 				"offset x" : 0.02,
 				"offset y" : 0.9,
 
-				"size x" : 0.12,
-				"size y" : 0.07,
+				"size x" : 0.12
+				"size y" : 0.07
 
 				"level" : 1
 
@@ -425,8 +657,8 @@
 				"offset x" : 0.02,
 				"offset y" : 0.9,
 
-				"size x" : 0.12,
-				"size y" : 0.07,
+				"size x" : 0.12
+				"size y" : 0.07
 
 				"level" : 1
 

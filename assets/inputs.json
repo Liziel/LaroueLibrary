@@ -14,24 +14,6 @@
 			},
 		{
 				"object" : {
-					"key" : 97,
-					"names" : [
-					"put bomb player 1"
-					],
-				},
-				"type" : "ctvty::Input::configuration",
-			},
-		{
-				"object" : {
-					"key" : 116,
-					"names" : [
-					"right player 1"
-					],
-				},
-				"type" : "ctvty::Input::configuration",
-			},
-		{
-				"object" : {
 					"key" : 1073741903,
 					"names" : [
 					"right player 2"
@@ -44,15 +26,6 @@
 					"key" : 101,
 					"names" : [
 					"throw bomb player 1"
-					],
-				},
-				"type" : "ctvty::Input::configuration",
-			},
-		{
-				"object" : {
-					"key" : 122,
-					"names" : [
-					"up player 1"
 					],
 				},
 				"type" : "ctvty::Input::configuration",
@@ -77,27 +50,9 @@
 			},
 		{
 				"object" : {
-					"key" : 115,
-					"names" : [
-					"down player 1"
-					],
-				},
-				"type" : "ctvty::Input::configuration",
-			},
-		{
-				"object" : {
 					"key" : 1073741905,
 					"names" : [
 					"down player 2"
-					],
-				},
-				"type" : "ctvty::Input::configuration",
-			},
-		{
-				"object" : {
-					"key" : 113,
-					"names" : [
-					"left player 1"
 					],
 				},
 				"type" : "ctvty::Input::configuration",
@@ -114,6 +69,42 @@
 		{
 				"object" : {
 					"key" : 101,
+					"names" : [
+					"left player 1"
+					],
+				},
+				"type" : "ctvty::Input::configuration",
+			},
+		{
+				"object" : {
+					"key" : 115,
+					"names" : [
+					"right player 1"
+					],
+				},
+				"type" : "ctvty::Input::configuration",
+			},
+		{
+				"object" : {
+					"key" : 97,
+					"names" : [
+					"up player 1"
+					],
+				},
+				"type" : "ctvty::Input::configuration",
+			},
+		{
+				"object" : {
+					"key" : 100,
+					"names" : [
+					"put bomb player 1"
+					],
+				},
+				"type" : "ctvty::Input::configuration",
+			},
+		{
+				"object" : {
+					"key" : 122,
 					"names" : [
 					"down player 1"
 					],

@@ -22,6 +22,7 @@ namespace user_defined
 
       void		OverConfiguration(ctvty::component::Hud*);
       void		OnOverConfiguration(ctvty::component::Hud*);
+      void	        Configuration(ctvty::component::Hud*);
 
       void		OverShortcuts(ctvty::component::Hud*);
       void		OnOverShortcuts(ctvty::component::Hud*);

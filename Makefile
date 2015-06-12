@@ -65,7 +65,9 @@ UDComponent	= $(UDCPlayer)\
 		src/user_defined/component/menu_options.cpp \
 		src/user_defined/component/map_generator.cpp \
 		src/user_defined/component/options_selection.cpp \
-		src/user_defined/component/menu_video.cpp
+		src/user_defined/component/menu_video.cpp \
+		src/user_defined/component/menu_configuration.cpp \
+		src/user_defined/component/ladder.cpp
 
 UDHelper	= src/user_defined/helper/tga_dict.cpp
 

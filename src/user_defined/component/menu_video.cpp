@@ -8,8 +8,8 @@ namespace user_defined
     namespace component
     {
 
-    MenuVideo::MenuVideo(const serialization::Archive&)
-      : ctvty::MonoBehaviour<MenuVideo>(nullptr, "MenuVideo")
+      MenuVideo::MenuVideo(const serialization::Archive&)
+	: ctvty::MonoBehaviour<MenuVideo>(nullptr, "MenuVideo")
       {
 	this->_resolution = 0;
 	this->_fullscreen = true;

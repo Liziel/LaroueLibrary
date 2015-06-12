@@ -17,6 +17,8 @@ namespace user_defined
 
     public:
       int& operator[](const std::string &);
+      inline std::map<std::string, int>::iterator	begin() { return log.begin(); }
+      inline std::map<std::string, int>::iterator	end() { return log.end(); }
 
     private:
       std::map<std::string, int>		log;
@@ -44,11 +46,21 @@ namespace user_defined
 {
   namespace component
   {
-    class MenuLadder : public ctvty::Monobehaviour<MenuLadder>
+    class MenuLadder : public ctvty::MonoBehaviour<MenuLadder>
     {
+    private:
+      struct auto_sort {
+	int		score;
+	std::string	name;
+	operator std::string() { return name; }
+	operator int() { return score; }
+	auto_sort(std::string _name, int _score) : score(_score), name(_name) {}
+      };
+      std::shared_ptr<ScoreLog>		log;
     public:
       MenuLadder(const serialization::Archive&);
-      void	serialize(serialization::Archive&) const;
+      void	Serialize(serialization::Archive&) const;
+      void	Awake();
 
     public:
       void	OverExit(ctvty::component::Hud*);

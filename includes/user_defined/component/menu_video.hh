@@ -38,5 +38,4 @@ namespace user_defined
   };
 };
 
-
 #endif
