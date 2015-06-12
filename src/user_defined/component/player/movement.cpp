@@ -17,7 +17,7 @@ namespace user_defined {
       }
 
       void			Movement::Update() {
-	ctvty::debug::Log(transform);
+	ctvty::debug::Log("right " + gameObject->Name());
 	rb->GetVelocity()
 	  = ctvty::utils::Vector3D(ctvty::Input::GetKeyState("right " + gameObject->Name())
 				   - ctvty::Input::GetKeyState("left " + gameObject->Name()),
