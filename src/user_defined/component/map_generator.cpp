@@ -81,7 +81,7 @@ namespace user_defined {
 				ctvty::utils::Quaternion::identity);
 	}
       Object::Instantiate(player1.get(),
-			  ctvty::utils::Vector3D(1.5, 2, 1.5),
+			  ctvty::utils::Vector3D(size_x/2 - 1.5, 20, size_x/2 - 1.5),
 			  ctvty::utils::Quaternion::identity);
     }
   };

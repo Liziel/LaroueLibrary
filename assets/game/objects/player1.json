@@ -30,7 +30,7 @@
 			"object" : {
 			    "scale" : {
 				"type" : "ctvty::utils::Vector3D"
-				"object" : {"x" : 1, "y" : 1, "z" : 1}
+				"object" : {"x" : 0.01, "y" : 0.01, "z" : 0.01}
 			    }
 			    "position" : {
 				"type" : "ctvty::utils::Vector3D"
@@ -75,7 +75,7 @@
 		}
 		"position" : {
 		    "type" : "ctvty::utils::Vector3D"
-		    "object" : {"x" : 0, "y" : 1, "z" : 0}
+		    "object" : {"x" : 1.5, "y" : 2, "z" : 1.5}
 		}
 		"rotation" : {
 		    "type" : "ctvty::utils::Quaternion"

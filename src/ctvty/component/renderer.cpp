@@ -14,6 +14,8 @@
 #include "ctvty/component/transform.hh"
 #include "ctvty/component/animator.hh"
 
+#include "ctvty/debug.hpp"
+
 REGISTER_FOR_SERIALIZATION(ctvty::component, Renderer);
 
 namespace ctvty
@@ -69,7 +71,6 @@ namespace ctvty
       if (shader && *shader)
 	ctvty::rendering::Renderer::GetRenderer().UseShaderAtNextDraw(shader->GetShader());
       if (!animator && model) {
-	ctvty::debug::Logs(transform->GetHierarchyPosition(), transform->GetHierarchyScale(), transform->GetHierarchyRotation());
 	SetAnimation("renderer_stop");
 	model->GetModel().Draw(transform->GetHierarchyPosition(),
 			       transform->GetHierarchyScale(),

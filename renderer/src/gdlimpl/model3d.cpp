@@ -5,6 +5,8 @@
 #include "gdlimpl/renderer.hh"
 #include "gdlimpl/model3d.hh"
 
+#include "ctvty/debug.hpp"
+
 namespace GdlImpl {
   Model3D::		Model3D(Renderer& r, const std::string& file)
     : path(file), model(new gdl::Model), renderer(r) {
@@ -118,9 +120,9 @@ namespace GdlImpl {
     transform *= glm::rotate((r.y / glm::pi<float>()) * 180.f, glm::vec3(0., 1., 0.));
     transform *= glm::rotate((r.z / glm::pi<float>()) * 180.f, glm::vec3(0., 0., 1.));
     transform *= glm::scale(scale.x, scale.y, scale.z);
-    if (model)
+    if (model) {
       model->draw(renderer.GetShader(), transform, time);
-    else {
+    } else {
       cube->draw(renderer.GetShader(), transform, GL_QUADS);
     }
   }
