@@ -14,8 +14,9 @@ namespace ctvty {
     /*
      * All Object are referenced with a name
      */
-    const std::string name;
-
+    const std::string		name;
+  public:
+    inline std::string		Name() {return name;}
   public:
     /*
      * basic Ctor & Dtor 

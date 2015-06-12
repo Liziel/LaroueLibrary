@@ -57,7 +57,10 @@ FileSystem	= src/filesystem/file.cpp \
 		src/filesystem/directory.cpp
 
 ### UserDefined
-UDComponent	= \
+UDCPlayer	= \
+		src/user_defined/component/player/movement.cpp
+
+UDComponent	= $(UDCPlayer)\
 		src/user_defined/component/menu_principal.cpp \
 		src/user_defined/component/menu_options.cpp \
 		src/user_defined/component/map_generator.cpp \

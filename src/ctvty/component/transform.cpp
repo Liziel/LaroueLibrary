@@ -68,7 +68,7 @@ namespace ctvty {
     }
 
     const utils::Vector3D	Transform::GetHierarchyScale() const {
-      return *scale + (parent ? parent->GetHierarchyScale() : ctvty::utils::Vector3D::zero);
+      return *scale * (parent ? parent->GetHierarchyScale() : ctvty::utils::Vector3D::one);
     }
 
   };

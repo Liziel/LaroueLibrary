@@ -20,7 +20,7 @@ namespace ctvty {
       Transform*		parent;
 
     public:
-      void		SetParent(Transform*);
+      inline void		SetParent(Transform* _parent) { parent = _parent; }
 
     public:
       Transform(GameObject* gameObject,

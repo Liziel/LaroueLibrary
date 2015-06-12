@@ -127,6 +127,12 @@ namespace ctvty {
 		      z + vector.z);
     }
 
+    const Vector3D		Vector3D::operator * (const Vector3D& vector) const {
+      return Vector3D(x * vector.x,
+		      y * vector.y,
+		      z * vector.z);
+    }
+
     Vector3D&		Vector3D::operator += (const Vector3D& vector) {
       x += vector.x;
       y += vector.y;
@@ -138,6 +144,13 @@ namespace ctvty {
       x -= vector.x;
       y -= vector.y;
       z -= vector.z;
+      return *this;
+    }
+
+    Vector3D&		Vector3D::operator *= (const Vector3D& vector) {
+      x *= vector.x;
+      y *= vector.y;
+      z *= vector.z;
       return *this;
     }
 

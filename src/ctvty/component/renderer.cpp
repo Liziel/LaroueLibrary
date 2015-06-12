@@ -14,6 +14,8 @@
 #include "ctvty/component/transform.hh"
 #include "ctvty/component/animator.hh"
 
+#include "ctvty/debug.hpp"
+
 REGISTER_FOR_SERIALIZATION(ctvty::component, Renderer);
 
 namespace ctvty
@@ -52,7 +54,7 @@ namespace ctvty
       if (model) {
 	model->delayedInstantiation();
 	CreateAnimation("renderer_stop", 0, 0);
-	Animator* animator = GetComponent<Animator>();
+	animator = GetComponent<Animator>();
 	if (animator)
 	  animator->Initialize(this);
       }
@@ -68,7 +70,6 @@ namespace ctvty
 	return ;
       if (shader && *shader)
 	ctvty::rendering::Renderer::GetRenderer().UseShaderAtNextDraw(shader->GetShader());
-      Animator* animator = GetComponent<Animator>();
       if (!animator && model) {
 	SetAnimation("renderer_stop");
 	model->GetModel().Draw(transform->GetHierarchyPosition(),

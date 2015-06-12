@@ -75,9 +75,10 @@ namespace ctvty {
     if (parent == nullptr)
       fathers.remove_if( [ = ](GameObject* child) { return child == this; } );
     SetParent(nullptr);
-    if (_parent == nullptr) 
+    if (_parent == nullptr)
       return ;
     parent = _parent;
+    transform->SetParent(parent->GetTransformation());
     parent->childs.push_back(this);
     std::for_each(events_map.begin(), events_map.end(), [&] (std::pair<std::string, bool> pair) {
 	if (pair.second)
@@ -121,10 +122,9 @@ namespace ctvty {
    */
   Object*			GameObject::clone() const {
     component::Transform*	_transform;
-    GameObject*	clone = new GameObject(name + "(clone)", tag,
+    GameObject*	clone = new GameObject(name, tag,
 				       nullptr,
 				       _transform = (component::Transform*)transform->clone());
-
     transform->AttachParent(clone);
     for (GameObject* child : childs)
       clone->AddChild(((GameObject*)child->clone()));

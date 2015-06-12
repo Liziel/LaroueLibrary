@@ -32,8 +32,8 @@
 			    "position" : {
 				"type" : "ctvty::utils::Vector3D"
 				"object" : {
-				    "x" : -10
-				    "z" : -10
+				    "x" : 10
+				    "z" : 10
 				    "y" : 20
 				}
 			    },
@@ -63,8 +63,11 @@
 		    "destructible" : asset("game/objects/destructible.json")
 		    "indestructible" : asset("game/objects/indestructible.json")
 		    
-		    "size x" : 50
-		    "size y" : 50
+		    "player 1" : asset("game/objects/player1.json")
+		    "player 2" : asset("game/objects/player1.json")
+		    
+		    "size x" : 15
+		    "size y" : 15
 
 		    "directly generated" : true
 		}

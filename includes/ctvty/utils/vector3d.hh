@@ -46,8 +46,10 @@ namespace ctvty {
       const Vector3D	operator - () const;
       const Vector3D	operator + (const Vector3D&) const;
       const Vector3D	operator - (const Vector3D&) const;
+      const Vector3D	operator * (const Vector3D&) const;
       Vector3D&		operator += (const Vector3D&);
       Vector3D&		operator -= (const Vector3D&);
+      Vector3D&		operator *= (const Vector3D&);
 
     public:
       const Vector3D	operator * (float) const;

@@ -9,7 +9,7 @@
 		    "textured cube" : {
 			"type" : "ctvty::asset::Texture"
 			"object" : {
-			    "wrapper" : "game/textures/ice.json"
+			    "wrapper" : "game/textures/bookshelf.json"
 			}
 		    }
 		}
@@ -28,7 +28,7 @@
 		    "-size" : {
 			"object" : {
 			    "x" : 0.5,
-			    "y" : 0.5,
+			    "y" : 0.6,
 			    "z" : 0.5,
 			},
 			"type" : "ctvty::utils::Vector3D",

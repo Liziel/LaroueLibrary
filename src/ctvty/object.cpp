@@ -59,8 +59,9 @@ namespace ctvty {
 
     product = _template->clone();
     if ((gameObject = dynamic_cast<GameObject*>(product)) != nullptr) {
-      delete gameObject->GetTransformation();
-      gameObject->SetTransformation(new component::Transform(gameObject, position, rotation));
+      gameObject->GetTransformation();
+      gameObject->GetTransformation()->GetPosition() = position;
+      gameObject->GetTransformation()->GetRotation() = rotation;
       gameObject->SetActive(true);
       gameObject->BroadcastMessage("Awake", {});
       ctvty::event::Clock::GetClock().RemoveTarget(gameObject);
