@@ -5,6 +5,7 @@
 #include "ctvty/utils/collision.hh"
 #include "ctvty/component/transform.hh"
 #include "ctvty/debug.hpp"
+#include "ctvty/input.hh"
 
 REGISTER_FOR_SERIALIZATION(ctvty::component, RigidBody);
 
@@ -202,7 +203,6 @@ namespace ctvty {
 
     void			RigidBody::EndMovement(utils::Vector3D& movement,
 						       const utils::Collision& collision) {
-      std::cerr << "End Movement" << std::endl;
       last_collision = new utils::Collision(collision);
       transform->GetPosition() += movement;
 
@@ -247,13 +247,15 @@ namespace ctvty {
 	      || !collider->IsTrigger()
 	      || !collider->GetGameObject()->IsActive();
 	  });
+
       utils::BoundingBox3D			box  = boundingBox + (transform->GetPosition());
-      for (auto trigger = triggers.begin(); trigger != triggers.end(); ++trigger) {
+      for (auto trigger = triggers.begin(); trigger != triggers.end();) {
 	utils::BoundingBox3D rhs = (*trigger)->GetBoundingBox()
 	  + (*trigger)->GetGameObject()->GetTransformation()->GetPosition();
-	ctvty::debug::Logs(rhs, box);
-	if (!rhs.Intersect(box) || !box.Intersect(rhs))
+	if (!rhs.Intersect(box) && !box.Intersect(rhs))
 	  trigger = triggers.erase(trigger);
+	else
+	  ++ trigger;
       }
 
       colliders_trigger.remove_if([this, &triggers](const Collider* _trigger) {

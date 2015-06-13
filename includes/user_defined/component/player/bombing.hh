@@ -21,9 +21,6 @@ namespace user_defined {
 	void	Update();
 
       public:
-	void	OnTriggerEnter(const ctvty::component::Collider*);
-
-      public:
 	void	Awake();
 	void	Reload();
       };

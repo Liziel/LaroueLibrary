@@ -1,5 +1,6 @@
 #include "user_defined/component/player/bombing.hh"
 #include "ctvty/debug.hpp"
+#include "ctvty/input.hh"
 
 REGISTER_FOR_SERIALIZATION(user_defined::component::player, Bombing);
 
@@ -23,14 +24,6 @@ namespace user_defined {
       void	Bombing::Awake() {
 	stock = 1;
 	InvokeRepeating(&Bombing::Reload, 2.f, 2.f);
-      }
-
-      void	Bombing::OnTriggerEnter(const ctvty::component::Collider* co) {
-	std::cout << "yep" << std::endl;
-	if (co == nullptr)
-	  std::cout << "wut the wat" << std::endl;
-	else if (0)
-	  ctvty::debug::Log(co);
       }
 
       void	Bombing::Reload() {

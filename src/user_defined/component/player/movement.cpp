@@ -24,8 +24,8 @@ namespace user_defined {
 	  5.0 * ctvty::utils::Vector3D(ctvty::Input::GetKeyState("right " + gameObject->Name())
 				   - ctvty::Input::GetKeyState("left " + gameObject->Name()),
 				   0,
-				   ctvty::Input::GetKeyState("up " + gameObject->Name())
-				   - ctvty::Input::GetKeyState("down " + gameObject->Name())
+				   ctvty::Input::GetKeyState("down " + gameObject->Name())
+				   - ctvty::Input::GetKeyState("up " + gameObject->Name())
 				   );
       }
 
