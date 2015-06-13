@@ -2,6 +2,7 @@
 #include <future>
 #include "ctvty/component/boxcollider.hh"
 #include "ctvty/component/transform.hh"
+#include "ctvty/debug.hpp"
 
 REGISTER_FOR_SERIALIZATION(ctvty::component, BoxCollider);
 
@@ -197,6 +198,9 @@ namespace ctvty{
 	}
       }
 
+      if (collision)
+	if (collision->point.normal.DotProduct(direction) > 0)
+	  collision->point.normal = collision->point.normal;
       return collision;
     }
 

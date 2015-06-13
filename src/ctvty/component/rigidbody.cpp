@@ -4,6 +4,7 @@
 #include "ctvty/event/clock.hh"
 #include "ctvty/utils/collision.hh"
 #include "ctvty/component/transform.hh"
+#include "ctvty/debug.hpp"
 
 REGISTER_FOR_SERIALIZATION(ctvty::component, RigidBody);
 
@@ -118,6 +119,7 @@ namespace ctvty {
 	utils::Vector3D	bounce = utils::Vector3D::zero;
 	utils::Vector3D	collisionNormal = utils::Vector3D::zero;
 	float		dynamicFriction = 0;
+	float		staticFriction = 0;
 
 	for (utils::Collision& collision : future_collider_collisions) {
 	  cumulated.collider_to.insert(cumulated.collider_to.end(), 
@@ -130,20 +132,26 @@ namespace ctvty {
 	    cumulated.point.point = (cumulated.point.point + collision.point.point) / 2;
 
 	  utils::Vector3D normal = collision.point.normal;
-	  if (normal.DotProduct(momentum) > 0)
-	    normal = -normal;
+	  if ((normal * utils::Vector3D::up).DotProduct(momentum) > 0)
+	    normal.y  = -normal.y;
+	  if ((normal * utils::Vector3D::right).DotProduct(momentum) > 0)
+	    normal.x  = -normal.x;
+	  if ((normal * utils::Vector3D::forward).DotProduct(momentum) > 0)
+	    normal.z  = -normal.z;
 
 	  float bouncing = 0;
 	  for (const Collider* collider_to : collision.collider_to) {
+	    cumulated.collider_to.push_back(collider_to);
 	    if (collider_to->GetRigidBody() == this) continue;
 	    if (collider_to->GetRigidBody())
 	      const_cast<RigidBody*>(collider_to->GetRigidBody())->GetVelocity() +=
 		GetVelocity() / collider_to->GetRigidBody()->mass;
-	    bouncing += collider_to->GetMaterial().bounciness;
 	    dynamicFriction += collider_to->GetMaterial().dynamicFriction;
-	    cumulated.collider_to.push_back(collider_to);
+	    staticFriction += collider_to->GetMaterial().staticFriction;
+	    bouncing += collider_to->GetMaterial().bounciness;
 	    GetVelocity() += -GetVelocity().Project(normal);
 	  }
+	  staticFriction += collision.collider_from->GetMaterial().staticFriction;
 	  dynamicFriction += collision.collider_from->GetMaterial().dynamicFriction;
 	  bouncing += collision.collider_from->GetMaterial().bounciness;
 	  bounce += bouncing * -(GetVelocity()).Project(normal);
@@ -154,7 +162,8 @@ namespace ctvty {
 	  GetVelocity() += -GetVelocity().Project(normal);
 	  cumulated.collider_to.push_back(collision.collider_from);
 	}
-
+	cumulated.collider_to.sort();
+	cumulated.collider_to.unique();
 	if (!isKinematic) {
 	  if (dynamicFriction)
 	    GetVelocity() -= -GetVelocity().ProjectOnPlane(collisionNormal) * dynamicFriction;
@@ -162,18 +171,18 @@ namespace ctvty {
 	}
 	momentum =
 	  (momentum - penetration);
-	position += 
+	position +=
 	  momentum;
 	cumulated.point.normal = collisionNormal;
 	momentum = GetVelocity() * event::Clock::GetClock().GetFixedDeltaTime();
-	if (DiscreteCheckMovement(momentum))
+	if (GetVelocity().GetMagnitude() > 0.1 && DiscreteCheckMovement(momentum))
 	  return true;
 	else {
 	  EndMovement(momentum, cumulated);
 	  return true;
 	}
       }
-      return false;	
+      return false;
     }
 
     void			RigidBody::EndMovement(utils::Vector3D& movement) {
@@ -193,6 +202,7 @@ namespace ctvty {
 
     void			RigidBody::EndMovement(utils::Vector3D& movement,
 						       const utils::Collision& collision) {
+      std::cerr << "End Movement" << std::endl;
       last_collision = new utils::Collision(collision);
       transform->GetPosition() += movement;
 
@@ -240,7 +250,8 @@ namespace ctvty {
       utils::BoundingBox3D			box  = boundingBox + (transform->GetPosition());
       for (auto trigger = triggers.begin(); trigger != triggers.end(); ++trigger) {
 	utils::BoundingBox3D rhs = (*trigger)->GetBoundingBox()
-	  + (*trigger)->GetGameObject()->GetTransformation()->GetPosition();	
+	  + (*trigger)->GetGameObject()->GetTransformation()->GetPosition();
+	ctvty::debug::Logs(rhs, box);
 	if (!rhs.Intersect(box) || !box.Intersect(rhs))
 	  trigger = triggers.erase(trigger);
       }
@@ -263,8 +274,8 @@ namespace ctvty {
       
       for (Collider* trigger : triggers) {
 	for (Collider* triggered : sub_colliders)
-	  trigger->BroadcastMessage("OnTriggerEnter", triggered);
-	BroadcastMessage("OnTriggerEnter", trigger);
+	  trigger->BroadcastMessage("OnTriggerEnter", static_cast<const component::Collider*>(triggered));
+	BroadcastMessage("OnTriggerEnter", static_cast<const component::Collider*>(trigger));
       }
 
     }

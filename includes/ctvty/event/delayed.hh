@@ -32,7 +32,7 @@ namespace ctvty {
     template<template<typename, typename> class container>
     class DelayedActionContainer {
     private:
-      container< DelayedActionContainer, std::allocator<DelayedActionContainer*> *>&	_container;
+      container< DelayedActionContainer*, std::allocator<DelayedActionContainer*> >&	_container;
       DelayedAction*	_action;
 
     public:
@@ -40,7 +40,7 @@ namespace ctvty {
       DelayedActionContainer(container<DelayedActionContainer*, std::allocator<DelayedActionContainer*>>& _c,
 			     std::function<void()> callback, delayed_parameters ... p)
 	: _container(_c), _action(new DelayedAction ([this, callback] () {
-	    callback(); delete this;
+	      callback(); if (sizeof...(delayed_parameters) == 1) delete this;
 	  }, p...)) {
 	
       }

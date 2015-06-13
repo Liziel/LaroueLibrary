@@ -28,7 +28,7 @@
 		    "-size" : {
 			"object" : {
 			    "x" : 0.5,
-			    "y" : 0.6,
+			    "y" : 0.9,
 			    "z" : 0.5,
 			},
 			"type" : "ctvty::utils::Vector3D",
@@ -39,7 +39,7 @@
 		    "material" : {
 			"object" : {
 			    "bounciness" : 0.0,
-			    "dynamicFriction" : 0.0,
+			    "dynamicFriction" : 0.3,
 			    "staticFriction" : 0.0,
 			},
 			"type" : "ctvty::physics::Material",

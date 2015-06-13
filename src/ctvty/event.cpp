@@ -1,5 +1,6 @@
 #include "SDL.h"
 #include "ctvty/event.hh"
+#include "ctvty/input.hh"
 
 namespace ctvty {
 
@@ -17,23 +18,28 @@ namespace ctvty {
 
   void					Event::Refresh() {
     SDL_Event	e;
+    Event*	_new;
 
     while (SDL_PollEvent(&e)) {
+      _new = nullptr;
       if (e.type == SDL_QUIT)
-	events.push(new Event());
+	_new = (new Event());
       else if (e.type == SDL_KEYDOWN)
-	events.push(new Event(e.key.keysym.scancode, e.key.keysym.sym, true));
+	_new = (new Event(e.key.keysym.scancode, e.key.keysym.sym, true));
       else if (e.type == SDL_KEYUP)
-	events.push(new Event(e.key.keysym.scancode, e.key.keysym.sym, false));
+	_new = (new Event(e.key.keysym.scancode, e.key.keysym.sym, false));
       else if (e.type == SDL_MOUSEMOTION)
-	events.push(new Event(utils::Vector3D(e.motion.xrel, e.motion.yrel, 0),
+	_new = (new Event(utils::Vector3D(e.motion.xrel, e.motion.yrel, 0),
 			      utils::Vector3D(e.motion.x, e.motion.y, 0)));
       else if (e.type == SDL_MOUSEBUTTONUP)
-	events.push(new Event(e.button.button, false,
+	_new = (new Event(e.button.button, false,
 			      utils::Vector3D(e.button.x, e.button.y, 0)));
       else if (e.type == SDL_MOUSEBUTTONDOWN)
-	events.push(new Event(e.button.button, true,
+	_new = (new Event(e.button.button, true,
 			      utils::Vector3D(e.button.x, e.button.y, 0)));
+      if (_new)
+	Input::receiveEvent(_new);
+      events.push(_new);
     }
   }
 

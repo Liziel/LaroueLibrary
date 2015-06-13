@@ -58,7 +58,9 @@ FileSystem	= src/filesystem/file.cpp \
 
 ### UserDefined
 UDCPlayer	= \
-		src/user_defined/component/player/movement.cpp
+		src/user_defined/component/player/movement.cpp\
+		src/user_defined/component/player/bombing.cpp\
+
 
 UDComponent	= $(UDCPlayer)\
 		src/user_defined/component/menu_principal.cpp \
@@ -66,9 +68,7 @@ UDComponent	= $(UDCPlayer)\
 		src/user_defined/component/map_generator.cpp \
 		src/user_defined/component/options_selection.cpp
 
-UDHelper	= src/user_defined/helper/tga_dict.cpp
-
-UserDefined	= $(UDComponent) $(UDHelper)
+UserDefined	= $(UDComponent)
 
 ### Main -> where we start the ctvty application
 Main		= src/start/main.cpp
@@ -79,7 +79,7 @@ CSRC		+=
 
 STATIC_LIBRARY	?= renderer/renderer.a
 
-FLAGS		= -W -Wall -Wextra $(INCLUDES)  -I renderer/libraries/GdlLibrary/includes/
+FLAGS		=  $(INCLUDES)  -I renderer/libraries/GdlLibrary/includes/
 CFLAGS		+= $(FLAGS) -Wall
 CXXFLAGS	+= $(FLAGS) -std=c++11
 LDFLAGS		+= -lpthread

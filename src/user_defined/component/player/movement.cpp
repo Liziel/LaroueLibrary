@@ -8,6 +8,7 @@ REGISTER_FOR_SERIALIZATION(user_defined::component::player, Movement);
 namespace user_defined {
   namespace component {
     namespace player {
+
       Movement::		Movement( const serialization::Archive& )
 	: ctvty::MonoBehaviour<Movement>{nullptr, "Player Movement"} {}
 
@@ -17,11 +18,12 @@ namespace user_defined {
       }
 
       void			Movement::Update() {
-	ctvty::debug::Log("right " + gameObject->Name());
 	rb->GetVelocity()
-	  = ctvty::utils::Vector3D(ctvty::Input::GetKeyState("right " + gameObject->Name())
+	  = 
+	  ctvty::utils::Vector3D(0, rb->GetVelocity().y, 0) + 
+	  5.0 * ctvty::utils::Vector3D(ctvty::Input::GetKeyState("right " + gameObject->Name())
 				   - ctvty::Input::GetKeyState("left " + gameObject->Name()),
-				   rb->GetVelocity().y,
+				   0,
 				   ctvty::Input::GetKeyState("up " + gameObject->Name())
 				   - ctvty::Input::GetKeyState("down " + gameObject->Name())
 				   );

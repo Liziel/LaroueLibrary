@@ -69,7 +69,7 @@
 		    "+size" : {
 			"object" : {
 			    "x" : 0.3,
-			    "y" : 0.6,
+			    "y" : 0.8,
 			    "z" : 0.3,
 			},
 			"type" : "ctvty::utils::Vector3D",
@@ -89,13 +89,19 @@
 			"object" : {
 			    "bounciness" : 0.0,
 			    "dynamicFriction" : 0.0,
-			    "staticFriction" : 0.0,
+			    "staticFriction" : 0.2,
 			},
 			"type" : "ctvty::physics::Material",
 		    },
 		}
 	    }
 	    { "type" : "user_defined::component::player::Movement" ,"object" : {} }
+	    {
+		"type" : "user_defined::component::player::Bombing" ,
+		"object" : {
+		    "bombe" : asset("game/objects/destructible.json")
+		}
+	    }
 	]
 	
 	"transform" : {
