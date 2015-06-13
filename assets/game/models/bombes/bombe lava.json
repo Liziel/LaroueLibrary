@@ -1,6 +1,6 @@
 {
     "type" : "ctvty::asset::Model3D::Wrapper"
     "object" : {
-	"path" : "game/models/ziggs/Ziggs.FBX"
+	"path" : "game/models/bombes/Bombe Lava/Lava.FBX"
     }
 }
