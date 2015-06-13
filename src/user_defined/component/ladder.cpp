@@ -1,6 +1,5 @@
 #include "user_defined/component/ladder.hh"
 #include "ctvty/application.hh"
-
 REGISTER_FOR_SERIALIZATION(user_defined::component, Ladder);
 
 namespace user_defined {
@@ -20,14 +19,14 @@ namespace user_defined {
     void		Ladder::Awake()
     {
       log = ctvty::Application::Assets()
-	.LoadAs<ScoreLog>(ctvty::Application::Assets().path() + path);
+	.GetAsset(ctvty::Application::Assets().GetLocation() + path).LoadAs<ScoreLog>();
     }
 
     void		Ladder::OnDestroy()
     {
       if (log)
 	{
-	  ctvty::Application::Assets().GetAsset(ctvty::Application::Assets().path() + path).Save(log);
+	  ctvty::Application::Assets().GetAsset(ctvty::Application::Assets().GetLocation() + path).Save(log);
 	}
     }
 
@@ -70,11 +69,11 @@ namespace user_defined
       ctvty::component::Canvas& canvas	= *GetComponent<ctvty::component::Canvas>();
       std::list<auto_sort>	sorter;
 
-      this->log = ctvty::Application::Assets()
-	.LoadAs<ScoreLog>("log/logLadder.json");
+      log = ctvty::Application::Assets()
+	.GetAsset("log/logLadder.json").LoadAs<ScoreLog>();
       for (auto pair : *log)
 	sorter.emplace_back(pair.first, pair.second);
-      sorter.sort(std::lesser<int>());
+      sorter.sort(std::less<int>());
       std::size_t	i = 0;
       for (auto_sort& score : sorter) {
 	if (i < 5) {
