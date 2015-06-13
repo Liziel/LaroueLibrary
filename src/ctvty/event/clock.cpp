@@ -56,9 +56,9 @@ namespace ctvty {
     }
 
     void				Clock::Start() {
-      std::chrono::time_point<std::chrono::system_clock>	fixed_beg, fixed_loop;
+      std::chrono::time_point<std::chrono::high_resolution_clock>	fixed_beg, fixed_loop;
 
-      fixed_beg = std::chrono::high_resolution_clock::now();;
+      fixed_beg = std::chrono::high_resolution_clock::now();
       while (!end) {
 	fixed_loop = std::chrono::high_resolution_clock::now();
 	if (fixed_loop - fixed_beg <= frame_length)

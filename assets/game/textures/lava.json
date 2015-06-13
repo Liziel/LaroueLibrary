@@ -1,6 +1,6 @@
 {
-    "type" : "ctvty::asset::Texture::Wrapper"
-    "object" : {
-	"path" : "game/textures/lava.tga"
-    }
+	"object" : {
+		"path" : "game/textures/lava.tga"
+	},
+	"type" : "ctvty::asset::Texture::Wrapper",
 }

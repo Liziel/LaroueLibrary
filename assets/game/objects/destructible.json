@@ -34,7 +34,7 @@
 			"type" : "ctvty::utils::Vector3D",
 		    },
 
-		    "isTrigger" : true,
+		    "isTrigger" : false,
 
 		    "material" : {
 			"object" : {

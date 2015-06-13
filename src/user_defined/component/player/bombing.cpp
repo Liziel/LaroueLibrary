@@ -1,6 +1,8 @@
 #include "user_defined/component/player/bombing.hh"
 #include "ctvty/debug.hpp"
 #include "ctvty/input.hh"
+#include "ctvty/physics/raycast.hh"
+#include "ctvty/component/transform.hh"
 
 REGISTER_FOR_SERIALIZATION(user_defined::component::player, Bombing);
 
@@ -18,7 +20,37 @@ namespace user_defined {
       }
 
       void	Bombing::Update() {
-
+	if (ctvty::Input::GetKeyState("put bomb " + gameObject->Name())) {
+	  {
+	    ctvstd::Optional<ctvty::physics::Raycaster::Hit> hit =
+	      ctvty::physics::Raycaster::Raycast(transform->GetPosition(),
+						 ctvty::utils::Vector3D::back,
+						 std::numeric_limits<float>::infinity(),
+						 [] (ctvty::component::Collider* collider) {
+						   return !collider->GetGameObject()->CompareTag("player") &&
+						   !collider->GetGameObject()->CompareTag("ia");
+						 });
+	    if (hit && hit->collider->GetGameObject()->Name() != "indestructible") {
+	      std::cout << "success" << std::endl;
+	      ctvty::debug::Logs(hit->collider->GetGameObject(), hit->dist);
+	      Object::Destroy(hit->collider->GetGameObject());
+	    }
+	  }
+	  ctvstd::Optional<ctvty::physics::Raycaster::Hit> hit =
+	    ctvty::physics::Raycaster::Raycast(transform->GetPosition(),
+					       ctvty::utils::Vector3D::left,
+					       std::numeric_limits<float>::infinity(),
+					       [] (ctvty::component::Collider* collider) {
+						 return !collider->GetGameObject()->CompareTag("player") &&
+						 !collider->GetGameObject()->CompareTag("ia");
+					       });
+	  if (hit && hit->collider->GetGameObject()->Name() != "indestructible") {
+	    std::cout << "success" << std::endl;
+	    ctvty::debug::Logs(hit->collider->GetGameObject(), hit->dist);
+	    Object::Destroy(hit->collider->GetGameObject());
+	  }
+	  stock--;
+	}
       }
 
       void	Bombing::Awake() {

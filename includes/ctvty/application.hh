@@ -59,7 +59,7 @@ namespace ctvty {
 
   public:
     /*
-     * Quit == exit from programm with no memory leaks
+     * Quit == exit from programm with no memory leaks, hum hum
      * Quit(float) == deleayed with seconds time quit
      * CancelQuit() == stop the programm from quitting
      */

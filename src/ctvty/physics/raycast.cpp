@@ -1,5 +1,6 @@
 #include <limits>
 #include "ctvty/physics/raycast.hh"
+#include "ctvty/debug.hpp"
 
 namespace ctvty {
   namespace physics {
@@ -11,6 +12,7 @@ namespace ctvty {
 					   ) {
       ctvstd::Optional<Hit>		hit(ctvstd::none);
       std::list<component::Collider*> colliders = Object::FindObjectsOfType<component::Collider>();
+      ctvty::debug::Log(origin);
       colliders.remove_if([selector] (component::Collider* collider) {
 	  return !collider->GetGameObject()->IsActive() ||
 	    !selector(collider);
@@ -19,7 +21,8 @@ namespace ctvty {
       float distance = maxDistance;
       for (component::Collider* collider : colliders) {
 	ctvstd::Optional<float> result = collider->RayCollision(origin, direction);
-	if (result && *result < distance) {
+	
+	if (result && *result < distance && *result > 0) {
 	  distance = *result;
 	  hit = Raycaster::Hit{collider, distance};
 	}
