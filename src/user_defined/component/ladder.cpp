@@ -59,11 +59,38 @@ namespace user_defined
   namespace component
   {
     MenuLadder::MenuLadder(const serialization::Archive&)
-      : ctvty::Monobehaviour<MenuLadder>(nullptr, "MenuLadder")
+      : ctvty::MonoBehaviour<MenuLadder>(nullptr, "MenuLadder")
     {
       RegisterListener("exit over", &MenuLadder::OverExit);
       RegisterListener("exit OnOver", &MenuLadder::OnOverExit);
       RegisterListener("exit click", &MenuLadder::Exit);
+    }
+
+    void		MenuLadder::Awake() {
+      ctvty::component::Canvas& canvas	= *GetComponent<ctvty::component::Canvas>();
+      std::list<auto_sort>	sorter;
+
+      this->log = ctvty::Application::Assets()
+	.LoadAs<ScoreLog>("log/logLadder.json");
+      for (auto pair : *log)
+	sorter.emplace_back(pair.first, pair.second);
+      sorter.sort(std::lesser<int>());
+      std::size_t	i = 0;
+      for (auto_sort& score : sorter) {
+	if (i < 5) {
+	  std::size_t	j = 0;
+	  for (char c : (std::string)score) {
+	    std::shared_ptr<ctvty::asset::Texture>	texture(new ctvty::asset::Texture(std::string("menu/textures/") + c + ".json"));
+	    canvas[std::string("letter ") + static_cast<char>(j + '0')
+		   + " row " + static_cast<char>(i + '0') ]->SetTexture(texture);
+	    ++j;
+	    if (j == 3)
+	      break;
+	  }
+	} else
+	  break;
+	++i;
+      }
     }
 
     void	        MenuLadder::Serialize(serialization::Archive& __serial_instance) const

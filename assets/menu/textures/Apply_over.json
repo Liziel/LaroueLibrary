@@ -1,0 +1,6 @@
+{
+	"object" : {
+		"path" : "menu/textures/Apply_over.tga"
+	},
+	"type" : "ctvty::asset::Texture::Wrapper",
+}

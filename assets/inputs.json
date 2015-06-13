@@ -12,38 +12,9 @@
 			},
 		{
 				"object" : {
-					"key" : 1073741906,
-					"names" : [
-					"up player 2"
-					],
-				},
-				"type" : "ctvty::Input::configuration",
-			},
-		{
-				"object" : {
 					"key" : 1073741903,
 					"names" : [
 					"right player 2"
-					],
-				},
-				"type" : "ctvty::Input::configuration",
-			},
-		{
-				"object" : {
-					"mouse axis" : "x",
-					"names" : [
-					"mouseXaxis",
-					"cameraDirection",
-					"toto",
-					],
-				},
-				"type" : "ctvty::Input::configuration",
-			},
-		{
-				"object" : {
-					"key" : 97,
-					"names" : [
-					"put bomb player 1"
 					],
 				},
 				"type" : "ctvty::Input::configuration",
@@ -59,18 +30,18 @@
 			},
 		{
 				"object" : {
-					"key" : 1073741922,
+					"key" : 1073741906,
 					"names" : [
-					"put bomb player 2"
+					"up player 2"
 					],
 				},
 				"type" : "ctvty::Input::configuration",
 			},
 		{
 				"object" : {
-					"key" : 1073741904,
+					"key" : 1073741913,
 					"names" : [
-					"left player 2"
+					"throw bomb player 2"
 					],
 				},
 				"type" : "ctvty::Input::configuration",
@@ -86,7 +57,16 @@
 			},
 		{
 				"object" : {
-					"key" : 113,
+					"key" : 122,
+					"names" : [
+					"left player 2"
+					],
+				},
+				"type" : "ctvty::Input::configuration",
+			},
+		{
+				"object" : {
+					"key" : 101,
 					"names" : [
 					"left player 1"
 					],
@@ -95,16 +75,16 @@
 			},
 		{
 				"object" : {
-					"key" : 115,
+					"key" : 1073741905,
 					"names" : [
-					"down player 1"
+					"right player 1"
 					],
 				},
 				"type" : "ctvty::Input::configuration",
 			},
 		{
 				"object" : {
-					"key" : 122,
+					"key" : 97,
 					"names" : [
 					"up player 1"
 					],
@@ -115,7 +95,16 @@
 				"object" : {
 					"key" : 100,
 					"names" : [
-					"right player 1"
+					"put bomb player 1"
+					],
+				},
+				"type" : "ctvty::Input::configuration",
+			},
+		{
+				"object" : {
+					"key" : 122,
+					"names" : [
+					"down player 1"
 					],
 				},
 				"type" : "ctvty::Input::configuration",

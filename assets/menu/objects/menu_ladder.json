@@ -45,6 +45,204 @@
 			    }
 			},
 
+			"letter 0 row 0" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"offset x" : 0.03,
+				"offset y" : 0.2,
+
+				"size x" : 0.07,
+				"size y" : 0.07,
+
+				"level" : 0,
+
+				"enabled" : true,
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/A.json"
+				    }
+				}
+			    }
+			},
+
+			"letter 1 row 0" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"offset x" : 0.12,
+				"offset y" : 0.2,
+
+				"size x" : 0.07,
+				"size y" : 0.07,
+
+				"level" : 0,
+
+				"enabled" : true,
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/A.json"
+				    }
+				}
+			    }
+			},
+
+			"letter 2 row 0" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"offset x" : 0.21,
+				"offset y" : 0.2,
+
+				"size x" : 0.07,
+				"size y" : 0.07,
+
+				"level" : 0,
+
+				"enabled" : true,
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/A.json"
+				    }
+				}
+			    }
+			},
+
+			"letter 0 row 1" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"offset x" : 0.03,
+				"offset y" : 0.3,
+
+				"size x" : 0.07,
+				"size y" : 0.07,
+
+				"level" : 0,
+
+				"enabled" : true,
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/A.json"
+				    }
+				}
+			    }
+			},
+
+			"letter 1 row 1" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"offset x" : 0.12,
+				"offset y" : 0.3,
+
+				"size x" : 0.07,
+				"size y" : 0.07,
+
+				"level" : 0,
+
+				"enabled" : true,
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/A.json"
+				    }
+				}
+			    }
+			},
+
+			"letter 2 row 1" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"offset x" : 0.21,
+				"offset y" : 0.3,
+
+				"size x" : 0.07,
+				"size y" : 0.07,
+
+				"level" : 0,
+
+				"enabled" : true,
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/A.json"
+				    }
+				}
+			    }
+			},
+
+			"letter 0 row 2" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"offset x" : 0.03,
+				"offset y" : 0.3,
+
+				"size x" : 0.07,
+				"size y" : 0.07,
+
+				"level" : 0,
+
+				"enabled" : true,
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/A.json"
+				    }
+				}
+			    }
+			},
+
+			"letter 1 row 2" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"offset x" : 0.12,
+				"offset y" : 0.3,
+
+				"size x" : 0.07,
+				"size y" : 0.07,
+
+				"level" : 0,
+
+				"enabled" : true,
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/A.json"
+				    }
+				}
+			    }
+			},
+
+			"letter 2 row 2" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"offset x" : 0.21,
+				"offset y" : 0.3,
+
+				"size x" : 0.07,
+				"size y" : 0.07,
+
+				"level" : 0,
+
+				"enabled" : true,
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/A.json"
+				    }
+				}
+			    }
+			},
+
 			"exit" : {
 			    "type" : "ctvty::component::Hud"
 			    "object" : {

@@ -18,9 +18,11 @@ namespace user_defined
     public:
       void		OverVideo(ctvty::component::Hud*);
       void		OnOverVideo(ctvty::component::Hud*);
+      void	        Video(ctvty::component::Hud*);
 
       void		OverConfiguration(ctvty::component::Hud*);
       void		OnOverConfiguration(ctvty::component::Hud*);
+      void	        Configuration(ctvty::component::Hud*);
 
       void		OverShortcuts(ctvty::component::Hud*);
       void		OnOverShortcuts(ctvty::component::Hud*);
@@ -32,4 +34,5 @@ namespace user_defined
     };
   };
 };
+
 #endif
