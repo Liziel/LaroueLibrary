@@ -1,0 +1,6 @@
+{
+	"object" : {
+		"path" : "menu/textures/Menu_in_game.tga"
+	},
+	"type" : "ctvty::asset::Texture::Wrapper",
+}

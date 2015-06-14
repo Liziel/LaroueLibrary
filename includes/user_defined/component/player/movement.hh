@@ -8,12 +8,13 @@ namespace user_defined {
   namespace component {
     namespace player {
       class Movement : public ctvty::MonoBehaviour<Movement> {
+      private:
+	ctvty::GameObject*			player_representation;
+	ctvty::component::RigidBody*	rb;
+
       public:
 	Movement(const serialization::Archive& __serial);
 	void	Serialize(serialization::Archive&) const;
-
-      public:
-	ctvty::component::RigidBody*	rb;
 
       public:
 	void	Awake();

@@ -1,0 +1,6 @@
+{
+	"object" : {
+		"path" : "menu/textures/Ladder.tga"
+	},
+	"type" : "ctvty::asset::Texture::Wrapper",
+}

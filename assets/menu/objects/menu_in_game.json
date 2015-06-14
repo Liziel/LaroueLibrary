@@ -1,0 +1,174 @@
+{
+    "type" : "ctvty::GameObject"
+    "object" : {
+	"childs" : [
+	],
+
+	"components" : [
+	    {
+		"type" : "user_defined::component::MenuInGame"
+		"object" : {
+		    
+		}
+	    },
+	    {
+		"type" : "ctvty::component::Canvas"
+		"object" : {
+		    "ScreenSpace" : true
+
+		    "offset x" : 0.40,
+		    "offset y" : 0.35,
+
+		    "size x" : 0.2,
+		    "size y" : 0.3,
+
+		    "childrens" : {[
+			"Wallpaper" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"offset x" : 0.0,
+				"offset y" : 0.0,
+
+				"size x" : 1.0,
+				"size y" : 1.0,
+
+				"level" : 0,
+
+				"enabled" : true,
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/menu_in_game.json"
+				    }
+				}
+			    }
+			},
+
+			"play" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"onClickEvent" : "play click",
+				"onOverEvent" : "play over",
+
+				"offset x" : 0.3,
+				"offset y" : 0.15,
+
+				"size x" : 0.45
+				"size y" : 0.3
+
+				"level" : 2
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/play_nm.json"
+				    }
+				}
+			    }
+			},
+
+			"play overed" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"onClickEvent" : "play click",
+				"onExitOverEvent" : "play OnOver",
+
+				"offset x" : 0.3,
+				"offset y" : 0.15,
+
+				"size x" : 0.45
+				"size y" : 0.3
+
+				"level" : 2
+
+				"enabled" : false
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/play_over.json"
+				    }
+				}
+			    }
+			},
+
+			"exit" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"onClickEvent" : "exit click",
+				"onOverEvent" : "exit over",
+
+				"offset x" : 0.3,
+				"offset y" : 0.55,
+
+				"size x" : 0.4
+				"size y" : 0.25
+
+				"level" : 2
+
+				"enabled" : true
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Exit_nm.json"
+				    }
+				}
+			    }
+			},
+
+			"exit overed" : {
+			    "type" : "ctvty::component::Hud"
+			    "object" : {
+				"onClickEvent" : "exit click",
+				"onExitOverEvent" : "exit OnOver",
+
+				"offset x" : 0.3,
+				"offset y" : 0.55,
+
+				"size x" : 0.4
+				"size y" : 0.25
+
+				"level" : 2
+
+				"enabled" : false
+
+				"texture" : {
+				    "type" : "ctvty::asset::Texture"
+				    "object" : {
+					"wrapper" : "menu/textures/Exit_over.json"
+				    }
+				}
+			    }
+			}
+
+		    ]}
+		}
+	    }
+	],
+
+	"name" : "Menu Principal",
+	"tag" : "menu",
+
+	"transform" : {
+	    "type" : "ctvty::component::Transform",
+	    "object" : {
+		"position" : {
+		    "type" : "ctvty::utils::Vector3D",
+		    "object" : { "x" : 0, "y" : 0, "z" : 0 }
+		},
+		"scale" : {
+		    "type" : "ctvty::utils::Vector3D",
+		    "object" : { "x" : 1.0, "y" : 1.0, "z" : 1.0 }
+		},
+		"rotation" : {
+		    "type" : "ctvty::utils::Quaternion",
+		    "object" : { "x" : 0.0, "y" : 0.0, "z" : 0.0, "w" : 0.0 }
+		}
+	    },
+	},
+    }
+}

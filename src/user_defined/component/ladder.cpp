@@ -1,6 +1,10 @@
 #include "user_defined/component/ladder.hh"
 #include "ctvty/application.hh"
+#include "ctvty/debug.hpp"
+
 REGISTER_FOR_SERIALIZATION(user_defined::component, Ladder);
+REGISTER_FOR_SERIALIZATION(user_defined::component, MenuLadder);
+REGISTER_FOR_SERIALIZATION(user_defined::component, ScoreLog);
 
 namespace user_defined {
   namespace component {
@@ -34,7 +38,6 @@ namespace user_defined {
     {
       (*log)[player] += 1;
     }
-
 
     ScoreLog::ScoreLog(const serialization::Archive& __serial)
     {
@@ -71,20 +74,45 @@ namespace user_defined
 
       log = ctvty::Application::Assets()
 	.GetAsset("log/logLadder.json").LoadAs<ScoreLog>();
+      ctvty::debug::Log(log);
       for (auto pair : *log)
 	sorter.emplace_back(pair.first, pair.second);
-      sorter.sort(std::less<int>());
+      sorter.sort(std::greater<int>());
       std::size_t	i = 0;
       for (auto_sort& score : sorter) {
 	if (i < 5) {
 	  std::size_t	j = 0;
 	  for (char c : (std::string)score) {
-	    std::shared_ptr<ctvty::asset::Texture>	texture(new ctvty::asset::Texture(std::string("menu/textures/") + c + ".json"));
+	    std::shared_ptr<ctvty::asset::Texture>	texture(new ctvty::asset::Texture(std::string("menu/textures/") + static_cast<char>(c >= 'a' && c <= 'z' ? c - 'a' + 'A' : c) + ".json"));
 	    canvas[std::string("letter ") + static_cast<char>(j + '0')
-		   + " row " + static_cast<char>(i + '0') ]->SetTexture(texture);
+		   + " row " + static_cast<char>(i + '0')]->SetTexture(texture);
+	    canvas[std::string("letter ") + static_cast<char>(j + '0')
+		   + " row " + static_cast<char>(i + '0')]->enable();
+
 	    ++j;
 	    if (j == 3)
 	      break;
+	  }
+	  {
+	    std::shared_ptr<ctvty::asset::Texture>	texture(new ctvty::asset::Texture(std::string("menu/textures/") + static_cast<char>((int)score / 100 + '0') + ".json"));
+	    canvas[std::string("number ") + '0'
+		   + " row " + static_cast<char>(i + '0')]->SetTexture(texture);
+	    canvas[std::string("number ") + '0'
+		   + " row " + static_cast<char>(i + '0')]->enable();
+	  }
+	  {
+	    std::shared_ptr<ctvty::asset::Texture>	texture(new ctvty::asset::Texture(std::string("menu/textures/") + static_cast<char>(((int)score / 10) % 10 + '0') + ".json"));
+	    canvas[std::string("number ") + '1'
+		   + " row " + static_cast<char>(i + '0')]->SetTexture(texture);
+	    canvas[std::string("number ") + '1'
+		   + " row " + static_cast<char>(i + '0')]->enable();
+	  }
+	  {
+	    std::shared_ptr<ctvty::asset::Texture>	texture(new ctvty::asset::Texture(std::string("menu/textures/") + static_cast<char>((int)score % 10 + '0') + ".json"));
+	    canvas[std::string("number ") + '2'
+		   + " row " + static_cast<char>(i + '0')]->SetTexture(texture);
+	    canvas[std::string("number ") + '2'
+		   + " row " + static_cast<char>(i + '0')]->enable();
 	  }
 	} else
 	  break;
@@ -112,7 +140,7 @@ namespace user_defined
 
     void		MenuLadder::Exit(ctvty::component::Hud*)
     {
-      ctvty::Application::Quit();
+      ctvty::Application::LoadScene("menu principal");
     }
   };
 };

@@ -24,8 +24,9 @@ namespace user_defined {
       void	        OverLoadGame(ctvty::component::Hud*);
       void		OnOverLoadGame(ctvty::component::Hud*);
 
-      void		OverCredit(ctvty::component::Hud*);
-      void		OnOverCredit(ctvty::component::Hud*);
+      void		OverLadder(ctvty::component::Hud*);
+      void		OnOverLadder(ctvty::component::Hud*);
+      void	        Ladder(ctvty::component::Hud*);
 
       void		OverExit(ctvty::component::Hud*);
       void		OnOverExit(ctvty::component::Hud*);

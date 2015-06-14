@@ -217,11 +217,11 @@
 			    }
 			},
 
-			"credit" : {
+			"ladder" : {
 			    "type" : "ctvty::component::Hud"
 			    "object" : {
-				"onClickEvent" : "credit click",
-				"onOverEvent" : "credit over",
+				"onClickEvent" : "ladder click",
+				"onOverEvent" : "ladder over",
 
 				"offset x" : 0.1,
 				"offset y" : 0.6,
@@ -236,17 +236,17 @@
 				"texture" : {
 				    "type" : "ctvty::asset::Texture"
 				    "object" : {
-					"wrapper" : "menu/textures/Credit_nm.json"
+					"wrapper" : "menu/textures/Ladder.json"
 				    }
 				}
 			    }
 			},
 
-			"credit overed" : {
+			"ladder overed" : {
 			    "type" : "ctvty::component::Hud"
 			    "object" : {
-				"onClickEvent" : "credit click",
-				"onExitOverEvent" : "credit OnOver",
+				"onClickEvent" : "ladder click",
+				"onExitOverEvent" : "ladder OnOver",
 
 				"offset x" : 0.1,
 				"offset y" : 0.6,
@@ -261,7 +261,7 @@
 				"texture" : {
 				    "type" : "ctvty::asset::Texture"
 				    "object" : {
-					"wrapper" : "menu/textures/Credit_over.json"
+					"wrapper" : "menu/textures/Ladder_over.json"
 				    }
 				}
 			    }

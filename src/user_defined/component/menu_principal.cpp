@@ -17,12 +17,12 @@ namespace user_defined {
       RegisterListener("options over", &MenuPrincipal::OverOptions);
       RegisterListener("options OnOver", &MenuPrincipal::OnOverOptions);
       RegisterListener("options click", &MenuPrincipal::Options); // Lancement menu des options
-      RegisterListener("credit over", &MenuPrincipal::OverCredit);
-      RegisterListener("credit OnOver", &MenuPrincipal::OnOverCredit);
+      RegisterListener("ladder over", &MenuPrincipal::OverLadder);
+      RegisterListener("ladder OnOver", &MenuPrincipal::OnOverLadder);
       RegisterListener("load game over", &MenuPrincipal::OverLoadGame);
       RegisterListener("load game OnOver", &MenuPrincipal::OnOverLoadGame);
       //RegisterListener("load game click", &MenuPrincipal::LoadGame); // Lancement du menu de load des games
-      //RegisterListener("credit click", &); // Lancement des credits
+      RegisterListener("ladder click", &MenuPrincipal::Ladder);
     }
 
     void		MenuPrincipal::Serialize(serialization::Archive& __serial_instance) const {
@@ -75,16 +75,21 @@ namespace user_defined {
       hud->GetCanvas()["load game"]->enable();
     }
 
-    void		MenuPrincipal::OverCredit(ctvty::component::Hud* hud)
+    void		MenuPrincipal::OverLadder(ctvty::component::Hud* hud)
     {
-      hud->GetCanvas()["credit overed"]->enable();
-      hud->GetCanvas()["credit"]->disable();
+      hud->GetCanvas()["ladder overed"]->enable();
+      hud->GetCanvas()["ladder"]->disable();
     }
 
-    void		MenuPrincipal::OnOverCredit(ctvty::component::Hud* hud)
+    void		MenuPrincipal::OnOverLadder(ctvty::component::Hud* hud)
     {
-      hud->GetCanvas()["credit overed"]->disable();
-      hud->GetCanvas()["credit"]->enable();
+      hud->GetCanvas()["ladder overed"]->disable();
+      hud->GetCanvas()["ladder"]->enable();
+    }
+
+    void		MenuPrincipal::Ladder(ctvty::component::Hud*)
+    {
+      ctvty::Application::LoadScene("menu ladder");
     }
 
     void		MenuPrincipal::OverExit(ctvty::component::Hud* hud)
