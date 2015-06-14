@@ -9,7 +9,7 @@ namespace user_defined {
       
       class Core : public ctvty::MonoBehaviour<Core> {
       private:
-	std::unique_ptr<ctvty::GameObject>	damage_zone;
+	std::unique_ptr<ctvty::GameObject, ctvty::Object::Deleter >	damage_zone;
 
       public:
 	Core(const serialization::Archive&);

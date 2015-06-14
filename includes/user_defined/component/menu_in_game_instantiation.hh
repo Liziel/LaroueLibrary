@@ -8,7 +8,7 @@ namespace user_defined {
     
     class MenuInGameInstantiation : public ctvty::MonoBehaviour<MenuInGameInstantiation> {
     private:
-      std::unique_ptr<ctvty::GameObject>	MenuInGame;
+      std::unique_ptr<ctvty::GameObject, ctvty::Object::Deleter>	MenuInGame;
       ctvty::GameObject*			instantied;
       bool					loaded;
 

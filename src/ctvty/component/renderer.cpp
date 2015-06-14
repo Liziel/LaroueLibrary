@@ -24,7 +24,7 @@ namespace ctvty
   {
 
     Renderer::Renderer(const serialization::Archive &__serial)
-      : MonoBehaviour(nullptr, "Renderer")
+      : MonoBehaviour(nullptr, "Renderer"), animator(nullptr)
     {
       if (__serial.exist("rotation"))
 	__serial["rotation"] & rotation;

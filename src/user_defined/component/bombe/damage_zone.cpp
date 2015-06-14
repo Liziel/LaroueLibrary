@@ -13,13 +13,10 @@ namespace user_defined {
 
       void	DamageZone::Serialize(serialization::Archive& __serial_instance) const {
 	SERIALIZE_OBJECT_AS(user_defined::component::bombe::DamageZone, __serial_instance);
-	std::cout << "trigger created" << std::endl;
       }
 
       void	DamageZone::OnTriggerEnter(const ctvty::component::Collider* collider) {
-	ctvty::debug::Log(const_cast<ctvty::component::Collider*>(collider)->GetGameObject());
 	collider->BroadcastMessage("Damage");
-	std::cout << "trigger entered" << std::endl;
       }
     };
   };

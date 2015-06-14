@@ -56,6 +56,9 @@ namespace ctvty {
      */
     static void			Destroy(Object* del);
     static void			Destroy(Object* del, float delay);
+  public:
+    class Deleter
+    { public: inline void	operator ()(ctvty::Object* del) { Object::Destroy(del); } };
 
   public:
     /*
@@ -99,7 +102,6 @@ namespace ctvty {
       }
       return (_founds);
     }
-
   };
 };
 

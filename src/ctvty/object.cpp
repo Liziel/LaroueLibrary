@@ -13,7 +13,7 @@ namespace ctvty {
   }
 
   Object::			~Object() {
-    std::cout << "deleted" << std::endl;
+    std::cout << "deleted " + name << std::endl;
     Objects.remove_if([this] (Object* _comp) -> bool {return _comp == this;});
   }
 
@@ -60,7 +60,7 @@ namespace ctvty {
 
     product = _template->clone();
     if ((gameObject = dynamic_cast<GameObject*>(product)) != nullptr) {
-      gameObject->GetTransformation();
+      std::cout << "instantiate" << std::endl;
       gameObject->GetTransformation()->GetPosition() = position;
       gameObject->GetTransformation()->GetRotation() = rotation;
       gameObject->SetActive(true);

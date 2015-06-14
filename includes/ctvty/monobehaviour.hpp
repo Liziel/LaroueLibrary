@@ -66,6 +66,7 @@ namespace ctvty {
     }
 
   public:
+    virtual ~MonoBehaviour() { CancelInvoke(); }
     MonoBehaviour(GameObject* parent, const std::string& name)
       : Behaviour(parent, name), invoked({}) {
       ATTACH_THIS_TO(Awake);

@@ -6,7 +6,8 @@ REGISTER_FOR_SERIALIZATION(user_defined::component, MenuInGameInstantiation);
 namespace user_defined {
   namespace component {
     MenuInGameInstantiation::MenuInGameInstantiation(const serialization::Archive& __serial)
-      : ctvty::MonoBehaviour<MenuInGameInstantiation>(nullptr, "In Game Insantiation"), loaded(false) {
+      : ctvty::MonoBehaviour<MenuInGameInstantiation>(nullptr, "In Game Insantiation"),
+	loaded(false) {
       __serial["Menu InGame"] & MenuInGame;
       RegisterListener("Resume", &MenuInGameInstantiation::Resume);
     }

@@ -465,8 +465,8 @@ namespace serialization {
     static serial::interface* make(const std::shared_ptr<_type>& _variable) { return new serial::object(_variable.get()); }
   };
 
-  template<typename _type>
-  struct serial_info< std::unique_ptr<_type>,
+  template<typename _type, typename _def>
+  struct serial_info< std::unique_ptr<_type, std::default_delete< _def> >,
 		      typename std::enable_if< std::is_assignable<Serializable*&, _type*>::value >::type > {
     using type = serial::object;
     static std::unique_ptr<_type> get(serial::interface* _interface) {
@@ -477,14 +477,26 @@ namespace serialization {
     static serial::interface* make(const std::unique_ptr<_type>& _variable) { return new serial::object(_variable.get()); }
   };
 
+  template<typename _type, typename _del>
+  struct serial_info< std::unique_ptr<_type, _del>,
+		      typename std::enable_if< std::is_assignable<Serializable*&, _type*>::value >::type > {
+    using type = serial::object;
+    static std::unique_ptr<_type, _del> get(serial::interface* _interface) {
+      return std::unique_ptr<_type, _del> (dynamic_cast<_type*> (SerializableInstantiate(*(dynamic_cast<serial::object*>(_interface)))));
+    }
+    static bool  is(serial::interface* _interface) { return dynamic_cast<serial::object*>(_interface) != nullptr; }
+    static void	 set(serial::interface* _interface, std::unique_ptr<_type, _del>& _variable) { _variable = get(_interface); }
+    static serial::interface* make(const std::unique_ptr<_type, _del>& _variable) { return new serial::object(_variable.get()); }
+  };
+
   /*
    * For Unique ptr
    */
   template<typename _type, typename _pass>
   struct _do_pass { using type = void; };
 
-  template<typename _type>//unique ptr for constructible member
-  struct serial_info< std::unique_ptr<_type>
+  template<typename _type, typename _def>//unique ptr for constructible member
+  struct serial_info< std::unique_ptr< _type, std::default_delete<_def> >
 		      , typename _do_pass< typename serial_info< _type >::type, void >::type > {
     using type = typename serial_info< _type >::type;
     static std::unique_ptr<_type> get(serial::interface* _interface) {
@@ -493,6 +505,18 @@ namespace serialization {
     static bool is(serial::interface* _interface) { return serial_info< _type>::is(_interface); }
     static void set(serial::interface* _interface, std::unique_ptr<_type>& _variable) { _variable.reset( new _type(serial_info< _type>::get(_interface) ) ); }
     static serial::interface* make(const std::unique_ptr<_type>& _variable) { return new type (*_variable); }
+  };
+
+  template<typename _type, typename _del>//unique ptr for constructible member
+  struct serial_info< std::unique_ptr<_type, _del>
+		      , typename _do_pass< typename serial_info< _type >::type, void >::type > {
+    using type = typename serial_info< _type >::type;
+    static std::unique_ptr<_type, _del> get(serial::interface* _interface) {
+      return std::unique_ptr<_type, _del> ( new _type(serial_info< _type>::get(_interface) ) );
+    }
+    static bool is(serial::interface* _interface) { return serial_info< _type>::is(_interface); }
+    static void set(serial::interface* _interface, std::unique_ptr<_type, _del>& _variable) { _variable.reset( new _type(serial_info< _type>::get(_interface) ) ); }
+    static serial::interface* make(const std::unique_ptr<_type, _del>& _variable) { return new type (*_variable); }
   };
 
   template<typename _type>//unique ptr for constructible member

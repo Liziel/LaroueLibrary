@@ -10,7 +10,7 @@ namespace user_defined {
 
       class Bombing : public ctvty::MonoBehaviour<Bombing> {
       private:
-	std::shared_ptr<ctvty::GameObject>	bombe;
+	std::unique_ptr<ctvty::GameObject, ctvty::Object::Deleter>	bombe;
 	float					stock, stock_max;
 
       public:

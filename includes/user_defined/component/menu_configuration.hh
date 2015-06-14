@@ -1,8 +1,10 @@
 #ifndef MenuConfiguration_hh__
 # define MenuConfiguration_hh__
 
-#include "ctvty/monobehaviour.hpp"
-#include "ctvty/component/hud.hh"
+# include "ctvty/monobehaviour.hpp"
+# include "ctvty/component/hud.hh"
+# include "user_defined/component/configurations.hh"
+
 
 namespace user_defined
 {
@@ -13,16 +15,15 @@ namespace user_defined
     {
     private:
       std::shared_ptr<ctvty::asset::Texture>	texture;
-      int	_sizeX;
-      int	_sizeY;
-      int	_player;
-      int	_IA;
+      std::shared_ptr<Configuration>		configuration;
 
     public:
       MenuConfiguration(const serialization::Archive&);
       void	Serialize(serialization::Archive&) const;
 
     public:
+      void		Awake();
+
       void		OverApply(ctvty::component::Hud*);
       void		OnOverApply(ctvty::component::Hud*);
       void	        Apply(ctvty::component::Hud*);

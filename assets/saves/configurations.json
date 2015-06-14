@@ -1,0 +1,9 @@
+{
+	"object" : {
+		"ia" : 1,
+		"players" : 1,
+		"size x" : 32,
+		"size y" : 18,
+	},
+	"type" : "user_defined::component::Configuration",
+}
