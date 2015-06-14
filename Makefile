@@ -60,9 +60,11 @@ FileSystem	= src/filesystem/file.cpp \
 UDCPlayer	= \
 		src/user_defined/component/player/movement.cpp\
 		src/user_defined/component/player/bombing.cpp\
+		src/user_defined/component/player/health.cpp\
 
 UDCBombe	= \
 		src/user_defined/component/bombe/core.cpp\
+		src/user_defined/component/bombe/damage_zone.cpp\
 
 
 UDComponent	= $(UDCPlayer) $(UDCBombe)\

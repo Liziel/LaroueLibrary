@@ -19,6 +19,12 @@ namespace ctvty {
   /*
    * Message Functions
    */
+  void			Component::BroadcastAll(const std::string& methodName,
+					 event::parameters::values params) const {
+    ctvty::event::Clock::GetClock().AddBroadCast(methodName,
+						 params);
+  }
+
   void			Component::BroadcastMessage(const std::string& methodName,
 					 event::parameters::values params) const {
     ctvty::event::Clock::GetClock().AddBroadCast(gameObject,

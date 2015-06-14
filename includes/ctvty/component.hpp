@@ -62,6 +62,15 @@ namespace ctvty {
      * will call the equivalent method in the parent GameObject
      * this->BroadcastMessage() == this->parent->BroadcastMessage();
      */
+    void			BroadcastAll(const std::string& methodName,
+						 event::parameters::values params) const;
+
+    template<typename ... parameters>
+    void			BroadcastAll(const std::string& methodName,
+						 parameters ... p) const {
+      BroadcastMessage(methodName, event::parameters::PackValues(p ... ));
+    }
+
     void			BroadcastMessage(const std::string& methodName,
 						 event::parameters::values params) const;
 
