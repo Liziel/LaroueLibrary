@@ -73,7 +73,7 @@ namespace ctvty {
        * accessed only by MonoBehaviour
        */
       void			FixedUpdate();
-
+      void			OnDestroy();
     public:
       void			RegisterCollider(Collider*);
 

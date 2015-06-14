@@ -14,7 +14,7 @@ namespace user_defined {
 	void	Serialize(serialization::Archive&) const;
 
       public:
-	void	OnEnterTrigger(const ctvty::component::Collider*);
+	void	OnTriggerEnter(const ctvty::component::Collider*);
       };
       
     };

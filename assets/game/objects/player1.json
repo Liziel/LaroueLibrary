@@ -96,6 +96,7 @@
 		}
 	    }
 	    { "type" : "user_defined::component::player::Movement" ,"object" : {} }
+	    { "type" : "user_defined::component::player::Health" ,"object" : {} }
 	    {
 		"type" : "user_defined::component::player::Bombing" ,
 		"object" : {

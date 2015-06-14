@@ -17,6 +17,39 @@
 		    }
 		}
 	    }
+	    { "type" : "user_defined::component::bombe::DamageZone", "object" : {} }
+	    {
+		"type" : "ctvty::component::BoxCollider"
+		"object" : {
+		    "+size" : {
+			"object" : {
+			    "x" : 0.4,
+			    "y" : 0.5,
+			    "z" : 0.4,
+			},
+			"type" : "ctvty::utils::Vector3D",
+		    },
+		    "-size" : {
+			"object" : {
+			    "x" : 0.4,
+			    "y" : 0.9,
+			    "z" : 0.4,
+			},
+			"type" : "ctvty::utils::Vector3D",
+		    },
+
+		    "isTrigger" : true,
+
+		    "material" : {
+			"object" : {
+			    "bounciness" : 0.0,
+			    "dynamicFriction" : 0.0,
+			    "staticFriction" : 0.0,
+			},
+			"type" : "ctvty::physics::Material",
+		    },
+		}
+	    }
 	]
 
 	"transform" : {
@@ -31,7 +64,7 @@
 		"scale" : {
 		    "type" : "ctvty::utils::Vector3D"
 		    "object" : {
-			"x" : 1.0, "y" : 0.5, "z" : 1.0
+			"x" : 1.0, "y" : 1.0, "z" : 1.0
 		    }
 		}
 		"rotation" : {

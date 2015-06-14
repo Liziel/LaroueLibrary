@@ -55,6 +55,13 @@ namespace ctvty {
       return *velocity;
     }
 
+    void		RigidBody::OnDestroy() {
+      for (auto collider : colliders_collisions)
+	const_cast<Collider*>(collider)->Collideds().remove_if([this] (RigidBody* r) { return r == this; });
+      for (auto collider : colliders_trigger)
+	const_cast<Collider*>(collider)->Triggereds().remove_if([this] (RigidBody* r) { return r == this; });
+    }
+
     void		RigidBody::FixedUpdate() {
       if (!isKinematic)
 	GetVelocity() += (utils::Vector3D::down * World::gravity)

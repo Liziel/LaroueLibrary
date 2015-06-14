@@ -13,6 +13,7 @@ namespace ctvty {
   }
 
   Object::			~Object() {
+    std::cout << "deleted" << std::endl;
     Objects.remove_if([this] (Object* _comp) -> bool {return _comp == this;});
   }
 

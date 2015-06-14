@@ -12,7 +12,6 @@ namespace ctvty {
 					   ) {
       ctvstd::Optional<Hit>		hit(ctvstd::none);
       std::list<component::Collider*> colliders = Object::FindObjectsOfType<component::Collider>();
-      ctvty::debug::Log(origin);
       colliders.remove_if([selector] (component::Collider* collider) {
 	  return !collider->GetGameObject()->IsActive() ||
 	    !selector(collider);

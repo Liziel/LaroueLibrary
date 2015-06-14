@@ -51,7 +51,6 @@ namespace user_defined {
 					       });
 	  if (hit) {
 	    if (hit->collider->GetGameObject()->CompareTag("bombes")) {
-	      std::cout << "wut" << std::endl;
 	      hit->collider->BroadcastMessage("Explosion");
 	    }
 	    else if (hit->collider->GetGameObject()->Name() == "destructible")
@@ -76,17 +75,17 @@ namespace user_defined {
 					       });
 	  if (hit) {
 	    if (hit->collider->GetGameObject()->CompareTag("bombes")) {
-	std::cout << "wut" << std::endl;
 	      hit->collider->BroadcastMessage("Explosion");
 	    }
 	    else if (hit->collider->GetGameObject()->Name() == "destructible")
 	      Object::Destroy(hit->collider->GetGameObject());
 	  }
-	  for (float i = 0; i < (hit ? (int)hit->dist : size); ++i)
+	  for (float i = 0; i < (hit ? (int)hit->dist : size); ++i) {
 	    Object::Destroy(Object::Instantiate(damage_zone.get(),
 						transform->GetPosition()
 						+ ctvty::utils::Vector3D::left * (i + 1),
 						ctvty::utils::Quaternion::identity), 0.5);
+	  }
 	}
 	{
 	  ctvstd::Optional<ctvty::physics::Raycaster::Hit>	hit =
@@ -101,7 +100,6 @@ namespace user_defined {
 					       });
 	  if (hit) {
 	    if (hit->collider->GetGameObject()->CompareTag("bombes")) {
-	std::cout << "wut" << std::endl;
 	      hit->collider->BroadcastMessage("Explosion");
 	    }
 	    else if (hit->collider->GetGameObject()->Name() == "destructible")
@@ -126,7 +124,6 @@ namespace user_defined {
 					       });
 	  if (hit) {
 	    if (hit->collider->GetGameObject()->CompareTag("bombes")) {
-	std::cout << "wut" << std::endl;
 	      hit->collider->BroadcastMessage("Explosion");
 	    }
 	    else if (hit->collider->GetGameObject()->Name() == "destructible")
@@ -138,7 +135,7 @@ namespace user_defined {
 					      + ctvty::utils::Vector3D::back * (i + 1),
 						ctvty::utils::Quaternion::identity), 0.5);
 	}
-	Object::Destroy(gameObject, 0.5);
+	Object::Destroy(gameObject);
       }
     };
   };

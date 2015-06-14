@@ -78,6 +78,9 @@ namespace ctvty {
 
 	for (DelayedAction* action : std::list<DelayedAction*>(delayedActions))
 	  action->Refresh();
+	dispatching = true;
+	while (broadcasts.size()) { broadcasts.front().Dispatch(); broadcasts.pop_front(); }
+	dispatching = false;
 
 	Update.Dispatch();
 	dispatching = true;

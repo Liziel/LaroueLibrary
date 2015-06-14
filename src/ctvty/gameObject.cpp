@@ -139,10 +139,10 @@ namespace ctvty {
   void				GameObject::intern_Destroy() {
     SetParent(nullptr);
     for (GameObject*& child : std::list<GameObject*>(childs)) {
-      child->intern_Destroy(); child = nullptr;
+      child->intern_Destroy(); delete child; child = nullptr;
     } childs.clear();
     for (Component* component : std::list<Component*>(components)) {
-      Object::Destroy(component); component = nullptr;
+      component->intern_Destroy(); delete component; component = nullptr;
     } components.clear();
   }
 
@@ -160,11 +160,10 @@ namespace ctvty {
 	for (Component* component : components)
 	  if (component->DoImplement(eventName))
 	    return ;
-      events_map[eventName] = isListening;	
+      events_map[eventName] = isListening;
     } else {
       if (isListening == childs_events_map[eventName])
 	return ;
-
       if (isListening)
 	childs_events_map[eventName] = true;
       else

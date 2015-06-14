@@ -8,7 +8,7 @@ namespace user_defined {
     namespace player {
       
       Health::		Health(const serialization::Archive& __serial)
-	: ctvty::MonoBehaviour<Health>(nullptr, "Player Health") {
+	: ctvty::MonoBehaviour<Health>(nullptr, "Player Health"), life(3) {
 	RegisterListener("Damage", &Health::TakeDamage);
       }
 
