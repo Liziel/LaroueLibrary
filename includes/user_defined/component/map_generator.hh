@@ -2,21 +2,24 @@
 # define MapGenerator_hh__
 
 # include "ctvty/monobehaviour.hpp"
+# include "ctvty/assets/model3d.hh"
 
 namespace user_defined {
   namespace component {
     
     class MapGenerator : public ctvty::MonoBehaviour<MapGenerator> {
     private:
-      std::unique_ptr<ctvty::GameObject>	ground;
-      std::unique_ptr<ctvty::GameObject>	destructible;
-      std::unique_ptr<ctvty::GameObject>	indestructible;
+      std::unique_ptr<ctvty::GameObject>			ground;
+      std::unique_ptr<ctvty::GameObject>			destructible;
+      std::unique_ptr<ctvty::GameObject>			indestructible;
 
-      std::size_t				size_x;
-      std::size_t				size_y;
+      std::size_t						size_x;
+      std::size_t						size_y;
 
-      std::unique_ptr<ctvty::GameObject>	player1;
-      std::unique_ptr<ctvty::GameObject>	player2;
+      std::unique_ptr<ctvty::GameObject>			player1;
+      std::unique_ptr<ctvty::GameObject>			player2;
+
+      std::list< std::shared_ptr<ctvty::asset::Model3D> >	bombes;
 
       bool					directly_generated;
 

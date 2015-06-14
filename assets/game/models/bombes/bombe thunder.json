@@ -1,6 +1,6 @@
 {
     "type" : "ctvty::asset::Model3D::Wrapper"
     "object" : {
-	"path" : "game/models/bombes/Bombe Thunder/Thunder.FBX"
+	"path" : "game/models/bombes/Bombe Thunder/thunder.FBX"
     }
 }

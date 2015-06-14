@@ -99,7 +99,7 @@
 	    {
 		"type" : "user_defined::component::player::Bombing" ,
 		"object" : {
-		    "bombe" : asset("game/objects/destructible.json")
+		    "bombe" : asset("game/objects/bombe.json")
 		}
 	    }
 	]

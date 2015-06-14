@@ -69,6 +69,14 @@
 		    "size x" : 15
 		    "size y" : 15
 
+		    "bombes" : [
+			{ "type" : "ctvty::asset::Model3D", "object" : { "wrapper" : "game/models/bombes/bombe glyphe.json" } }
+			{ "type" : "ctvty::asset::Model3D", "object" : { "wrapper" : "game/models/bombes/bombe health.json" } }
+			{ "type" : "ctvty::asset::Model3D", "object" : { "wrapper" : "game/models/bombes/bombe lava.json" } }
+			{ "type" : "ctvty::asset::Model3D", "object" : { "wrapper" : "game/models/bombes/bombe thunder.json" } }
+			{ "type" : "ctvty::asset::Model3D", "object" : { "wrapper" : "game/models/bombes/bombe glace.json" } }
+		    ]
+
 		    "directly generated" : true
 		}
 	    }

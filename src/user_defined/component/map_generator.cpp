@@ -16,6 +16,8 @@ namespace user_defined {
       __serial["player 1"]	& player1;
       __serial["player 2"]	& player2;
 
+      __serial["bombes"]	& bombes;
+
       if (__serial.exist("directly generated"))
 	__serial["directly generated"]	& directly_generated;
     }
@@ -32,10 +34,14 @@ namespace user_defined {
       __serial["player 1"]	& player1;
       __serial["player 2"]	& player2;
 
+      __serial["bombes"]	& bombes;
+
       __serial["directly generated"]	& directly_generated;
     }
 
     void		MapGenerator::Awake() {
+      for (auto& bombe : bombes)
+	bombe->delayedInstantiation();
       if (directly_generated)
 	OnLoadScene("");
     }
