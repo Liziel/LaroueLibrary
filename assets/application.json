@@ -6,7 +6,7 @@
 
 	"fps" : 40,
 
-	"load" : "menu in game",
+	"load" : "menu principal",
 	"scenes" : [
 
 	    {
@@ -65,16 +65,6 @@
 		    "name" : "menu ladder",
 		    "objects" : [
 			asset("menu/objects/menu_ladder.json"),
-		    ],
-		}
-	    },
-
-	    {
-		"type" : "ctvty::Application::Scene",
-		"object" : { 
-		    "name" : "menu in game",
-		    "objects" : [
-			asset("menu/objects/menu_in_game.json"),
 		    ],
 		}
 	    },

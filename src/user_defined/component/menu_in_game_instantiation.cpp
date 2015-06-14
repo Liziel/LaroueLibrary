@@ -11,15 +11,15 @@ namespace user_defined {
       RegisterListener("Resume", &MenuInGameInstantiation::Resume);
     }
 
-    void	MenuInGameInstantiation::Serialize(serialization::Archive& __serial) const {
-      SERIALIZE_OBJECT_AS(...);
+    void	MenuInGameInstantiation::Serialize(serialization::Archive& __serial_instance) const {
+      SERIALIZE_OBJECT_AS(user_defined::component::MenuInGameInstantiation, __serial_instance);
       __serial["Menu InGame"] & MenuInGame;
     }
 
     void	MenuInGameInstantiation::Update() {
       if (!loaded && ctvty::Input::GetKeyState("Menu In Game")) {
 	loaded = true;
-	instantied = Object::Instantiate(MenuInGame.get());
+	instantied = (ctvty::GameObject*)Object::Instantiate(MenuInGame.get());
       } else if (ctvty::Input::GetKeyState("Menu In Game")) {
 	Object::Destroy(instantied);
       }

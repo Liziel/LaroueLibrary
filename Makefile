@@ -75,7 +75,8 @@ UDComponent	= $(UDCPlayer) $(UDCBombe)\
 		src/user_defined/component/menu_video.cpp \
 		src/user_defined/component/menu_configuration.cpp \
 		src/user_defined/component/ladder.cpp \
-		src/user_defined/component/MenuInGame.cpp
+		src/user_defined/component/MenuInGame.cpp\
+		src/user_defined/component/menu_in_game_instantiation.cpp
 
 UserDefined	= $(UDComponent)
 

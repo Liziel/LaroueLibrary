@@ -3,14 +3,14 @@
 
 # include "ctvty/monobehaviour.hpp"
 
-namespace cuser_defined {
+namespace user_defined {
   namespace component {
     
     class MenuInGameInstantiation : public ctvty::MonoBehaviour<MenuInGameInstantiation> {
     private:
       std::unique_ptr<ctvty::GameObject>	MenuInGame;
       ctvty::GameObject*			instantied;
-      bool					Loaded;
+      bool					loaded;
 
     public:
       MenuInGameInstantiation(const serialization::Archive&);
@@ -19,7 +19,7 @@ namespace cuser_defined {
     public:
       void	Update();
       void	Resume();
-    }
+    };
 
   };
 };
