@@ -20,6 +20,12 @@
 		    "directly generated" : true
 		}
 	    }
+	    {
+		"type" : "user_defined::component::MenuInGameInstantiation"
+		"object" : {
+		    "Menu InGame" : asset("menu/objects/menu_in_game.json")
+		}
+	    }
 	],
 
 	"name" : "map"
