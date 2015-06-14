@@ -30,7 +30,7 @@ namespace user_defined {
 
     public:
       void	Awake();
-      void	OnLoadScene(const std::string& scene_name);
+      void	Generate(int, int);
 
     public:
       inline std::size_t&	SizeX() { return size_x; }

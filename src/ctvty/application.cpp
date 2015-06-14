@@ -1,5 +1,7 @@
 #include <cstdlib>
 
+#include "SDL2/SDL.h"
+
 #include "ctvty/application.hh"
 #include "ctvty/event/clock.hh"
 #include "ctvty/rendering/renderer.hh"
@@ -142,8 +144,7 @@ namespace ctvty {
     if (!app->leave_state)
       return ;
     event::Clock::GetClock().End();
-    std::list<GameObject*> fathers_copy(ctvty::GameObject::accessParentsGameObjects());
-    ctvty::GameObject::accessParentsGameObjects().clear();
+    rendering::Renderer::GetRenderer().Close();
     std::exit(0);
   }
 

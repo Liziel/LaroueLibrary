@@ -57,7 +57,7 @@ namespace user_defined
 
       void		MenuConfiguration::DownSizeX(ctvty::component::Hud* hud)
       {
-	if (configuration->_sizeX != 10)
+	if (configuration->_sizeX != 5)
 	  configuration->_sizeX--;
 	texture.reset(new ctvty::asset::Texture(std::string("menu/textures/") +
 						static_cast<char>(configuration->_sizeX % 10 + 48) + ".json"));
@@ -71,7 +71,7 @@ namespace user_defined
 
       void		MenuConfiguration::UpSizeX(ctvty::component::Hud* hud)
       {
-	if (configuration->_sizeX != 99)
+	if (configuration->_sizeX != 49)
 	  configuration->_sizeX++;
 	std::cout << "size x = " << configuration->_sizeX << std::endl;
 	texture.reset(new ctvty::asset::Texture(std::string("menu/textures/") +
@@ -86,7 +86,7 @@ namespace user_defined
 
       void		MenuConfiguration::DownSizeY(ctvty::component::Hud* hud)
       {
-	if (configuration->_sizeY != 10)
+	if (configuration->_sizeY != 5)
 	  configuration->_sizeY--;
 	texture.reset(new ctvty::asset::Texture(std::string("menu/textures/") +
 						static_cast<char>(configuration->_sizeY % 10 + 48) + ".json"));
@@ -100,7 +100,7 @@ namespace user_defined
 
       void		MenuConfiguration::UpSizeY(ctvty::component::Hud* hud)
       {
-	if (configuration->_sizeY != 99)
+	if (configuration->_sizeY != 49)
 	  configuration->_sizeY++;
 	texture.reset(new ctvty::asset::Texture(std::string("menu/textures/") +
 						static_cast<char>(configuration->_sizeY % 10 + 48) + ".json"));

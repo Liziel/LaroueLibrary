@@ -16,6 +16,9 @@
 namespace GdlImpl {
   
   class Renderer : public gdl::SdlContext, public ctvty::rendering::Renderer::Implementation {
+  public:
+    void				Close() final { gdl::SdlContext::stop(); }
+
   private:
     gdl::BasicShader			_shader;
     std::shared_ptr<Shader>		_next_shader_use;
@@ -28,6 +31,15 @@ namespace GdlImpl {
     inline std::size_t			GetWidth() { return width; }
     inline std::size_t			GetHeight() { return height; }
 
+  public:
+    void				SetWindowSize(std::size_t x, std::size_t y) final {
+      width = x;
+      height = y;
+      SDL_SetWindowSize(gdl::SdlContext::_window, x, y);
+    }
+    void				SetFullscreen(bool enable) {
+      SDL_SetWindowFullscreen(gdl::SdlContext::_window, SDL_WINDOW_FULLSCREEN * enable);
+    }
   private:
     ctvty::utils::Vector3D		camera_position, camera_lookAt, camera_up;
 

@@ -1,14 +1,14 @@
 {
     "type" : "ctvty::GameObject"
     "object" : {
-	"name" : "player 1"
+	"name" : "player 2"
 	"tag" : "player"
 
 	"childs" : [
 	    {
 		"type" : "ctvty::GameObject"
 		"object" : {
-		    "name" : "player 1 Camera",
+		    "name" : "player 2 Camera",
 		    "tag" : "camera",
 
 		    "childs" : [ ]
@@ -16,7 +16,7 @@
 			{
 			    "type" : "ctvty::component::Camera"
 			    "object" : {
-				"viewport id" : 1
+				"viewport id" : 2
 				"forward look" : {
 				    "type" : "ctvty::utils::Vector3D"
 				    "object" : {
@@ -60,7 +60,7 @@
 	    {
 		"type" : "ctvty::GameObject"
 		"object" : {
-		    "name" : "player 1 representation"
+		    "name" : "player 2 representation"
 		    "tag" : "player representation"
 
 		    "childs" : [

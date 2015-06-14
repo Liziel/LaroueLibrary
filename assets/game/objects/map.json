@@ -12,10 +12,9 @@
 		    "indestructible" : asset("game/objects/indestructible.json")
 		    
 		    "player 1" : asset("game/objects/player1.json")
-		    "player 2" : asset("game/objects/player1.json")
-		    
-		    "size x" : 15
-		    "size y" : 15
+		    "player 2" : asset("game/objects/player2.json")
+
+		    "ia" : asset("game/objects/player1.json")
 
 		    "bombes" : [
 			{ "type" : "ctvty::asset::Model3D", "object" : { "wrapper" : "game/models/bombes/bombe glyphe.json" } }
@@ -25,7 +24,6 @@
 			{ "type" : "ctvty::asset::Model3D", "object" : { "wrapper" : "game/models/bombes/bombe glace.json" } }
 		    ]
 
-		    "directly generated" : true
 		}
 	    }
 	    {

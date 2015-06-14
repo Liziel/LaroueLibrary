@@ -12,6 +12,15 @@
 			},
 		{
 				"object" : {
+					"key" : 27,
+					"names" : [
+					"in game menu"
+					],
+				},
+				"type" : "ctvty::Input::configuration",
+			},
+		{
+				"object" : {
 					"key" : 1073741913,
 					"names" : [
 					"throw bomb player 2"

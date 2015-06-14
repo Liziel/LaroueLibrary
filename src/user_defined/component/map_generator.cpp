@@ -1,4 +1,5 @@
 #include "user_defined/component/map_generator.hh"
+#include "ctvty/application.hh"
 
 REGISTER_FOR_SERIALIZATION(user_defined::component, MapGenerator);
 
@@ -10,16 +11,10 @@ namespace user_defined {
       __serial["destructible"]	& destructible;
       __serial["indestructible"]& indestructible;
 
-      __serial["size x"]	& size_x;
-      __serial["size y"]	& size_y;
-
       __serial["player 1"]	& player1;
       __serial["player 2"]	& player2;
 
       __serial["bombes"]	& bombes;
-
-      if (__serial.exist("directly generated"))
-	__serial["directly generated"]	& directly_generated;
     }
 
     void		MapGenerator::Serialize(serialization::Archive& __serial_instance) const {
@@ -28,25 +23,23 @@ namespace user_defined {
       __serial["destructible"]	& destructible;
       __serial["indestructible"]& indestructible;
 
-      __serial["size x"]	& size_x;
-      __serial["size y"]	& size_y;
-
       __serial["player 1"]	& player1;
       __serial["player 2"]	& player2;
 
       __serial["bombes"]	& bombes;
-
-      __serial["directly generated"]	& directly_generated;
     }
 
     void		MapGenerator::Awake() {
+      std::shared_ptr<Configuration> configuration =
+	ctvty::Application::Assets().GetAsset("saves/configurations.json").LoadAs<Configuration>();
+      size_x = configuration->_sizeX;
+      size_y = configuration->_sizeY;
       for (auto& bombe : bombes)
 	bombe->delayedInstantiation();
-      if (directly_generated)
-	OnLoadScene("");
+      Generate(configuration->_player, configuration->_IA);
     }
 
-    void		MapGenerator::OnLoadScene(const std::string&) {
+    void		MapGenerator::Generate(int players, int ias) {
       for (std::size_t x = 0; x < size_x; ++x)
 	for (std::size_t y = 0; y < size_y; ++y) {
 	  Object::Instantiate(ground.get(),
@@ -89,6 +82,10 @@ namespace user_defined {
       Object::Instantiate(player1.get(),
 			  ctvty::utils::Vector3D(size_x/2 - 1, 3, size_x/2 - 1),
 			  ctvty::utils::Quaternion::identity);
+      if (players == 2)
+	Object::Instantiate(player2.get(),
+			    ctvty::utils::Vector3D(size_x/2 - 1, 3, size_x/2 - 1),
+			    ctvty::utils::Quaternion::identity);
     }
   };
 };

@@ -1,5 +1,6 @@
 #include "user_defined/component/menu_video.hh"
 #include "ctvty/application.hh"
+#include "ctvty/rendering/renderer.hh"
 
 REGISTER_FOR_SERIALIZATION(user_defined::component, MenuVideo);
 
@@ -97,7 +98,13 @@ namespace user_defined
 
       void		MenuVideo::Apply(ctvty::component::Hud*)
       {
-	// this->_resolution (0->2) and this->_fullscreen (true, false).
+	if (_resolution == 0)
+	  ctvty::rendering::Renderer::GetRenderer().SetWindowSize(1920, 1080);
+	else if (_resolution == 1)
+	  ctvty::rendering::Renderer::GetRenderer().SetWindowSize(1366, 768);
+	else if (_resolution == 2)
+	  ctvty::rendering::Renderer::GetRenderer().SetWindowSize(800, 600);
+	ctvty::rendering::Renderer::GetRenderer().SetFullscreen(_fullscreen);
       }
 
       void		MenuVideo::OverExit(ctvty::component::Hud* hud)

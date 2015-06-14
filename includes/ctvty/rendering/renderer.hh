@@ -20,6 +20,11 @@ namespace ctvty {
       class Implementation {
       public:
 	virtual ~Implementation() {}
+	virtual void			Close() = 0;
+
+      public:
+	virtual void			SetWindowSize(std::size_t, std::size_t) = 0;
+	virtual void			SetFullscreen(bool) = 0;
 
       public:
 	virtual Model3D*		CreateCube() = 0;
