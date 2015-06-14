@@ -15,6 +15,7 @@ namespace ctvty {
       ctvty::debug::Log(origin);
       colliders.remove_if([selector] (component::Collider* collider) {
 	  return !collider->GetGameObject()->IsActive() ||
+	    collider->IsTrigger() ||
 	    !selector(collider);
 	});
 
@@ -22,7 +23,7 @@ namespace ctvty {
       for (component::Collider* collider : colliders) {
 	ctvstd::Optional<float> result = collider->RayCollision(origin, direction);
 	
-	if (result && *result < distance && *result > 0) {
+	if (result && *result < distance && *result >= 0) {
 	  distance = *result;
 	  hit = Raycaster::Hit{collider, distance};
 	}

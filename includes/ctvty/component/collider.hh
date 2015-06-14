@@ -8,6 +8,7 @@
 namespace ctvty {
   namespace component {
 
+    class RigidBody;
     class Collider : public MonoBehaviour<Collider> {
     protected:
       utils::BoundingBox3D				boundingBox;
@@ -15,8 +16,18 @@ namespace ctvty {
       bool						isTrigger;
       std::shared_ptr<physics::Material>		material;
 
+    private:
+      std::list< RigidBody* >				triggereds;
+      std::list< RigidBody* >				collideds;
+    public:
+      inline std::list< RigidBody* >&			Triggereds() { return triggereds; }
+      inline std::list< RigidBody* >&			Collideds() { return collideds; }
+
     public:
       const RigidBody*			GetRigidBody() const;
+
+    public:
+      inline bool&			trigger() { return isTrigger; }
 
     public:
       bool				IsTrigger() const;
@@ -25,6 +36,7 @@ namespace ctvty {
 
     public:
       void				Awake();
+      void				OnDestroy();
 
     public:
       virtual const std::list<utils::Vector3D>&

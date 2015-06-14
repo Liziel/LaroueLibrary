@@ -1,0 +1,46 @@
+{
+    "type" : "ctvty::GameObject"
+    "object" : {
+	"name" : "danger zone!!"
+	"tag" : "zone"
+	
+	"childs" : []
+	"components" : [
+	    {
+		"type" : "ctvty::component::Renderer"
+		"object" : {
+		    "textured cube" : {
+			"type" : "ctvty::asset::Texture"
+			"object" : {
+			    "wrapper" : "game/textures/ice.json"
+			}
+		    }
+		}
+	    }
+	]
+
+	"transform" : {
+	    "type" : "ctvty::component::Transform"
+	    "object" : {
+		"position" : {
+		    "type" : "ctvty::utils::Vector3D"
+		    "object" : {
+			"x" : 0, "y" : 0, "z" : 0
+		    }
+		}
+		"scale" : {
+		    "type" : "ctvty::utils::Vector3D"
+		    "object" : {
+			"x" : 1.0, "y" : 1.5, "z" : 1.0
+		    }
+		}
+		"rotation" : {
+		    "type" : "ctvty::utils::Quaternion"
+		    "object" : {
+			"euler" : 0.0, "x" : 0.0, "y" : 0.0, "z" : 0.0
+		    }
+		}
+	    }
+	}
+    }
+}

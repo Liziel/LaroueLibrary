@@ -214,6 +214,7 @@ namespace serialization {
     map::			map(std::string::const_iterator& cursor, std::string::const_iterator end) {
       std::advance(cursor, 2);
 
+      Serial::isBlank(cursor, end);
       while (*cursor != ']') {
 	Serial::isBlank(cursor, end);
 	Serial* key = Serial::Instantiate(cursor, end);

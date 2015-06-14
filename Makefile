@@ -61,8 +61,11 @@ UDCPlayer	= \
 		src/user_defined/component/player/movement.cpp\
 		src/user_defined/component/player/bombing.cpp\
 
+UDCBombe	= \
+		src/user_defined/component/bombe/core.cpp\
 
-UDComponent	= $(UDCPlayer)\
+
+UDComponent	= $(UDCPlayer) $(UDCBombe)\
 		src/user_defined/component/menu_principal.cpp \
 		src/user_defined/component/menu_options.cpp \
 		src/user_defined/component/map_generator.cpp \

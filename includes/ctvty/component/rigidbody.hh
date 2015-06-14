@@ -34,9 +34,17 @@ namespace ctvty {
     private:
       std::list<const Collider*>		colliders_collisions;
       ctvstd::Optional<utils::Collision>	last_collision;
+    public:
+      inline void				ExitCollision(Collider* col) {
+	colliders_collisions.remove_if([col] (const Collider* co) { return co == col; });
+      }
 
     private:
       std::list<const Collider*>		colliders_trigger;
+    public:
+      inline void				ExitTrigger(Collider* col) {
+	colliders_trigger.remove_if([col] (const Collider* co) { return co == col; });
+      }
 
     private://later accessible and serializable
       CollisionDetectionMode			detectionMode;

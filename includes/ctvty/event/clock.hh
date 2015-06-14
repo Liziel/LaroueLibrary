@@ -31,7 +31,7 @@ namespace ctvty {
     private:
       std::chrono::milliseconds		frame_length;
       std::chrono::duration<double>	fixedDeltaTime;
-
+      bool				dispatching;
     private:
       double						lastFrameRatio;
       double						maxFrameSeconds;

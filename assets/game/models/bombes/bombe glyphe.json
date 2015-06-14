@@ -1,6 +1,6 @@
 {
-    "type" : "ctvty::asset::Model3D::Wrapper"
-    "object" : {
-	"path" : "game/models/bombes/Bombe Glyphe/Glyphe.FBX"
-    }
+	"object" : {
+		"path" : "game/models/bombes/Bombe Glyphe/Glyphe.FBX"
+	},
+	"type" : "ctvty::asset::Model3D::Wrapper",
 }

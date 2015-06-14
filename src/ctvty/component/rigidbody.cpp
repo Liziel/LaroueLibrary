@@ -194,6 +194,7 @@ namespace ctvty {
 	for (const Collider* c : colliders_collisions) {
 	  c->BroadcastMessage("OnCollisionExit", static_cast<const utils::Collision*>(&*last_collision));
 	  BroadcastMessage("OnCollisionExit", static_cast<const utils::Collision*>(&*last_collision));
+	  const_cast<Collider*>(c)->Collideds().remove_if([this] (RigidBody* r) { return r == this; });
 	}
 	colliders_collisions.clear();
 	last_collision = ctvstd::none;
@@ -214,6 +215,7 @@ namespace ctvty {
 	      return false;
 	  cc->BroadcastMessage("OnCollisionExit", &collision);
 	  BroadcastMessage("OnCollisionExit", &collision);
+	  const_cast<Collider*>(cc)->Collideds().remove_if([this] (RigidBody* r) { return r == this; });
 	  return true;
 	});
 
@@ -226,6 +228,7 @@ namespace ctvty {
 	    if (c == cc)
 	      return true;
 
+	  const_cast<Collider*>(c)->Collideds().push_back(this);
 	  c->BroadcastMessage("OnCollisionEnter", static_cast<const utils::Collision*>(&collision));
 	  BroadcastMessage("OnCollisionEnter", static_cast<const utils::Collision*>(&collision));
 	  return false;
@@ -262,15 +265,16 @@ namespace ctvty {
 	  for (auto trigger = triggers.begin(); trigger != triggers.end(); ++trigger) {
 	    if (*trigger == _trigger) {
 	      for (Collider* triggered : sub_colliders)
-		_trigger->BroadcastMessage("OnTriggerStay", &triggered);
-	      BroadcastMessage("OnCollisionStay", &_trigger);
+		_trigger->BroadcastMessage("OnTriggerStay", static_cast<const component::Collider*>(triggered));
+	      BroadcastMessage("OnTriggernStay", static_cast<const component::Collider*>(_trigger));
 	      trigger = triggers.erase(trigger);
 	      return false;
 	    }
 	  }
 	  for (Collider* triggered : sub_colliders)
-	    _trigger->BroadcastMessage("OnTriggerExit", &triggered);
-	  BroadcastMessage("OnCollisionExit", &_trigger);
+	    _trigger->BroadcastMessage("OnTriggerExit", static_cast<const component::Collider*>(triggered));
+	  BroadcastMessage("OnTriggernExit", static_cast<const component::Collider*>(_trigger));
+	  const_cast<Collider*>(_trigger)->Triggereds().remove_if([this] (RigidBody* r) { return r == this; });
 	  return true;
 	});
       
@@ -278,6 +282,8 @@ namespace ctvty {
 	for (Collider* triggered : sub_colliders)
 	  trigger->BroadcastMessage("OnTriggerEnter", static_cast<const component::Collider*>(triggered));
 	BroadcastMessage("OnTriggerEnter", static_cast<const component::Collider*>(trigger));
+	trigger->Triggereds().push_back(this);
+	colliders_trigger.push_back(trigger);
       }
 
     }

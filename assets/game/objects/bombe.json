@@ -14,6 +14,29 @@
 		    "childs" : []
 		    "components" : [
 			{
+			    "object" : {
+				"default_state" : "idle",
+
+				"states" : {[
+
+				    "idle" : {
+					"object" : {
+					    "name" : "idle",
+					    "speed" : 0.1,
+
+					    "start" : 0,
+					    "end" : 100,
+
+					    "transitions" : {[
+					    ]},
+					},
+					"type" : "ctvty::component::Animator::State"
+				    },
+				]},
+			    },
+			    "type" : "ctvty::component::Animator",
+			},
+			{
 			    "type" : "ctvty::component::Renderer"
 			    "object" : {
 				"model" : {
@@ -38,7 +61,7 @@
 			    "scale" : {
 				"type" : "ctvty::utils::Vector3D"
 				"object" : {
-				    "x" : 0.005, "y" : 0.005, "z" : 0.005
+				    "x" : 0.004, "y" : 0.004, "z" : 0.004
 				}
 			    }
 			    "rotation" : {
@@ -52,7 +75,47 @@
 		}
 	    }
 	]
-	"components" : []
+	"components" : [
+	    {
+		"type" : "user_defined::component::bombe::Core"
+		"object" : {
+		    "damage zone" : asset("game/objects/damage zone.json")
+		}
+	    }
+	    {
+		"type" : "ctvty::component::BoxCollider"
+		"object" : {
+		    "+size" : {
+			"object" : {
+			    "x" : 0.4,
+			    "y" : 0.5,
+			    "z" : 0.4,
+			},
+			"type" : "ctvty::utils::Vector3D",
+		    },
+		    "-size" : {
+			"object" : {
+			    "x" : 0.4,
+			    "y" : 0.9,
+			    "z" : 0.4,
+			},
+			"type" : "ctvty::utils::Vector3D",
+		    },
+
+		    "isTrigger" : true,
+
+		    "material" : {
+			"object" : {
+			    "bounciness" : 0.0,
+			    "dynamicFriction" : 0.3,
+			    "staticFriction" : 0.0,
+			},
+			"type" : "ctvty::physics::Material",
+		    },
+		}
+	    }
+
+	]
 
 	"transform" : {
 	    "type" : "ctvty::component::Transform"

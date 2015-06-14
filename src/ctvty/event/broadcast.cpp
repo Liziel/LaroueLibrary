@@ -1,6 +1,7 @@
 #include "ctvty/event/broadcast.hh"
 #include "ctvty/gameObject.hpp"
 #include "ctvty/object.hpp"
+#include "ctvty/debug.hpp"
 
 namespace ctvty {
   namespace event {

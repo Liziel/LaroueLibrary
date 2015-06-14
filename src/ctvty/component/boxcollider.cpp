@@ -277,7 +277,7 @@ namespace ctvty{
 	  if ( face->IsPointInside(origin + (direction * *_distance)) ) {
 	    if (distance && *_distance < *distance)
 	      distance = _distance;
-	    else if (!distance && *_distance > 0)
+	    else if (!distance && *_distance >= 0)
 	      distance = _distance;
 	  }
 	}

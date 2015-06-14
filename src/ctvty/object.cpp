@@ -32,7 +32,7 @@ namespace ctvty {
   }
 
   void				Object::Destroy(Object* del, float delay) {
-    new event::DelayedAction([del] () -> void { del->intern_Destroy(); delete del; }, delay);
+    new event::DelayedAction([del] () -> void { Object::Destroy(del); }, delay);
   }
 
   /*

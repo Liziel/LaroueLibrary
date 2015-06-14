@@ -51,13 +51,14 @@ namespace ctvty {
       OnGui.RemoveTarget(target);
       Render.RemoveTarget(target);
       for (auto it = broadcasts.begin(); it != broadcasts.end(); ++it)
-	if (it->RemoveTarget(target) && it != broadcasts.begin())
+	if (it->RemoveTarget(target) && (!dispatching || it != broadcasts.begin()))
 	  it = broadcasts.erase(it);
     }
 
     void				Clock::Start() {
       std::chrono::time_point<std::chrono::high_resolution_clock>	fixed_beg, fixed_loop;
 
+      dispatching = false;
       fixed_beg = std::chrono::high_resolution_clock::now();
       while (!end) {
 	fixed_loop = std::chrono::high_resolution_clock::now();
@@ -71,13 +72,17 @@ namespace ctvty {
 	Event::Refresh();
 
 	FixedUpdate.Dispatch();
+	dispatching = true;
 	while (broadcasts.size()) { broadcasts.front().Dispatch(); broadcasts.pop_front(); }
+	dispatching = false;
 
 	for (DelayedAction* action : std::list<DelayedAction*>(delayedActions))
 	  action->Refresh();
 
 	Update.Dispatch();
+	dispatching = true;
 	while (broadcasts.size()) { broadcasts.front().Dispatch(); broadcasts.pop_front(); }
+	dispatching = false;
 
 	{//Event Dispatching By ONGUI
 	  Event* e;
@@ -89,7 +94,9 @@ namespace ctvty {
 	  }
 	}
 
+	dispatching = true;
 	while (broadcasts.size()) { broadcasts.front().Dispatch(); broadcasts.pop_front(); }
+	dispatching = false;
 
 	{//Renderer Dispatching By RENDER
 	  ctvty::rendering::Renderer::GetRenderer().Update();
@@ -102,7 +109,9 @@ namespace ctvty {
 	  ctvty::rendering::Renderer::GetRenderer().Flush();
 	}
 
+	dispatching = true;
 	while (broadcasts.size()) { broadcasts.front().Dispatch(); broadcasts.pop_front(); }
+	dispatching = false;
 
 
       }

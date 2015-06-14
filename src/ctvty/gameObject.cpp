@@ -139,7 +139,7 @@ namespace ctvty {
   void				GameObject::intern_Destroy() {
     SetParent(nullptr);
     for (GameObject*& child : std::list<GameObject*>(childs)) {
-      Object::Destroy(child); child = nullptr;
+      child->intern_Destroy(); child = nullptr;
     } childs.clear();
     for (Component* component : std::list<Component*>(components)) {
       Object::Destroy(component); component = nullptr;

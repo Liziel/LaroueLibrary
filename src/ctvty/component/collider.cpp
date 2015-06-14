@@ -17,6 +17,13 @@ namespace ctvty {
       r = nullptr;
     }
 
+    void			Collider::OnDestroy() {
+      for (RigidBody* triggered : triggereds)
+	triggered->ExitTrigger(this);
+      for (RigidBody* collided : collideds)
+	collided->ExitCollision(this);
+    }
+
     bool			Collider::IsTrigger() const {
       return isTrigger;
     }
