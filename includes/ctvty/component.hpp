@@ -68,7 +68,7 @@ namespace ctvty {
     template<typename ... parameters>
     void			BroadcastAll(const std::string& methodName,
 						 parameters ... p) const {
-      BroadcastMessage(methodName, event::parameters::PackValues(p ... ));
+      BroadcastAll(methodName, event::parameters::PackValues(p ... ));
     }
 
     void			BroadcastMessage(const std::string& methodName,

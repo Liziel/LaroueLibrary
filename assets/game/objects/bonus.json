@@ -1,46 +1,44 @@
 {
     "type" : "ctvty::GameObject"
     "object" : {
+	"name" : "bonus zone!!"
+	"tag" : "zone"
+	
 	"childs" : []
 	"components" : [
 	    {
 		"type" : "ctvty::component::Renderer"
 		"object" : {
-		    "textured cube" : {
+		    "model" : {
 			"type" : "ctvty::asset::Texture"
 			"object" : {
-			    "wrapper" : "game/textures/bookshelf.json"
+			    "wrapper" : "game/models/bonus.json"
 			}
 		    }
 		}
-	    },
-	    {
-		"type" : "user_defined::component::Loot"
-		"object" : {
-		    "loot" : asset("game/objects/bonus.json")
-		}
 	    }
+	    { "type" : "user_defined::component::Bonus", "object" : {} }
 	    {
 		"type" : "ctvty::component::BoxCollider"
 		"object" : {
 		    "+size" : {
 			"object" : {
-			    "x" : 0.5,
+			    "x" : 0.4,
 			    "y" : 0.5,
-			    "z" : 0.5,
+			    "z" : 0.4,
 			},
 			"type" : "ctvty::utils::Vector3D",
 		    },
 		    "-size" : {
 			"object" : {
-			    "x" : 0.5,
+			    "x" : 0.4,
 			    "y" : 0.9,
-			    "z" : 0.5,
+			    "z" : 0.4,
 			},
 			"type" : "ctvty::utils::Vector3D",
 		    },
 
-		    "isTrigger" : false,
+		    "isTrigger" : true,
 
 		    "material" : {
 			"object" : {
@@ -54,37 +52,28 @@
 	    }
 	]
 
-	"name" : "destructible"
-	"tag" : "map"
-
 	"transform" : {
-	    "type" : "ctvty::component::Transform",
+	    "type" : "ctvty::component::Transform"
 	    "object" : {
 		"position" : {
 		    "type" : "ctvty::utils::Vector3D"
 		    "object" : {
-			"x" : 0
-			"y" : 0
-			"z" : 0
+			"x" : 0, "y" : 0, "z" : 0
 		    }
-		},
+		}
 		"scale" : {
 		    "type" : "ctvty::utils::Vector3D"
 		    "object" : {
-			"x" : 1
-			"y" : 1
-			"z" : 1
+			"x" : 1.0, "y" : 1.0, "z" : 1.0
 		    }
-		},
+		}
 		"rotation" : {
 		    "type" : "ctvty::utils::Quaternion"
 		    "object" : {
-			"euler" : true,
-			"x" : 0, "y" : 0, "z" : 0
+			"euler" : 0.0, "x" : 0.0, "y" : 0.0, "z" : 0.0
 		    }
 		}
 	    }
 	}
-
     }
 }

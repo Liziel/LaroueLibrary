@@ -1,4 +1,5 @@
 #include <cstdlib>
+#include <ctime>
 
 #include "SDL2/SDL.h"
 
@@ -50,6 +51,7 @@ namespace ctvty {
     ctvty::asset::Assets*	assets = new ctvty::asset::Assets(location);
     serialization::Serial*	serial;
 
+    std::srand(std::time(0));
     {//serialization asset function
       serialization::StoreFunction("asset",
 				   [&assets] (const serialization::Serial& __serial) -> serialization::Serial* {

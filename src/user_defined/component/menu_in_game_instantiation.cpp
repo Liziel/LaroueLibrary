@@ -27,6 +27,7 @@ namespace user_defined {
     }
 
     void	MenuInGameInstantiation::Resume() {
+      std::cout << "resume" << std::endl;
       loaded = false;
       instantied = nullptr;
     }

@@ -14,7 +14,7 @@
 				"object" : {
 					"key" : 27,
 					"names" : [
-					"in game menu"
+					"Menu In Game"
 					],
 				},
 				"type" : "ctvty::Input::configuration",

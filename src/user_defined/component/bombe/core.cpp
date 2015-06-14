@@ -38,7 +38,6 @@ namespace user_defined {
 
       void	Core::Explode() {
 	{
-	  std::cout << "explode" << std::endl;
 	  exploded = true;
 	  ctvstd::Optional<ctvty::physics::Raycaster::Hit>	hit =
 	    ctvty::physics::Raycaster::Raycast(transform->GetPosition() + ctvty::utils::Vector3D::forward * 0.5,
@@ -137,7 +136,6 @@ namespace user_defined {
 						ctvty::utils::Quaternion::identity), 0.5);
 	}
 	Object::Destroy(gameObject);
-	std::cout << "explode" << std::endl;
       }
     };
   };

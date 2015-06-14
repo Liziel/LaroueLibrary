@@ -1,0 +1,6 @@
+{
+	"object" : {
+		"path" : "game/models/bonus/Book.FBX"
+	},
+	"type" : "ctvty::asset::Model3D::Wrapper",
+}
