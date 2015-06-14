@@ -15,12 +15,6 @@
 		}
 	    },
 	    {
-		"type" : "user_defined::component::Loot"
-		"object" : {
-		    "loot" : asset("game/objects/bonus.json")
-		}
-	    }
-	    {
 		"type" : "ctvty::component::BoxCollider"
 		"object" : {
 		    "+size" : {

@@ -35,6 +35,7 @@ namespace user_defined {
 
     void	Bonus::Serialize(serialization::Archive& __serial_instance) const {
       SERIALIZE_OBJECT_AS(user_defined::component::Bonus, __serial_instance);
+      (void)__serial;
     }
 
     void	Bonus::OnTriggerEnter(const ctvty::component::Collider* collider) {
