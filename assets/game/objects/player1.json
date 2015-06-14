@@ -8,11 +8,88 @@
 	    {
 		"type" : "ctvty::GameObject"
 		"object" : {
-		    "name" : "player 1 representation"
-		    "tag" : "player representation"
+		    "name" : "player 1 Camera",
+		    "tag" : "camera",
 
 		    "childs" : [ ]
 		    "components" : [
+			{
+			    "type" : "ctvty::component::Camera"
+			    "object" : {
+				"viewport id" : 1
+				"forward look" : {
+				    "type" : "ctvty::utils::Vector3D"
+				    "object" : {
+					"x" : 0
+					"y" : -1
+					"z" : 1
+				    }
+				}
+			    }
+			}
+		    ]
+
+		    "transform" : {
+			"type" : "ctvty::component::Transform"
+			"object" : {
+			    "position" : {
+				"type" : "ctvty::utils::Vector3D"
+				"object" : {
+				    "x" : 0
+				    "z" : -5
+				    "y" : 10
+				}
+			    },
+			    "rotation" : {
+				"type" : "ctvty::utils::Quaternion"
+				"object" : {
+				    "euler" : true, "x" : 0, "y" : 0, "z" : 0
+				}
+			    }
+			    "scale" : {
+				"type" : "ctvty::utils::Vector3D"
+				"object" : {
+				    "x" : 0, "y" : 0, "z" : 0
+				}
+			    }
+			}
+		    }
+
+		}
+	    },
+	    {
+		"type" : "ctvty::GameObject"
+		"object" : {
+		    "name" : "player 1 representation"
+		    "tag" : "player representation"
+
+		    "childs" : [
+		    ]
+		    "components" : [
+			{
+			    "object" : {
+				"default_state" : "idle",
+
+				"states" : {[
+
+				    "idle" : {
+					"object" : {
+					    "name" : "idle",
+					    "speed" : .7,
+
+					    "start" : 0,
+					    "end" : 400,
+
+					    "transitions" : {[
+						"boring" : "idle",
+					    ]},
+					},
+					"type" : "ctvty::component::Animator::State"
+				    },
+				]},
+			    },
+			    "type" : "ctvty::component::Animator",
+			},
 			{
 			    "type" : "ctvty::component::Renderer",
 			    "object" : {
@@ -34,7 +111,7 @@
 			    }
 			    "position" : {
 				"type" : "ctvty::utils::Vector3D"
-				"object" : {"x" : 0, "y" : 1, "z" : 0}
+				"object" : {"x" : 0, "y" : 0, "z" : 0}
 			    }
 			    "rotation" : {
 				"type" : "ctvty::utils::Quaternion"

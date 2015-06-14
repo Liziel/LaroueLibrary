@@ -34,12 +34,12 @@
 			"type" : "ctvty::utils::Vector3D",
 		    },
 
-		    "isTrigger" : true,
+		    "isTrigger" : false,
 
 		    "material" : {
 			"object" : {
 			    "bounciness" : 0.0,
-			    "dynamicFriction" : 0.3,
+			    "dynamicFriction" : 0.0,
 			    "staticFriction" : 0.0,
 			},
 			"type" : "ctvty::physics::Material",

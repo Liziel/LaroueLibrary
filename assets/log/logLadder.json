@@ -2,8 +2,12 @@
     "type" : "user_defined::component::ScoreLog"
     "object" : {
 	"log" : {[
-	    "toto" : 10000,
-	    "looser" : 1
+	    "tot" : 5,
+	    "lii" : 4,
+	    "loo" : 3,
+	    "plo" : 2,
+	    "pmu" : 1,
+	    "lol" : 0,
 	]}
     }
 }

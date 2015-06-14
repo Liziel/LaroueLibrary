@@ -42,6 +42,14 @@ namespace ctvty {
     inline bool					HasParent() { return parent != nullptr; }
     inline GameObject&				GetParent() { return *parent; }
 
+  public:
+    inline std::list<GameObject*>		GetChilds() { return childs; }
+    inline GameObject*				GetChildByName(const std::string& name) {
+      for (auto child : childs)
+	if (child->name == name)
+	  return child;
+      return nullptr;
+    }
   private:
     /*
      * All GameObject should have a Transform Component for their localization
