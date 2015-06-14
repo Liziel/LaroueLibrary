@@ -57,14 +57,17 @@ namespace ctvty {
     }
 
     void			CancelInvoke() {
-      for (auto invoking : invoked)
+      for (auto& invoking : std::list< event::DelayedActionContainer< std::list >* >(invoked)) {
+	std::cout << "deleting " << invoking << std::endl;
 	delete invoking;
+	invoking = nullptr;
+      }
       invoked.clear();
     }
 
   public:
     MonoBehaviour(GameObject* parent, const std::string& name)
-      : Behaviour(parent, name) {
+      : Behaviour(parent, name), invoked({}) {
       ATTACH_THIS_TO(Awake);
       ATTACH_THIS_TO(Start);
       ATTACH_THIS_TO(Update);

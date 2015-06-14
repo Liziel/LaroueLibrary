@@ -3,6 +3,7 @@
 
 #include <chrono>
 #include <functional>
+#include <iostream>
 
 namespace ctvty {
   namespace event {
@@ -46,6 +47,7 @@ namespace ctvty {
       }
 
       ~DelayedActionContainer() {
+	std::cout << this << " " << _action << std::endl;
 	if (!_action->HasFinished())
 	  delete _action;
 	_container.remove_if([this] (DelayedActionContainer* oth) { return oth == this; });

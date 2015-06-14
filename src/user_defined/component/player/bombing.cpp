@@ -39,7 +39,7 @@ namespace user_defined {
 
       void	Bombing::Awake() {
 	stock = 1;
-	InvokeRepeating(&Bombing::Reload, 2.f, 2.f);
+	InvokeRepeating(&Bombing::Reload, 1.f, 1.f);
       }
 
       void	Bombing::Reload() {

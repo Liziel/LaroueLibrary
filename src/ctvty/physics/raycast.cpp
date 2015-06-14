@@ -15,7 +15,6 @@ namespace ctvty {
       ctvty::debug::Log(origin);
       colliders.remove_if([selector] (component::Collider* collider) {
 	  return !collider->GetGameObject()->IsActive() ||
-	    collider->IsTrigger() ||
 	    !selector(collider);
 	});
 

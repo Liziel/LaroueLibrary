@@ -12,6 +12,8 @@ namespace user_defined {
       Core::Core(const serialization::Archive& __serial)
 	: ctvty::MonoBehaviour<Core>(nullptr, "Bombe Core") {
 	__serial["damage zone"] & damage_zone;
+	exploded = false;
+	RegisterListener("Explosion", &Core::BeforeExplode);
       }
 
       void	Core::Serialize(serialization::Archive& __serial_instance) const {
@@ -27,23 +29,32 @@ namespace user_defined {
 	GetComponent<ctvty::component::Collider>()->trigger() = false;
       }
 
+      void	Core::BeforeExplode() {
+	if (exploded)
+	  return ;
+	CancelInvoke();
+	Explode();
+      }
+
       void	Core::Explode() {
 	{
+	exploded = true;
 	  ctvstd::Optional<ctvty::physics::Raycaster::Hit>	hit =
 	    ctvty::physics::Raycaster::Raycast(transform->GetPosition() + ctvty::utils::Vector3D::forward * 0.5,
 					       ctvty::utils::Vector3D::forward,
-					       std::numeric_limits<float>::infinity(),
+					       size,
 					       [this] (ctvty::component::Collider* co) {
 						 return co->GetGameObject() != gameObject &&
 						 !co->GetGameObject()->CompareTag("player") &&
+						 !co->GetGameObject()->CompareTag("zone") &&
 						 !co->GetGameObject()->CompareTag("ia");
 					       });
 	  if (hit) {
 	    if (hit->collider->GetGameObject()->CompareTag("bombes")) {
-	      hit->collider->GetGameObject()->GetComponent<Core>()->CancelInvoke();
-	      hit->collider->GetGameObject()->GetComponent<Core>()->Explode();
+	      std::cout << "wut" << std::endl;
+	      hit->collider->BroadcastMessage("Explosion");
 	    }
-	    else if (hit->collider->GetGameObject()->Name() == "Destructible")
+	    else if (hit->collider->GetGameObject()->Name() == "destructible")
 	      Object::Destroy(hit->collider->GetGameObject());
 	  }
 	  for (float i = 0; i < (hit ? (int)hit->dist : size); ++i)
@@ -60,14 +71,15 @@ namespace user_defined {
 					       [this] (ctvty::component::Collider* co) {
 						 return co->GetGameObject() != gameObject &&
 						 !co->GetGameObject()->CompareTag("player") &&
+						 !co->GetGameObject()->CompareTag("zone") &&
 						 !co->GetGameObject()->CompareTag("ia");
 					       });
 	  if (hit) {
 	    if (hit->collider->GetGameObject()->CompareTag("bombes")) {
-	      hit->collider->GetGameObject()->GetComponent<Core>()->CancelInvoke();
-	      hit->collider->GetGameObject()->GetComponent<Core>()->Explode();
+	std::cout << "wut" << std::endl;
+	      hit->collider->BroadcastMessage("Explosion");
 	    }
-	    else if (hit->collider->GetGameObject()->Name() == "Destructible")
+	    else if (hit->collider->GetGameObject()->Name() == "destructible")
 	      Object::Destroy(hit->collider->GetGameObject());
 	  }
 	  for (float i = 0; i < (hit ? (int)hit->dist : size); ++i)
@@ -83,15 +95,16 @@ namespace user_defined {
 					       size,
 					       [this] (ctvty::component::Collider* co) {
 						 return co->GetGameObject() != gameObject &&
+						 !co->GetGameObject()->CompareTag("zone") &&
 						 !co->GetGameObject()->CompareTag("player") &&
 						 !co->GetGameObject()->CompareTag("ia");
 					       });
 	  if (hit) {
 	    if (hit->collider->GetGameObject()->CompareTag("bombes")) {
-	      hit->collider->GetGameObject()->GetComponent<Core>()->CancelInvoke();
-	      hit->collider->GetGameObject()->GetComponent<Core>()->Explode();
+	std::cout << "wut" << std::endl;
+	      hit->collider->BroadcastMessage("Explosion");
 	    }
-	    else if (hit->collider->GetGameObject()->Name() == "Destructible")
+	    else if (hit->collider->GetGameObject()->Name() == "destructible")
 	      Object::Destroy(hit->collider->GetGameObject());
 	  }
 	  for (float i = 0; i < (hit ? (int)hit->dist : size); ++i)
@@ -108,14 +121,15 @@ namespace user_defined {
 					       [this] (ctvty::component::Collider* co) {
 						 return co->GetGameObject() != gameObject &&
 						 !co->GetGameObject()->CompareTag("player") &&
+						 !co->GetGameObject()->CompareTag("zone") &&
 						 !co->GetGameObject()->CompareTag("ia");
 					       });
 	  if (hit) {
 	    if (hit->collider->GetGameObject()->CompareTag("bombes")) {
-	      hit->collider->GetGameObject()->GetComponent<Core>()->CancelInvoke();
-	      hit->collider->GetGameObject()->GetComponent<Core>()->Explode();
+	std::cout << "wut" << std::endl;
+	      hit->collider->BroadcastMessage("Explosion");
 	    }
-	    else if (hit->collider->GetGameObject()->Name() == "Destructible")
+	    else if (hit->collider->GetGameObject()->Name() == "destructible")
 	      Object::Destroy(hit->collider->GetGameObject());
 	  }
 	  for (float i = 0; i < (hit ? (int)hit->dist : size); ++i)

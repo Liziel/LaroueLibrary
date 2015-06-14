@@ -16,10 +16,14 @@ namespace user_defined {
 	void	Serialize(serialization::Archive&) const;
 
       private:
+	void		BeforeExplode();
 	void		Explode();
 
       public:
 	void		OnTriggerExit(const ctvty::component::Collider*);
+
+      private:
+	bool		exploded;
 
       private:
 	float		fuseDelay;
